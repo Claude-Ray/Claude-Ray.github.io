@@ -341,21 +341,42 @@
 <ol>
 <li>安装 Node.js 环境 </li>
 <li><p>通过 Node 的 npm 安装 Hexo，命令行输入 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli </div><div class="line">``` </div><div class="line">3. 初始化 </div><div class="line">``` </div><div class="line">$ hexo init &lt;folder&gt; # 初始化项目名称 </div><div class="line">$ cd &lt;folder&gt; </div><div class="line">$ npm install # 安装模块 </div><div class="line">``` </div><div class="line">4. 预览 </div><div class="line">``` </div><div class="line">$ hexo clean # 必要时，清除上次生成页面时造成的缓存 </div><div class="line">$ hexo g  # 生成静态页面 </div><div class="line">$ hexo s  # 在本地启动Hexo，可以在浏览器访问 localhost:4000 来预览</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$ npm install -g hexo-cli </div><div class="line">``` </div><div class="line">3. 初始化 </div><div class="line">```bash</div><div class="line">$ hexo init &lt;folder&gt; <span class="comment"># 初始化项目名称 </span></div><div class="line">$ <span class="built_in">cd</span> &lt;folder&gt; </div><div class="line">$ npm install <span class="comment"># 安装模块</span></div></pre></td></tr></table></figure>
 </li>
-<li><p>github 支持<br>github 支持<br>首先在 github 按照 username.github.io 的格式新建仓库，<br>之后在项目根目录下执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm i hexo-deployer-git --save</div></pre></td></tr></table></figure>
+<li><p>预览 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ hexo clean <span class="comment"># 必要时，清除上次生成页面时造成的缓存 </span></div><div class="line">$ hexo g  <span class="comment"># 生成静态页面 </span></div><div class="line">$ hexo s  <span class="comment"># 在本地启动Hexo，可以在浏览器访问 localhost:4000 来预览</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>github 支持<br>首先在 github 按照 username.github.io 的格式新建仓库，<br>之后在项目根目录下执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm i hexo-deployer-git --save</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>打开_config.yml，编辑deploy信息，注意替换用户名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">  type: git</div><div class="line">  repo: git@github.com:yourusername/yourusername.github.io.git</div><div class="line">  branch: master</div></pre></td></tr></table></figure></p>
-<p>配置完成后，只需执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo d</div></pre></td></tr></table></figure></p>
+<p>配置完成后，只需执行<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo d</div></pre></td></tr></table></figure></p>
 <p>即可将本地内容部署在 github 中，输入域名username.github.io进行访问</p>
 <h3 id="配置主题"><a href="#配置主题" class="headerlink" title="配置主题"></a>配置主题</h3><pre><code>如果不喜欢默认主题，可以参考如下方式更改。
-</code></pre><p>要把主题更换为Next，先定位到Hexo站点目录进行安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cd your-hexo-site</div><div class="line">$ git clone https://github.com/iissnan/hexo-theme-next themes/next</div></pre></td></tr></table></figure></p>
+</code></pre><p>要把主题更换为Next，先定位到Hexo站点目录进行安装<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> your-hexo-site</div><div class="line">$ git <span class="built_in">clone</span> https://github.com/iissnan/hexo-theme-next themes/next</div></pre></td></tr></table></figure></p>
 <p>之后打开站点配置文件_config.yml，修改theme字段值为next<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">theme: next</div></pre></td></tr></table></figure></p>
 <h4 id="修改Scheme"><a href="#修改Scheme" class="headerlink" title="修改Scheme"></a>修改Scheme</h4><p>Next主题提供了3种Scheme，也决定了外观细节，需要在主题配置文件（themes/next/_config.yml）中进行修改，通过注释和反注释三选一。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Schemes</div><div class="line">#scheme: Muse</div><div class="line">scheme: Mist</div><div class="line">#scheme: Pisces</div></pre></td></tr></table></figure></p>
 <h4 id="修改菜单"><a href="#修改菜单" class="headerlink" title="修改菜单"></a>修改菜单</h4><p>在主题配置文件中，找到menu字段并进行适当修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">menu:</div><div class="line">  home: /</div><div class="line">  archives: /archives</div><div class="line">  about: /about</div><div class="line">  #categories: /categories</div><div class="line">  tags: /tags</div><div class="line">  #commonweal: /404.html</div></pre></td></tr></table></figure></p>
 <h4 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h4><p>同样在主题配置文件中修改avatar字段，可以参照注释把avatar图片存在next/source/images目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Sidebar Avatar</div><div class="line"># in theme directory(source/images): /images/avatar.jpg</div><div class="line"># in site  directory(source/uploads): /uploads/avatar.jpg</div><div class="line">avatar: /images/avatar.jpg</div></pre></td></tr></table></figure></p>
+<h3 id="遇到的坑和问题汇总"><a href="#遇到的坑和问题汇总" class="headerlink" title="遇到的坑和问题汇总"></a>遇到的坑和问题汇总</h3><h4 id="404页面配置"><a href="#404页面配置" class="headerlink" title="404页面配置"></a>404页面配置</h4><p>常规的方法是在主题目录的source目录下新建404.html文件，修改主题配置文件commonweal，在本地预览404就能看到对应界面。但是，这么配置到GitHub pages就访问不到404页面了。</p>
+<blockquote>
+<p>网上给出原因是404页面只能绑定顶级域名，如果只用github.io，404页面就失去效果。</p>
+</blockquote>
+<p>其实，主要原因是Github Pages强制使用https，所以文档内对js和css的请求也都需要经过https才能传输，而腾讯公益404页面默认使用http。<br>所以，只要把出问题的js文件拿到本地进行修改就好了~</p>
+<ul>
+<li>原本的search_children.js</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> _base = <span class="string">'http://qzone.qq.com/gy/404/'</span>;</div><div class="line"><span class="built_in">document</span>.write(<span class="string">'&lt;script type="text/javascript" src="'</span> + _base + <span class="string">'data.js" charset="utf-8"&gt;&lt;/script&gt;'</span>);</div><div class="line"><span class="built_in">document</span>.write(<span class="string">'&lt;script type="text/javascript" src="'</span> + _base + <span class="string">'page.js" charset="utf-8"&gt;&lt;/script&gt;'</span>);</div></pre></td></tr></table></figure>
+<p>初次修改为</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> _base = <span class="string">'https://qzone.qq.com/gy/404/'</span>;</div></pre></td></tr></table></figure>
+<ul>
+<li>控制台发现仍然有js文件没有加载进来，阅读page.js的代码后明白了，于是page.js也拿到本地，修改必要的url为https，终于显示正常了<br>但是有一行貌似没什么用的代码，注释掉了</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// getData("http://boss.qzone.qq.com/fcg-bin/fcg_zone_info");</span></div></pre></td></tr></table></figure>
+<ul>
+<li>为了增强可读性，移除上述js文件，代码直接写入HTML</li>
+</ul>
 
           
         
