@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2017-06-19T07:37:10.000Z</updated>
+  <updated>2017-06-19T17:05:37.000Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://claude-ray.github.io/2017/06/18/Hexo%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/"/>
     <id>https://claude-ray.github.io/2017/06/18/Hexo搭建过程/</id>
     <published>2017-06-18T14:09:28.000Z</published>
-    <updated>2017-06-19T07:37:10.000Z</updated>
+    <updated>2017-06-19T17:05:37.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>这里只列出 hexo 的简明搭建方法，不讲“是什么”和“为什么”，关于 hexo 的更多配置和用法请前往 <a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo Docs</a>  了解。</p>
 <h4 id="Node-js-环境"><a href="#Node-js-环境" class="headerlink" title="Node.js 环境"></a>Node.js 环境</h4><p>必须安装Node，方式任选，不多说</p>
@@ -58,6 +58,17 @@
 <li>为了增强可读性，移除上述js文件，代码直接写入HTML。但出现新问题，返回链接变成默认的腾讯主页了。<br>解决办法是修改 <code>page.js</code> 中如下判断语句条件， <code>search_children.js</code> 改为 <code>data.js</code></li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (scs[i].src.indexOf(<span class="string">"/404/search_children.js"</span>) &gt; <span class="number">-1</span>) &#123;</div><div class="line">  <span class="keyword">if</span> (scs[i].getAttribute(<span class="string">"homePageUrl"</span>)) &#123;</div><div class="line">    homePageUrl = scs[i].getAttribute(<span class="string">"homePageUrl"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">if</span> (scs[i].getAttribute(<span class="string">"homePageName"</span>)) &#123;</div><div class="line">    homePageName = scs[i].getAttribute(<span class="string">"homePageName"</span>);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">break</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>虽然页面能正常显示了，但控制台提示提取到的儿童图片url仍然是http，解决这个问题需要在 <code>page.js</code> 中的 <code>resolveData(d)</code> 函数中对数据格式化。<br>在其中的for循环添加一行</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">d.data[i].child_pic = d.data[i].child_pic.replace(/^http/, &quot;https&quot;);</div></pre></td></tr></table></figure>
+<ul>
+<li>Finally! 发现了新版的 <code>http://www.qq.com/404/</code> ，logo也更美观了，果断修改。代码再次整洁了，完整如下：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">&lt;!DOCTYPE HTML&gt;</div><div class="line">&lt;html&gt;</div><div class="line">&lt;head&gt;</div><div class="line">  &lt;title&gt;Claude&apos;s Home - 404&lt;/title&gt;</div><div class="line">  &lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html;charset=utf-8;&quot;/&gt;</div><div class="line">  &lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=edge,chrome=1&quot;/&gt;</div><div class="line">  &lt;meta name=&quot;robots&quot; content=&quot;all&quot;/&gt;</div><div class="line">  &lt;meta name=&quot;robots&quot; content=&quot;index,follow&quot;/&gt;</div><div class="line">&lt;/head&gt;</div><div class="line">&lt;body&gt;</div><div class="line"></div><div class="line">&lt;script type=&quot;text/javascript&quot;</div><div class="line">        src=&quot;https://qzonestyle.gtimg.cn/qzone/hybrid/app/404/search_children.js&quot;</div><div class="line">        charset=&quot;utf-8&quot;</div><div class="line">        homePageUrl=&quot;https://claude-ray.github.io/&quot;</div><div class="line">        homePageName=&quot;回到我的主页&quot;&gt;</div><div class="line">&lt;/script&gt;</div><div class="line"></div><div class="line">&lt;/body&gt;</div><div class="line">&lt;/html&gt;</div></pre></td></tr></table></figure>
+<p>感觉瞎折腾了 XD ！</p>
+<h4 id="About页面"><a href="#About页面" class="headerlink" title="About页面"></a>About页面</h4><p>相同主题下，查看他人的 <code>about</code> 页面时，侧栏 <code>sidebar</code> 不会自动弹出，而我的居然会弹出……<br>难道因为 <code>#</code> 标题被当做post了？强迫症下查阅了很多相关文章，还没有发现官方的解决方案，看他们博客的意思是搭建的过程中也仅用了<code>hexo new page about</code>。<br>但回头一想，反正也不难看，就舒舒服服地按 <code>Markdown</code> 的习惯写着吧。</p>
+<p>临时解决方案：<br>可以通过在 Markdown 中插入 HTML 标签的方法，移除Markdown的标题判定。</p>
 ]]></content>
     
     <summary type="html">
