@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2017-06-19T17:05:37.000Z</updated>
+  <updated>2017-06-21T15:45:37.000Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://claude-ray.github.io/2017/06/18/Hexo%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/"/>
     <id>https://claude-ray.github.io/2017/06/18/Hexo搭建过程/</id>
     <published>2017-06-18T14:09:28.000Z</published>
-    <updated>2017-06-19T17:05:37.000Z</updated>
+    <updated>2017-06-21T15:45:37.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>这里只列出 hexo 的简明搭建方法，不讲“是什么”和“为什么”，关于 hexo 的更多配置和用法请前往 <a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo Docs</a>  了解。</p>
 <h4 id="Node-js-环境"><a href="#Node-js-环境" class="headerlink" title="Node.js 环境"></a>Node.js 环境</h4><p>必须安装Node，方式任选，不多说</p>
@@ -76,6 +76,8 @@
       使用Hexo打造个人GitHub Pages的简要过程
     
     </summary>
+    
+      <category term="Hexo" scheme="https://claude-ray.github.io/categories/Hexo/"/>
     
     
       <category term="Hexo" scheme="https://claude-ray.github.io/tags/Hexo/"/>
