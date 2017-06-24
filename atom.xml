@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2017-06-22T16:05:23.000Z</updated>
+  <updated>2017-06-24T01:48:20.000Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://claude-ray.github.io/2017/06/18/Hexo%E6%90%AD%E5%BB%BA%E8%BF%87%E7%A8%8B/"/>
     <id>https://claude-ray.github.io/2017/06/18/Hexo搭建过程/</id>
     <published>2017-06-18T14:09:28.000Z</published>
-    <updated>2017-06-22T16:05:23.000Z</updated>
+    <updated>2017-06-24T01:48:20.000Z</updated>
     
     <content type="html"><![CDATA[<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>这里只列出 hexo 的简明搭建方法，不讲“是什么”和“为什么”，关于 hexo 的更多配置和用法请前往 <a href="https://hexo.io/docs/" target="_blank" rel="external">Hexo Docs</a>  了解。</p>
 <h4 id="Node-js-环境"><a href="#Node-js-环境" class="headerlink" title="Node.js 环境"></a>Node.js 环境</h4><p>必须安装Node，方式任选，不多说</p>
@@ -39,6 +39,9 @@
 <h4 id="修改Scheme"><a href="#修改Scheme" class="headerlink" title="修改Scheme"></a>修改Scheme</h4><p>Next主题提供了3种Scheme，也决定了外观细节，需要在主题配置文件 <code>themes/next/_config.yml</code> 中进行修改，通过注释和反注释三选一。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Schemes</div><div class="line">#scheme: Muse</div><div class="line">scheme: Mist</div><div class="line">#scheme: Pisces</div></pre></td></tr></table></figure></p>
 <h4 id="修改菜单"><a href="#修改菜单" class="headerlink" title="修改菜单"></a>修改菜单</h4><p>在主题配置文件中，找到 <code>menu</code> 字段并进行适当修改<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">menu:</div><div class="line">  home: /</div><div class="line">  archives: /archives</div><div class="line">  about: /about</div><div class="line">  #categories: /categories</div><div class="line">  tags: /tags</div><div class="line">  #commonweal: /404.html</div></pre></td></tr></table></figure></p>
 <h4 id="设置头像"><a href="#设置头像" class="headerlink" title="设置头像"></a>设置头像</h4><p>同样在主题配置文件中修改 <code>avatar</code> 字段，可以参照注释把avatar图片存在 <code>next/source/images</code> 目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># Sidebar Avatar</div><div class="line"># in theme directory(source/images): /images/avatar.jpg</div><div class="line"># in site  directory(source/uploads): /uploads/avatar.jpg</div><div class="line">avatar: /images/avatar.jpg</div></pre></td></tr></table></figure></p>
+<h4 id="阅读统计"><a href="#阅读统计" class="headerlink" title="阅读统计"></a>阅读统计</h4><p>为文章增加字数统计和阅读时长字段，需要安装wordcount<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm i hexo-wordcount --save</div></pre></td></tr></table></figure></p>
+<p>最新的2017 next主题已经内置了<code>hexo-wordcount</code>，接下来就可以在主题配置文件<code>_config.yml</code>中，修改如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># Post wordcount display settings</div><div class="line"># Dependencies: https://github.com/willin/hexo-wordcount</div><div class="line">post_wordcount:</div><div class="line">  item_text: true</div><div class="line">  wordcount: true</div><div class="line">  min2read: true</div><div class="line">  separated_meta: true</div></pre></td></tr></table></figure></p>
+<p>关于阅读人数的统计，我使用了<code>LeanCloud</code>，而非<code>不蒜子</code>，同样都在next主题中内置</p>
 <h4 id="进阶设定"><a href="#进阶设定" class="headerlink" title="进阶设定"></a>进阶设定</h4><p>官方文档介绍的很详细，请首先查阅<a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="external">Next使用文档</a></p>
 <h3 id="遇到的坑和问题汇总"><a href="#遇到的坑和问题汇总" class="headerlink" title="遇到的坑和问题汇总"></a>遇到的坑和问题汇总</h3><h4 id="404页面配置"><a href="#404页面配置" class="headerlink" title="404页面配置"></a>404页面配置</h4><p>常规的方法是在主题目录即 <code>theme/next/source</code> 下新建 <code>404.html</code> 文件，修改主题配置文件中的<code>commonweal</code>字段，在本地预览404就能看到对应界面。但是，这么配置到GitHub pages就访问不到404页面了。</p>
 <blockquote>
