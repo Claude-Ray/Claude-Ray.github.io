@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2017-12-05T16:02:29.000Z</updated>
+  <updated>2017-12-21T14:51:07.645Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -14,6 +14,44 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>缓存不当至服务崩溃</title>
+    <link href="https://claude-ray.github.io/2017/12/20/%E7%BC%93%E5%AD%98%E4%B8%8D%E5%BD%93%E8%87%B3%E6%9C%8D%E5%8A%A1%E5%B4%A9%E6%BA%83/"/>
+    <id>https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/</id>
+    <published>2017-12-20T14:45:20.000Z</published>
+    <updated>2017-12-21T14:51:07.645Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>9月份优化的redis写缓存冲突，埋下了一个地雷。</p>
+<p>回顾之前的解决方案：</p>
+<p>recommend接口的返回值使用非常频繁，为了避免前端不断请求recommend接口，因此前端负责写缓存，后端负责从sql中查询数据，需要更新时再去删除此缓存。</p>
+<p>这样就留下一个问题，当前端缓存过期，会迸发大量的请求到后端，当后端的sql查询速度较慢。此时前端的请求不间断，后端就堆积了大量的sql查询，影响到其他请求，甚至宕机。</p>
+<p>之前没有出现问题的原因，是sql走了索引，查询速度正常。恰巧这个项目被交接之后，优化的过程中发现这条索引不合理，被删除了，但是遗漏了对recommend的修改，于是导致接口超时（查询时间大于Nginx配置的最大响应时间）。且缓存时间一周，等到它自然过期，被搞得措手不及。</p>
+<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
+<li>立即为recommend设置一个非空缓存，停掉前端请求</li>
+<li>重启mysql</li>
+<li>恢复之前的索引，保证该接口下的SQL查询处于正常水平</li>
+</ol>
+<blockquote>
+<p>旧索引恢复之后，一些优化就失效了，mysql继续走了它自认为不错的毒瘤索引。要即刻进行后续工作。</p>
+</blockquote>
+<h3 id="后续工作"><a href="#后续工作" class="headerlink" title="后续工作"></a>后续工作</h3><ol>
+<li>优化此处低效的sql(select xx where xx in xx order by，没有索引自然会崩)</li>
+<li>恢复后端在该接口下写缓存的能力，使用锁（redis.setnx）或让前端走请求方式获取</li>
+<li>重新删除上述索引，恢复正常优化</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      记录此次Bug原因和修复过程
+    
+    </summary>
+    
+      <category term="Redis" scheme="https://claude-ray.github.io/categories/Redis/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>vscode+evernote云笔记</title>
