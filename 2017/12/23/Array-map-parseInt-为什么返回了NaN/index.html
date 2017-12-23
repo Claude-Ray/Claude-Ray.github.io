@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="JavaScript," />
 
 
 
@@ -95,16 +95,17 @@
 
 
 
-<meta name="description" content="记录此次Bug原因和修复过程">
+<meta name="description" content="简单来说，当调用`[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。">
+<meta name="keywords" content="JavaScript">
 <meta property="og:type" content="article">
-<meta property="og:title" content="缓存不当至服务崩溃">
-<meta property="og:url" content="https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/index.html">
+<meta property="og:title" content="Array.map(parseInt)为什么返回了NaN">
+<meta property="og:url" content="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="记录此次Bug原因和修复过程">
-<meta property="og:updated_time" content="2017-12-21T14:51:07.645Z">
+<meta property="og:description" content="简单来说，当调用`[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。">
+<meta property="og:updated_time" content="2017-12-23T11:32:47.117Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="缓存不当至服务崩溃">
-<meta name="twitter:description" content="记录此次Bug原因和修复过程">
+<meta name="twitter:title" content="Array.map(parseInt)为什么返回了NaN">
+<meta name="twitter:description" content="简单来说，当调用`[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。">
 
 
 
@@ -132,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/"/>
 
 
 
@@ -141,7 +142,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>缓存不当至服务崩溃 | Claude's Home</title>
+  <title>Array.map(parseInt)为什么返回了NaN | Claude's Home</title>
   
 
 
@@ -280,7 +281,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -297,7 +298,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">缓存不当至服务崩溃</h1>
+          <h1 class="post-title" itemprop="name headline">Array.map(parseInt)为什么返回了NaN</h1>
         
 
         <div class="post-meta">
@@ -309,8 +310,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T22:45:20+08:00">
-                2017-12-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-23T19:29:48+08:00">
+                2017-12-23
               </time>
             
 
@@ -332,8 +333,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
                   </a>
                 </span>
 
@@ -349,7 +350,7 @@
 
           
           
-             <span id="/2017/12/20/缓存不当至服务崩溃/" class="leancloud_visitors" data-flag-title="缓存不当至服务崩溃">
+             <span id="/2017/12/23/Array-map-parseInt-为什么返回了NaN/" class="leancloud_visitors" data-flag-title="Array.map(parseInt)为什么返回了NaN">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -375,7 +376,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  435
+                  893
                 </span>
               
 
@@ -391,7 +392,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
@@ -399,7 +400,7 @@
 
           
               <div class="post-description">
-                  记录此次Bug原因和修复过程
+                  简单来说，当调用`['1', '2', '3'].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。
               </div>
           
 
@@ -413,24 +414,50 @@
       
 
       
-        <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>9月份优化的redis写缓存冲突，埋下了一个地雷。</p>
-<p>回顾之前的解决方案：</p>
-<p>recommend接口的返回值使用非常频繁，为了避免前端不断请求recommend接口，因此前端负责写缓存，后端负责从sql中查询数据，需要更新时再去删除此缓存。</p>
-<p>这样就留下一个问题，当前端缓存过期，会迸发大量的请求到后端，当后端的sql查询速度较慢。此时前端的请求不间断，后端就堆积了大量的sql查询，影响到其他请求，甚至宕机。</p>
-<p>之前没有出现问题的原因，是sql走了索引，查询速度正常。恰巧这个项目被交接之后，优化的过程中发现这条索引不合理，被删除了，但是遗漏了对recommend的修改，于是导致接口超时（查询时间大于Nginx配置的最大响应时间）。且缓存时间一周，等到它自然过期，被搞得措手不及。</p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
-<li>立即为recommend设置一个非空缓存，停掉前端请求</li>
-<li>重启mysql</li>
-<li>恢复之前的索引，保证该接口下的SQL查询处于正常水平</li>
+        <p>为什么没有得到想要的<code>[1, 2, 3]</code>？先来看parseInt的<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt" target="_blank" rel="external">文档</a>。</p>
+<h2 id="parseInt"><a href="#parseInt" class="headerlink" title="parseInt"></a>parseInt</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">parseInt(string, radix);</div></pre></td></tr></table></figure>
+<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ul>
+<li><code>string</code>是必传参数，要被解析的字符串，排在起始处的空格会被忽略。</li>
+<li><code>radix</code>这是可选参数，但不了解的话就容易踩坑。它是一个介于2和36之间的整数(数学系统的基础)，表示上述字符串的基数。例如10代表十进制。此外，不指定该参数或0，均表示为以十进制。如果以<code>0x</code> 或 <code>0X</code> 开头，表示十六进制。</li>
+</ul>
+<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>parseInt 函数将其第一个参数转换为字符串，解析它，并返回一个整数或NaN。如果不是NaN，返回的值将是作为指定基数（基数）中的数字的第一个参数的整数。</p>
+<p>基数大于 10 时，用字母表中的字母来表示大于 9 的数字。例如十六进制中，使用 A 到 F。</p>
+<h3 id="一些细节（keng）"><a href="#一些细节（keng）" class="headerlink" title="一些细节（keng）"></a>一些细节（keng）</h3><ol>
+<li><p>一些数中可能包含e字符（例如6.022e23），使用parseInt去截取包含e字符数值部分会造成难以预料的结果。例如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'6.022e23'</span>, <span class="number">10</span>); <span class="comment">// 返回 6</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'6.022e2'</span>, <span class="number">10</span>);  <span class="comment">// 返回 602</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>当parseInt遇到不属于radix参数所指定的基数中的字符（eg: 有人告诉你<code>0103101</code>是2进制），那么该字符（3）和其后的字符（101）都将被忽略，接着返回已经解析的整数部分（010）。parseInt 将截取整数部分，开头和结尾的空白符允许存在，会被忽略。那么NaN的出现情况就是，<code>string</code>的第一个字符（除空白）不属于radix指定进制时，因为parseInt什么都没有解析到。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'123'</span>, <span class="string">'afdsaf'</span>); <span class="comment">// 返回123</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>在没有指定基数，或者基数为 0 的情况下，JavaScript 作如下处理：</p>
+</li>
 </ol>
-<blockquote>
-<p>旧索引恢复之后，一些优化就失效了，mysql继续走了它自认为不错的毒瘤索引。要即刻进行后续工作。</p>
+<ul>
+<li>string 以’0x’或者’0X’开头, 则基数是16 (16进制).</li>
+<li>string 以’0’开头, 基数是8（八进制）或者10（十进制），那么具体是哪个基数由实现环境决定。ECMAScript 5 规定使用10，但是并不是所有的浏览器都遵循这个规定。因此，永远都要明确给出radix参数的值。</li>
+<li>string 以其它任何值开头，则基数是10 (十进制)。</li>
+</ul>
+<ol>
+<li>将整型数值以特定基数转换成它的字符串值可以使用 <code>intValue.toString(radix);</code></li>
+</ol>
+<h2 id="Array-map"><a href="#Array-map" class="headerlink" title="Array.map"></a>Array.map</h2><p>其实看完parseInt的文档就已经清晰了，再来看<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map" target="_blank" rel="external">map</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> new_array = arr.map(<span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">currentValue[, index[, array]]</span>) </span>&#123;</div><div class="line">    <span class="comment">// Return element for new_array</span></div><div class="line">&#125;[, thisArg])</div></pre></td></tr></table></figure>
+<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><p>通常情况下，<code>callback</code> 只需要接受一个参数，就是正在被遍历的数组元素本身。但这并不意味着 map 只给 callback 传了一个参数。</p>
+<ul>
+<li><code>callback</code>: 生成新数组元素的函数，使用三个参数：<ul>
+<li><code>currentValue</code>: 正在处理的当前元素。</li>
+<li><code>index</code>: 当前元素的索引。</li>
+<li><code>array</code>: map 方法被调用的数组。</li>
+</ul>
+</li>
+<li><code>thisArg</code>: 可选，执行 callback 函数时 使用的this 值。<blockquote>
+<p>返回值是一个新数组，每个元素都是回调函数的值。</p>
 </blockquote>
-<h3 id="后续工作"><a href="#后续工作" class="headerlink" title="后续工作"></a>后续工作</h3><ol>
-<li>优化此处低效的sql(select xx where xx in xx order by，没有索引自然会崩)</li>
-<li>恢复后端在该接口下写缓存的能力，使用锁（redis.setnx）或让前端走请求方式获取</li>
-<li>重新删除上述索引，恢复正常优化</li>
-</ol>
+</li>
+</ul>
+<h2 id="最终分析"><a href="#最终分析" class="headerlink" title="最终分析"></a>最终分析</h2><p>调用<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(console.log)</code>观察，列举出当<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(parseInt)</code>的时候发生了什么。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div></pre></td></tr></table></figure></p>
+<p>由于parseInt只接受了前两个参数，过滤掉array得到如下。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>); <span class="comment">// radix为0，按十进制输出1</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>); <span class="comment">// radix为1，不满足2到36范围</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>); <span class="comment">// radix为2，将3看成二进制数，但3并不是二进制，无法转换</span></div></pre></td></tr></table></figure></p>
+<p>再换一个数组，也可以按照此逻辑推算正确结果了。</p>
 
       
     </div>
@@ -459,7 +486,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/" title="缓存不当至服务崩溃">https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/</a>
+      <a href="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/" title="Array.map(parseInt)为什么返回了NaN">https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -473,6 +500,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/JavaScript/" rel="tag"> <i class="fa fa-tag"></i> JavaScript</a>
+          
+        </div>
+      
 
       
       
@@ -482,8 +515,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/05/vscode-evernote云笔记/" rel="next" title="vscode+evernote云笔记">
-                <i class="fa fa-chevron-left"></i> vscode+evernote云笔记
+              <a href="/2017/12/20/缓存不当至服务崩溃/" rel="next" title="缓存不当至服务崩溃">
+                <i class="fa fa-chevron-left"></i> 缓存不当至服务崩溃
               </a>
             
           </div>
@@ -491,10 +524,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/23/Array-map-parseInt-为什么返回了NaN/" rel="prev" title="Array.map(parseInt)为什么返回了NaN">
-                Array.map(parseInt)为什么返回了NaN <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -673,7 +702,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后续工作"><span class="nav-number">3.</span> <span class="nav-text">后续工作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#parseInt"><span class="nav-number">1.</span> <span class="nav-text">parseInt</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数"><span class="nav-number">1.1.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">1.2.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些细节（keng）"><span class="nav-number">1.3.</span> <span class="nav-text">一些细节（keng）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-map"><span class="nav-number">2.</span> <span class="nav-text">Array.map</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数-1"><span class="nav-number">2.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最终分析"><span class="nav-number">3.</span> <span class="nav-text">最终分析</span></a></li></ol></div>
             
 
           </div>
