@@ -102,7 +102,7 @@
 <meta property="og:url" content="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
 <meta property="og:description" content="简单来说，当调用`[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。">
-<meta property="og:updated_time" content="2017-12-23T11:32:47.117Z">
+<meta property="og:updated_time" content="2017-12-23T11:35:36.041Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Array.map(parseInt)为什么返回了NaN">
 <meta name="twitter:description" content="简单来说，当调用`[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。">
@@ -430,15 +430,14 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'123'</span>, <span class="string">'afdsaf'</span>); <span class="comment">// 返回123</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>在没有指定基数，或者基数为 0 的情况下，JavaScript 作如下处理：</p>
-</li>
-</ol>
 <ul>
 <li>string 以’0x’或者’0X’开头, 则基数是16 (16进制).</li>
 <li>string 以’0’开头, 基数是8（八进制）或者10（十进制），那么具体是哪个基数由实现环境决定。ECMAScript 5 规定使用10，但是并不是所有的浏览器都遵循这个规定。因此，永远都要明确给出radix参数的值。</li>
 <li>string 以其它任何值开头，则基数是10 (十进制)。</li>
 </ul>
-<ol>
-<li>将整型数值以特定基数转换成它的字符串值可以使用 <code>intValue.toString(radix);</code></li>
+</li>
+<li><p>将整型数值以特定基数转换成它的字符串值可以使用 <code>intValue.toString(radix);</code></p>
+</li>
 </ol>
 <h2 id="Array-map"><a href="#Array-map" class="headerlink" title="Array.map"></a>Array.map</h2><p>其实看完parseInt的文档就已经清晰了，再来看<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map" target="_blank" rel="external">map</a></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> new_array = arr.map(<span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">currentValue[, index[, array]]</span>) </span>&#123;</div><div class="line">    <span class="comment">// Return element for new_array</span></div><div class="line">&#125;[, thisArg])</div></pre></td></tr></table></figure>
@@ -450,13 +449,13 @@
 <li><code>array</code>: map 方法被调用的数组。</li>
 </ul>
 </li>
-<li><code>thisArg</code>: 可选，执行 callback 函数时 使用的this 值。<blockquote>
+<li><code>thisArg</code>: 可选，执行 callback 函数时 使用的this 值。</li>
+</ul>
+<blockquote>
 <p>返回值是一个新数组，每个元素都是回调函数的值。</p>
 </blockquote>
-</li>
-</ul>
-<h2 id="最终分析"><a href="#最终分析" class="headerlink" title="最终分析"></a>最终分析</h2><p>调用<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(console.log)</code>观察，列举出当<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(parseInt)</code>的时候发生了什么。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div></pre></td></tr></table></figure></p>
-<p>由于parseInt只接受了前两个参数，过滤掉array得到如下。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>); <span class="comment">// radix为0，按十进制输出1</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>); <span class="comment">// radix为1，不满足2到36范围</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>); <span class="comment">// radix为2，将3看成二进制数，但3并不是二进制，无法转换</span></div></pre></td></tr></table></figure></p>
+<h2 id="最终分析"><a href="#最终分析" class="headerlink" title="最终分析"></a>最终分析</h2><p>调用<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(console.log)</code>观察，列举出当<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(parseInt)</code>的时候发生了什么。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div></pre></td></tr></table></figure></p>
+<p>由于parseInt只接受了前两个参数，过滤掉array得到如下。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>); <span class="comment">// radix为0，按十进制输出1</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>); <span class="comment">// radix为1，不满足2到36范围</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>); <span class="comment">// radix为2，将3看成二进制数，但3并不是二进制，无法转换</span></div></pre></td></tr></table></figure></p>
 <p>再换一个数组，也可以按照此逻辑推算正确结果了。</p>
 
       
@@ -524,6 +523,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/27/使用chokidar监视文件更新/" rel="prev" title="使用chokidar监视文件更新">
+                使用chokidar监视文件更新 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -595,7 +598,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -724,8 +727,8 @@
       <div class="footer-inner">
         <div class="copyright" >
   
-  &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-bolt"></i>
   </span>

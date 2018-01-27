@@ -95,16 +95,16 @@
 
 
 
-<meta name="description" content="个人笔记这种重要东西，放在墙内是不放心的，由于内容基础又杂乱，不能像博客一样托管到github或gitbook，适合单独找一个地方存放。由于习惯使用Markdown记录笔记，主要为了查阅方便，我上个月瞄向了不支持Markdown格式的Evernote，借插件实现Markdown笔记存储。">
+<meta name="description" content="为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vscode+evernote云笔记">
-<meta property="og:url" content="https://claude-ray.github.io/2017/12/05/vscode-evernote云笔记/index.html">
+<meta property="og:title" content="使用chokidar监视文件更新">
+<meta property="og:url" content="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="个人笔记这种重要东西，放在墙内是不放心的，由于内容基础又杂乱，不能像博客一样托管到github或gitbook，适合单独找一个地方存放。由于习惯使用Markdown记录笔记，主要为了查阅方便，我上个月瞄向了不支持Markdown格式的Evernote，借插件实现Markdown笔记存储。">
-<meta property="og:updated_time" content="2017-12-05T16:02:29.000Z">
+<meta property="og:description" content="为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。">
+<meta property="og:updated_time" content="2018-01-27T05:21:12.051Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vscode+evernote云笔记">
-<meta name="twitter:description" content="个人笔记这种重要东西，放在墙内是不放心的，由于内容基础又杂乱，不能像博客一样托管到github或gitbook，适合单独找一个地方存放。由于习惯使用Markdown记录笔记，主要为了查阅方便，我上个月瞄向了不支持Markdown格式的Evernote，借插件实现Markdown笔记存储。">
+<meta name="twitter:title" content="使用chokidar监视文件更新">
+<meta name="twitter:description" content="为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。">
 
 
 
@@ -132,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2017/12/05/vscode-evernote云笔记/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/"/>
 
 
 
@@ -141,7 +141,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>vscode+evernote云笔记 | Claude's Home</title>
+  <title>使用chokidar监视文件更新 | Claude's Home</title>
   
 
 
@@ -280,7 +280,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2017/12/05/vscode-evernote云笔记/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -297,7 +297,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">vscode+evernote云笔记</h1>
+          <h1 class="post-title" itemprop="name headline">使用chokidar监视文件更新</h1>
         
 
         <div class="post-meta">
@@ -309,8 +309,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-05T23:40:53+08:00">
-                2017-12-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T12:57:42+08:00">
+                2018-01-27
               </time>
             
 
@@ -332,8 +332,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随笔/" itemprop="url" rel="index">
-                    <span itemprop="name">随笔</span>
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
                   </a>
                 </span>
 
@@ -349,7 +349,7 @@
 
           
           
-             <span id="/2017/12/05/vscode-evernote云笔记/" class="leancloud_visitors" data-flag-title="vscode+evernote云笔记">
+             <span id="/2018/01/27/使用chokidar监视文件更新/" class="leancloud_visitors" data-flag-title="使用chokidar监视文件更新">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -375,7 +375,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  929
+                  338
                 </span>
               
 
@@ -391,7 +391,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  3
+                  2
                 </span>
               
             </div>
@@ -399,7 +399,7 @@
 
           
               <div class="post-description">
-                  个人笔记这种重要东西，放在墙内是不放心的，由于内容基础又杂乱，不能像博客一样托管到github或gitbook，适合单独找一个地方存放。由于习惯使用Markdown记录笔记，主要为了查阅方便，我上个月瞄向了不支持Markdown格式的Evernote，借插件实现Markdown笔记存储。
+                  为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。
               </div>
           
 
@@ -413,48 +413,14 @@
       
 
       
-        <h1 id="Why-Evernote"><a href="#Why-Evernote" class="headerlink" title="Why Evernote"></a>Why Evernote</h1><p>之前一直使用有道云来保存笔记，支持markdown，免费的功能满足笔记所用，界面也还算可以。缺点是有广告，还经历了几次服务崩溃和笔记丢失，虽然联系客服又找回来了，但终究是越用越不爽。</p>
-<p>支持markdown的云笔记非常多，可以凭喜好选择。但要说云笔记软件哪款做的最好，我更倾心于evernote。</p>
-<p>evernote作为知识收藏库非常便捷，然而只有markdown才能支撑我将它作为笔记端使用。之前不使用它的唯一原因就是不支持markdown的预览，但想让它存储markdown的方法却非常多。</p>
-<h1 id="云编辑"><a href="#云编辑" class="headerlink" title="云编辑"></a>云编辑</h1><p>开源的markdown云笔记：</p>
-<ul>
-<li>Leanote 看到知乎的吐槽，伪开源，自建服务器会很坑</li>
-<li><a href="https://stackedit.io/" target="_blank" rel="external">Stack Edit</a>，对中文支持不太友好，可同步到Google Drive，Dropbox和github。</li>
-</ul>
-<p>如果不介意笔记安全，可以购买以下这类第三方服务</p>
-<ul>
-<li><code>马克飞象</code> 试用后认为很赞，但是一人维护也难免出现一些bug</li>
-<li><code>小书匠</code> 免费不开源，界面不喜欢</li>
-<li><code>有道云笔记</code> 免费够用</li>
-<li><code>为知笔记</code> 要付费使用</li>
-<li><code>作业部落Cmd</code></li>
-<li>…</li>
-</ul>
-<p>有兴趣可以自己比较优劣，只能说试用过后，上面都不是我想要的，不过多赘述。</p>
-<h1 id="本地编辑"><a href="#本地编辑" class="headerlink" title="本地编辑"></a>本地编辑</h1><p>文档断电丢失的担忧是过去式了，本地编辑方便使用熟悉的快捷键和指法，可以提高编辑效率。</p>
-<p>如果你接受在本地编辑，或者在离线环境下写东西，联网之后再保存笔记到云端，那么就来尝试这种方法吧。</p>
-<h2 id="Typora"><a href="#Typora" class="headerlink" title="Typora"></a>Typora</h2><p>所见即所得。</p>
-<p>把编辑和预览结果放在了一个文本框中，对于习惯裸写markdown的无所谓，但的确是一种不错的风格。</p>
-<p>绑定网盘之后可以将md文件同步到网盘上，仍然和我理想中的云笔记有差距。对我个人来说，云笔记更重要的功能是阅读而不是编辑，方便随时查阅。</p>
-<h2 id="Evermonkey"><a href="#Evermonkey" class="headerlink" title="Evermonkey"></a>Evermonkey</h2><p>如果你使用sublime，应该知道有一款<code>sublime-evernote</code>插件可以使本地的markdown同步到evernote笔记中。而我更常用vscode，对markdown原生的支持就不错。vscode的一款开源插件<code>evermonkey</code>，也实现了同样的功能。</p>
-<h3 id="缺憾"><a href="#缺憾" class="headerlink" title="缺憾"></a>缺憾</h3><ol>
-<li>不支持双向编辑，markdown的终稿放在博客，或者打包成附件加到该笔记中更合适。</li>
-<li><code>[TOC]</code>的bug？目录树可以生成，但是在印象笔记中点击链接无法跳转到正确位置。</li>
-</ol>
-<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><ul>
-<li><code>ever new</code> 新建笔记</li>
-<li><code>ever publish</code> 发布笔记</li>
-<li><code>ever recent</code> 打开最近编辑的笔记</li>
-<li><code>ever open</code> 可按照目录树逐级打开</li>
-<li><code>ever search</code> 使用evernote的搜索接口</li>
-<li><code>ever attach</code> 添加附件</li>
-<li><code>ever resources</code> 查看现在添加了哪些附件</li>
-<li><code>ever unattach</code> 删除附件</li>
-</ul>
-<h3 id="token"><a href="#token" class="headerlink" title="token"></a>token</h3><p>不幸的是，evernote禁止了<code>developer tokens</code>的申请，已经拥有tokens的用户将不受影响。</p>
-<p>但这并不代表新用户无法使用tokens了，你可以写下申请原因，以向evernote提交<code>tickets</code>的形式来申请tokens。按照官网的说法可能要一周才回复，实际上不到半天我就收到了客服的批准答复。</p>
-<h1 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h1><p>不建议在工具“选择”上浪费太多时间，愿意折腾就都玩一遍，不想折腾就认清自己的需求，选择一款方便转移文档（跑路）的即可。新的工具层出不穷，时下更成熟的那款终会浮现出现。</p>
-<p>工具不能提升技术，但是可以提高效率。信仰加成~</p>
+        <h2 id="监视文件"><a href="#监视文件" class="headerlink" title="监视文件"></a>监视文件</h2><p>使用<code>chokidar</code>，可以监视指定路径下目录、文件的变动。由于我只关注更改，因此监视<code>change</code>事件即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> fs   = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> chokidar = <span class="built_in">require</span>(<span class="string">'chokidar'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = watchChange;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 监听目录或文件变动</div><div class="line"> * @param &#123;string|array&#125; paths    目录或文件路径</div><div class="line"> * @param &#123;function&#125;     onChange 回调函数</div><div class="line"> * @return &#123;Promise.&lt;*&gt;&#125;</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchChange</span>(<span class="params">paths, onChange</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onChange !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`onChange (<span class="subst">$&#123;onChange&#125;</span>) is not a function`</span>);</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(paths)) paths = [paths];</div><div class="line"></div><div class="line">  paths.forEach(<span class="function"><span class="params">path</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (!(path &amp;&amp; fs.existsSync(path))) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`can't find path <span class="subst">$&#123;path&#125;</span>`</span>);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  chokidar.watch(paths)</div><div class="line">    <span class="comment">// .on('add', filepath =&gt; &#123;console.log('you can watch more events by chains')&#125;)</span></div><div class="line">    .on(<span class="string">'change'</span>, filepath =&gt; &#123;</div><div class="line">      <span class="keyword">const</span> filename = path.basename(filepath);</div><div class="line">      onChange(filename);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="更新缓存"><a href="#更新缓存" class="headerlink" title="更新缓存"></a>更新缓存</h2><p>为了避免每次取内容都读文件，使用了<code>lodash.memoize</code>缓存读取结果。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">readFile</span>(<span class="params">params</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> getFile = _.memoize(readFile);</div></pre></td></tr></table></figure>
+<p>要更新这部分缓存，可以使用如下方法。用大文件测试了内存占用，没有泄露产生。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getFile.cache.set(file, readFile(file));</div></pre></td></tr></table></figure>
+<p>完整部分，加上了try catch。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchTpl</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    watchFiles(<span class="string">'./test'</span>, file =&gt; &#123;</div><div class="line">      getFile.cache.set(file, readFile(file));</div><div class="line">    &#125;);</div><div class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="built_in">console</span>.error(err);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">watchTpl();</div></pre></td></tr></table></figure></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>由于使用场景明确，代码实现较简单，没有考虑太多情况，也算不上热更新。但借这种思路，可以完成配置文件甚至功能模块的更新。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://ngtmuzi.com/Node监视文件以实现热更新/" target="_blank" rel="external">Node监视文件以实现热更新</a><br><a href="http://fex.baidu.com/blog/2015/05/nodejs-hot-swapping/" target="_blank" rel="external">Node.js Web应用代码热更新的另类思路</a></p>
 
       
     </div>
@@ -483,7 +449,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://claude-ray.github.io/2017/12/05/vscode-evernote云笔记/" title="vscode+evernote云笔记">https://claude-ray.github.io/2017/12/05/vscode-evernote云笔记/</a>
+      <a href="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/" title="使用chokidar监视文件更新">https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -506,8 +472,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/10/05/9月踩的坑/" rel="next" title="9月踩的坑">
-                <i class="fa fa-chevron-left"></i> 9月踩的坑
+              <a href="/2017/12/23/Array-map-parseInt-为什么返回了NaN/" rel="next" title="Array.map(parseInt)为什么返回了NaN">
+                <i class="fa fa-chevron-left"></i> Array.map(parseInt)为什么返回了NaN
               </a>
             
           </div>
@@ -515,10 +481,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/20/缓存不当至服务崩溃/" rel="prev" title="缓存不当至服务崩溃">
-                缓存不当至服务崩溃 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -697,7 +659,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Why-Evernote"><span class="nav-number">1.</span> <span class="nav-text">Why Evernote</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#云编辑"><span class="nav-number">2.</span> <span class="nav-text">云编辑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#本地编辑"><span class="nav-number">3.</span> <span class="nav-text">本地编辑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Typora"><span class="nav-number">3.1.</span> <span class="nav-text">Typora</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Evermonkey"><span class="nav-number">3.2.</span> <span class="nav-text">Evermonkey</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#缺憾"><span class="nav-number">3.2.1.</span> <span class="nav-text">缺憾</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常用命令"><span class="nav-number">3.2.2.</span> <span class="nav-text">常用命令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#token"><span class="nav-number">3.2.3.</span> <span class="nav-text">token</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#最后"><span class="nav-number">4.</span> <span class="nav-text">最后</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#监视文件"><span class="nav-number">1.</span> <span class="nav-text">监视文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新缓存"><span class="nav-number">2.</span> <span class="nav-text">更新缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>

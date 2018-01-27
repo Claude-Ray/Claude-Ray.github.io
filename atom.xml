@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2017-12-23T11:32:47.117Z</updated>
+  <updated>2018-01-27T05:21:12.051Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -16,11 +16,39 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>使用chokidar监视文件更新</title>
+    <link href="https://claude-ray.github.io/2018/01/27/%E4%BD%BF%E7%94%A8chokidar%E7%9B%91%E8%A7%86%E6%96%87%E4%BB%B6%E6%9B%B4%E6%96%B0/"/>
+    <id>https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/</id>
+    <published>2018-01-27T04:57:42.000Z</published>
+    <updated>2018-01-27T05:21:12.051Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="监视文件"><a href="#监视文件" class="headerlink" title="监视文件"></a>监视文件</h2><p>使用<code>chokidar</code>，可以监视指定路径下目录、文件的变动。由于我只关注更改，因此监视<code>change</code>事件即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="meta">'use strict'</span>;</div><div class="line"></div><div class="line"><span class="keyword">const</span> fs   = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</div><div class="line"></div><div class="line"><span class="keyword">const</span> chokidar = <span class="built_in">require</span>(<span class="string">'chokidar'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = watchChange;</div><div class="line"></div><div class="line"><span class="comment">/**</span></div><div class="line"> * 监听目录或文件变动</div><div class="line"> * @param &#123;string|array&#125; paths    目录或文件路径</div><div class="line"> * @param &#123;function&#125;     onChange 回调函数</div><div class="line"> * @return &#123;Promise.&lt;*&gt;&#125;</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchChange</span>(<span class="params">paths, onChange</span>) </span>&#123;</div><div class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onChange !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`onChange (<span class="subst">$&#123;onChange&#125;</span>) is not a function`</span>);</div><div class="line"></div><div class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(paths)) paths = [paths];</div><div class="line"></div><div class="line">  paths.forEach(<span class="function"><span class="params">path</span> =&gt;</span> &#123;</div><div class="line">    <span class="keyword">if</span> (!(path &amp;&amp; fs.existsSync(path))) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`can't find path <span class="subst">$&#123;path&#125;</span>`</span>);</div><div class="line">  &#125;);</div><div class="line"></div><div class="line">  chokidar.watch(paths)</div><div class="line">    <span class="comment">// .on('add', filepath =&gt; &#123;console.log('you can watch more events by chains')&#125;)</span></div><div class="line">    .on(<span class="string">'change'</span>, filepath =&gt; &#123;</div><div class="line">      <span class="keyword">const</span> filename = path.basename(filepath);</div><div class="line">      onChange(filename);</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="更新缓存"><a href="#更新缓存" class="headerlink" title="更新缓存"></a>更新缓存</h2><p>为了避免每次取内容都读文件，使用了<code>lodash.memoize</code>缓存读取结果。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">readFile</span>(<span class="params">params</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">const</span> getFile = _.memoize(readFile);</div></pre></td></tr></table></figure>
+<p>要更新这部分缓存，可以使用如下方法。用大文件测试了内存占用，没有泄露产生。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">getFile.cache.set(file, readFile(file));</div></pre></td></tr></table></figure>
+<p>完整部分，加上了try catch。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchTpl</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    watchFiles(<span class="string">'./test'</span>, file =&gt; &#123;</div><div class="line">      getFile.cache.set(file, readFile(file));</div><div class="line">    &#125;);</div><div class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="built_in">console</span>.error(err);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">watchTpl();</div></pre></td></tr></table></figure></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>由于使用场景明确，代码实现较简单，没有考虑太多情况，也算不上热更新。但借这种思路，可以完成配置文件甚至功能模块的更新。</p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://ngtmuzi.com/Node监视文件以实现热更新/" target="_blank" rel="external">Node监视文件以实现热更新</a><br><a href="http://fex.baidu.com/blog/2015/05/nodejs-hot-swapping/" target="_blank" rel="external">Node.js Web应用代码热更新的另类思路</a></p>
+]]></content>
+    
+    <summary type="html">
+    
+      为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>Array.map(parseInt)为什么返回了NaN</title>
     <link href="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%94%E5%9B%9E%E4%BA%86NaN/"/>
     <id>https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/</id>
     <published>2017-12-23T11:29:48.000Z</published>
-    <updated>2017-12-23T11:32:47.117Z</updated>
+    <updated>2017-12-23T11:35:36.041Z</updated>
     
     <content type="html"><![CDATA[<p>为什么没有得到想要的<code>[1, 2, 3]</code>？先来看parseInt的<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt" target="_blank" rel="external">文档</a>。</p>
 <h2 id="parseInt"><a href="#parseInt" class="headerlink" title="parseInt"></a>parseInt</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">parseInt(string, radix);</div></pre></td></tr></table></figure>
@@ -38,15 +66,14 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'123'</span>, <span class="string">'afdsaf'</span>); <span class="comment">// 返回123</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>在没有指定基数，或者基数为 0 的情况下，JavaScript 作如下处理：</p>
-</li>
-</ol>
 <ul>
 <li>string 以’0x’或者’0X’开头, 则基数是16 (16进制).</li>
 <li>string 以’0’开头, 基数是8（八进制）或者10（十进制），那么具体是哪个基数由实现环境决定。ECMAScript 5 规定使用10，但是并不是所有的浏览器都遵循这个规定。因此，永远都要明确给出radix参数的值。</li>
 <li>string 以其它任何值开头，则基数是10 (十进制)。</li>
 </ul>
-<ol>
-<li>将整型数值以特定基数转换成它的字符串值可以使用 <code>intValue.toString(radix);</code></li>
+</li>
+<li><p>将整型数值以特定基数转换成它的字符串值可以使用 <code>intValue.toString(radix);</code></p>
+</li>
 </ol>
 <h2 id="Array-map"><a href="#Array-map" class="headerlink" title="Array.map"></a>Array.map</h2><p>其实看完parseInt的文档就已经清晰了，再来看<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map" target="_blank" rel="external">map</a></p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> new_array = arr.map(<span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">currentValue[, index[, array]]</span>) </span>&#123;</div><div class="line">    <span class="comment">// Return element for new_array</span></div><div class="line">&#125;[, thisArg])</div></pre></td></tr></table></figure>
@@ -58,13 +85,13 @@
 <li><code>array</code>: map 方法被调用的数组。</li>
 </ul>
 </li>
-<li><code>thisArg</code>: 可选，执行 callback 函数时 使用的this 值。<blockquote>
+<li><code>thisArg</code>: 可选，执行 callback 函数时 使用的this 值。</li>
+</ul>
+<blockquote>
 <p>返回值是一个新数组，每个元素都是回调函数的值。</p>
 </blockquote>
-</li>
-</ul>
-<h2 id="最终分析"><a href="#最终分析" class="headerlink" title="最终分析"></a>最终分析</h2><p>调用<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(console.log)</code>观察，列举出当<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(parseInt)</code>的时候发生了什么。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div></pre></td></tr></table></figure></p>
-<p>由于parseInt只接受了前两个参数，过滤掉array得到如下。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>); <span class="comment">// radix为0，按十进制输出1</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>); <span class="comment">// radix为1，不满足2到36范围</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>); <span class="comment">// radix为2，将3看成二进制数，但3并不是二进制，无法转换</span></div></pre></td></tr></table></figure></p>
+<h2 id="最终分析"><a href="#最终分析" class="headerlink" title="最终分析"></a>最终分析</h2><p>调用<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(console.log)</code>观察，列举出当<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(parseInt)</code>的时候发生了什么。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</div></pre></td></tr></table></figure></p>
+<p>由于parseInt只接受了前两个参数，过滤掉array得到如下。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>); <span class="comment">// radix为0，按十进制输出1</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>); <span class="comment">// radix为1，不满足2到36范围</span></div><div class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>); <span class="comment">// radix为2，将3看成二进制数，但3并不是二进制，无法转换</span></div></pre></td></tr></table></figure></p>
 <p>再换一个数组，也可以按照此逻辑推算正确结果了。</p>
 ]]></content>
     
