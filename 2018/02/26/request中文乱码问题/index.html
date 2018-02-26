@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="String," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -95,17 +95,16 @@
 
 
 
-<meta name="description" content="Node下如何获取GBK编码的字符串">
-<meta name="keywords" content="String">
+<meta name="description" content="Node中使用request请求得到的数据为乱码，分析可能的情况并列举解决方案。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Node获取GBK编码字符串">
-<meta property="og:url" content="https://claude-ray.github.io/2017/10/05/node获取GBK编码字符串/index.html">
+<meta property="og:title" content="request中文乱码问题">
+<meta property="og:url" content="https://claude-ray.github.io/2018/02/26/request中文乱码问题/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="Node下如何获取GBK编码的字符串">
-<meta property="og:updated_time" content="2017-10-05T01:07:11.000Z">
+<meta property="og:description" content="Node中使用request请求得到的数据为乱码，分析可能的情况并列举解决方案。">
+<meta property="og:updated_time" content="2018-02-26T14:19:56.135Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Node获取GBK编码字符串">
-<meta name="twitter:description" content="Node下如何获取GBK编码的字符串">
+<meta name="twitter:title" content="request中文乱码问题">
+<meta name="twitter:description" content="Node中使用request请求得到的数据为乱码，分析可能的情况并列举解决方案。">
 
 
 
@@ -133,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2017/10/05/node获取GBK编码字符串/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/02/26/request中文乱码问题/"/>
 
 
 
@@ -142,7 +141,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>Node获取GBK编码字符串 | Claude's Home</title>
+  <title>request中文乱码问题 | Claude's Home</title>
   
 
 
@@ -281,7 +280,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2017/10/05/node获取GBK编码字符串/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/02/26/request中文乱码问题/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -298,7 +297,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Node获取GBK编码字符串</h1>
+          <h1 class="post-title" itemprop="name headline">request中文乱码问题</h1>
         
 
         <div class="post-meta">
@@ -310,8 +309,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-05T08:50:46+08:00">
-                2017-10-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-26T22:16:20+08:00">
+                2018-02-26
               </time>
             
 
@@ -350,7 +349,7 @@
 
           
           
-             <span id="/2017/10/05/node获取GBK编码字符串/" class="leancloud_visitors" data-flag-title="Node获取GBK编码字符串">
+             <span id="/2018/02/26/request中文乱码问题/" class="leancloud_visitors" data-flag-title="request中文乱码问题">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,7 +375,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  147
+                  232
                 </span>
               
 
@@ -400,7 +399,7 @@
 
           
               <div class="post-description">
-                  Node下如何获取GBK编码的字符串
+                  Node中使用request请求得到的数据为乱码，分析可能的情况并列举解决方案。
               </div>
           
 
@@ -414,13 +413,15 @@
       
 
       
-        <h1 id="Node-js的编码转换"><a href="#Node-js的编码转换" class="headerlink" title="Node.js的编码转换"></a>Node.js的编码转换</h1><h2 id="iconv-lite"><a href="#iconv-lite" class="headerlink" title="iconv-lite"></a>iconv-lite</h2><p>通常都会使用 <code>iconv-lite</code> 这个包实现Node的编码转换，但是这个包是基于 <code>Buffer</code> 的，如果传递给其他语言的系统，需要先转换为 <code>String</code> 字符串。</p>
-<p>在网上查阅了相关资料，并没有给出很好的解答。一些比较老的回答都在说，Node中无法把Buffer转换成字符串。</p>
-<p>但是师兄教了我一招</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">"iconv-lite"</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">toGBKString</span>(<span class="params">str</span>)</span>&#123;</div><div class="line">  <span class="keyword">return</span> iconv.encode(str, <span class="string">'gbk'</span>)</div><div class="line">    .reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> <span class="string">`<span class="subst">$&#123;pre&#125;</span><span class="subst">$&#123;cur.toString(<span class="number">16</span>)&#125;</span>`</span>, <span class="string">''</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>还有这种操作？？</p>
-<p>真的要好好学习JS了</p>
-
+        <h2 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h2><p>可能是需要开启<code>gzip: true</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">request(&#123;url, <span class="attr">gzip</span>: <span class="literal">true</span>&#125;);</div></pre></td></tr></table></figure></p>
+<h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><h3 id="buffer-decode"><a href="#buffer-decode" class="headerlink" title="buffer decode"></a>buffer decode</h3><p>可以考虑使用<code>iconv-lite</code>转换buffer。request设置<code>encoding: null</code>时，会返回buffer形式的body。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">request(&#123;url, <span class="attr">gzip</span>: <span class="literal">true</span>, <span class="attr">encoding</span> : <span class="literal">null</span>&#125;, (err, res, body) =&gt; &#123;</div><div class="line">  <span class="keyword">const</span> str = iconv.decode(body, <span class="string">'gb2312'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>有个别网站编码不统一，时而gb2312时而utf8，这种情况需要自己判断处理。<br>可以参考<a href="https://cnodejs.org/topic/545de1e1a68535a174fe51b5" target="_blank" rel="external">cnode的回帖</a>——<br>先请求下来 Buffer, 也就是 request 的时候指定 encoding: null ，得到 Buffer, 用ASCII解码前一千个字符，用正则，匹配出 ; charset=(\w+)”，得到正确的 charset, 再用 iconv-lite 解码出全部的  buff。</p>
+</blockquote>
+<h3 id="stream-pipe"><a href="#stream-pipe" class="headerlink" title="stream pipe"></a>stream pipe</h3><p>简化一下过程，<code>iconv-lite</code>也支持pipe<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">request(url).pipe(iconv.decodeStream(code));</div></pre></td></tr></table></figure></p>
+<p>Demo</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</div><div class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params">url, code = <span class="string">'gb2312'</span></span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> filename = <span class="string">'something.txt'</span>;</div><div class="line">  <span class="keyword">const</span> tempname = <span class="string">`<span class="subst">$&#123;<span class="built_in">Date</span>.now()&#125;</span>.txt`</span>;</div><div class="line"></div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">const</span> writeStream = fs.createWriteStream(tempname);</div><div class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">      request(url)</div><div class="line">        .pipe(iconv.decodeStream(code))</div><div class="line">        .pipe(writeStream)</div><div class="line">        .on(<span class="string">'close'</span>, () =&gt; &#123;</div><div class="line">          fs.renameSync(tempname, filename);</div><div class="line">          resolve();</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="built_in">console</span>.error(<span class="string">`<span class="subst">$&#123;url&#125;</span>文件下载失败,<span class="subst">$&#123;err.message&#125;</span>`</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -448,7 +449,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://claude-ray.github.io/2017/10/05/node获取GBK编码字符串/" title="Node获取GBK编码字符串">https://claude-ray.github.io/2017/10/05/node获取GBK编码字符串/</a>
+      <a href="https://claude-ray.github.io/2018/02/26/request中文乱码问题/" title="request中文乱码问题">https://claude-ray.github.io/2018/02/26/request中文乱码问题/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -462,12 +463,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/String/" rel="tag"> <i class="fa fa-tag"></i> String</a>
-          
-        </div>
-      
 
       
       
@@ -477,8 +472,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/24/Express源码分析/" rel="next" title="Express源码分析">
-                <i class="fa fa-chevron-left"></i> Express源码分析
+              <a href="/2018/01/27/使用chokidar监视文件更新/" rel="next" title="使用chokidar监视文件更新">
+                <i class="fa fa-chevron-left"></i> 使用chokidar监视文件更新
               </a>
             
           </div>
@@ -486,10 +481,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/05/9月踩的坑/" rel="prev" title="9月踩的坑">
-                9月踩的坑 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -668,7 +659,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Node-js的编码转换"><span class="nav-number">1.</span> <span class="nav-text">Node.js的编码转换</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#iconv-lite"><span class="nav-number">1.1.</span> <span class="nav-text">iconv-lite</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#gzip"><span class="nav-number">1.</span> <span class="nav-text">gzip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码"><span class="nav-number">2.</span> <span class="nav-text">编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#buffer-decode"><span class="nav-number">2.1.</span> <span class="nav-text">buffer decode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stream-pipe"><span class="nav-number">2.2.</span> <span class="nav-text">stream pipe</span></a></li></ol></li></ol></div>
             
 
           </div>
