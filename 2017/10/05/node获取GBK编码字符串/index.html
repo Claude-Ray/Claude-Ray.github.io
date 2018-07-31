@@ -102,6 +102,7 @@
 <meta property="og:url" content="https://claude-ray.github.io/2017/10/05/node获取GBK编码字符串/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
 <meta property="og:description" content="Node下如何获取GBK编码的字符串">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-04-19T16:04:06.050Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node获取GBK编码字符串">
@@ -376,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  268
+                  273
                 </span>
               
 
@@ -417,15 +418,17 @@
         <h1 id="UTF8-to-GBK-Hex-String"><a href="#UTF8-to-GBK-Hex-String" class="headerlink" title="UTF8 to GBK Hex String"></a>UTF8 to GBK Hex String</h1><h2 id="iconv-lite"><a href="#iconv-lite" class="headerlink" title="iconv-lite"></a>iconv-lite</h2><p>通常都会使用 <code>iconv-lite</code> 这个包实现Node的编码转换，但是这个包是基于 <code>Buffer</code> 的，如果传递给其他语言的系统，需要先转换为 <code>String</code> 字符串。</p>
 <p>在网上查阅了相关资料，并没有给出很好的解答。一些比较老的回答都在说，Node中无法把Buffer转换成gbk字符串。</p>
 <p>俗话说有问题找师兄，果然，咨询同组师兄后得到了期望的结果。转换过程很巧妙，在此分享出来：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">toGBKString</span>(<span class="params">str</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> iconv.encode(str, <span class="string">'gbk'</span>)</div><div class="line">    .reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> <span class="string">`<span class="subst">$&#123;pre&#125;</span><span class="subst">$&#123;cur.toString(<span class="number">16</span>)&#125;</span>`</span>, <span class="string">''</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toGBKString</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> iconv.encode(str, <span class="string">'gbk'</span>)</span><br><span class="line">    .reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> <span class="string">`<span class="subst">$&#123;pre&#125;</span><span class="subst">$&#123;cur.toString(<span class="number">16</span>)&#125;</span>`</span>, <span class="string">''</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>以上是不加百分号的，如果需要可以在模板字符串中自行加上。</p>
 <h2 id="2018-04-18更"><a href="#2018-04-18更" class="headerlink" title="2018-04-18更"></a>2018-04-18更</h2><p>由于<code>Buffer</code>本身支持hex的转换</p>
 <blockquote>
 <p>Buffer instances are commonly used to represent sequences of encoded characters such as UTF-8, UCS2, Base64, or even Hex-encoded data. It is possible to convert back and forth between Buffer instances and ordinary JavaScript strings by using an explicit character encoding.</p>
+</blockquote>
+<blockquote>
 <p>‘hex’ - Encode each byte as two hexadecimal characters.</p>
 </blockquote>
 <p>因此<code>reduce</code>可以继续简化为</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iconv.encode(str, <span class="string">'gbk'</span>).toString(<span class="string">'hex'</span>);</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iconv.encode(str, <span class="string">'gbk'</span>).toString(<span class="string">'hex'</span>);</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -566,7 +569,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -588,7 +591,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

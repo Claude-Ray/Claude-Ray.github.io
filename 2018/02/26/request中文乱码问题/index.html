@@ -101,7 +101,8 @@
 <meta property="og:url" content="https://claude-ray.github.io/2018/02/26/request中文乱码问题/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
 <meta property="og:description" content="Node中使用request请求得到的数据为乱码，分析可能的情况并列举解决方案。">
-<meta property="og:updated_time" content="2018-02-26T14:19:56.135Z">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-26T14:19:56.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="request中文乱码问题">
 <meta name="twitter:description" content="Node中使用request请求得到的数据为乱码，分析可能的情况并列举解决方案。">
@@ -375,7 +376,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  232
+                  255
                 </span>
               
 
@@ -413,15 +414,15 @@
       
 
       
-        <h2 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h2><p>可能是需要开启<code>gzip: true</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">request(&#123;url, <span class="attr">gzip</span>: <span class="literal">true</span>&#125;);</div></pre></td></tr></table></figure></p>
+        <h2 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h2><p>可能是需要开启<code>gzip: true</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request(&#123;url, <span class="attr">gzip</span>: <span class="literal">true</span>&#125;);</span><br></pre></td></tr></table></figure></p>
 <h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><h3 id="buffer-decode"><a href="#buffer-decode" class="headerlink" title="buffer decode"></a>buffer decode</h3><p>可以考虑使用<code>iconv-lite</code>转换buffer。request设置<code>encoding: null</code>时，会返回buffer形式的body。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">request(&#123;url, <span class="attr">gzip</span>: <span class="literal">true</span>, <span class="attr">encoding</span> : <span class="literal">null</span>&#125;, (err, res, body) =&gt; &#123;</div><div class="line">  <span class="keyword">const</span> str = iconv.decode(body, <span class="string">'gb2312'</span>);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">request(&#123;url, <span class="attr">gzip</span>: <span class="literal">true</span>, <span class="attr">encoding</span> : <span class="literal">null</span>&#125;, (err, res, body) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> str = iconv.decode(body, <span class="string">'gb2312'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>有个别网站编码不统一，时而gb2312时而utf8，这种情况需要自己判断处理。<br>可以参考<a href="https://cnodejs.org/topic/545de1e1a68535a174fe51b5" target="_blank" rel="external">cnode的回帖</a>——<br>先请求下来 Buffer, 也就是 request 的时候指定 encoding: null ，得到 Buffer, 用ASCII解码前一千个字符，用正则，匹配出 ; charset=(\w+)”，得到正确的 charset, 再用 iconv-lite 解码出全部的  buff。</p>
+<p>有个别网站编码不统一，时而gb2312时而utf8，这种情况需要自己判断处理。<br>可以参考<a href="https://cnodejs.org/topic/545de1e1a68535a174fe51b5" target="_blank" rel="noopener">cnode的回帖</a>——<br>先请求下来 Buffer, 也就是 request 的时候指定 encoding: null ，得到 Buffer, 用ASCII解码前一千个字符，用正则，匹配出 ; charset=(\w+)”，得到正确的 charset, 再用 iconv-lite 解码出全部的  buff。</p>
 </blockquote>
-<h3 id="stream-pipe"><a href="#stream-pipe" class="headerlink" title="stream pipe"></a>stream pipe</h3><p>简化一下过程，<code>iconv-lite</code>也支持pipe<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">request(url).pipe(iconv.decodeStream(code));</div></pre></td></tr></table></figure></p>
+<h3 id="stream-pipe"><a href="#stream-pipe" class="headerlink" title="stream pipe"></a>stream pipe</h3><p>简化一下过程，<code>iconv-lite</code>也支持pipe<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request(url).pipe(iconv.decodeStream(code));</span><br></pre></td></tr></table></figure></p>
 <p>Demo</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</div><div class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</div><div class="line"></div><div class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params">url, code = <span class="string">'gb2312'</span></span>) </span>&#123;</div><div class="line">  <span class="keyword">const</span> filename = <span class="string">'something.txt'</span>;</div><div class="line">  <span class="keyword">const</span> tempname = <span class="string">`<span class="subst">$&#123;<span class="built_in">Date</span>.now()&#125;</span>.txt`</span>;</div><div class="line"></div><div class="line">  <span class="keyword">try</span> &#123;</div><div class="line">    <span class="keyword">const</span> writeStream = fs.createWriteStream(tempname);</div><div class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</div><div class="line">      request(url)</div><div class="line">        .pipe(iconv.decodeStream(code))</div><div class="line">        .pipe(writeStream)</div><div class="line">        .on(<span class="string">'close'</span>, () =&gt; &#123;</div><div class="line">          fs.renameSync(tempname, filename);</div><div class="line">          resolve();</div><div class="line">        &#125;);</div><div class="line">    &#125;);</div><div class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</div><div class="line">    <span class="built_in">console</span>.error(<span class="string">`<span class="subst">$&#123;url&#125;</span>文件下载失败,<span class="subst">$&#123;err.message&#125;</span>`</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">name</span>(<span class="params">url, code = <span class="string">'gb2312'</span></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> filename = <span class="string">'something.txt'</span>;</span><br><span class="line">  <span class="keyword">const</span> tempname = <span class="string">`<span class="subst">$&#123;<span class="built_in">Date</span>.now()&#125;</span>.txt`</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> writeStream = fs.createWriteStream(tempname);</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">      request(url)</span><br><span class="line">        .pipe(iconv.decodeStream(code))</span><br><span class="line">        .pipe(writeStream)</span><br><span class="line">        .on(<span class="string">'close'</span>, () =&gt; &#123;</span><br><span class="line">          fs.renameSync(tempname, filename);</span><br><span class="line">          resolve();</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">`<span class="subst">$&#123;url&#125;</span>文件下载失败,<span class="subst">$&#123;err.message&#125;</span>`</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
     </div>
 
@@ -556,7 +557,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -578,7 +579,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
