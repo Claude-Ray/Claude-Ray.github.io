@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-07-31T15:46:01.911Z</updated>
+  <updated>2018-08-01T16:04:02.752Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="https://claude-ray.github.io/2018/07/31/%E9%98%BF%E9%87%8C%E4%BA%91%E9%AA%8C%E8%AF%81%E7%A0%81node%E6%8E%A5%E5%85%A5/"/>
     <id>https://claude-ray.github.io/2018/07/31/阿里云验证码node接入/</id>
     <published>2018-07-31T14:51:14.000Z</published>
-    <updated>2018-07-31T15:46:01.911Z</updated>
+    <updated>2018-08-01T16:04:02.752Z</updated>
     
     <content type="html"><![CDATA[<h2 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a>文档地址</h2><p>首先放出<del>不是那么</del>重要的文档地址。</p>
-<p>我认为值得看的文档是使用说明中的流程图，其他感兴趣的信息可以在文档左侧菜单查找。</p>
+<p>我认为值得看的是使用说明中的流程图，其他感兴趣的信息可以在文档左侧菜单查找。</p>
 <ul>
 <li><a href="https://help.aliyun.com/document_detail/66306.html" target="_blank" rel="noopener">滑动验证使用说明</a></li>
 <li><a href="https://help.aliyun.com/document_detail/66349.html" target="_blank" rel="noopener">签名机制</a></li>
@@ -48,7 +48,9 @@
 <blockquote>
 <p>请求方式的不同，会决定signature是否需要经过编码。</p>
 </blockquote>
-<h3 id="4-HTTPS请求"><a href="#4-HTTPS请求" class="headerlink" title="4. HTTPS请求"></a>4. HTTPS请求</h3><p>GET和POST都支持，只需留意签名计算的区别。<br>为了避免各种请求模块对参数的编码进行再次转换，建议拼接完整url后使用GET请求。</p>
+<h3 id="4-HTTPS请求"><a href="#4-HTTPS请求" class="headerlink" title="4. HTTPS请求"></a>4. HTTPS请求</h3><p>GET和POST都支持，只需留意签名计算的区别。<br>为了避免各种请求模块对参数的编码进行再次转换，省心的做法是拼接完整url后使用GET请求。</p>
+<h3 id="5-付费模式"><a href="#5-付费模式" class="headerlink" title="5. 付费模式"></a>5. 付费模式</h3><p>友情提示一下，官网明说<code>免费调用周期7天</code>，结果试用两天就收到0.08元欠费通知，找了半天没看到扣费明细，心塞T_T</p>
+<p>应该是直接进入了后付费模式，因此测试时请做好心理准备。</p>
 <h2 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h2><p>不可轻信文档，特别是神奇的日期格式版本号Version，公共参数居然给定了取值<code>2016-11-23</code>，但没给验证地址。</p>
 <p>事实上新旧Version的验证地址并不相同。在不知情时用错误地址进行校验，一直提示InvalidVersion，并且没有对应的错误返回值文档。</p>
 <p>除了验证地址，不同Version下需要提交的必选参数也不同，详情需要去其他版本SDK挖掘。</p>
