@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-08-01T16:04:02.752Z</updated>
+  <updated>2018-08-08T15:37:38.708Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://claude-ray.github.io/2018/07/31/%E9%98%BF%E9%87%8C%E4%BA%91%E9%AA%8C%E8%AF%81%E7%A0%81node%E6%8E%A5%E5%85%A5/"/>
     <id>https://claude-ray.github.io/2018/07/31/阿里云验证码node接入/</id>
     <published>2018-07-31T14:51:14.000Z</published>
-    <updated>2018-08-01T16:04:02.752Z</updated>
+    <updated>2018-08-08T15:37:38.708Z</updated>
     
     <content type="html"><![CDATA[<h2 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a>文档地址</h2><p>首先放出<del>不是那么</del>重要的文档地址。</p>
 <p>我认为值得看的是使用说明中的流程图，其他感兴趣的信息可以在文档左侧菜单查找。</p>
@@ -55,6 +55,7 @@
 <p>事实上新旧Version的验证地址并不相同。在不知情时用错误地址进行校验，一直提示InvalidVersion，并且没有对应的错误返回值文档。</p>
 <p>除了验证地址，不同Version下需要提交的必选参数也不同，详情需要去其他版本SDK挖掘。</p>
 <p>看得出文档内容比前人吐槽的时候丰富了不少，望相关开发人员及时更新。</p>
+<h3 id="SDK实现"><a href="#SDK实现" class="headerlink" title="SDK实现"></a>SDK实现</h3><p><a href="https://github.com/Claude-Ray/aliyun-captcha" target="_blank" rel="noopener">aliyun-captcha</a></p>
 ]]></content>
     
     <summary type="html">
