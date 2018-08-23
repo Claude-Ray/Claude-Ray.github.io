@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-08-23T14:46:00.776Z</updated>
+  <updated>2018-08-23T14:50:58.625Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>ubuntu16.04升级18.04LTS.md</title>
+    <title>ubuntu16.04升级18.04LTS</title>
     <link href="https://claude-ray.github.io/2018/08/23/ubuntu16to18md/"/>
     <id>https://claude-ray.github.io/2018/08/23/ubuntu16to18md/</id>
     <published>2018-08-23T13:16:15.000Z</published>
-    <updated>2018-08-23T14:46:00.776Z</updated>
+    <updated>2018-08-23T14:50:58.625Z</updated>
     
     <content type="html"><![CDATA[<h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><h4 id="进度缓慢"><a href="#进度缓慢" class="headerlink" title="- 进度缓慢"></a>- 进度缓慢</h4><p>部分软件需要手动输入y/n来决定一些新旧配置项的取舍，长时间不去查看就会一直卡着。</p>
 <h4 id="桌面崩溃"><a href="#桌面崩溃" class="headerlink" title="- 桌面崩溃"></a>- 桌面崩溃</h4><p>由于加了一些界面美化插件，非常担心桌面崩溃，果然更新了三分之一就跪了。</p>
