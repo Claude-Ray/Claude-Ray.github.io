@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Claude&#39;s Home">
 <meta property="og:description" content="上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-23T14:50:58.625Z">
+<meta property="og:updated_time" content="2018-08-23T15:06:19.954Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu16.04升级18.04LTS">
 <meta name="twitter:description" content="上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。">
@@ -415,8 +415,8 @@
       
 
       
-        <h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><h4 id="进度缓慢"><a href="#进度缓慢" class="headerlink" title="- 进度缓慢"></a>- 进度缓慢</h4><p>部分软件需要手动输入y/n来决定一些新旧配置项的取舍，长时间不去查看就会一直卡着。</p>
-<h4 id="桌面崩溃"><a href="#桌面崩溃" class="headerlink" title="- 桌面崩溃"></a>- 桌面崩溃</h4><p>由于加了一些界面美化插件，非常担心桌面崩溃，果然更新了三分之一就跪了。</p>
+        <h2 id="踩坑"><a href="#踩坑" class="headerlink" title="踩坑"></a>踩坑</h2><h3 id="进度缓慢"><a href="#进度缓慢" class="headerlink" title="- 进度缓慢"></a>- 进度缓慢</h3><p>部分软件需要手动输入y/n来决定一些新旧配置项的取舍，长时间不去查看就会一直卡着。</p>
+<h3 id="桌面崩溃"><a href="#桌面崩溃" class="headerlink" title="- 桌面崩溃"></a>- 桌面崩溃</h3><p>由于加了一些界面美化插件，非常担心桌面崩溃，果然更新了三分之一就跪了。</p>
 <p>尝试注销桌面系统，过一会儿屏幕上只剩一个鼠标，凉凉。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pkill Xorg</span><br></pre></td></tr></table></figure></p>
 <p>为了恢复工作，尝试重新安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install --reinstall ubuntu.desktop</span><br></pre></td></tr></table></figure></p>
 <p>但提示<code>Could not get lock /var/lib/dpkg/lock</code>，尝试强制获取lock<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo rm /var/cache/apt/archives/lock</span><br><span class="line">sudo rm /var/lib/dpkg/lock</span><br></pre></td></tr></table></figure></p>
@@ -425,14 +425,14 @@
 <p>继续尝试重启<code>shutdown now -r</code>无效，按提示<code>systemctl reboot -i</code>成功启动</p>
 <h2 id="善后"><a href="#善后" class="headerlink" title="善后"></a>善后</h2><p>惊喜是一次重启就成功了，部分软件如redshift提示无法使用，原因是缺了一些依赖，重新下载即可。</p>
 <p>但是打开浏览器发现无法上网，但系统提示网线已连接，第一反应是dns，修改了<code>/etc/resolv.conf</code>没效果，又习惯性用ssh测远程连接，再次失败陷入误区。当发现使用ip和端口可以访问服务时才彻底意识到是dns的问题。</p>
-<h4 id="修改dns"><a href="#修改dns" class="headerlink" title="- 修改dns"></a>- 修改dns</h4><p>ubuntu修改dns两种方式，并不包含直接修改<code>/etc/resolv.conf</code>。</p>
+<h3 id="修改dns"><a href="#修改dns" class="headerlink" title="- 修改dns"></a>- 修改dns</h3><p>ubuntu修改dns两种方式，并不包含直接修改<code>/etc/resolv.conf</code>。</p>
 <p>编辑<code>/etc/resolvconf/resolv.conf.d/base</code>，文件初始内容为空，加上<code>nameserver 8.8.8.8</code>，之后需执行<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">resolvconf -u</span><br></pre></td></tr></table></figure></p>
 <p>才会正确生效并写入<code>/etc/resolv.conf</code>。</p>
 <p>另一种方式是直接修改<code>/etc/network/interfaces</code>。</p>
-<h4 id="修复ssh"><a href="#修复ssh" class="headerlink" title="- 修复ssh"></a>- 修复ssh</h4><p>升级之后使用ssh提示<code>permission denied (publickey)</code>，最快排查办法是带上参数<code>-vvv</code>，我这里的错误是未指定私钥文件，使用<code>-i</code>加私钥路径可解。</p>
+<h3 id="修复ssh"><a href="#修复ssh" class="headerlink" title="- 修复ssh"></a>- 修复ssh</h3><p>升级之后使用ssh提示<code>permission denied (publickey)</code>，最快排查办法是带上参数<code>-vvv</code>，我这里的错误是未指定私钥文件，使用<code>-i</code>加私钥路径可解。</p>
 <p>当然不想每次都-i，因此可以将公钥私钥放在id_rsa，id_rsa.pub。同时不想每次都输入密码，执行<code>ssh-add ~/.ssh/id_dsa</code>。</p>
 <p>注意密钥权限只能属于使用者，文件400权限就好，超过权限范围会提示Permissions too open。</p>
-<h4 id="18-04部署攻略"><a href="#18-04部署攻略" class="headerlink" title="- 18.04部署攻略"></a>- 18.04部署攻略</h4><p>重装redshift时发现有人整理了一些安装指令，可以方便大家部署新系统。</p>
+<h3 id="18-04部署攻略"><a href="#18-04部署攻略" class="headerlink" title="- 18.04部署攻略"></a>- 18.04部署攻略</h3><p>重装redshift时发现有人整理了一些安装指令，可以方便大家部署新系统。</p>
 <p><a href="https://github.com/erikdubois/Ultimate-Ubuntu-18.04" target="_blank" rel="noopener">https://github.com/erikdubois/Ultimate-Ubuntu-18.04</a></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>由于桌面系统相当脆弱，一定要通过命令行来完成升级，也方便处理异常。出现问题升级不一定中断，不要急着重启，避免让问题严重到系统无法访问。</p>
 <p>不要听信网上的无痛升级论，做好数据备份，谨慎操作。</p>
@@ -680,7 +680,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#踩坑"><span class="nav-number">1.</span> <span class="nav-text">踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#进度缓慢"><span class="nav-number">1.0.1.</span> <span class="nav-text">- 进度缓慢</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#桌面崩溃"><span class="nav-number">1.0.2.</span> <span class="nav-text">- 桌面崩溃</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#善后"><span class="nav-number">2.</span> <span class="nav-text">善后</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#修改dns"><span class="nav-number">2.0.1.</span> <span class="nav-text">- 修改dns</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修复ssh"><span class="nav-number">2.0.2.</span> <span class="nav-text">- 修复ssh</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#18-04部署攻略"><span class="nav-number">2.0.3.</span> <span class="nav-text">- 18.04部署攻略</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#踩坑"><span class="nav-number">1.</span> <span class="nav-text">踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进度缓慢"><span class="nav-number">1.1.</span> <span class="nav-text">- 进度缓慢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#桌面崩溃"><span class="nav-number">1.2.</span> <span class="nav-text">- 桌面崩溃</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#善后"><span class="nav-number">2.</span> <span class="nav-text">善后</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改dns"><span class="nav-number">2.1.</span> <span class="nav-text">- 修改dns</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修复ssh"><span class="nav-number">2.2.</span> <span class="nav-text">- 修复ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-04部署攻略"><span class="nav-number">2.3.</span> <span class="nav-text">- 18.04部署攻略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
