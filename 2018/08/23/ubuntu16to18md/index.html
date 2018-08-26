@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。">
+<meta name="description" content="上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。次日，桌面系统再次崩溃，强烈建议不要升级而是彻底重装!">
 <meta name="keywords" content="Ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ubuntu16.04升级18.04LTS">
 <meta property="og:url" content="https://claude-ray.github.io/2018/08/23/ubuntu16to18md/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。">
+<meta property="og:description" content="上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。次日，桌面系统再次崩溃，强烈建议不要升级而是彻底重装!">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-23T15:06:19.954Z">
+<meta property="og:updated_time" content="2018-08-26T12:52:55.428Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu16.04升级18.04LTS">
-<meta name="twitter:description" content="上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。">
+<meta name="twitter:description" content="上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。次日，桌面系统再次崩溃，强烈建议不要升级而是彻底重装!">
 
 
 
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  708
+                  833
                 </span>
               
 
@@ -401,7 +401,7 @@
 
           
               <div class="post-description">
-                  上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。
+                  上个月第一次收到升级推送，当时工作较重又担心出现问题就拒绝了。今天又收到推送，恰好本地没有怕丢的代码，但是经验不足，直接通过推送窗口点击了同意，接下来虚惊一场。次日，桌面系统再次崩溃，强烈建议不要升级而是彻底重装!
               </div>
           
 
@@ -436,6 +436,9 @@
 <p><a href="https://github.com/erikdubois/Ultimate-Ubuntu-18.04" target="_blank" rel="noopener">https://github.com/erikdubois/Ultimate-Ubuntu-18.04</a></p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>由于桌面系统相当脆弱，一定要通过命令行来完成升级，也方便处理异常。出现问题升级不一定中断，不要急着重启，避免让问题严重到系统无法访问。</p>
 <p>不要听信网上的无痛升级论，做好数据备份，谨慎操作。</p>
+<h3 id="16-08-24更新"><a href="#16-08-24更新" class="headerlink" title="16-08-24更新"></a>16-08-24更新</h3><p>桌面系统再次崩溃，详情可以看这个<a href="https://bugs.launchpad.net/ubuntu/+source/gdm3/+bug/1779476" target="_blank" rel="noopener">Bug</a>，并且在论坛找到了非常相似的<a href="https://ubuntuforums.org/showthread.php?t=2391542" target="_blank" rel="noopener">遭遇</a>。</p>
+<p>起初还不清楚是什么状况，试过了swapoff，gnome重装，gdm3降级，切换lightdm等等，看到bug反馈时终于决定接受了各位前人的重装解决方案。</p>
+<p>顺便碰到了双系统不能上网问题，修复较容易，BIOS 关闭<code>wake on lan</code>，如果已经关闭就重新打开再关闭。</p>
 
       
     </div>
@@ -680,7 +683,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#踩坑"><span class="nav-number">1.</span> <span class="nav-text">踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进度缓慢"><span class="nav-number">1.1.</span> <span class="nav-text">- 进度缓慢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#桌面崩溃"><span class="nav-number">1.2.</span> <span class="nav-text">- 桌面崩溃</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#善后"><span class="nav-number">2.</span> <span class="nav-text">善后</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改dns"><span class="nav-number">2.1.</span> <span class="nav-text">- 修改dns</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修复ssh"><span class="nav-number">2.2.</span> <span class="nav-text">- 修复ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-04部署攻略"><span class="nav-number">2.3.</span> <span class="nav-text">- 18.04部署攻略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#踩坑"><span class="nav-number">1.</span> <span class="nav-text">踩坑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#进度缓慢"><span class="nav-number">1.1.</span> <span class="nav-text">- 进度缓慢</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#桌面崩溃"><span class="nav-number">1.2.</span> <span class="nav-text">- 桌面崩溃</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#善后"><span class="nav-number">2.</span> <span class="nav-text">善后</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改dns"><span class="nav-number">2.1.</span> <span class="nav-text">- 修改dns</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修复ssh"><span class="nav-number">2.2.</span> <span class="nav-text">- 修复ssh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#18-04部署攻略"><span class="nav-number">2.3.</span> <span class="nav-text">- 18.04部署攻略</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#16-08-24更新"><span class="nav-number">3.1.</span> <span class="nav-text">16-08-24更新</span></a></li></ol></li></ol></div>
             
 
           </div>
