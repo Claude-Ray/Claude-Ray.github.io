@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-09-02T16:18:16.546Z</updated>
+  <updated>2018-09-02T16:20:26.042Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://claude-ray.github.io/2018/09/02/node-image-captcha/"/>
     <id>https://claude-ray.github.io/2018/09/02/node-image-captcha/</id>
     <published>2018-09-02T13:46:55.000Z</published>
-    <updated>2018-09-02T16:18:16.546Z</updated>
+    <updated>2018-09-02T16:20:26.042Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><p>参考文档安装基础图形库，<a href="https://github.com/Automattic/node-canvas" target="_blank" rel="noopener">node-canvas</a>。</p>
 <p>建议使用<code>npm install canvas@next</code>安装2.x版本，兼容Windows开发环境，接口功能更完善。</p>
@@ -37,7 +37,7 @@
 <p>最后的图片产出分多种：<code>Buffer</code>，<code>DataUrl</code>和<code>Stream</code>，就从官方文档上看例子吧，注意1.x和2.x的版本差异。</p>
 <h2 id="应急方案"><a href="#应急方案" class="headerlink" title="应急方案"></a>应急方案</h2><h3 id="背景色"><a href="#背景色" class="headerlink" title="背景色"></a>背景色</h3><p>挑选一些对人眼友好的颜色，随机筛选几个拼接成渐变色背景，可以略微提高识别成本。但对于成熟的破解算法无意义，如果和字体颜色过接近，用户识别也会特别痛苦。</p>
 <p>举个简单的3段式，抛砖引玉。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gradient = ctx.createLinearGradient(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br><span class="line"></span><br><span class="line">gradient.addColorStop(<span class="number">0</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">0.5</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">1</span>, opts.randomBGC());</span><br><span class="line"></span><br><span class="line">ctx.fillStyle = gradient;</span><br><span class="line">ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br></pre></td></tr></table></figure></p>
-<h3 id="空心字体"><a href="#空心字体" class="headerlink" title="空心字体"></a>空心字体</h3><p>canvas原生支持的几个字体差别实在不大，有个技巧是绘制空心字体，在验证码被攻击时，可以加入支持应急，在没有准备的情况下，可以立刻起到拦截效果。</p>
+<h3 id="空心字体"><a href="#空心字体" class="headerlink" title="空心字体"></a>空心字体</h3><p>canvas原生支持的几个字体差别实在不大，有个技巧是绘制空心字体，在验证码被攻击时，可以加入支持应急，在攻击者没有准备的情况下，可以立刻起到拦截效果。</p>
 <p>用法很简单，将上面写字用到的<code>fillStyle</code>替换为<code>strokeStyle</code>，<code>fillText</code>替换为<code>strokeText</code>。</p>
 <h2 id="Lib选择"><a href="#Lib选择" class="headerlink" title="Lib选择"></a>Lib选择</h2><p>起初，使用<code>gm</code>和<code>GraphicsMagick</code>的组合，但经压测发现了严重的性能问题，在<a href="https://stackoverflow.com/questions/23795669/graphicsmagick-for-node-js-gm-module-performance" target="_blank" rel="noopener">StackOverFlow</a>上也看到了原因，于是决定更换绘图方案。</p>
 <blockquote>
