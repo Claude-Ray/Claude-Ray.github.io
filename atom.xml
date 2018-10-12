@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-09-09T09:01:01.448Z</updated>
+  <updated>2018-10-12T15:19:26.043Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Nodejs使用MySQL 4.1的问题解决</title>
+    <link href="https://claude-ray.github.io/2018/10/12/old-sms-mas-nodejs/"/>
+    <id>https://claude-ray.github.io/2018/10/12/old-sms-mas-nodejs/</id>
+    <published>2018-10-12T14:04:17.000Z</published>
+    <updated>2018-10-12T15:19:26.043Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h2><p>如果使用<code>old authentication</code>方式连接4.1版本之前的mysql，<code>sequelize</code>和<code>mysql2</code>无法通过认证：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123; Error: Access denied <span class="keyword">for</span> user: <span class="string">'@127.0.0.x'</span> (Using password: NO)</span><br><span class="line">    at Packet.asError (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packets/packet.js:714:13)</span><br><span class="line">    at ClientHandshake.Command.execute (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/commands/command.js:28:22)</span><br><span class="line">    at Connection.handlePacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:513:28)</span><br><span class="line">    at PacketParser.onPacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:81:16)</span><br><span class="line">    at PacketParser.executeStart (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packet_parser.js:76:14)</span><br><span class="line">    at Socket.&lt;anonymous&gt; (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:89:29)</span><br><span class="line">    at Socket.emit (events.js:182:13)</span><br><span class="line">    at addChunk (_stream_readable.js:283:12)</span><br><span class="line">    at readableAddChunk (_stream_readable.js:264:11)</span><br><span class="line">    at Socket.Readable.push (_stream_readable.js:219:10)</span><br><span class="line">    at TCP.onread (net.js:639:20)</span><br><span class="line">  code: <span class="string">'ER_ACCESS_DENIED_ERROR'</span>,</span><br><span class="line">  errno: 1045,</span><br><span class="line">  sqlState: <span class="string">''</span>,</span><br><span class="line">  sqlMessage:</span><br><span class="line">   <span class="string">'Access denied for user: \'</span>@127.0.0.x\<span class="string">' (Using password: NO)'</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>处理倒不困难，在不能改动数据库的情况下，可以改用npm包<code>mysql</code>。</p>
+<h2 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h2><p>文档描述如下：</p>
+<blockquote>
+<p>mysql使用ISO8859-1编码，往db接口写入数据时应先把编码格式转化为ISO8859-1…</p>
+</blockquote>
+<p>上述编码实际为<code>latin1</code>，为早期mysql的默认编码。实际文档存在误导，未指出mas机的db接口是使用gbk编码写入的，因此将字符进行转化gbk再使用该接口即可，无需再将编码转为<code>latin1</code>。</p>
+<p>但如果想从数据库中读取，同事在创建连接时指定了<code>charset=latin1</code>获取到的中文是乱码。</p>
+<p>这涉及到mysql如何用<code>latin1</code>存储中文的问题：<code>latin1</code>为0x00 to 0xFF范围的单字节编码（<code>ASCII</code>是它的子集），理论上单字节范围可以无损存储数据，任意编码均可以用字节流形式存储。</p>
+<p>也就是说，mas机写入之前用的是gbk字节流，读取时直接用nodejs默认的utf8编码自然不行。那么怎样读出二进制数据呢？在npm <code>mysql</code>库的README中搜索<code>buffer</code>字样，找到了如下方法。</p>
+<p>mysqljs支持在query中自定义<a href="https://github.com/mysqljs/mysql#string" target="_blank" rel="noopener">typeCast</a>方法，可用于提取数据的步骤进行编码转换。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mysql = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</span><br><span class="line"><span class="keyword">const</span> connection = mysql.createConnection(&#123;</span><br><span class="line">  host     : <span class="string">'localhost'</span>,</span><br><span class="line">  user     : <span class="string">'me'</span>,</span><br><span class="line">  password : <span class="string">'secret'</span>,</span><br><span class="line">  database : <span class="string">'my_db'</span>,</span><br><span class="line">  charset  : <span class="string">'latin1'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.connect();</span><br><span class="line"></span><br><span class="line">connection.query(&#123;</span><br><span class="line">  sql: <span class="string">'SELECT * FROM tbl_user'</span>,</span><br><span class="line">  typeCast: <span class="function">(<span class="params">field, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// converting `tbl_user.name` to utf8 string:</span></span><br><span class="line">    <span class="keyword">if</span> (field.name === <span class="string">'username'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> iconv.decode(field.buffer(), <span class="string">'gbk'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, (error, results, fields) =&gt; &#123;</span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>其中typeCast的参数field包含</p>
+<ul>
+<li>type 字段类型，<code>VARCHAR</code>等（<a href="https://github.com/mysqljs/mysql/blob/master/lib/protocol/packets/RowDataPacket.js#L41" target="_blank" rel="noopener">详情链接</a>）</li>
+<li>name 字段名</li>
+<li>length 字段长度</li>
+<li>table 表名</li>
+<li>db 数据库名</li>
+<li>…</li>
+</ul>
+<p>依此，其他更多问题都可以迎刃而解。</p>
+<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><ul>
+<li><a href="https://blog.csdn.net/css_good/article/details/8809016" target="_blank" rel="noopener">mysql中的latin1支持中文</a>，CSDN有很多一样的文章，不清楚谁是原作者。</li>
+<li><a href="https://kb.iu.edu/d/ahfr" target="_blank" rel="noopener">What are the differences between ASCII, ISO 8859, and Unicode?</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      近期新同事在处理短信业务，用到了一台存放久远的移动mas机，MySQL版本为同样久远的4.1，改动数据库是不要想了，并且不提供node的sdk，留下的接入文档也不靠谱。好在要到了一份java sdk源码，可以运行起来参照着接入。本篇分享一下帮忙时填的坑，主要涉及“数据库连接”和“编码转换”的问题。
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
+    
+    
+      <category term="MySQL" scheme="https://claude-ray.github.io/tags/MySQL/"/>
+    
+  </entry>
   
   <entry>
     <title>node图形验证码实现</title>
