@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="近期新同事在处理短信业务，用到了一台存放久远的移动mas机，MySQL版本为同样久远的4.1，改动数据库是不要想了，并且不提供node的sdk，留下的接入文档也不靠谱。好在要到了一份java sdk源码，可以运行起来参照着接入。本篇分享一下帮忙时填的坑，主要涉及“数据库连接”和“编码转换”的问题。">
+<meta name="description" content="近期有同学在玩一台老古董服务器，要使用node连上4.1版本的MySQL进行操作。并且不让改动数据库配置，凭啥？人家是移动提供的MAS……本文分享一下帮忙时填的坑，主要为解决“数据库连接”和“编码转换”问题。">
 <meta name="keywords" content="MySQL">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nodejs使用MySQL 4.1的问题解决">
 <meta property="og:url" content="https://claude-ray.github.io/2018/10/12/old-sms-mas-nodejs/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="近期新同事在处理短信业务，用到了一台存放久远的移动mas机，MySQL版本为同样久远的4.1，改动数据库是不要想了，并且不提供node的sdk，留下的接入文档也不靠谱。好在要到了一份java sdk源码，可以运行起来参照着接入。本篇分享一下帮忙时填的坑，主要涉及“数据库连接”和“编码转换”的问题。">
+<meta property="og:description" content="近期有同学在玩一台老古董服务器，要使用node连上4.1版本的MySQL进行操作。并且不让改动数据库配置，凭啥？人家是移动提供的MAS……本文分享一下帮忙时填的坑，主要为解决“数据库连接”和“编码转换”问题。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-12T15:19:26.043Z">
+<meta property="og:updated_time" content="2018-10-18T14:12:06.819Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nodejs使用MySQL 4.1的问题解决">
-<meta name="twitter:description" content="近期新同事在处理短信业务，用到了一台存放久远的移动mas机，MySQL版本为同样久远的4.1，改动数据库是不要想了，并且不提供node的sdk，留下的接入文档也不靠谱。好在要到了一份java sdk源码，可以运行起来参照着接入。本篇分享一下帮忙时填的坑，主要涉及“数据库连接”和“编码转换”的问题。">
+<meta name="twitter:description" content="近期有同学在玩一台老古董服务器，要使用node连上4.1版本的MySQL进行操作。并且不让改动数据库配置，凭啥？人家是移动提供的MAS……本文分享一下帮忙时填的坑，主要为解决“数据库连接”和“编码转换”问题。">
 
 
 
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  682
+                  689
                 </span>
               
 
@@ -401,7 +401,7 @@
 
           
               <div class="post-description">
-                  近期新同事在处理短信业务，用到了一台存放久远的移动mas机，MySQL版本为同样久远的4.1，改动数据库是不要想了，并且不提供node的sdk，留下的接入文档也不靠谱。好在要到了一份java sdk源码，可以运行起来参照着接入。本篇分享一下帮忙时填的坑，主要涉及“数据库连接”和“编码转换”的问题。
+                  近期有同学在玩一台老古董服务器，要使用node连上4.1版本的MySQL进行操作。并且不让改动数据库配置，凭啥？人家是移动提供的MAS……本文分享一下帮忙时填的坑，主要为解决“数据库连接”和“编码转换”问题。
               </div>
           
 
@@ -417,7 +417,7 @@
       
         <h2 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h2><p>如果使用<code>old authentication</code>方式连接4.1版本之前的mysql，<code>sequelize</code>和<code>mysql2</code>无法通过认证：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123; Error: Access denied <span class="keyword">for</span> user: <span class="string">'@127.0.0.x'</span> (Using password: NO)</span><br><span class="line">    at Packet.asError (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packets/packet.js:714:13)</span><br><span class="line">    at ClientHandshake.Command.execute (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/commands/command.js:28:22)</span><br><span class="line">    at Connection.handlePacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:513:28)</span><br><span class="line">    at PacketParser.onPacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:81:16)</span><br><span class="line">    at PacketParser.executeStart (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packet_parser.js:76:14)</span><br><span class="line">    at Socket.&lt;anonymous&gt; (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:89:29)</span><br><span class="line">    at Socket.emit (events.js:182:13)</span><br><span class="line">    at addChunk (_stream_readable.js:283:12)</span><br><span class="line">    at readableAddChunk (_stream_readable.js:264:11)</span><br><span class="line">    at Socket.Readable.push (_stream_readable.js:219:10)</span><br><span class="line">    at TCP.onread (net.js:639:20)</span><br><span class="line">  code: <span class="string">'ER_ACCESS_DENIED_ERROR'</span>,</span><br><span class="line">  errno: 1045,</span><br><span class="line">  sqlState: <span class="string">''</span>,</span><br><span class="line">  sqlMessage:</span><br><span class="line">   <span class="string">'Access denied for user: \'</span>@127.0.0.x\<span class="string">' (Using password: NO)'</span> &#125;</span><br></pre></td></tr></table></figure></p>
 <p>处理倒不困难，在不能改动数据库的情况下，可以改用npm包<code>mysql</code>。</p>
-<h2 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h2><p>文档描述如下：</p>
+<h2 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h2><p>移动mas的接入文档有描述如下：</p>
 <blockquote>
 <p>mysql使用ISO8859-1编码，往db接口写入数据时应先把编码格式转化为ISO8859-1…</p>
 </blockquote>
@@ -599,7 +599,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
