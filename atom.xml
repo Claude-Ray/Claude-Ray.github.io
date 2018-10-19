@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-10-18T14:12:06.819Z</updated>
+  <updated>2018-10-19T15:38:06.580Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -14,6 +14,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>koa之content-type与content-length</title>
+    <link href="https://claude-ray.github.io/2018/10/18/koa-content/"/>
+    <id>https://claude-ray.github.io/2018/10/18/koa-content/</id>
+    <published>2018-10-18T14:16:05.000Z</published>
+    <updated>2018-10-19T15:38:06.580Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a>Content-Type</h1><p>众所周知，koa可以方便地通过<code>ctx.type=</code>来设置响应头的<code>Content-Type</code>。</p>
+<p>但是，当响应体ctx.body为<code>object</code>时，无论怎么设置ctx.type，收到的Content-Type都是<code>application/json</code>。</p>
+<p>为什么设置被覆盖了，先通过一小段koa源码来解释。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// koa/lib/response.js</span></span><br><span class="line"></span><br><span class="line">set body(val) &#123;</span><br><span class="line">  <span class="keyword">const</span> original = <span class="keyword">this</span>._body;</span><br><span class="line">  <span class="keyword">this</span>._body = val;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.res.headersSent) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// no content</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">null</span> == val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!statuses.empty[<span class="keyword">this</span>.status]) <span class="keyword">this</span>.status = <span class="number">204</span>;</span><br><span class="line">    <span class="keyword">this</span>.remove(<span class="string">'Content-Type'</span>);</span><br><span class="line">    <span class="keyword">this</span>.remove(<span class="string">'Content-Length'</span>);</span><br><span class="line">    <span class="keyword">this</span>.remove(<span class="string">'Transfer-Encoding'</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// set the status</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>._explicitStatus) <span class="keyword">this</span>.status = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// set the content-type only if not yet set</span></span><br><span class="line">  <span class="keyword">const</span> setType = !<span class="keyword">this</span>.header[<span class="string">'content-type'</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// string</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (setType) <span class="keyword">this</span>.type = <span class="regexp">/^\s*&lt;/</span>.test(val) ? <span class="string">'html'</span> : <span class="string">'text'</span>;</span><br><span class="line">    <span class="keyword">this</span>.length = Buffer.byteLength(val);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// buffer</span></span><br><span class="line">  <span class="keyword">if</span> (Buffer.isBuffer(val)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (setType) <span class="keyword">this</span>.type = <span class="string">'bin'</span>;</span><br><span class="line">    <span class="keyword">this</span>.length = val.length;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// stream</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'function'</span> == <span class="keyword">typeof</span> val.pipe) &#123;</span><br><span class="line">    onFinish(<span class="keyword">this</span>.res, destroy.bind(<span class="literal">null</span>, val));</span><br><span class="line">    ensureErrorHandler(val, err =&gt; <span class="keyword">this</span>.ctx.onerror(err));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// overwriting</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">null</span> != original &amp;&amp; original != val) <span class="keyword">this</span>.remove(<span class="string">'Content-Length'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (setType) <span class="keyword">this</span>.type = <span class="string">'bin'</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// json</span></span><br><span class="line">  <span class="keyword">this</span>.remove(<span class="string">'Content-Length'</span>);</span><br><span class="line">  <span class="keyword">this</span>.type = <span class="string">'json'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>熟悉koa源码的同学可能还记得，如果ctx.type未设置，会根据传给body的值类型赋予<code>Content-Type</code>默认值。</p>
+<ul>
+<li><code>null/undefined</code>：type什么的不存在的，即使有也会被删掉，并设置’No Content’ 204状态码</li>
+<li><code>string</code>：正则<code>/^\s*&lt;/</code>匹配，分情况设为html或text</li>
+<li><code>Buffer</code>：如果未设置type，那么会被改为<code>bin</code>(application/octet-stream)</li>
+<li><code>Stream</code>：同Buffer，当然逻辑上会多个绑定结束时destroy和异常处理，如果和旧body不同，还会删掉content-length</li>
+<li>以上都不是：标记为json，并删除content-length</li>
+</ul>
+<p>可想而知，既然已经过每一步判断，body的内容一般就是<code>boolean</code>、<code>object</code>或<code>number</code>之流，标记为<code>json</code>合情合理。当然没忘<code>symbol</code>，它是无法被JSON序列化的，会抛出TypeError。除此之外，body值为空时content-type也会被强制置空。</p>
+<p>综上，如果接口返回值满足上述几个json类型，就得JSON.stringify处理后才能自行更改content-type。</p>
+<blockquote>
+<p>ctx.type的设置支持各类缩略词，每次set前都会通过<code>mime-types</code>和<code>mime-db</code>依赖匹配完整名称，并挂上charset。</p>
+</blockquote>
+<p>Wait，好像还漏了什么？</p>
+<p>content-type既然在最后给定为json，为什么执行了一个<code>this.remove(&#39;Content-Length&#39;)</code>？且听下面分解。</p>
+<h1 id="Content-Length"><a href="#Content-Length" class="headerlink" title="Content-Length"></a>Content-Length</h1><p>在<code>set body</code>的string和Buffer步骤，都会主动判断字节长度（不是字符，所以string用Buffer.byteLength判断），并对this.length即content-length赋值。而json和stream则相反，不但没有设置length，反而把设置过的删掉了。</p>
+<p>简单分析一下，stream步骤的删除不难理解，二进制数据流只有传输完毕才能计算长度，不需要从响应头判断length。另一方面，content-length是允许胡乱设置的，koa为了避免它被设置一个错误的值，所以才有了的重新赋值与删除。甚至在异常捕获中也加上了这个fix：<a href="https://github.com/koajs/koa/issues/199" target="_blank" rel="noopener">Content-Length not reset if error is thrown after body is set</a>。</p>
+<p>那么json返回值的length被删掉之后，它是从哪里重新被设置呢？</p>
+<blockquote>
+<p>最初我错想为交给了node底层处理，而且确实在http模块中有对content-length的设置(<a href="https://github.com/nodejs/node/blob/master/lib/_http_outgoing.js)，但它只有在完全未指定headers时才会添加。" target="_blank" rel="noopener">https://github.com/nodejs/node/blob/master/lib/_http_outgoing.js)，但它只有在完全未指定headers时才会添加。</a></p>
+</blockquote>
+<p>实际对json类型的值判断字节长度非常容易，JSON.stringify加Buffer.byteLength即可。目录内搜索一下对this.length或ctx.length的赋值，果然，在响应的最终res.end()之前看到了该处理。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// koa/lib/application.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">respond</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// responses</span></span><br><span class="line">  <span class="keyword">if</span> (Buffer.isBuffer(body)) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> body) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (body <span class="keyword">instanceof</span> Stream) <span class="keyword">return</span> body.pipe(res);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// body: json</span></span><br><span class="line">  body = <span class="built_in">JSON</span>.stringify(body);</span><br><span class="line">  <span class="keyword">if</span> (!res.headersSent) &#123;</span><br><span class="line">    ctx.length = Buffer.byteLength(body);</span><br><span class="line">  &#125;</span><br><span class="line">  res.end(body);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>那为什么不在最后一步重新对content-length进行赋值呢？</p>
+<p>我的理解是，set body和onerror时完成自动设置已经是仁尽义至了，会在之后主动设置content-length的人未免不是怀有特殊目的，否则开放的<code>ctx.length=</code>功能也毫无用武之地。因此反而能为使用者的发挥留有余地，即使改出了差错也不能怪罪到koa头上。保持目前的写法，恰到好处。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>koa的源码解析文章实在太多了，所以早先没有打算像express那样写一篇逐句分析，而且确实简单易读，<del>恐怕没写完就太监了</del>。但时间一久，很多细节就忘掉了，会遇到此类问题说明对其底层不够熟悉。就此写一篇笔记，发出来加深记忆。[真香.jpg]</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;Content-Type&quot;&gt;&lt;a href=&quot;#Content-Type&quot; class=&quot;headerlink&quot; title=&quot;Content-Type&quot;&gt;&lt;/a&gt;Content-Type&lt;/h1&gt;&lt;p&gt;众所周知，koa可以方便地通过&lt;code&gt;ctx.type=
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
+    
+    
+      <category term="JavaScript" scheme="https://claude-ray.github.io/tags/JavaScript/"/>
+    
+  </entry>
   
   <entry>
     <title>Nodejs使用MySQL 4.1的问题解决</title>
