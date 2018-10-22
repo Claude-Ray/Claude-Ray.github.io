@@ -301,7 +301,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/10/18/koa-content/" itemprop="url">koa之content-type与content-length</a></h1>
+                <a class="post-title-link" href="/2018/10/18/koa-content/" itemprop="url">koa之Content-Type与Content-Length</a></h1>
         
 
         <div class="post-meta">
@@ -353,7 +353,7 @@
 
           
           
-             <span id="/2018/10/18/koa-content/" class="leancloud_visitors" data-flag-title="koa之content-type与content-length">
+             <span id="/2018/10/18/koa-content/" class="leancloud_visitors" data-flag-title="koa之Content-Type与Content-Length">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,183
+                  1,322
                 </span>
               
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  5
+                  6
                 </span>
               
             </div>
@@ -414,14 +414,10 @@
 
       
         
-          
-          Content-Type众所周知，koa可以方便地通过ctx.type=来设置响应头的Content-Type。
-但是，当响应体ctx.body为object时，无论怎么设置ctx.type，收到的Content-Type都是application/json。
-为什么设置被覆盖了，先通过一小段koa
-          ...
+          透过ctx.body setter的执行过程，分析koa如何设置响应头content-type和content-length，以及一些注意事项。
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2018/10/18/koa-content/#more" rel="contents">
+            <a class="btn" href="/2018/10/18/koa-content/">
               阅读全文 &raquo;
             </a>
           </div>
