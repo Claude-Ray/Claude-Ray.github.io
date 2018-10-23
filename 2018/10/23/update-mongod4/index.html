@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="MongoDB," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="Now or Never">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Claude&#39;s Home">
-<meta property="og:url" content="https://claude-ray.github.io/tags/index.html">
+<meta name="description" content="4.0正式版已经出了3个多月，相比测试阶段网上有价值的资料日渐丰富，版本升级以及使用事务需要了解的知识都可以在官网找到。在这里记录一下升级本地开发环境的过程，生产环境应当用数据备份再恢复的方案。 总文档：Release Notes for MongoDB 4.0 版本升级单机开发环境，参考standalone升级文档  以下升级流程节选自上述文档  确保本地是3.6版本才能继续进行，以及兼容版本f">
+<meta name="keywords" content="MongoDB">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MongoDB升级4.0和事务使用小记">
+<meta property="og:url" content="https://claude-ray.github.io/2018/10/23/update-mongod4/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="Now or Never">
+<meta property="og:description" content="4.0正式版已经出了3个多月，相比测试阶段网上有价值的资料日渐丰富，版本升级以及使用事务需要了解的知识都可以在官网找到。在这里记录一下升级本地开发环境的过程，生产环境应当用数据备份再恢复的方案。 总文档：Release Notes for MongoDB 4.0 版本升级单机开发环境，参考standalone升级文档  以下升级流程节选自上述文档  确保本地是3.6版本才能继续进行，以及兼容版本f">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-06-18T15:59:05.000Z">
+<meta property="og:updated_time" content="2018-10-23T15:54:11.465Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Claude&#39;s Home">
-<meta name="twitter:description" content="Now or Never">
+<meta name="twitter:title" content="MongoDB升级4.0和事务使用小记">
+<meta name="twitter:description" content="4.0正式版已经出了3个多月，相比测试阶段网上有价值的资料日渐丰富，版本升级以及使用事务需要了解的知识都可以在官网找到。在这里记录一下升级本地开发环境的过程，生产环境应当用数据备份再恢复的方案。 总文档：Release Notes for MongoDB 4.0 版本升级单机开发环境，参考standalone升级文档  以下升级流程节选自上述文档  确保本地是3.6版本才能继续进行，以及兼容版本f">
 
 
 
@@ -133,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/tags/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/10/23/update-mongod4/"/>
 
 
 
@@ -142,7 +143,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>标签 | Claude's Home</title>
+  <title>MongoDB升级4.0和事务使用小记 | Claude's Home</title>
   
 
 
@@ -272,25 +273,247 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h1 class="post-title" itemprop="name headline"></h1>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/10/23/update-mongod4/">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Home">
+    </span>
 
     
-    
-      <div class="tag-cloud">
-        <div class="tag-cloud-title">
-            目前共计 9 个标签
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">MongoDB升级4.0和事务使用小记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T22:08:09+08:00">
+                2018-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MongoDB/" itemprop="url" rel="index">
+                    <span itemprop="name">MongoDB</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/10/23/update-mongod4/" class="leancloud_visitors" data-flag-title="MongoDB升级4.0和事务使用小记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <br>
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  446
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
         </div>
-        <div class="tag-cloud-tags">
-          <a href="/tags/Captcha/" style="font-size: 12px; color: #ccc">Captcha</a> <a href="/tags/Express/" style="font-size: 12px; color: #ccc">Express</a> <a href="/tags/Hexo/" style="font-size: 12px; color: #ccc">Hexo</a> <a href="/tags/JavaScript/" style="font-size: 30px; color: #111">JavaScript</a> <a href="/tags/MongoDB/" style="font-size: 12px; color: #ccc">MongoDB</a> <a href="/tags/MySQL/" style="font-size: 12px; color: #ccc">MySQL</a> <a href="/tags/SVN/" style="font-size: 12px; color: #ccc">SVN</a> <a href="/tags/String/" style="font-size: 12px; color: #ccc">String</a> <a href="/tags/Ubuntu/" style="font-size: 12px; color: #ccc">Ubuntu</a>
-        </div>
-      </div>
+      </header>
     
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>4.0正式版已经出了3个多月，相比测试阶段网上有价值的资料日渐丰富，版本升级以及使用事务需要了解的知识都可以在官网找到。在这里记录一下升级本地开发环境的过程，生产环境应当用数据备份再恢复的方案。</p>
+<p>总文档：<a href="https://docs.mongodb.com/manual/release-notes/4.0/" target="_blank" rel="noopener">Release Notes for MongoDB 4.0</a></p>
+<h2 id="版本升级"><a href="#版本升级" class="headerlink" title="版本升级"></a>版本升级</h2><p>单机开发环境，参考<a href="https://docs.mongodb.com/manual/release-notes/4.0-upgrade-standalone/" target="_blank" rel="noopener">standalone升级文档</a></p>
+<blockquote>
+<p>以下升级流程节选自上述文档</p>
+</blockquote>
+<p>确保本地是3.6版本才能继续进行，以及兼容版本<code>featureCompatibilityVersion</code>为3.6。在mongo shell中可以执行检查和设置。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.adminCommand( &#123; getParameter: 1, featureCompatibilityVersion: 1 &#125; )</span><br><span class="line"></span><br><span class="line">db.adminCommand( &#123; setFeatureCompatibilityVersion: <span class="string">"3.6"</span> &#125; )</span><br></pre></td></tr></table></figure>
+<p>升级前应关闭mongod服务和<strong>备份数据</strong>，之后按照官网所给出对应系统的<a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/" target="_blank" rel="noopener">安装方法</a>执行安装。</p>
+<p>例如Ubuntu18，可以按下面依次执行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse"</span> | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list</span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y mongodb-org</span><br></pre></td></tr></table></figure></p>
+<p>升级完成后在mongo shell中重新设置兼容性<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.adminCommand( &#123; setFeatureCompatibilityVersion: <span class="string">"4.0"</span> &#125; )</span><br></pre></td></tr></table></figure></p>
+<h2 id="事务使用"><a href="#事务使用" class="headerlink" title="事务使用"></a>事务使用</h2><h3 id="replSet"><a href="#replSet" class="headerlink" title="replSet"></a>replSet</h3><p>目前必须在replSet中使用，简单的配置方法是<code>/etc/mongod.conf</code>添加设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">replication:</span><br><span class="line">  replSetName: rs0</span><br></pre></td></tr></table></figure></p>
+<p>然后重启mongod <code>service mongod restart</code>，在mongo shell中执行初始化并查看结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rs.initiate()</span><br><span class="line">rs.conf()</span><br></pre></td></tr></table></figure></p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>官方使用教程，内含demo：<br><a href="https://docs.mongodb.com/manual/core/transactions/" target="_blank" rel="noopener">https://docs.mongodb.com/manual/core/transactions/</a></p>
+<p>Nodejs相关文档（npm包需更新）：</p>
+<ul>
+<li><p>node-mongodb-native:<br><a href="http://mongodb.github.io/node-mongodb-native/3.1/api/ClientSession.html#startTransaction" target="_blank" rel="noopener">http://mongodb.github.io/node-mongodb-native/3.1/api/ClientSession.html#startTransaction</a></p>
+</li>
+<li><p>mongoose:<br><a href="https://mongoosejs.com/docs/transactions.html" target="_blank" rel="noopener">https://mongoosejs.com/docs/transactions.html</a></p>
+</li>
+</ul>
+<p>手中项目使用事务的场景不多，暂时没有遇到坑，之后遇到再补充。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Claude Ray
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://claude-ray.github.io/2018/10/23/update-mongod4/" title="MongoDB升级4.0和事务使用小记">https://claude-ray.github.io/2018/10/23/update-mongod4/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MongoDB/" rel="tag"> <i class="fa fa-tag"></i> MongoDB</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/18/koa-content/" rel="next" title="koa之Content-Type与Content-Length">
+                <i class="fa fa-chevron-left"></i> koa之Content-Type与Content-Length
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -322,8 +545,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -436,6 +668,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#版本升级"><span class="nav-number">1.</span> <span class="nav-text">版本升级</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#事务使用"><span class="nav-number">2.</span> <span class="nav-text">事务使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#replSet"><span class="nav-number">2.1.</span> <span class="nav-text">replSet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#API"><span class="nav-number">2.2.</span> <span class="nav-text">API</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -538,10 +786,10 @@ Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homep
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-10-22T14:42:59.606Z</updated>
+  <updated>2018-10-23T15:54:11.465Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -14,6 +14,51 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MongoDB升级4.0和事务使用小记</title>
+    <link href="https://claude-ray.github.io/2018/10/23/update-mongod4/"/>
+    <id>https://claude-ray.github.io/2018/10/23/update-mongod4/</id>
+    <published>2018-10-23T14:08:09.000Z</published>
+    <updated>2018-10-23T15:54:11.465Z</updated>
+    
+    <content type="html"><![CDATA[<p>4.0正式版已经出了3个多月，相比测试阶段网上有价值的资料日渐丰富，版本升级以及使用事务需要了解的知识都可以在官网找到。在这里记录一下升级本地开发环境的过程，生产环境应当用数据备份再恢复的方案。</p>
+<p>总文档：<a href="https://docs.mongodb.com/manual/release-notes/4.0/" target="_blank" rel="noopener">Release Notes for MongoDB 4.0</a></p>
+<h2 id="版本升级"><a href="#版本升级" class="headerlink" title="版本升级"></a>版本升级</h2><p>单机开发环境，参考<a href="https://docs.mongodb.com/manual/release-notes/4.0-upgrade-standalone/" target="_blank" rel="noopener">standalone升级文档</a></p>
+<blockquote>
+<p>以下升级流程节选自上述文档</p>
+</blockquote>
+<p>确保本地是3.6版本才能继续进行，以及兼容版本<code>featureCompatibilityVersion</code>为3.6。在mongo shell中可以执行检查和设置。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">db.adminCommand( &#123; getParameter: 1, featureCompatibilityVersion: 1 &#125; )</span><br><span class="line"></span><br><span class="line">db.adminCommand( &#123; setFeatureCompatibilityVersion: <span class="string">"3.6"</span> &#125; )</span><br></pre></td></tr></table></figure>
+<p>升级前应关闭mongod服务和<strong>备份数据</strong>，之后按照官网所给出对应系统的<a href="https://docs.mongodb.com/manual/tutorial/install-mongodb-on-ubuntu/" target="_blank" rel="noopener">安装方法</a>执行安装。</p>
+<p>例如Ubuntu18，可以按下面依次执行<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 9DA31620334BD75D9DCB49F368818C72E52529D4</span><br><span class="line"></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"deb [ arch=amd64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/4.0 multiverse"</span> | sudo tee /etc/apt/sources.list.d/mongodb-org-4.0.list</span><br><span class="line"></span><br><span class="line">sudo apt-get update</span><br><span class="line">sudo apt-get install -y mongodb-org</span><br></pre></td></tr></table></figure></p>
+<p>升级完成后在mongo shell中重新设置兼容性<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.adminCommand( &#123; setFeatureCompatibilityVersion: <span class="string">"4.0"</span> &#125; )</span><br></pre></td></tr></table></figure></p>
+<h2 id="事务使用"><a href="#事务使用" class="headerlink" title="事务使用"></a>事务使用</h2><h3 id="replSet"><a href="#replSet" class="headerlink" title="replSet"></a>replSet</h3><p>目前必须在replSet中使用，简单的配置方法是<code>/etc/mongod.conf</code>添加设置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">replication:</span><br><span class="line">  replSetName: rs0</span><br></pre></td></tr></table></figure></p>
+<p>然后重启mongod <code>service mongod restart</code>，在mongo shell中执行初始化并查看结果<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rs.initiate()</span><br><span class="line">rs.conf()</span><br></pre></td></tr></table></figure></p>
+<h3 id="API"><a href="#API" class="headerlink" title="API"></a>API</h3><p>官方使用教程，内含demo：<br><a href="https://docs.mongodb.com/manual/core/transactions/" target="_blank" rel="noopener">https://docs.mongodb.com/manual/core/transactions/</a></p>
+<p>Nodejs相关文档（npm包需更新）：</p>
+<ul>
+<li><p>node-mongodb-native:<br><a href="http://mongodb.github.io/node-mongodb-native/3.1/api/ClientSession.html#startTransaction" target="_blank" rel="noopener">http://mongodb.github.io/node-mongodb-native/3.1/api/ClientSession.html#startTransaction</a></p>
+</li>
+<li><p>mongoose:<br><a href="https://mongoosejs.com/docs/transactions.html" target="_blank" rel="noopener">https://mongoosejs.com/docs/transactions.html</a></p>
+</li>
+</ul>
+<p>手中项目使用事务的场景不多，暂时没有遇到坑，之后遇到再补充。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;4.0正式版已经出了3个多月，相比测试阶段网上有价值的资料日渐丰富，版本升级以及使用事务需要了解的知识都可以在官网找到。在这里记录一下升级本地开发环境的过程，生产环境应当用数据备份再恢复的方案。&lt;/p&gt;
+&lt;p&gt;总文档：&lt;a href=&quot;https://docs.mongod
+    
+    </summary>
+    
+      <category term="MongoDB" scheme="https://claude-ray.github.io/categories/MongoDB/"/>
+    
+    
+      <category term="MongoDB" scheme="https://claude-ray.github.io/tags/MongoDB/"/>
+    
+  </entry>
   
   <entry>
     <title>koa之Content-Type与Content-Length</title>
