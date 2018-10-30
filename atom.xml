@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-10-23T15:54:11.465Z</updated>
+  <updated>2018-10-30T15:57:24.829Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -14,6 +14,77 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Jest共享server和tests的上下文环境</title>
+    <link href="https://claude-ray.github.io/2018/10/30/jest-server-context/"/>
+    <id>https://claude-ray.github.io/2018/10/30/jest-server-context/</id>
+    <published>2018-10-30T14:05:19.000Z</published>
+    <updated>2018-10-30T15:57:24.829Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>单元测试，test文件的加载顺序尤为关键。对于服务端，通常先启动http server，再通过发起接口请求的方式展开后续测试。</p>
+<p>但仅仅controller层测试不能满足复杂业务的校验，需要对service及以下层级编写测试时，需要切入server的上下文环境才能做出恰当处理。</p>
+<p>笔者尝试一番发现Jest并不能优雅地使用配置支持node.js server和test cases共享上下文环境，具体情况将在下文交代。</p>
+<h1 id="Jest配置项说明"><a href="#Jest配置项说明" class="headerlink" title="Jest配置项说明"></a>Jest配置项说明</h1><p>jest倾向于将测试执行前的运行环境都加载配置(package.json的jest)中。因此我也先在官网<a href="https://jestjs.io/docs/en/configuration" target="_blank" rel="noopener">文档</a>中查询了相关配置项。</p>
+<h2 id="globalSetup-string"><a href="#globalSetup-string" class="headerlink" title="globalSetup [string]"></a>globalSetup [string]</h2><blockquote>
+<p>This option allows the use of a custom global setup module which exports an async function that is triggered once before all test suites. This function gets Jest’s globalConfig object as a parameter.</p>
+</blockquote>
+<p>通过字符串指定一个文件，其exports的函数作为初始化脚本，并支持异步操作。</p>
+<p>jest运行测试过程中，此函数只会在所有测试用例加载前执行一次。用途可以是执行安装脚本，初始化数据库等。</p>
+<p>需要特别注意的是，此函数运行的上下文环境与接下来的测试用例并无关联。</p>
+<blockquote>
+<p>详见issue <a href="https://github.com/facebook/jest/issues/6007" target="_blank" rel="noopener">https://github.com/facebook/jest/issues/6007</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/setup.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 这个变量并不会传到test case中</span></span><br><span class="line">  global.setup = <span class="string">'setup'</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="globalTeardown-string"><a href="#globalTeardown-string" class="headerlink" title="globalTeardown [string]"></a>globalTeardown [string]</h2><blockquote>
+<p>This option allows the use of a custom global teardown module which exports an async function that is triggered once after all test suites. This function gets Jest’s globalConfig object as a parameter.</p>
+</blockquote>
+<p>同globalSetup，该异步函数只会在整个测试生命周期末执行一次。用途可以是运行环境重置，还原或drop数据库等。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/teardown.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`这里和<span class="subst">$&#123;global.setup&#125;</span>运行环境一致`</span>);</span><br><span class="line">  <span class="keyword">return</span> process.exit(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="testEnvironment-string"><a href="#testEnvironment-string" class="headerlink" title="testEnvironment [string]"></a>testEnvironment [string]</h2><p>通常是指定运行环境，默认浏览器，nodejs需要指定为<code>node</code>。</p>
+<p>当然也可以指定为一个文件。该文件需要继承自<code>jest-environment-node</code>，并实现<code>setup</code>、<code>teardown</code>和<code>runScript</code>三个方法。</p>
+<p>以官文的demo举例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/env.js</span></span><br><span class="line"><span class="keyword">const</span> NodeEnvironment = <span class="built_in">require</span>(<span class="string">'jest-environment-node'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomEnvironment</span> <span class="keyword">extends</span> <span class="title">NodeEnvironment</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(config) &#123;</span><br><span class="line">    <span class="keyword">super</span>(config);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> setup() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">super</span>.setup();</span><br><span class="line">    <span class="keyword">await</span> someSetupTasks();</span><br><span class="line">    <span class="keyword">this</span>.global.someGlobalObject = createGlobalObject();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> teardown() &#123;</span><br><span class="line">    <span class="keyword">this</span>.global.someGlobalObject = destroyGlobalObject();</span><br><span class="line">    <span class="keyword">await</span> someTeardownTasks();</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">super</span>.teardown();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  runScript(script) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.runScript(script);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CustomEnvironment;</span><br></pre></td></tr></table></figure></p>
+<p>这里上下文环境支持通过<code>this.global</code>将变量共享到每个测试文件。</p>
+<p><code>jest-environment-node</code>方法说明：</p>
+<ul>
+<li><p>setup: 每个test suit（通常指测试文件）执行一次，支持异步方法。</p>
+</li>
+<li><p>teardown: 每个test suit执行一次，支持异步方法。</p>
+</li>
+<li><p>runScript: 每个小的test都会执行一次，要求用同步，若为异步则执行顺序不可控制。</p>
+</li>
+</ul>
+<h2 id="setupFiles-array"><a href="#setupFiles-array" class="headerlink" title="setupFiles [array]"></a>setupFiles [array]</h2><p>同env的setup。</p>
+<h2 id="setupTestFrameworkScriptFile-string"><a href="#setupTestFrameworkScriptFile-string" class="headerlink" title="setupTestFrameworkScriptFile [string]"></a>setupTestFrameworkScriptFile [string]</h2><p>同env的runScript。</p>
+<h1 id="Jest生命周期"><a href="#Jest生命周期" class="headerlink" title="Jest生命周期"></a>Jest生命周期</h1><p>了解jest常用的一些启动配置后，应该对加载顺序有了大概的认知。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1.</span><br><span class="line">globaSetup -&gt;</span><br><span class="line"></span><br><span class="line">  2.</span><br><span class="line">  env.setup (every test suit) -&gt;</span><br><span class="line">  env.runScript (every test case) -&gt;</span><br><span class="line">  env.teardown (every test suit) -&gt;</span><br><span class="line"></span><br><span class="line">  3.</span><br><span class="line">  repeat...</span><br><span class="line"></span><br><span class="line">    n.</span><br><span class="line">    -&gt; globalTeardown</span><br></pre></td></tr></table></figure>
+<h1 id="Context共享"><a href="#Context共享" class="headerlink" title="Context共享"></a>Context共享</h1><h2 id="调整Server启动位置"><a href="#调整Server启动位置" class="headerlink" title="调整Server启动位置"></a>调整Server启动位置</h2><p>根据不同的测试场景，选择合适的server启动位置：</p>
+<ol>
+<li><p>仅接口层测试。对测试代码的加载流程要求最低，只需要保证测试用例执行前启动http服务即可。可以加在jest的任何一环。如无特殊处理，http服务启动一次就好，放在globalSetup为妙。</p>
+</li>
+<li><p>多层测试，但controller和service之前耦合度较低，用global存储了少量运行信息。这种情况也简单，可以手动挂在this.global，使测试脚本和server的上下文环境相似。</p>
+</li>
+<li><p>多层测试，各模块耦合严重，上下文挂载了较多内容，不止global中存储的变量，对原生JS对象方法也做了修改。这时，通过jest的配置无法传递上下文。</p>
+</li>
+</ol>
+<p>针对第三种情况，我选择将测试入口限制为单个文件(test suit)，其他测试文件用<code>require()</code>引入。此时，jest的env.setup和setupGlobal效果一致，因为jest认为只是启动了单个测试文件。如下，index.test.js的<code>beforeAll</code>具备了所有测试用例的最高优先级，保证server启动早于测试执行，并实现测试用例和server共享上下文。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/index.test.js</span></span><br><span class="line"></span><br><span class="line">beforeAll(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// launcher server</span></span><br><span class="line">  <span class="keyword">await</span> load();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// require all test files</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./file.test.js'</span>);</span><br></pre></td></tr></table></figure>
+<p>综上，总的package.json<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"demo"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"jest ./test/index"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"jest"</span>: &#123;</span><br><span class="line">    <span class="attr">"testEnvironment"</span>: <span class="string">"./test/env.js"</span>,</span><br><span class="line">    <span class="attr">"globalSetup"</span>: <span class="string">"./test/setup.js"</span>,</span><br><span class="line">    <span class="attr">"globalTeardown"</span>: <span class="string">"./test/teardown.js"</span>,</span><br><span class="line">    <span class="attr">"globals"</span>: &#123;</span><br><span class="line">      <span class="attr">"testBoolean"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>参考egg的做法，统一将上下文放在app，并通过<code>egg-mock</code>来获取。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      本文首先简单介绍Jest关于启动的配置项，阐述Jest测试生命周期，之后粗略总结不同情况的server应该何时启动，最终使用略粗鄙的办法解决本次问题。
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
+    
+    
+      <category term="Jest Test" scheme="https://claude-ray.github.io/tags/Jest-Test/"/>
+    
+  </entry>
   
   <entry>
     <title>MongoDB升级4.0和事务使用小记</title>

@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JavaScript," />
+  <meta name="keywords" content="Jest Test," />
 
 
 
@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="简单来说，当调用`[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。">
-<meta name="keywords" content="JavaScript">
+<meta name="description" content="本文首先简单介绍Jest关于启动的配置项，阐述Jest测试生命周期，之后粗略总结不同情况的server应该何时启动，最终使用略粗鄙的办法解决本次问题。">
+<meta name="keywords" content="Jest Test">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Array.map(parseInt)为什么返回了NaN">
-<meta property="og:url" content="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/index.html">
+<meta property="og:title" content="Jest共享server和tests的上下文环境">
+<meta property="og:url" content="https://claude-ray.github.io/2018/10/30/jest-server-context/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="简单来说，当调用`[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。">
+<meta property="og:description" content="本文首先简单介绍Jest关于启动的配置项，阐述Jest测试生命周期，之后粗略总结不同情况的server应该何时启动，最终使用略粗鄙的办法解决本次问题。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-23T11:35:36.042Z">
+<meta property="og:updated_time" content="2018-10-30T15:57:24.829Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Array.map(parseInt)为什么返回了NaN">
-<meta name="twitter:description" content="简单来说，当调用`[&apos;1&apos;, &apos;2&apos;, &apos;3&apos;].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。">
+<meta name="twitter:title" content="Jest共享server和tests的上下文环境">
+<meta name="twitter:description" content="本文首先简单介绍Jest关于启动的配置项，阐述Jest测试生命周期，之后粗略总结不同情况的server应该何时启动，最终使用略粗鄙的办法解决本次问题。">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/10/30/jest-server-context/"/>
 
 
 
@@ -143,7 +143,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>Array.map(parseInt)为什么返回了NaN | Claude's Home</title>
+  <title>Jest共享server和tests的上下文环境 | Claude's Home</title>
   
 
 
@@ -282,7 +282,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/10/30/jest-server-context/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -299,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Array.map(parseInt)为什么返回了NaN</h1>
+          <h1 class="post-title" itemprop="name headline">Jest共享server和tests的上下文环境</h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-23T19:29:48+08:00">
-                2017-12-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-30T22:05:19+08:00">
+                2018-10-30
               </time>
             
 
@@ -351,7 +351,7 @@
 
           
           
-             <span id="/2017/12/23/Array-map-parseInt-为什么返回了NaN/" class="leancloud_visitors" data-flag-title="Array.map(parseInt)为什么返回了NaN">
+             <span id="/2018/10/30/jest-server-context/" class="leancloud_visitors" data-flag-title="Jest共享server和tests的上下文环境">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  903
+                  1,209
                 </span>
               
 
@@ -393,7 +393,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  3
+                  5
                 </span>
               
             </div>
@@ -401,7 +401,7 @@
 
           
               <div class="post-description">
-                  简单来说，当调用`['1', '2', '3'].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。
+                  本文首先简单介绍Jest关于启动的配置项，阐述Jest测试生命周期，之后粗略总结不同情况的server应该何时启动，最终使用略粗鄙的办法解决本次问题。
               </div>
           
 
@@ -415,49 +415,55 @@
       
 
       
-        <p>为什么没有得到想要的<code>[1, 2, 3]</code>？先来看parseInt的<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt" target="_blank" rel="noopener">文档</a>。</p>
-<h2 id="parseInt"><a href="#parseInt" class="headerlink" title="parseInt"></a>parseInt</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parseInt(string, radix);</span><br></pre></td></tr></table></figure>
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ul>
-<li><code>string</code>是必传参数，要被解析的字符串，排在起始处的空格会被忽略。</li>
-<li><code>radix</code>这是可选参数，但不了解的话就容易踩坑。它是一个介于2和36之间的整数(数学系统的基础)，表示上述字符串的基数。例如10代表十进制。此外，不指定该参数或0，均表示为以十进制。如果以<code>0x</code> 或 <code>0X</code> 开头，表示十六进制。</li>
-</ul>
-<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>parseInt 函数将其第一个参数转换为字符串，解析它，并返回一个整数或NaN。如果不是NaN，返回的值将是作为指定基数（基数）中的数字的第一个参数的整数。</p>
-<p>基数大于 10 时，用字母表中的字母来表示大于 9 的数字。例如十六进制中，使用 A 到 F。</p>
-<h3 id="一些细节（keng）"><a href="#一些细节（keng）" class="headerlink" title="一些细节（keng）"></a>一些细节（keng）</h3><ol>
-<li><p>一些数中可能包含e字符（例如6.022e23），使用parseInt去截取包含e字符数值部分会造成难以预料的结果。例如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'6.022e23'</span>, <span class="number">10</span>); <span class="comment">// 返回 6</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'6.022e2'</span>, <span class="number">10</span>);  <span class="comment">// 返回 602</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>当parseInt遇到不属于radix参数所指定的基数中的字符（eg: 有人告诉你<code>0103101</code>是2进制），那么该字符（3）和其后的字符（101）都将被忽略，接着返回已经解析的整数部分（010）。parseInt 将截取整数部分，开头和结尾的空白符允许存在，会被忽略。那么NaN的出现情况就是，<code>string</code>的第一个字符（除空白）不属于radix指定进制时，因为parseInt什么都没有解析到。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'123'</span>, <span class="string">'afdsaf'</span>); <span class="comment">// 返回123</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在没有指定基数，或者基数为 0 的情况下，JavaScript 作如下处理：</p>
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>单元测试，test文件的加载顺序尤为关键。对于服务端，通常先启动http server，再通过发起接口请求的方式展开后续测试。</p>
+<p>但仅仅controller层测试不能满足复杂业务的校验，需要对service及以下层级编写测试时，需要切入server的上下文环境才能做出恰当处理。</p>
+<p>笔者尝试一番发现Jest并不能优雅地使用配置支持node.js server和test cases共享上下文环境，具体情况将在下文交代。</p>
+<h1 id="Jest配置项说明"><a href="#Jest配置项说明" class="headerlink" title="Jest配置项说明"></a>Jest配置项说明</h1><p>jest倾向于将测试执行前的运行环境都加载配置(package.json的jest)中。因此我也先在官网<a href="https://jestjs.io/docs/en/configuration" target="_blank" rel="noopener">文档</a>中查询了相关配置项。</p>
+<h2 id="globalSetup-string"><a href="#globalSetup-string" class="headerlink" title="globalSetup [string]"></a>globalSetup [string]</h2><blockquote>
+<p>This option allows the use of a custom global setup module which exports an async function that is triggered once before all test suites. This function gets Jest’s globalConfig object as a parameter.</p>
+</blockquote>
+<p>通过字符串指定一个文件，其exports的函数作为初始化脚本，并支持异步操作。</p>
+<p>jest运行测试过程中，此函数只会在所有测试用例加载前执行一次。用途可以是执行安装脚本，初始化数据库等。</p>
+<p>需要特别注意的是，此函数运行的上下文环境与接下来的测试用例并无关联。</p>
+<blockquote>
+<p>详见issue <a href="https://github.com/facebook/jest/issues/6007" target="_blank" rel="noopener">https://github.com/facebook/jest/issues/6007</a></p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/setup.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 这个变量并不会传到test case中</span></span><br><span class="line">  global.setup = <span class="string">'setup'</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h2 id="globalTeardown-string"><a href="#globalTeardown-string" class="headerlink" title="globalTeardown [string]"></a>globalTeardown [string]</h2><blockquote>
+<p>This option allows the use of a custom global teardown module which exports an async function that is triggered once after all test suites. This function gets Jest’s globalConfig object as a parameter.</p>
+</blockquote>
+<p>同globalSetup，该异步函数只会在整个测试生命周期末执行一次。用途可以是运行环境重置，还原或drop数据库等。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/teardown.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`这里和<span class="subst">$&#123;global.setup&#125;</span>运行环境一致`</span>);</span><br><span class="line">  <span class="keyword">return</span> process.exit(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="testEnvironment-string"><a href="#testEnvironment-string" class="headerlink" title="testEnvironment [string]"></a>testEnvironment [string]</h2><p>通常是指定运行环境，默认浏览器，nodejs需要指定为<code>node</code>。</p>
+<p>当然也可以指定为一个文件。该文件需要继承自<code>jest-environment-node</code>，并实现<code>setup</code>、<code>teardown</code>和<code>runScript</code>三个方法。</p>
+<p>以官文的demo举例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/env.js</span></span><br><span class="line"><span class="keyword">const</span> NodeEnvironment = <span class="built_in">require</span>(<span class="string">'jest-environment-node'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomEnvironment</span> <span class="keyword">extends</span> <span class="title">NodeEnvironment</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(config) &#123;</span><br><span class="line">    <span class="keyword">super</span>(config);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> setup() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">super</span>.setup();</span><br><span class="line">    <span class="keyword">await</span> someSetupTasks();</span><br><span class="line">    <span class="keyword">this</span>.global.someGlobalObject = createGlobalObject();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> teardown() &#123;</span><br><span class="line">    <span class="keyword">this</span>.global.someGlobalObject = destroyGlobalObject();</span><br><span class="line">    <span class="keyword">await</span> someTeardownTasks();</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">super</span>.teardown();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  runScript(script) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.runScript(script);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CustomEnvironment;</span><br></pre></td></tr></table></figure></p>
+<p>这里上下文环境支持通过<code>this.global</code>将变量共享到每个测试文件。</p>
+<p><code>jest-environment-node</code>方法说明：</p>
 <ul>
-<li>string 以’0x’或者’0X’开头, 则基数是16 (16进制).</li>
-<li>string 以’0’开头, 基数是8（八进制）或者10（十进制），那么具体是哪个基数由实现环境决定。ECMAScript 5 规定使用10，但是并不是所有的浏览器都遵循这个规定。因此，永远都要明确给出radix参数的值。</li>
-<li>string 以其它任何值开头，则基数是10 (十进制)。</li>
-</ul>
+<li><p>setup: 每个test suit（通常指测试文件）执行一次，支持异步方法。</p>
 </li>
-<li><p>将整型数值以特定基数转换成它的字符串值可以使用 <code>intValue.toString(radix);</code></p>
+<li><p>teardown: 每个test suit执行一次，支持异步方法。</p>
+</li>
+<li><p>runScript: 每个小的test都会执行一次，要求用同步，若为异步则执行顺序不可控制。</p>
+</li>
+</ul>
+<h2 id="setupFiles-array"><a href="#setupFiles-array" class="headerlink" title="setupFiles [array]"></a>setupFiles [array]</h2><p>同env的setup。</p>
+<h2 id="setupTestFrameworkScriptFile-string"><a href="#setupTestFrameworkScriptFile-string" class="headerlink" title="setupTestFrameworkScriptFile [string]"></a>setupTestFrameworkScriptFile [string]</h2><p>同env的runScript。</p>
+<h1 id="Jest生命周期"><a href="#Jest生命周期" class="headerlink" title="Jest生命周期"></a>Jest生命周期</h1><p>了解jest常用的一些启动配置后，应该对加载顺序有了大概的认知。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1.</span><br><span class="line">globaSetup -&gt;</span><br><span class="line"></span><br><span class="line">  2.</span><br><span class="line">  env.setup (every test suit) -&gt;</span><br><span class="line">  env.runScript (every test case) -&gt;</span><br><span class="line">  env.teardown (every test suit) -&gt;</span><br><span class="line"></span><br><span class="line">  3.</span><br><span class="line">  repeat...</span><br><span class="line"></span><br><span class="line">    n.</span><br><span class="line">    -&gt; globalTeardown</span><br></pre></td></tr></table></figure>
+<h1 id="Context共享"><a href="#Context共享" class="headerlink" title="Context共享"></a>Context共享</h1><h2 id="调整Server启动位置"><a href="#调整Server启动位置" class="headerlink" title="调整Server启动位置"></a>调整Server启动位置</h2><p>根据不同的测试场景，选择合适的server启动位置：</p>
+<ol>
+<li><p>仅接口层测试。对测试代码的加载流程要求最低，只需要保证测试用例执行前启动http服务即可。可以加在jest的任何一环。如无特殊处理，http服务启动一次就好，放在globalSetup为妙。</p>
+</li>
+<li><p>多层测试，但controller和service之前耦合度较低，用global存储了少量运行信息。这种情况也简单，可以手动挂在this.global，使测试脚本和server的上下文环境相似。</p>
+</li>
+<li><p>多层测试，各模块耦合严重，上下文挂载了较多内容，不止global中存储的变量，对原生JS对象方法也做了修改。这时，通过jest的配置无法传递上下文。</p>
 </li>
 </ol>
-<h2 id="Array-map"><a href="#Array-map" class="headerlink" title="Array.map"></a>Array.map</h2><p>其实看完parseInt的文档就已经清晰了，再来看<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map" target="_blank" rel="noopener">map</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> new_array = arr.map(<span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">currentValue[, index[, array]]</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Return element for new_array</span></span><br><span class="line">&#125;[, thisArg])</span><br></pre></td></tr></table></figure>
-<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><p>通常情况下，<code>callback</code> 只需要接受一个参数，就是正在被遍历的数组元素本身。但这并不意味着 map 只给 callback 传了一个参数。</p>
-<ul>
-<li><code>callback</code>: 生成新数组元素的函数，使用三个参数：<ul>
-<li><code>currentValue</code>: 正在处理的当前元素。</li>
-<li><code>index</code>: 当前元素的索引。</li>
-<li><code>array</code>: map 方法被调用的数组。</li>
-</ul>
-</li>
-<li><code>thisArg</code>: 可选，执行 callback 函数时 使用的this 值。</li>
-</ul>
-<blockquote>
-<p>返回值是一个新数组，每个元素都是回调函数的值。</p>
-</blockquote>
-<h2 id="最终分析"><a href="#最终分析" class="headerlink" title="最终分析"></a>最终分析</h2><p>调用<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(console.log)</code>观察，列举出当<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(parseInt)</code>的时候发生了什么。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</span><br></pre></td></tr></table></figure></p>
-<p>由于parseInt只接受了前两个参数，过滤掉array得到如下。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>); <span class="comment">// radix为0，按十进制输出1</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>); <span class="comment">// radix为1，不满足2到36范围</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>); <span class="comment">// radix为2，将3看成二进制数，但3并不是二进制，无法转换</span></span><br></pre></td></tr></table></figure></p>
-<p>再换一个数组，也可以按照此逻辑推算正确结果了。</p>
+<p>针对第三种情况，我选择将测试入口限制为单个文件(test suit)，其他测试文件用<code>require()</code>引入。此时，jest的env.setup和setupGlobal效果一致，因为jest认为只是启动了单个测试文件。如下，index.test.js的<code>beforeAll</code>具备了所有测试用例的最高优先级，保证server启动早于测试执行，并实现测试用例和server共享上下文。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/index.test.js</span></span><br><span class="line"></span><br><span class="line">beforeAll(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// launcher server</span></span><br><span class="line">  <span class="keyword">await</span> load();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// require all test files</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./file.test.js'</span>);</span><br></pre></td></tr></table></figure>
+<p>综上，总的package.json<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"demo"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"jest ./test/index"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"jest"</span>: &#123;</span><br><span class="line">    <span class="attr">"testEnvironment"</span>: <span class="string">"./test/env.js"</span>,</span><br><span class="line">    <span class="attr">"globalSetup"</span>: <span class="string">"./test/setup.js"</span>,</span><br><span class="line">    <span class="attr">"globalTeardown"</span>: <span class="string">"./test/teardown.js"</span>,</span><br><span class="line">    <span class="attr">"globals"</span>: &#123;</span><br><span class="line">      <span class="attr">"testBoolean"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>参考egg的做法，统一将上下文放在app，并通过<code>egg-mock</code>来获取。</p>
 
       
     </div>
@@ -486,7 +492,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/" title="Array.map(parseInt)为什么返回了NaN">https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/</a>
+      <a href="https://claude-ray.github.io/2018/10/30/jest-server-context/" title="Jest共享server和tests的上下文环境">https://claude-ray.github.io/2018/10/30/jest-server-context/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -502,7 +508,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"> <i class="fa fa-tag"></i> JavaScript</a>
+            <a href="/tags/Jest-Test/" rel="tag"> <i class="fa fa-tag"></i> Jest Test</a>
           
         </div>
       
@@ -515,8 +521,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/20/缓存不当至服务崩溃/" rel="next" title="缓存不当至服务崩溃">
-                <i class="fa fa-chevron-left"></i> 缓存不当至服务崩溃
+              <a href="/2018/10/23/update-mongod4/" rel="next" title="MongoDB升级4.0和事务使用小记">
+                <i class="fa fa-chevron-left"></i> MongoDB升级4.0和事务使用小记
               </a>
             
           </div>
@@ -524,10 +530,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/27/使用chokidar监视文件更新/" rel="prev" title="使用chokidar监视文件更新">
-                使用chokidar监视文件更新 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -706,7 +708,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#parseInt"><span class="nav-number">1.</span> <span class="nav-text">parseInt</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数"><span class="nav-number">1.1.</span> <span class="nav-text">参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描述"><span class="nav-number">1.2.</span> <span class="nav-text">描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一些细节（keng）"><span class="nav-number">1.3.</span> <span class="nav-text">一些细节（keng）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Array-map"><span class="nav-number">2.</span> <span class="nav-text">Array.map</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数-1"><span class="nav-number">2.1.</span> <span class="nav-text">参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最终分析"><span class="nav-number">3.</span> <span class="nav-text">最终分析</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jest配置项说明"><span class="nav-number">2.</span> <span class="nav-text">Jest配置项说明</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#globalSetup-string"><span class="nav-number">2.1.</span> <span class="nav-text">globalSetup [string]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#globalTeardown-string"><span class="nav-number">2.2.</span> <span class="nav-text">globalTeardown [string]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#testEnvironment-string"><span class="nav-number">2.3.</span> <span class="nav-text">testEnvironment [string]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setupFiles-array"><span class="nav-number">2.4.</span> <span class="nav-text">setupFiles [array]</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#setupTestFrameworkScriptFile-string"><span class="nav-number">2.5.</span> <span class="nav-text">setupTestFrameworkScriptFile [string]</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Jest生命周期"><span class="nav-number">3.</span> <span class="nav-text">Jest生命周期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Context共享"><span class="nav-number">4.</span> <span class="nav-text">Context共享</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#调整Server启动位置"><span class="nav-number">4.1.</span> <span class="nav-text">调整Server启动位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他方法"><span class="nav-number">4.2.</span> <span class="nav-text">其他方法</span></a></li></ol></li></ol></div>
             
 
           </div>
