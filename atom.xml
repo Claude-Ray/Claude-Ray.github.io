@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-10-30T15:57:24.829Z</updated>
+  <updated>2018-10-31T14:14:29.396Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://claude-ray.github.io/2018/10/30/jest-server-context/"/>
     <id>https://claude-ray.github.io/2018/10/30/jest-server-context/</id>
     <published>2018-10-30T14:05:19.000Z</published>
-    <updated>2018-10-30T15:57:24.829Z</updated>
+    <updated>2018-10-31T14:14:29.396Z</updated>
     
     <content type="html"><![CDATA[<h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>单元测试，test文件的加载顺序尤为关键。对于服务端，通常先启动http server，再通过发起接口请求的方式展开后续测试。</p>
 <p>但仅仅controller层测试不能满足复杂业务的校验，需要对service及以下层级编写测试时，需要切入server的上下文环境才能做出恰当处理。</p>
@@ -82,7 +82,11 @@
       <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
     
     
-      <category term="Jest Test" scheme="https://claude-ray.github.io/tags/Jest-Test/"/>
+      <category term="Jest" scheme="https://claude-ray.github.io/tags/Jest/"/>
+    
+      <category term="Unit Testing" scheme="https://claude-ray.github.io/tags/Unit-Testing/"/>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
   </entry>
   
@@ -136,7 +140,7 @@
     <link href="https://claude-ray.github.io/2018/10/18/koa-content/"/>
     <id>https://claude-ray.github.io/2018/10/18/koa-content/</id>
     <published>2018-10-18T14:16:05.000Z</published>
-    <updated>2018-10-22T14:42:59.606Z</updated>
+    <updated>2018-10-31T14:14:36.232Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a>Content-Type</h1><p>众所周知，koa可以方便地通过<code>ctx.type=</code>来设置响应头的<code>Content-Type</code>。</p>
 <p>但下面这段代码，当响应体ctx.body为<code>object</code>时，无论怎么设置ctx.type，收到的Content-Type都是<code>application/json</code>。</p>
@@ -182,6 +186,10 @@
     
       <category term="JavaScript" scheme="https://claude-ray.github.io/tags/JavaScript/"/>
     
+      <category term="Koa" scheme="https://claude-ray.github.io/tags/Koa/"/>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
   </entry>
   
   <entry>
@@ -189,7 +197,7 @@
     <link href="https://claude-ray.github.io/2018/10/12/old-sms-mas-nodejs/"/>
     <id>https://claude-ray.github.io/2018/10/12/old-sms-mas-nodejs/</id>
     <published>2018-10-12T14:04:17.000Z</published>
-    <updated>2018-10-18T14:12:06.819Z</updated>
+    <updated>2018-10-31T14:14:55.144Z</updated>
     
     <content type="html"><![CDATA[<h2 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h2><p>如果使用<code>old authentication</code>方式连接4.1版本之前的mysql，<code>sequelize</code>和<code>mysql2</code>无法通过认证：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123; Error: Access denied <span class="keyword">for</span> user: <span class="string">'@127.0.0.x'</span> (Using password: NO)</span><br><span class="line">    at Packet.asError (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packets/packet.js:714:13)</span><br><span class="line">    at ClientHandshake.Command.execute (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/commands/command.js:28:22)</span><br><span class="line">    at Connection.handlePacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:513:28)</span><br><span class="line">    at PacketParser.onPacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:81:16)</span><br><span class="line">    at PacketParser.executeStart (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packet_parser.js:76:14)</span><br><span class="line">    at Socket.&lt;anonymous&gt; (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:89:29)</span><br><span class="line">    at Socket.emit (events.js:182:13)</span><br><span class="line">    at addChunk (_stream_readable.js:283:12)</span><br><span class="line">    at readableAddChunk (_stream_readable.js:264:11)</span><br><span class="line">    at Socket.Readable.push (_stream_readable.js:219:10)</span><br><span class="line">    at TCP.onread (net.js:639:20)</span><br><span class="line">  code: <span class="string">'ER_ACCESS_DENIED_ERROR'</span>,</span><br><span class="line">  errno: 1045,</span><br><span class="line">  sqlState: <span class="string">''</span>,</span><br><span class="line">  sqlMessage:</span><br><span class="line">   <span class="string">'Access denied for user: \'</span>@127.0.0.x\<span class="string">' (Using password: NO)'</span> &#125;</span><br></pre></td></tr></table></figure></p>
 <p>处理倒不困难，在不能改动数据库的情况下，可以改用npm包<code>mysql</code>。</p>
@@ -229,6 +237,8 @@
     
       <category term="MySQL" scheme="https://claude-ray.github.io/tags/MySQL/"/>
     
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
   </entry>
   
   <entry>
@@ -236,7 +246,7 @@
     <link href="https://claude-ray.github.io/2018/09/02/node-image-captcha/"/>
     <id>https://claude-ray.github.io/2018/09/02/node-image-captcha/</id>
     <published>2018-09-02T13:46:55.000Z</published>
-    <updated>2018-09-09T09:01:01.448Z</updated>
+    <updated>2018-10-31T14:12:50.376Z</updated>
     
     <content type="html"><![CDATA[<h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><p>参考文档安装基础图形库，<a href="https://github.com/Automattic/node-canvas" target="_blank" rel="noopener">node-canvas</a>。</p>
 <p>建议使用<code>npm install canvas@next</code>安装2.x版本，兼容Windows开发环境，接口功能更完善。</p>
@@ -288,6 +298,10 @@
     
     
       <category term="JavaScript" scheme="https://claude-ray.github.io/tags/JavaScript/"/>
+    
+      <category term="Captcha" scheme="https://claude-ray.github.io/tags/Captcha/"/>
+    
+      <category term="Canvas" scheme="https://claude-ray.github.io/tags/Canvas/"/>
     
   </entry>
   
@@ -345,7 +359,7 @@
     <link href="https://claude-ray.github.io/2018/07/31/%E9%98%BF%E9%87%8C%E4%BA%91%E9%AA%8C%E8%AF%81%E7%A0%81node%E6%8E%A5%E5%85%A5/"/>
     <id>https://claude-ray.github.io/2018/07/31/阿里云验证码node接入/</id>
     <published>2018-07-31T14:51:14.000Z</published>
-    <updated>2018-08-08T15:37:38.708Z</updated>
+    <updated>2018-10-31T14:16:55.885Z</updated>
     
     <content type="html"><![CDATA[<h2 id="文档地址"><a href="#文档地址" class="headerlink" title="文档地址"></a>文档地址</h2><p>首先放出<del>不是那么</del>重要的文档地址。</p>
 <p>我认为值得看的是使用说明中的流程图，其他感兴趣的信息可以在文档左侧菜单查找。</p>
@@ -394,6 +408,8 @@
     
       <category term="Captcha" scheme="https://claude-ray.github.io/tags/Captcha/"/>
     
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
   </entry>
   
   <entry>
@@ -441,7 +457,7 @@
     <link href="https://claude-ray.github.io/2018/02/26/request%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/"/>
     <id>https://claude-ray.github.io/2018/02/26/request中文乱码问题/</id>
     <published>2018-02-26T14:16:20.000Z</published>
-    <updated>2018-02-26T14:19:56.136Z</updated>
+    <updated>2018-10-31T14:18:40.593Z</updated>
     
     <content type="html"><![CDATA[<h2 id="gzip"><a href="#gzip" class="headerlink" title="gzip"></a>gzip</h2><p>可能是需要开启<code>gzip: true</code><br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">request(&#123;url, <span class="attr">gzip</span>: <span class="literal">true</span>&#125;);</span><br></pre></td></tr></table></figure></p>
 <h2 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h2><h3 id="buffer-decode"><a href="#buffer-decode" class="headerlink" title="buffer decode"></a>buffer decode</h3><p>可以考虑使用<code>iconv-lite</code>转换buffer。request设置<code>encoding: null</code>时，会返回buffer形式的body。</p>
@@ -462,6 +478,8 @@
       <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
     
     
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
   </entry>
   
   <entry>
@@ -469,7 +487,7 @@
     <link href="https://claude-ray.github.io/2018/01/27/%E4%BD%BF%E7%94%A8chokidar%E7%9B%91%E8%A7%86%E6%96%87%E4%BB%B6%E6%9B%B4%E6%96%B0/"/>
     <id>https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/</id>
     <published>2018-01-27T04:57:42.000Z</published>
-    <updated>2018-01-27T05:21:12.052Z</updated>
+    <updated>2018-10-31T14:15:18.654Z</updated>
     
     <content type="html"><![CDATA[<h2 id="监视文件"><a href="#监视文件" class="headerlink" title="监视文件"></a>监视文件</h2><p>使用<code>chokidar</code>，可以监视指定路径下目录、文件的变动。由于我只关注更改，因此监视<code>change</code>事件即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs   = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> chokidar = <span class="built_in">require</span>(<span class="string">'chokidar'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = watchChange;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 监听目录或文件变动</span></span><br><span class="line"><span class="comment"> * @param &#123;string|array&#125; paths    目录或文件路径</span></span><br><span class="line"><span class="comment"> * @param &#123;function&#125;     onChange 回调函数</span></span><br><span class="line"><span class="comment"> * @return &#123;Promise.&lt;*&gt;&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchChange</span>(<span class="params">paths, onChange</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onChange !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`onChange (<span class="subst">$&#123;onChange&#125;</span>) is not a function`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(paths)) paths = [paths];</span><br><span class="line"></span><br><span class="line">  paths.forEach(<span class="function"><span class="params">path</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!(path &amp;&amp; fs.existsSync(path))) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`can't find path <span class="subst">$&#123;path&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  chokidar.watch(paths)</span><br><span class="line">    <span class="comment">// .on('add', filepath =&gt; &#123;console.log('you can watch more events by chains')&#125;)</span></span><br><span class="line">    .on(<span class="string">'change'</span>, filepath =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> filename = path.basename(filepath);</span><br><span class="line">      onChange(filename);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <h2 id="更新缓存"><a href="#更新缓存" class="headerlink" title="更新缓存"></a>更新缓存</h2><p>为了避免每次取内容都读文件，使用了<code>lodash.memoize</code>缓存读取结果。</p>
@@ -489,6 +507,8 @@
     
       <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
     
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
   </entry>
   
@@ -600,7 +620,7 @@
     <link href="https://claude-ray.github.io/2017/12/05/vscode-evernote%E4%BA%91%E7%AC%94%E8%AE%B0/"/>
     <id>https://claude-ray.github.io/2017/12/05/vscode-evernote云笔记/</id>
     <published>2017-12-05T15:40:53.000Z</published>
-    <updated>2017-12-05T16:02:29.000Z</updated>
+    <updated>2018-10-31T14:19:08.784Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Why-Evernote"><a href="#Why-Evernote" class="headerlink" title="Why Evernote"></a>Why Evernote</h1><p>之前一直使用有道云来保存笔记，支持markdown，免费的功能满足笔记所用，界面也还算可以。缺点是有广告，还经历了几次服务崩溃和笔记丢失，虽然联系客服又找回来了，但终究是越用越不爽。</p>
 <p>支持markdown的云笔记非常多，可以凭喜好选择。但要说云笔记软件哪款做的最好，我更倾心于evernote。</p>
@@ -693,7 +713,7 @@
     <link href="https://claude-ray.github.io/2017/10/05/node%E8%8E%B7%E5%8F%96GBK%E7%BC%96%E7%A0%81%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
     <id>https://claude-ray.github.io/2017/10/05/node获取GBK编码字符串/</id>
     <published>2017-10-05T00:50:46.000Z</published>
-    <updated>2018-04-19T16:04:06.050Z</updated>
+    <updated>2018-10-31T14:14:44.905Z</updated>
     
     <content type="html"><![CDATA[<h1 id="UTF8-to-GBK-Hex-String"><a href="#UTF8-to-GBK-Hex-String" class="headerlink" title="UTF8 to GBK Hex String"></a>UTF8 to GBK Hex String</h1><h2 id="iconv-lite"><a href="#iconv-lite" class="headerlink" title="iconv-lite"></a>iconv-lite</h2><p>通常都会使用 <code>iconv-lite</code> 这个包实现Node的编码转换，但是这个包是基于 <code>Buffer</code> 的，如果传递给其他语言的系统，需要先转换为 <code>String</code> 字符串。</p>
 <p>在网上查阅了相关资料，并没有给出很好的解答。一些比较老的回答都在说，Node中无法把Buffer转换成gbk字符串。</p>
@@ -721,6 +741,8 @@
     
       <category term="String" scheme="https://claude-ray.github.io/tags/String/"/>
     
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
   </entry>
   
   <entry>
@@ -728,7 +750,7 @@
     <link href="https://claude-ray.github.io/2017/07/24/Express%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     <id>https://claude-ray.github.io/2017/07/24/Express源码分析/</id>
     <published>2017-07-24T14:54:05.000Z</published>
-    <updated>2017-07-24T15:09:31.000Z</updated>
+    <updated>2018-10-31T14:17:09.800Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Express源码分析"><a href="#Express源码分析" class="headerlink" title="Express源码分析"></a>Express源码分析</h1><h2 id="项目整体结构"><a href="#项目整体结构" class="headerlink" title="项目整体结构"></a>项目整体结构</h2><p>相较于 <code>4.15.2</code> ， <code>4.15.3</code> 又一次移除了所有内部<code>node_modules</code>，目录结构恢复整洁。</p>
 <blockquote>
@@ -779,6 +801,8 @@
     
     
       <category term="Express" scheme="https://claude-ray.github.io/tags/Express/"/>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
   </entry>
   
