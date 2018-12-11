@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Claude&#39;s Home">
 <meta property="og:description" content="透过ctx.body setter的执行过程，分析koa如何设置响应头content-type和content-length，以及一些注意事项。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T14:14:36.232Z">
+<meta property="og:updated_time" content="2018-12-11T15:46:17.206Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="koa之Content-Type与Content-Length">
 <meta name="twitter:description" content="透过ctx.body setter的执行过程，分析koa如何设置响应头content-type和content-length，以及一些注意事项。">
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,322
+                  1,385
                 </span>
               
 
@@ -433,6 +433,9 @@
 <p>另一种常规方法是调整数据格式后再对ctx.body赋值，例如对object进行JSON.stringify处理后，之前设置的content-type才不会被覆盖为<code>application/json</code>。</p>
 <blockquote>
 <p>ctx.type的设置支持各类缩略词，每次set前都会通过<code>mime-types</code>和<code>mime-db</code>依赖匹配完整名称，并挂上charset。</p>
+</blockquote>
+<blockquote>
+<p>除了设置，还需要注意的点是ctx.type的getter会过滤掉<code>charset</code>部分，因此<strong>ctx.type的setter和getter不是完全对等的</strong>。如果想获取之前设置过的完整信息，需要通过<code>ctx.res.getHeader(&#39;Content-Type&#39;)</code>到头部获取。</p>
 </blockquote>
 <p>Wait，好像还漏了什么？</p>
 <p>content-type既然在最后给定为json，为什么执行了一个<code>this.remove(&#39;Content-Length&#39;)</code>？且听下面分解。</p>
@@ -613,7 +616,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

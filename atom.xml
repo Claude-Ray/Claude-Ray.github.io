@@ -176,7 +176,7 @@
     <link href="https://claude-ray.github.io/2018/10/18/koa-content/"/>
     <id>https://claude-ray.github.io/2018/10/18/koa-content/</id>
     <published>2018-10-18T14:16:05.000Z</published>
-    <updated>2018-10-31T14:14:36.232Z</updated>
+    <updated>2018-12-11T15:46:17.206Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a>Content-Type</h1><p>众所周知，koa可以方便地通过<code>ctx.type=</code>来设置响应头的<code>Content-Type</code>。</p>
 <p>但下面这段代码，当响应体ctx.body为<code>object</code>时，无论怎么设置ctx.type，收到的Content-Type都是<code>application/json</code>。</p>
@@ -196,6 +196,9 @@
 <p>另一种常规方法是调整数据格式后再对ctx.body赋值，例如对object进行JSON.stringify处理后，之前设置的content-type才不会被覆盖为<code>application/json</code>。</p>
 <blockquote>
 <p>ctx.type的设置支持各类缩略词，每次set前都会通过<code>mime-types</code>和<code>mime-db</code>依赖匹配完整名称，并挂上charset。</p>
+</blockquote>
+<blockquote>
+<p>除了设置，还需要注意的点是ctx.type的getter会过滤掉<code>charset</code>部分，因此<strong>ctx.type的setter和getter不是完全对等的</strong>。如果想获取之前设置过的完整信息，需要通过<code>ctx.res.getHeader(&#39;Content-Type&#39;)</code>到头部获取。</p>
 </blockquote>
 <p>Wait，好像还漏了什么？</p>
 <p>content-type既然在最后给定为json，为什么执行了一个<code>this.remove(&#39;Content-Length&#39;)</code>？且听下面分解。</p>
@@ -714,18 +717,16 @@
   </entry>
   
   <entry>
-    <title>9月踩的坑</title>
-    <link href="https://claude-ray.github.io/2017/10/05/9%E6%9C%88%E8%B8%A9%E7%9A%84%E5%9D%91/"/>
-    <id>https://claude-ray.github.io/2017/10/05/9月踩的坑/</id>
+    <title>lodash3升级4踩坑</title>
+    <link href="https://claude-ray.github.io/2017/10/05/lodash-3-to-4/"/>
+    <id>https://claude-ray.github.io/2017/10/05/lodash-3-to-4/</id>
     <published>2017-10-05T01:15:09.000Z</published>
-    <updated>2017-12-06T15:40:17.000Z</updated>
+    <updated>2018-12-11T16:05:56.208Z</updated>
     
     <content type="html"><![CDATA[<h2 id="lodash版本问题"><a href="#lodash版本问题" class="headerlink" title="lodash版本问题"></a>lodash版本问题</h2><p>近期更新了lodash包，<code>3.x</code> 到最新的 <code>4.17.x</code>，然后就发现系统拿不到数据了。</p>
 <p>最终定位到 <code>lodash.merge</code> 方法。</p>
 <p>lodash.merge有一个常用的特性，即._merge(source, […abc])，merge会自动过滤到后面参数中undefined的属性。然而，<code>4.17.x</code> 的 lodash 不再支持。这个是根据论坛其他人的评论和官方的history.md发现的，然而一年过去了，lodash的官方文档却没有更新这一点……</p>
 <p>如果仍想用到过滤 <code>undefined</code> 的特性，就需要使用 <code>_.omitBy(myObj, _.isNil)</code> 或者 <code>_.pickBy(myObj)</code> 包装或替换原使用 <code>_.merge(myObj, [...source])</code> 的地方。</p>
-<h2 id="写缓存冲突"><a href="#写缓存冲突" class="headerlink" title="写缓存冲突"></a>写缓存冲突</h2><p>有两个项目分别在两台服务器上pm2开5个进程，并且都具备读写一个缓存的操作，发生了写缓存冲突，导致缓存中数据写入不完整。</p>
-<p>限制为只有一个项目写即可解决。</p>
 <h2 id="npm安装失败"><a href="#npm安装失败" class="headerlink" title="npm安装失败"></a>npm安装失败</h2><p>升级lodash的过程中，在某个服务器失败了，报错内容为：</p>
 <blockquote>
 <p>nnpm ERR! path /var/xxx/node_modules/fs-extra_back/node_modules/graceful-fs/node_modules/natives npm ERR! code ENOENT npm ERR! errno -2 npm ERR! syscall access npm ERR! enoent ENOENT: no such file or directory, access ‘/var/xxx/node_modules/fs-extra_back/node_modules/graceful-fs/node_modules/natives’ npm ERR! enoent This is related to npm not being able to find a file. npm ERR! enoent npm ERR! A complete log of this run can be found in: npm ERR! /root/.npm/_logs/2017-09-29T07_39_30_928Z-debug.log</p>
@@ -735,21 +736,25 @@
     
     <summary type="html">
     
-      记录9月份踩的一些坑，redis缓存和npm包的安装。
+      记录lodash升级过程中不兼容的点，以及偶遇的npm包安装异常。
     
     </summary>
     
       <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
     
     
+      <category term="Lodash" scheme="https://claude-ray.github.io/tags/Lodash/"/>
+    
+      <category term="npm" scheme="https://claude-ray.github.io/tags/npm/"/>
+    
   </entry>
   
   <entry>
-    <title>Node获取GBK编码字符串</title>
-    <link href="https://claude-ray.github.io/2017/10/05/node%E8%8E%B7%E5%8F%96GBK%E7%BC%96%E7%A0%81%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>https://claude-ray.github.io/2017/10/05/node获取GBK编码字符串/</id>
+    <title>Node获取GBK编码“字符串”</title>
+    <link href="https://claude-ray.github.io/2017/10/05/node-gbk-hex/"/>
+    <id>https://claude-ray.github.io/2017/10/05/node-gbk-hex/</id>
     <published>2017-10-05T00:50:46.000Z</published>
-    <updated>2018-10-31T14:14:44.905Z</updated>
+    <updated>2018-12-11T16:03:10.796Z</updated>
     
     <content type="html"><![CDATA[<h1 id="UTF8-to-GBK-Hex-String"><a href="#UTF8-to-GBK-Hex-String" class="headerlink" title="UTF8 to GBK Hex String"></a>UTF8 to GBK Hex String</h1><h2 id="iconv-lite"><a href="#iconv-lite" class="headerlink" title="iconv-lite"></a>iconv-lite</h2><p>通常都会使用 <code>iconv-lite</code> 这个包实现Node的编码转换，但是这个包是基于 <code>Buffer</code> 的，如果传递给其他语言的系统，需要先转换为 <code>String</code> 字符串。</p>
 <p>在网上查阅了相关资料，并没有给出很好的解答。一些比较老的回答都在说，Node中无法把Buffer转换成gbk字符串。</p>
@@ -768,7 +773,7 @@
     
     <summary type="html">
     
-      Node下如何获取GBK编码的字符串
+      首先，Node内部是无法直接获取GBK编码“字符串”的，只不过使用到GBK的场景均有相应的应对方法。最初学习时，陷入了接口返回值必须是“字符串”的误区，然而想把GBK编码从Buffer强转为GBK中文String类型是做不到的。本篇借助了hex码，达成了字符串形式传输GBK数据的需要，用以发送给其他语言编写的系统。
     
     </summary>
     

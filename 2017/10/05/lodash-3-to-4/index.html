@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Lodash,npm," />
 
 
 
@@ -95,16 +95,18 @@
 
 
 
-<meta name="description" content="Now or Never">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Claude&#39;s Home">
-<meta property="og:url" content="https://claude-ray.github.io/tags/Express/index.html">
+<meta name="description" content="记录lodash升级过程中不兼容的点，以及偶遇的npm包安装异常。">
+<meta name="keywords" content="Lodash,npm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="lodash3升级4踩坑">
+<meta property="og:url" content="https://claude-ray.github.io/2017/10/05/lodash-3-to-4/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="Now or Never">
+<meta property="og:description" content="记录lodash升级过程中不兼容的点，以及偶遇的npm包安装异常。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-11T16:05:56.208Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Claude&#39;s Home">
-<meta name="twitter:description" content="Now or Never">
+<meta name="twitter:title" content="lodash3升级4踩坑">
+<meta name="twitter:description" content="记录lodash升级过程中不兼容的点，以及偶遇的npm包安装异常。">
 
 
 
@@ -132,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/tags/Express/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2017/10/05/lodash-3-to-4/"/>
 
 
 
@@ -141,7 +143,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>标签: Express | Claude's Home</title>
+  <title>lodash3升级4踩坑 | Claude's Home</title>
   
 
 
@@ -166,7 +168,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -270,44 +272,246 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>Express<small>标签</small>
-      </h1>
-    </div>
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2017/10/05/lodash-3-to-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Home">
+    </span>
 
     
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">lodash3升级4踩坑</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-05T09:15:09+08:00">
+                2017-10-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/05/lodash-3-to-4/" class="leancloud_visitors" data-flag-title="lodash3升级4踩坑">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <br>
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  359
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+              <div class="post-description">
+                  记录lodash升级过程中不兼容的点，以及偶遇的npm包安装异常。
+              </div>
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
       
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h2 id="lodash版本问题"><a href="#lodash版本问题" class="headerlink" title="lodash版本问题"></a>lodash版本问题</h2><p>近期更新了lodash包，<code>3.x</code> 到最新的 <code>4.17.x</code>，然后就发现系统拿不到数据了。</p>
+<p>最终定位到 <code>lodash.merge</code> 方法。</p>
+<p>lodash.merge有一个常用的特性，即._merge(source, […abc])，merge会自动过滤到后面参数中undefined的属性。然而，<code>4.17.x</code> 的 lodash 不再支持。这个是根据论坛其他人的评论和官方的history.md发现的，然而一年过去了，lodash的官方文档却没有更新这一点……</p>
+<p>如果仍想用到过滤 <code>undefined</code> 的特性，就需要使用 <code>_.omitBy(myObj, _.isNil)</code> 或者 <code>_.pickBy(myObj)</code> 包装或替换原使用 <code>_.merge(myObj, [...source])</code> 的地方。</p>
+<h2 id="npm安装失败"><a href="#npm安装失败" class="headerlink" title="npm安装失败"></a>npm安装失败</h2><p>升级lodash的过程中，在某个服务器失败了，报错内容为：</p>
+<blockquote>
+<p>nnpm ERR! path /var/xxx/node_modules/fs-extra_back/node_modules/graceful-fs/node_modules/natives npm ERR! code ENOENT npm ERR! errno -2 npm ERR! syscall access npm ERR! enoent ENOENT: no such file or directory, access ‘/var/xxx/node_modules/fs-extra_back/node_modules/graceful-fs/node_modules/natives’ npm ERR! enoent This is related to npm not being able to find a file. npm ERR! enoent npm ERR! A complete log of this run can be found in: npm ERR! /root/.npm/_logs/2017-09-29T07_39_30_928Z-debug.log</p>
+</blockquote>
+<p>google了一下 <code>ENOENT</code> 相关错误，提取众人反映问题的共同点就是，npm5。在npm4甚至3的环境下是没有这种情况的，服务器也是近期升级了npm版本。<br>不过比起npm降级，采取了更简便的方法，将access ‘/xxx’的npm包删除就好啦~</p>
 
-      <h2 class="post-title">
+      
+    </div>
+
+    <div>
+      
         
-            <a class="post-title-link" href="/2017/07/24/Express源码分析/" itemprop="url">
-              
-                <span itemprop="name">Express源码分析</span>
-              
-            </a>
+
+      
+    </div>
+
+    <div>
+      
         
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-07-24T22:54:05+08:00"
-              content="2017-07-24" >
-          07-24
-        </time>
-      </div>
+      
+    </div>
 
-    </header>
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Claude Ray
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://claude-ray.github.io/2017/10/05/lodash-3-to-4/" title="lodash3升级4踩坑">https://claude-ray.github.io/2017/10/05/lodash-3-to-4/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Lodash/" rel="tag"> <i class="fa fa-tag"></i> Lodash</a>
+          
+            <a href="/tags/npm/" rel="tag"> <i class="fa fa-tag"></i> npm</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/05/node-gbk-hex/" rel="next" title="Node获取GBK编码“字符串”">
+                <i class="fa fa-chevron-left"></i> Node获取GBK编码“字符串”
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/05/vscode-evernote云笔记/" rel="prev" title="vscode+evernote云笔记">
+                vscode+evernote云笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </article>
 
 
-    
-  </div>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -315,6 +519,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -334,8 +542,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -448,6 +665,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#lodash版本问题"><span class="nav-number">1.</span> <span class="nav-text">lodash版本问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#npm安装失败"><span class="nav-number">2.</span> <span class="nav-text">npm安装失败</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -550,10 +783,10 @@ Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homep
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 
