@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2018-12-02T07:38:29.788Z</updated>
+  <updated>2018-12-12T15:52:41.758Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -14,6 +14,49 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>总结node处理GBK编码</title>
+    <link href="https://claude-ray.github.io/2018/12/12/node-gbk-sum/"/>
+    <id>https://claude-ray.github.io/2018/12/12/node-gbk-sum/</id>
+    <published>2018-12-12T14:49:00.000Z</published>
+    <updated>2018-12-12T15:52:41.758Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Node内部不支持直接操作GBK字符串，而实际也并不需要如此。</p>
+<p>总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用utf8。编码转换主要基于<code>iconv-lite</code>库。</p>
+<p>总结已经写在了前头，下面再列举几种http服务中常见的处理场景。</p>
+<h1 id="常见场景"><a href="#常见场景" class="headerlink" title="常见场景"></a>常见场景</h1><h2 id="请求返回值"><a href="#请求返回值" class="headerlink" title="请求返回值"></a>请求返回值</h2><p>最常用且容易处理，通常我们使用<code>request</code>发起http请求，options中设置<code>encoding: null</code>，这样返回的res.body为buffer，再对buffer进行解码<code>iconv.decode(res.body, encoding)</code>。</p>
+<blockquote>
+<p>引用：<a href="https://claude-ray.github.io/2018/02/26/request%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/#%E7%BC%96%E7%A0%81">request返回值中文乱码问题</a></p>
+</blockquote>
+<h2 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h2><p>这里直接用<code>iconv-lite</code>处理略显复杂，建议上<a href="https://github.com/node-modules/urlencode" target="_blank" rel="noopener">urlencode</a>。</p>
+<p>post请求时stringify整个body对象，用options.form提交。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(body, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>querystring则stringify后再拼到url中。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(qs, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="接口返回值"><a href="#接口返回值" class="headerlink" title="接口返回值"></a>接口返回值</h2><p>以koa举例，返回值先使用<code>iconv-lite</code>转为gbk Buffer，随后设置响应头的content-type。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.body = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">ctx.type = <span class="string">'text/plain; charset=gbk'</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="接口参数"><a href="#接口参数" class="headerlink" title="接口参数"></a>接口参数</h2><p>同样以koa举例，结合koa-bodyparser，原始参数分别在ctx.request.rawBody和ctx.request.querystring中，<code>urlencode.parse</code>解析。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">urlencode.parse(ctx.request.rawBody, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br><span class="line">urlencode.parse(ctx.request.querystring, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>如果能约定使用十六进制传参更好，处理hex就不需要在参数获取上额外处理了。</p>
+<h2 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h2><p>默认方式（<code>encoding: null</code>）就是操作buffer，iconv转换无压力。</p>
+<p>读：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = fs.readFileSync(<span class="string">'test.txt'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(iconv.decode(buff, <span class="string">'gbk'</span>));</span><br></pre></td></tr></table></figure></p>
+<p>写：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">fs.writeFileSync(<span class="string">'test.txt'</span>, buff);</span><br></pre></td></tr></table></figure></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;Node内部不支持直接操作GBK字符串，而实际也并不需要如此。&lt;/p&gt;
+&lt;p&gt;总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用u
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
+    
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
+      <category term="String" scheme="https://claude-ray.github.io/tags/String/"/>
+    
+      <category term="GBK编码" scheme="https://claude-ray.github.io/tags/GBK%E7%BC%96%E7%A0%81/"/>
+    
+  </entry>
   
   <entry>
     <title>Ubuntu配置ss-local客户端</title>

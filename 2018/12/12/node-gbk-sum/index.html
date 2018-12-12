@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="JavaScript,Captcha,Canvas," />
+  <meta name="keywords" content="Node.js,String,GBK编码," />
 
 
 
@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="JS的图形验证码已有很多开源实现，可以直接用npm引入，但如果综合考虑性能和契合度时，还是亲自动手造一个好。当然实现起来并不复杂，且方便结合自身需求调整，在此分享一下使用node-canvas绘制验证码的几个心得。">
-<meta name="keywords" content="JavaScript,Captcha,Canvas">
+<meta name="description" content="概述Node内部不支持直接操作GBK字符串，而实际也并不需要如此。 总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用utf8。编码转换主要基于iconv-lite库。 总结已经写在了前头，下面再列举几种http服务中常见的处理场景。 常见场景请求返回值最常用且容易处理，通常我们使用request发起http请求，options中设置encoding: null，这样返回的res.bod">
+<meta name="keywords" content="Node.js,String,GBK编码">
 <meta property="og:type" content="article">
-<meta property="og:title" content="node图形验证码实现">
-<meta property="og:url" content="https://claude-ray.github.io/2018/09/02/node-image-captcha/index.html">
+<meta property="og:title" content="总结node处理GBK编码">
+<meta property="og:url" content="https://claude-ray.github.io/2018/12/12/node-gbk-sum/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="JS的图形验证码已有很多开源实现，可以直接用npm引入，但如果综合考虑性能和契合度时，还是亲自动手造一个好。当然实现起来并不复杂，且方便结合自身需求调整，在此分享一下使用node-canvas绘制验证码的几个心得。">
+<meta property="og:description" content="概述Node内部不支持直接操作GBK字符串，而实际也并不需要如此。 总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用utf8。编码转换主要基于iconv-lite库。 总结已经写在了前头，下面再列举几种http服务中常见的处理场景。 常见场景请求返回值最常用且容易处理，通常我们使用request发起http请求，options中设置encoding: null，这样返回的res.bod">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T14:12:50.376Z">
+<meta property="og:updated_time" content="2018-12-12T15:52:41.758Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="node图形验证码实现">
-<meta name="twitter:description" content="JS的图形验证码已有很多开源实现，可以直接用npm引入，但如果综合考虑性能和契合度时，还是亲自动手造一个好。当然实现起来并不复杂，且方便结合自身需求调整，在此分享一下使用node-canvas绘制验证码的几个心得。">
+<meta name="twitter:title" content="总结node处理GBK编码">
+<meta name="twitter:description" content="概述Node内部不支持直接操作GBK字符串，而实际也并不需要如此。 总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用utf8。编码转换主要基于iconv-lite库。 总结已经写在了前头，下面再列举几种http服务中常见的处理场景。 常见场景请求返回值最常用且容易处理，通常我们使用request发起http请求，options中设置encoding: null，这样返回的res.bod">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/09/02/node-image-captcha/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/12/12/node-gbk-sum/"/>
 
 
 
@@ -143,7 +143,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>node图形验证码实现 | Claude's Home</title>
+  <title>总结node处理GBK编码 | Claude's Home</title>
   
 
 
@@ -282,7 +282,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/09/02/node-image-captcha/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/12/12/node-gbk-sum/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -299,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">node图形验证码实现</h1>
+          <h1 class="post-title" itemprop="name headline">总结node处理GBK编码</h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-09-02T21:46:55+08:00">
-                2018-09-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-12T22:49:00+08:00">
+                2018-12-12
               </time>
             
 
@@ -351,7 +351,7 @@
 
           
           
-             <span id="/2018/09/02/node-image-captcha/" class="leancloud_visitors" data-flag-title="node图形验证码实现">
+             <span id="/2018/12/12/node-gbk-sum/" class="leancloud_visitors" data-flag-title="总结node处理GBK编码">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  930
+                  384
                 </span>
               
 
@@ -393,16 +393,12 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  4
+                  2
                 </span>
               
             </div>
           
 
-          
-              <div class="post-description">
-                  JS的图形验证码已有很多开源实现，可以直接用npm引入，但如果综合考虑性能和契合度时，还是亲自动手造一个好。当然实现起来并不复杂，且方便结合自身需求调整，在此分享一下使用node-canvas绘制验证码的几个心得。
-              </div>
           
 
         </div>
@@ -415,44 +411,22 @@
       
 
       
-        <h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><p>参考文档安装基础图形库，<a href="https://github.com/Automattic/node-canvas" target="_blank" rel="noopener">node-canvas</a>。</p>
-<p>建议使用<code>npm install canvas@next</code>安装2.x版本，兼容Windows开发环境，接口功能更完善。</p>
-<p>此外，MDN的<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D" target="_blank" rel="noopener">canvas相关文档</a>也可以作为重要参考。</p>
-<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><blockquote>
-<p><code>opts.*</code>标注的是需要自行完善的属性或方法。图形验证码作为系统安全的一环，就不开放源码了，请谅解。</p>
-</blockquote>
-<h3 id="1-创建canvas-ctx"><a href="#1-创建canvas-ctx" class="headerlink" title="1. 创建canvas ctx"></a>1. 创建canvas ctx</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canvas = <span class="keyword">new</span> Canvas(opts.width, opts.height);</span><br><span class="line"><span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br></pre></td></tr></table></figure>
-<h3 id="2-透明度"><a href="#2-透明度" class="headerlink" title="2. 透明度"></a>2. 透明度</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.globalAlpha = opts.opacity;</span><br></pre></td></tr></table></figure>
-<h3 id="3-背景色填充"><a href="#3-背景色填充" class="headerlink" title="3. 背景色填充"></a>3. 背景色填充</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.fillStyle = opts.bgc;</span><br><span class="line">ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br></pre></td></tr></table></figure>
-<h3 id="4-写字"><a href="#4-写字" class="headerlink" title="4. 写字"></a>4. 写字</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; opts.length; i++) &#123;</span><br><span class="line">  <span class="comment">// 字体和随机字号</span></span><br><span class="line">  ctx.font = <span class="string">`<span class="subst">$&#123;opts.fontSize&#125;</span>px <span class="subst">$&#123;opts.font&#125;</span>`</span>;</span><br><span class="line">  <span class="comment">// 颜色</span></span><br><span class="line">  ctx.fillStyle = opts.randomColor();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 旋转角度，使用save/restore保存之前填充的状态</span></span><br><span class="line">  ctx.save();</span><br><span class="line">  ctx.rotate(opts.randomAngle());</span><br><span class="line">  <span class="comment">// 填充字体</span></span><br><span class="line">  ctx.fillText(opts.text[i], opts.wordSpaceX, opts.wordSpaceY);</span><br><span class="line">  ctx.restore();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="5-干扰线"><a href="#5-干扰线" class="headerlink" title="5. 干扰线"></a>5. 干扰线</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 干扰线宽度</span></span><br><span class="line">ctx.lineWidth = opts.lineWidth;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length - <span class="number">2</span>; i++) &#123;</span><br><span class="line">  ctx.strokeStyle = opts.randomColor();</span><br><span class="line">  <span class="comment">// 绘制路径起始点</span></span><br><span class="line">  ctx.beginPath();</span><br><span class="line">  <span class="comment">// 移动画笔</span></span><br><span class="line">  ctx.moveTo(opts.x1, opts.y1));</span><br><span class="line">  ctx.lineTo(opts.x2, opts.y2));</span><br><span class="line">  <span class="comment">// 画线</span></span><br><span class="line">  ctx.stroke();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="6-干扰点"><a href="#6-干扰点" class="headerlink" title="6. 干扰点"></a>6. 干扰点</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据密度计算个数</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; opts.pixelNum; i++) &#123;</span><br><span class="line">  ctx.fillStyle = opts.randomColor();</span><br><span class="line">  ctx.beginPath();</span><br><span class="line">  <span class="comment">// 用实心圆作为点</span></span><br><span class="line">  ctx.arc(opts.x, opts.y, opts.radius, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI);</span><br><span class="line">  ctx.fill();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>最后的图片产出分多种：<code>Buffer</code>，<code>DataUrl</code>和<code>Stream</code>，就从官方文档上看例子吧，注意1.x和2.x的版本差异。</p>
-<h2 id="应急方案"><a href="#应急方案" class="headerlink" title="应急方案"></a>应急方案</h2><h3 id="背景色"><a href="#背景色" class="headerlink" title="背景色"></a>背景色</h3><p>挑选一些对人眼友好的颜色，随机筛选几个拼接成渐变色背景，可以略微提高识别成本。但对于成熟的破解算法无意义，如果和字体颜色过接近，用户识别也会特别痛苦。</p>
-<p>举个简单的3段式，抛砖引玉。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gradient = ctx.createLinearGradient(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br><span class="line"></span><br><span class="line">gradient.addColorStop(<span class="number">0</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">0.5</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">1</span>, opts.randomBGC());</span><br><span class="line"></span><br><span class="line">ctx.fillStyle = gradient;</span><br><span class="line">ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br></pre></td></tr></table></figure></p>
-<h3 id="空心字体"><a href="#空心字体" class="headerlink" title="空心字体"></a>空心字体</h3><p>canvas原生支持的几个字体差别实在不大，有个技巧是绘制空心字体，在验证码被攻击时，可以加入支持应急，在攻击者没有准备的情况下，可以立刻起到拦截效果。</p>
-<p>用法很简单，将上面写字用到的<code>fillStyle</code>替换为<code>strokeStyle</code>，<code>fillText</code>替换为<code>strokeText</code>。</p>
-<h2 id="Lib选择"><a href="#Lib选择" class="headerlink" title="Lib选择"></a>Lib选择</h2><p>起初，使用<code>gm</code>和<code>GraphicsMagick</code>的组合，但经压测发现了严重的性能问题，在<a href="https://stackoverflow.com/questions/23795669/graphicsmagick-for-node-js-gm-module-performance" target="_blank" rel="noopener">StackOverFlow</a>上也看到了原因，于是决定更换绘图方案。</p>
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Node内部不支持直接操作GBK字符串，而实际也并不需要如此。</p>
+<p>总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用utf8。编码转换主要基于<code>iconv-lite</code>库。</p>
+<p>总结已经写在了前头，下面再列举几种http服务中常见的处理场景。</p>
+<h1 id="常见场景"><a href="#常见场景" class="headerlink" title="常见场景"></a>常见场景</h1><h2 id="请求返回值"><a href="#请求返回值" class="headerlink" title="请求返回值"></a>请求返回值</h2><p>最常用且容易处理，通常我们使用<code>request</code>发起http请求，options中设置<code>encoding: null</code>，这样返回的res.body为buffer，再对buffer进行解码<code>iconv.decode(res.body, encoding)</code>。</p>
 <blockquote>
-<p>The gm module calls out to a command-line tool. You might look at using graphicsmagick2 instead, which is an actual binding to the graphicsmagick library. Unfortunately there is no documentation, so you’ll have to read the source for that (which isn’t too long).</p>
+<p>引用：<a href="https://claude-ray.github.io/2018/02/26/request%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/#%E7%BC%96%E7%A0%81">request返回值中文乱码问题</a></p>
 </blockquote>
-<p>测试了npm上几个热门验证码模块，有两种相对高效的实现</p>
-<ol>
-<li>c++调用canvas运行环境（node-canvas）</li>
-<li>无外部依赖，纯js绘图（trek-captcha）</li>
-</ol>
-<p>两年以上没人维护的包没有进行测试，有个自称1200/s的ccap，按我的需求出图，效率不及上面的一半。</p>
-<p>最终选择了性能出色的node-canvas。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>以上用法是作者半年前尝试推行AI验证无果的无奈产物，终于在近期被大举攻破时宣告灭亡。</p>
-<p>在AI面前，图形验证码的防御力是非常低的，建议处理验证码业务的各位趁早接入行为识别。</p>
-<p>希望可以帮到有需要的同学。</p>
-<p>Last but not least，附两篇他人的精彩调研：</p>
-<ul>
-<li><p><a href="https://www.jianshu.com/p/c63b78a373ad" target="_blank" rel="noopener">验证码WEB端产品调研（一）：Google reCAPTCHA</a></p>
-</li>
-<li><p><a href="https://www.jianshu.com/p/c64902f60c7c" target="_blank" rel="noopener">验证码WEB端产品调研（二）：极限验证</a></p>
-</li>
-</ul>
+<h2 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h2><p>这里直接用<code>iconv-lite</code>处理略显复杂，建议上<a href="https://github.com/node-modules/urlencode" target="_blank" rel="noopener">urlencode</a>。</p>
+<p>post请求时stringify整个body对象，用options.form提交。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(body, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>querystring则stringify后再拼到url中。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(qs, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="接口返回值"><a href="#接口返回值" class="headerlink" title="接口返回值"></a>接口返回值</h2><p>以koa举例，返回值先使用<code>iconv-lite</code>转为gbk Buffer，随后设置响应头的content-type。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.body = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">ctx.type = <span class="string">'text/plain; charset=gbk'</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="接口参数"><a href="#接口参数" class="headerlink" title="接口参数"></a>接口参数</h2><p>同样以koa举例，结合koa-bodyparser，原始参数分别在ctx.request.rawBody和ctx.request.querystring中，<code>urlencode.parse</code>解析。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">urlencode.parse(ctx.request.rawBody, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br><span class="line">urlencode.parse(ctx.request.querystring, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>如果能约定使用十六进制传参更好，处理hex就不需要在参数获取上额外处理了。</p>
+<h2 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h2><p>默认方式（<code>encoding: null</code>）就是操作buffer，iconv转换无压力。</p>
+<p>读：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = fs.readFileSync(<span class="string">'test.txt'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(iconv.decode(buff, <span class="string">'gbk'</span>));</span><br></pre></td></tr></table></figure></p>
+<p>写：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">fs.writeFileSync(<span class="string">'test.txt'</span>, buff);</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -481,7 +455,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://claude-ray.github.io/2018/09/02/node-image-captcha/" title="node图形验证码实现">https://claude-ray.github.io/2018/09/02/node-image-captcha/</a>
+      <a href="https://claude-ray.github.io/2018/12/12/node-gbk-sum/" title="总结node处理GBK编码">https://claude-ray.github.io/2018/12/12/node-gbk-sum/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -497,11 +471,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"> <i class="fa fa-tag"></i> JavaScript</a>
+            <a href="/tags/Node-js/" rel="tag"> <i class="fa fa-tag"></i> Node.js</a>
           
-            <a href="/tags/Captcha/" rel="tag"> <i class="fa fa-tag"></i> Captcha</a>
+            <a href="/tags/String/" rel="tag"> <i class="fa fa-tag"></i> String</a>
           
-            <a href="/tags/Canvas/" rel="tag"> <i class="fa fa-tag"></i> Canvas</a>
+            <a href="/tags/GBK编码/" rel="tag"> <i class="fa fa-tag"></i> GBK编码</a>
           
         </div>
       
@@ -514,8 +488,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/23/ubuntu16to18md/" rel="next" title="ubuntu16.04升级18.04LTS">
-                <i class="fa fa-chevron-left"></i> ubuntu16.04升级18.04LTS
+              <a href="/2018/12/01/ss-local/" rel="next" title="Ubuntu配置ss-local客户端">
+                <i class="fa fa-chevron-left"></i> Ubuntu配置ss-local客户端
               </a>
             
           </div>
@@ -523,10 +497,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/12/old-sms-mas-nodejs/" rel="prev" title="Nodejs使用MySQL 4.1的问题解决">
-                Nodejs使用MySQL 4.1的问题解决 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -705,7 +675,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Requirements"><span class="nav-number">1.</span> <span class="nav-text">Requirements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">2.</span> <span class="nav-text">Tips</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建canvas-ctx"><span class="nav-number">2.1.</span> <span class="nav-text">1. 创建canvas ctx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-透明度"><span class="nav-number">2.2.</span> <span class="nav-text">2. 透明度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-背景色填充"><span class="nav-number">2.3.</span> <span class="nav-text">3. 背景色填充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-写字"><span class="nav-number">2.4.</span> <span class="nav-text">4. 写字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-干扰线"><span class="nav-number">2.5.</span> <span class="nav-text">5. 干扰线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-干扰点"><span class="nav-number">2.6.</span> <span class="nav-text">6. 干扰点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应急方案"><span class="nav-number">3.</span> <span class="nav-text">应急方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景色"><span class="nav-number">3.1.</span> <span class="nav-text">背景色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空心字体"><span class="nav-number">3.2.</span> <span class="nav-text">空心字体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lib选择"><span class="nav-number">4.</span> <span class="nav-text">Lib选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#常见场景"><span class="nav-number">2.</span> <span class="nav-text">常见场景</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#请求返回值"><span class="nav-number">2.1.</span> <span class="nav-text">请求返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#请求参数"><span class="nav-number">2.2.</span> <span class="nav-text">请求参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口返回值"><span class="nav-number">2.3.</span> <span class="nav-text">接口返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#接口参数"><span class="nav-number">2.4.</span> <span class="nav-text">接口参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#读写文件"><span class="nav-number">2.5.</span> <span class="nav-text">读写文件</span></a></li></ol></li></ol></div>
             
 
           </div>
