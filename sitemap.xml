@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/about/index.html</loc>
+    
+    <lastmod>2018-12-14T15:26:39.469Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2018/12/12/node-gbk-sum/</loc>
     
     <lastmod>2018-12-12T15:52:41.758Z</lastmod>
@@ -138,13 +145,6 @@
     <loc>https://claude-ray.github.io/categories/index.html</loc>
     
     <lastmod>2017-06-21T15:44:16.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/about/index.html</loc>
-    
-    <lastmod>2017-06-19T16:36:09.000Z</lastmod>
     
   </url>
   
