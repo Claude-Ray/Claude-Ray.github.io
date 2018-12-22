@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Node.js," />
+  <meta name="keywords" content="Node.js,log4js,pm2,pm2-intercom," />
 
 
 
@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。">
-<meta name="keywords" content="Node.js">
+<meta name="description" content="log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。 log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。 官方提供的方案是安装 pm2-intercom，并在代码配置">
+<meta name="keywords" content="Node.js,log4js,pm2,pm2-intercom">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用chokidar监视文件更新">
-<meta property="og:url" content="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/index.html">
+<meta property="og:title" content="PM2 cluster + log4js？并不理想的组合">
+<meta property="og:url" content="https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。">
+<meta property="og:description" content="log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。 log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。 官方提供的方案是安装 pm2-intercom，并在代码配置">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T14:15:18.654Z">
+<meta property="og:updated_time" content="2018-12-22T05:53:09.215Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用chokidar监视文件更新">
-<meta name="twitter:description" content="为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。">
+<meta name="twitter:title" content="PM2 cluster + log4js？并不理想的组合">
+<meta name="twitter:description" content="log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。 log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。 官方提供的方案是安装 pm2-intercom，并在代码配置">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/"/>
 
 
 
@@ -143,7 +143,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>使用chokidar监视文件更新 | Claude's Home</title>
+  <title>PM2 cluster + log4js？并不理想的组合 | Claude's Home</title>
   
 
 
@@ -282,7 +282,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -299,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">使用chokidar监视文件更新</h1>
+          <h1 class="post-title" itemprop="name headline">PM2 cluster + log4js？并不理想的组合</h1>
         
 
         <div class="post-meta">
@@ -311,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-27T12:57:42+08:00">
-                2018-01-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-12-21T20:49:03+08:00">
+                2018-12-21
               </time>
             
 
@@ -351,7 +351,7 @@
 
           
           
-             <span id="/2018/01/27/使用chokidar监视文件更新/" class="leancloud_visitors" data-flag-title="使用chokidar监视文件更新">
+             <span id="/2018/12/21/pm2-cluster-log4js/" class="leancloud_visitors" data-flag-title="PM2 cluster + log4js？并不理想的组合">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  382
+                  902
                 </span>
               
 
@@ -393,16 +393,12 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2
+                  4
                 </span>
               
             </div>
           
 
-          
-              <div class="post-description">
-                  为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。
-              </div>
           
 
         </div>
@@ -415,14 +411,37 @@
       
 
       
-        <h2 id="监视文件"><a href="#监视文件" class="headerlink" title="监视文件"></a>监视文件</h2><p>使用<code>chokidar</code>，可以监视指定路径下目录、文件的变动。由于我只关注更改，因此监视<code>change</code>事件即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs   = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> chokidar = <span class="built_in">require</span>(<span class="string">'chokidar'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = watchChange;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 监听目录或文件变动</span></span><br><span class="line"><span class="comment"> * @param &#123;string|array&#125; paths    目录或文件路径</span></span><br><span class="line"><span class="comment"> * @param &#123;function&#125;     onChange 回调函数</span></span><br><span class="line"><span class="comment"> * @return &#123;Promise.&lt;*&gt;&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchChange</span>(<span class="params">paths, onChange</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onChange !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`onChange (<span class="subst">$&#123;onChange&#125;</span>) is not a function`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(paths)) paths = [paths];</span><br><span class="line"></span><br><span class="line">  paths.forEach(<span class="function"><span class="params">path</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!(path &amp;&amp; fs.existsSync(path))) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`can't find path <span class="subst">$&#123;path&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  chokidar.watch(paths)</span><br><span class="line">    <span class="comment">// .on('add', filepath =&gt; &#123;console.log('you can watch more events by chains')&#125;)</span></span><br><span class="line">    .on(<span class="string">'change'</span>, filepath =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> filename = path.basename(filepath);</span><br><span class="line">      onChange(filename);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="更新缓存"><a href="#更新缓存" class="headerlink" title="更新缓存"></a>更新缓存</h2><p>为了避免每次取内容都读文件，使用了<code>lodash.memoize</code>缓存读取结果。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">readFile</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getFile = _.memoize(readFile);</span><br></pre></td></tr></table></figure>
-<p>要更新这部分缓存，可以使用如下方法。用大文件测试了内存占用，没有泄露产生。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getFile.cache.set(file, readFile(file));</span><br></pre></td></tr></table></figure>
-<p>完整部分，加上了try catch。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchTpl</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    watchFiles(<span class="string">'./test'</span>, file =&gt; &#123;</span><br><span class="line">      getFile.cache.set(file, readFile(file));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">watchTpl();</span><br></pre></td></tr></table></figure></p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>由于使用场景明确，代码实现较简单，没有考虑太多情况，也算不上热更新。但借这种思路，可以完成配置文件甚至功能模块的更新。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://ngtmuzi.com/Node监视文件以实现热更新/" target="_blank" rel="noopener">Node监视文件以实现热更新</a><br><a href="http://fex.baidu.com/blog/2015/05/nodejs-hot-swapping/" target="_blank" rel="noopener">Node.js Web应用代码热更新的另类思路</a></p>
+        <h1 id="log4js-和-cluster"><a href="#log4js-和-cluster" class="headerlink" title="log4js 和 cluster"></a>log4js 和 cluster</h1><h2 id="写策略"><a href="#写策略" class="headerlink" title="写策略"></a>写策略</h2><p>node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。</p>
+<p>log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。</p>
+<p>官方提供的方案是安装 <code>pm2-intercom</code>，并在代码配置 log4js 时打开 <code>pm2: true</code> 选项，其原理也是选出一个负责写文件的主进程。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 install pm2-intercom</span><br></pre></td></tr></table></figure></p>
+<h2 id="选举-master"><a href="#选举-master" class="headerlink" title="选举 master"></a>选举 master</h2><p>log4js 选择主进程的<a href="https://github.com/log4js-node/log4js-node/blob/master/lib/clustering.js#L13" target="_blank" rel="noopener">策略</a>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isPM2Master = <span class="function"><span class="params">()</span> =&gt;</span> pm2 &amp;&amp; process.env[pm2InstanceVar] === <span class="string">'0'</span>;</span><br><span class="line"><span class="keyword">const</span> isMaster = <span class="function"><span class="params">()</span> =&gt;</span> disabled || cluster.isMaster || isPM2Master();</span><br></pre></td></tr></table></figure></p>
+<p>其中 disabled 是 log4js 的 disableClustering 选项，设置为 true 后，所有进程都将作为 master 进而拥有写文件的权限，这并没有解决安全问题。它存在的价值后面再说。</p>
+<p>每个 pm2 启动的进程都有唯一的 process.env.NODE_APP_INSTANCE 标识，<code>process.env.NODE_APP_INSTANCE === &#39;0&#39;</code> 是常见的选择主从方式。多进程同时记录日志时，也可以用此方式指定唯一的进程负责写文件，避免同时写文件造成的冲突。此外 pm2 支持通过重命名 <code>instance_var</code> 来改变 process.env 的标记名，目的是解决和 <code>node-config</code> 包共用导致的异常。</p>
+<blockquote>
+<p><a href="http://pm2.keymetrics.io/docs/usage/environment/#specific-environment-variables" target="_blank" rel="noopener">关于 NODE_APP_INSTANCE 的 pm2 官方说明</a></p>
+</blockquote>
+<h2 id="问题多多的-pm2-intercom-方案"><a href="#问题多多的-pm2-intercom-方案" class="headerlink" title="问题多多的 pm2-intercom 方案"></a>问题多多的 pm2-intercom 方案</h2><p>当下 pm2 的版本是 3.2.x，而 <code>pm2-intercom</code> 在 pm2 2.x 版本就已经存在异常了，重复日志甚至丢失日志，或在开发环境运行正常，到了线上莫名失败。更严重的是，当一个 pm2 box 内运行多个 cluster 模式启动的应用时，日志记录会变得混乱，各应用的日志都乱入了最早启动的应用的日志文件中。</p>
+<p>log4js 的维护者 nomiddlename 也在 issue 中表示 pm2-intercom 存在着古怪的问题。</p>
+<blockquote>
+<p><a href="https://github.com/log4js-node/log4js-node/issues/265#issuecomment-359126674" target="_blank" rel="noopener">log4js doesn’t work with PM2 cluster mode #265</a></p>
+<p>pm2-intercom has always seemed a bit dodgy - for some people it never works at all anyway. It didn’t need to use git clone when I installed it. Best plan might be to use the disableClustering option in your log4js config, log to stdout and let pm2 handle the files as it normally would.</p>
+</blockquote>
+<h2 id="option-disableClustering-不是银弹"><a href="#option-disableClustering-不是银弹" class="headerlink" title="option.disableClustering 不是银弹"></a>option.disableClustering 不是银弹</h2><p>上面再次提到 <code>disableClustering</code> 选项，不错，pm2-intercom 异常的场景可以拿它救场，但要注意它本身不适用于直接写文件，每个进程都被赋予了 master 权限，会再次引发开篇的冲突问题。官方文档也明确警示：<code>Be careful if you’re logging to files</code>。</p>
+<h1 id="pm2-intercom-粗解"><a href="#pm2-intercom-粗解" class="headerlink" title="pm2-intercom 粗解"></a>pm2-intercom 粗解</h1><p>这个模块是简易的 IPC，借助 <code>process.send</code> 方法，将多个进程的数据包统一发送至 pm2 中编号为 0 的 pm2-intercom 进程，此进程再将收到的消息推送至项目进程中的一个。</p>
+<p>在log4js的使用场景，表现为各自进程的日志首先发送到 pm2-intercom，由 pm2-intercom 分发到全部进程，但只有 log4js isMaster 才会写文件。</p>
+<p>分发代码如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">packet</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">async</span>.forEachLimit(process_list, <span class="number">3</span>, <span class="function"><span class="keyword">function</span>(<span class="params">proc, next</span>) </span>&#123;</span><br><span class="line">    sendDataToProcessId(proc.pm_id, packet);</span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="built_in">console</span>.error(err);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>如果想在多进程模式下记录日志到同一个文件，log4js + PM2 显然不是完美的组合。winston 也有人反馈丢日志的<a href="https://github.com/winstonjs/winston/issues/1466" target="_blank" rel="noopener">问题</a>，但没有得到官方回复前，仍需要验证。</p>
+<p>如果想安全记录日志，还是得分多个文件，或脱离 pm2，像 egg 一样在框架层面自行 cluster。</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
+<li><p><a href="https://log4js-node.github.io/log4js-node/clustering.html" target="_blank" rel="noopener">Clustering / Multi-process Logging</a></p>
+</li>
+<li><p><a href="https://www.npmjs.com/package/lj-log4js-pm2intercom" target="_blank" rel="noopener">to-fix-pm2-intercom-in-pm2-2x</a></p>
+</li>
+<li><p><a href="https://juejin.im/post/5b7d0e20f265da43231f00d4" target="_blank" rel="noopener">再说打日志你不会，pm2 + log4js，你值得拥有</a></p>
+</li>
+<li><p><a href="https://www.jianshu.com/p/20fcb3672723" target="_blank" rel="noopener">探索 PM2 Cluster 模式下 Log4js 日志丢失</a></p>
+</li>
+</ul>
 
       
     </div>
@@ -451,7 +470,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/" title="使用chokidar监视文件更新">https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/</a>
+      <a href="https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/" title="PM2 cluster + log4js？并不理想的组合">https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -469,6 +488,12 @@
           
             <a href="/tags/Node-js/" rel="tag"> <i class="fa fa-tag"></i> Node.js</a>
           
+            <a href="/tags/log4js/" rel="tag"> <i class="fa fa-tag"></i> log4js</a>
+          
+            <a href="/tags/pm2/" rel="tag"> <i class="fa fa-tag"></i> pm2</a>
+          
+            <a href="/tags/pm2-intercom/" rel="tag"> <i class="fa fa-tag"></i> pm2-intercom</a>
+          
         </div>
       
 
@@ -480,8 +505,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/23/Array-map-parseInt-为什么返回了NaN/" rel="next" title="Array.map(parseInt)为什么返回了NaN">
-                <i class="fa fa-chevron-left"></i> Array.map(parseInt)为什么返回了NaN
+              <a href="/2018/12/15/iptables-wont-block-established-connections/" rel="next" title="iptables不会主动断开已有连接">
+                <i class="fa fa-chevron-left"></i> iptables不会主动断开已有连接
               </a>
             
           </div>
@@ -489,10 +514,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/26/request中文乱码问题/" rel="prev" title="request中文乱码问题">
-                request中文乱码问题 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -671,7 +692,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#监视文件"><span class="nav-number">1.</span> <span class="nav-text">监视文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更新缓存"><span class="nav-number">2.</span> <span class="nav-text">更新缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#log4js-和-cluster"><span class="nav-number">1.</span> <span class="nav-text">log4js 和 cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写策略"><span class="nav-number">1.1.</span> <span class="nav-text">写策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选举-master"><span class="nav-number">1.2.</span> <span class="nav-text">选举 master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题多多的-pm2-intercom-方案"><span class="nav-number">1.3.</span> <span class="nav-text">问题多多的 pm2-intercom 方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#option-disableClustering-不是银弹"><span class="nav-number">1.4.</span> <span class="nav-text">option.disableClustering 不是银弹</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pm2-intercom-粗解"><span class="nav-number">2.</span> <span class="nav-text">pm2-intercom 粗解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
             
 
           </div>
