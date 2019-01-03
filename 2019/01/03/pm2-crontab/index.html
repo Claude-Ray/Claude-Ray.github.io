@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="pm2,crontab," />
 
 
 
@@ -95,16 +95,18 @@
 
 
 
-<meta name="description" content="Now or Never">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Claude&#39;s Home">
-<meta property="og:url" content="https://claude-ray.github.io/categories/Linux/index.html">
+<meta name="description" content="本篇不是讲如何处理代码内的定时任务，而是聊聊怎么借助 crontab 等工具，定时操作 pm2 (指令)。例如，定时重启 pm2 中的进程、定时执行 pm2 save 保存运行状态，等等。">
+<meta name="keywords" content="pm2,crontab">
+<meta property="og:type" content="article">
+<meta property="og:title" content="crontab 中使用 pm2">
+<meta property="og:url" content="https://claude-ray.github.io/2019/01/03/pm2-crontab/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="Now or Never">
+<meta property="og:description" content="本篇不是讲如何处理代码内的定时任务，而是聊聊怎么借助 crontab 等工具，定时操作 pm2 (指令)。例如，定时重启 pm2 中的进程、定时执行 pm2 save 保存运行状态，等等。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-01-03T14:34:21.896Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Claude&#39;s Home">
-<meta name="twitter:description" content="Now or Never">
+<meta name="twitter:title" content="crontab 中使用 pm2">
+<meta name="twitter:description" content="本篇不是讲如何处理代码内的定时任务，而是聊聊怎么借助 crontab 等工具，定时操作 pm2 (指令)。例如，定时重启 pm2 中的进程、定时执行 pm2 save 保存运行状态，等等。">
 
 
 
@@ -132,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/categories/Linux/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2019/01/03/pm2-crontab/"/>
 
 
 
@@ -141,7 +143,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>分类: Linux | Claude's Home</title>
+  <title>crontab 中使用 pm2 | Claude's Home</title>
   
 
 
@@ -166,7 +168,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -270,129 +272,246 @@
           <div id="content" class="content">
             
 
-  <section id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h1>Linux<small>分类</small>
-      </h1>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2019/01/03/pm2-crontab/" itemprop="url">
-              
-                <span itemprop="name">crontab 中使用 pm2</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-01-03T21:56:48+08:00"
-              content="2019-01-03" >
-          01-03
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/15/iptables-wont-block-established-connections/" itemprop="url">
-              
-                <span itemprop="name">iptables不会主动断开已有连接</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-12-15T18:48:24+08:00"
-              content="2018-12-15" >
-          12-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/01/ss-local/" itemprop="url">
-              
-                <span itemprop="name">Ubuntu配置ss-local客户端</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-12-01T22:03:28+08:00"
-              content="2018-12-01" >
-          12-01
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/08/23/ubuntu16to18md/" itemprop="url">
-              
-                <span itemprop="name">ubuntu16.04升级18.04LTS</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-08-23T21:16:15+08:00"
-              content="2018-08-23" >
-          08-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </section>
 
   
 
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/01/03/pm2-crontab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">crontab 中使用 pm2</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-03T21:56:48+08:00">
+                2019-01-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/03/pm2-crontab/" class="leancloud_visitors" data-flag-title="crontab 中使用 pm2">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <br>
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  542
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本篇不是讲如何处理代码内的定时任务，而是聊聊怎么借助 crontab 等工具，定时操作 pm2 (指令)。例如，定时重启 pm2 中的进程、定时执行 pm2 save 保存运行状态，等等。<br><a id="more"></a></p>
+<h1 id="重启进程"><a href="#重启进程" class="headerlink" title="重启进程"></a>重启进程</h1><p><code>pm2 --help</code> 可以看到 pm2 自带 cron 功能，但功能仅限于重启进程。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Usage: pm2 [cmd] app</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line"></span><br><span class="line">-c --cron &lt;cron_pattern&gt;     restart a running process based on a cron pattern</span><br></pre></td></tr></table></figure>
+<h1 id="执行指令"><a href="#执行指令" class="headerlink" title="执行指令"></a>执行指令</h1><p>执行指令包括重启 pm2 内的进程，并且可以定时调用 pm2 做任何它支持的事。这种情况下，使用系统层面的 <code>crontab</code> 就对啦。</p>
+<p>需要注意的是，pm2 在 crontab 中的运行 PATH 和 在 命令行 shell 中直接执行并不一样，因此会报 <code>pm2: command not found</code> 之类的错。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 错误示范</span></span><br><span class="line">*/1 * * * * pm2 flush &gt; /var/<span class="built_in">log</span>/pm2flush.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>解决方法是在使用pm2的脚本中指定环境变量，参考<code>which pm2</code>，找出pm2的bin路径。</p>
+<p>一般是通过<code>npm i pm2 -g</code>全局安装，环境变量是<code>/urs/local/node/bin</code>。如果你使用nvm，那可能是<code>/home/yourname/.nvm/versions/node/vX.X.X/bin</code>。</p>
+<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><h2 id="pm2-flush"><a href="#pm2-flush" class="headerlink" title="pm2 flush"></a>pm2 flush</h2><p>例如我们要定时清除 pm2 的 log 文件，节省磁盘空间，可以使用 pm2 自带的 flush 命令。</p>
+<h2 id="直接执行"><a href="#直接执行" class="headerlink" title="直接执行"></a>直接执行</h2><p>一种是直接在定时器执行 pm2 flush</p>
+<blockquote>
+<p>PATH 的指定要结合具体情况，常见的做法是命令行 <code>echo $PATH</code>，把输出内容补到指令的 PATH 中</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SHELL=/bin/sh</span><br><span class="line">PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/<span class="built_in">local</span>/node/bin</span><br><span class="line"></span><br><span class="line">*/1 * * * * pm2 flush &gt; /var/<span class="built_in">log</span>/pm2flush.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h2 id="间接执行"><a href="#间接执行" class="headerlink" title="间接执行"></a>间接执行</h2><p>另一种是定时调用任务脚本，通过脚本间接执行 pm2 flush，这样方便我们同时做其他处理，如删除日志前先打包备份。</p>
+<p>在 crontab 中，内容如下<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SHELL=/bin/sh</span><br><span class="line">PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/<span class="built_in">local</span>/node/bin</span><br><span class="line"></span><br><span class="line">*/1 * * * * sh /home/root/pm2flush.sh &gt; /var/<span class="built_in">log</span>/pm2flush.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure></p>
+<p>再来看它执行的 <code>pm2flush.sh</code> 文件<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果crontab中不指定node bin的PATH，也可以在这里通过如下方式指定</span></span><br><span class="line"><span class="comment"># PATH=$PATH:/usr/local/node/bin</span></span><br><span class="line">pm2 flush</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Claude Ray
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://claude-ray.github.io/2019/01/03/pm2-crontab/" title="crontab 中使用 pm2">https://claude-ray.github.io/2019/01/03/pm2-crontab/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/pm2/" rel="tag"> <i class="fa fa-tag"></i> pm2</a>
+          
+            <a href="/tags/crontab/" rel="tag"> <i class="fa fa-tag"></i> crontab</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/21/pm2-cluster-log4js/" rel="next" title="PM2 cluster + log4js？并不理想的组合">
+                <i class="fa fa-chevron-left"></i> PM2 cluster + log4js？并不理想的组合
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -400,6 +519,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -419,8 +542,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -533,6 +665,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重启进程"><span class="nav-number">1.</span> <span class="nav-text">重启进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行指令"><span class="nav-number">2.</span> <span class="nav-text">执行指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#举例"><span class="nav-number">3.</span> <span class="nav-text">举例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pm2-flush"><span class="nav-number">3.1.</span> <span class="nav-text">pm2 flush</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接执行"><span class="nav-number">3.2.</span> <span class="nav-text">直接执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#间接执行"><span class="nav-number">3.3.</span> <span class="nav-text">间接执行</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -635,10 +783,10 @@ Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homep
   
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
 
-  
+
 
   
 

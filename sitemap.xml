@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/01/03/pm2-crontab/</loc>
+    
+    <lastmod>2019-01-03T14:34:21.896Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/</loc>
     
     <lastmod>2018-12-22T05:53:09.215Z</lastmod>
