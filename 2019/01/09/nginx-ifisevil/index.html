@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Nginx,If Is Evil," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="被 nginx 官方自我批判的 if 语句，《If Is Evil》——这应该成为每位开发者初次使用 nginx 的 if 之前必读的文章。 即使一年前就开始用 nginx 和 if 的组合做跳转，但涉及的功能太简单，没能见识到它的真面目。当我在多个 if 内处理 proxy_pass 时，噩梦就降临了。">
+<meta name="keywords" content="Nginx,If Is Evil">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://claude-ray.github.io/2017/06/14/hello-world/index.html">
+<meta property="og:title" content="Nginx的if使用须知">
+<meta property="og:url" content="https://claude-ray.github.io/2019/01/09/nginx-ifisevil/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="被 nginx 官方自我批判的 if 语句，《If Is Evil》——这应该成为每位开发者初次使用 nginx 的 if 之前必读的文章。 即使一年前就开始用 nginx 和 if 的组合做跳转，但涉及的功能太简单，没能见识到它的真面目。当我在多个 if 内处理 proxy_pass 时，噩梦就降临了。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-06-13T16:29:04.000Z">
+<meta property="og:updated_time" content="2019-01-09T16:49:29.027Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="Nginx的if使用须知">
+<meta name="twitter:description" content="被 nginx 官方自我批判的 if 语句，《If Is Evil》——这应该成为每位开发者初次使用 nginx 的 if 之前必读的文章。 即使一年前就开始用 nginx 和 if 的组合做跳转，但涉及的功能太简单，没能见识到它的真面目。当我在多个 if 内处理 proxy_pass 时，噩梦就降临了。">
 
 
 
@@ -133,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2017/06/14/hello-world/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2019/01/09/nginx-ifisevil/"/>
 
 
 
@@ -142,7 +143,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>Hello World | Claude's Home</title>
+  <title>Nginx的if使用须知 | Claude's Home</title>
   
 
 
@@ -281,7 +282,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2017/06/14/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/01/09/nginx-ifisevil/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -298,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">Nginx的if使用须知</h1>
         
 
         <div class="post-meta">
@@ -310,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-14T00:29:04+08:00">
-                2017-06-14
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-09T22:42:14+08:00">
+                2019-01-09
               </time>
             
 
@@ -321,6 +322,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nginx/" itemprop="url" rel="index">
+                    <span itemprop="name">Nginx</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -328,7 +351,7 @@
 
           
           
-             <span id="/2017/06/14/hello-world/" class="leancloud_visitors" data-flag-title="Hello World">
+             <span id="/2019/01/09/nginx-ifisevil/" class="leancloud_visitors" data-flag-title="Nginx的if使用须知">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -354,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  78
+                  876
                 </span>
               
 
@@ -370,7 +393,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  4
                 </span>
               
             </div>
@@ -388,15 +411,46 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>被 nginx 官方自我批判的 if 语句，《<a href="https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/" target="_blank" rel="noopener">If Is Evil</a>》——这应该成为每位开发者初次使用 nginx 的 if 之前必读的文章。</p>
+<p>即使一年前就开始用 nginx 和 if 的组合做跳转，但涉及的功能太简单，没能见识到它的真面目。当我在多个 if 内处理 proxy_pass 时，噩梦就降临了。<br><a id="more"></a></p>
+<h1 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h1><p>if 本身是 rewrite 模块的一部分，然而在非 rewrite 环境下也可以用，显然这是错误的用法，进而引发很多出乎意料的问题。</p>
+<h1 id="How"><a href="#How" class="headerlink" title="How"></a>How</h1><p>最直观的还是来看代码，下面引用 If Is Evil 的 <a href="https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/#examples" target="_blank" rel="noopener">Example 部分</a>，用 30 秒即可浏览大部分 evil 场景。</p>
+<ol>
+<li><p>只有X-Second会被设置</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /only-one-if &#123;</span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="attribute">add_header</span> X-First <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="attribute">add_header</span> X-Second <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">return</span> <span class="number">204</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>proxy_pass 不会生效</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /proxy-pass-uri &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="comment"># nothing</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>try_files 不会生效</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /if-try-files &#123;</span><br><span class="line">     <span class="attribute">try_files</span>  /file  <span class="variable">@fallback</span>;</span><br><span class="line"></span><br><span class="line">     <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">     <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">         <span class="comment"># nothing</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>nginx 将发出段错误信号 SIGSEGV</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /crash &#123;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="comment"># fastcgi_pass here</span></span><br><span class="line">        <span class="attribute">fastcgi_pass</span>  <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="comment"># no handler here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>alias 无法正确地被继承到由 if 创建的隐式嵌套 location 中</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~* ^/if-and-alias/(?&lt;file&gt;.*)</span> &#123;</span><br><span class="line">    <span class="attribute">alias</span> /tmp/<span class="variable">$file</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="comment"># nothing</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h1><p>既然 if 如此之坑，最好的办法就是乖乖禁用 if，但拗不过诸位喜欢折腾的灵魂，特殊场景还是可以用的。下面列举最常见的避坑方案。</p>
+<h2 id="官方认可的两种用法"><a href="#官方认可的两种用法" class="headerlink" title="官方认可的两种用法"></a>官方认可的两种用法</h2><p>再怎么说，if 就是为 rewrite 服务的，如果有 bug 早被封杀了。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#The only 100% safe things which may be done inside if in a location context are:</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">return</span> ...;</span><br><span class="line"><span class="attribute">rewrite</span> ... <span class="literal">last</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="proxy-pass-中及时-break"><a href="#proxy-pass-中及时-break" class="headerlink" title="proxy_pass 中及时 break"></a>proxy_pass 中及时 break</h2><p>当处理各种跳转逻辑时，假设你不期望因为多传了个等于 “hi” 的参数 parma2，就导致 <code>param1 ~ &quot;hello&quot;</code> 的跳转失败，那么应该在合适的地方增加 break。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /proxy-pass-uri &#123;</span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$arg_param1</span> <span class="regexp">~ "hello")</span> &#123;</span><br><span class="line">      <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/;</span><br><span class="line">      <span class="comment"># 这里的break将阻止下面if的执行</span></span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$arg_param2</span> <span class="regexp">~ "hi")</span> &#123;</span><br><span class="line">      <span class="comment"># anything</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8082/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>此外，也可以通过调整 if 的顺序来规避风险，但是容错率比 break 低了很多</p>
+</blockquote>
+<h2 id="使用-lua"><a href="#使用-lua" class="headerlink" title="使用 lua"></a>使用 lua</h2><blockquote>
+<p><a href="https://github.com/openresty/lua-nginx-module" target="_blank" rel="noopener">https://github.com/openresty/lua-nginx-module</a></p>
+</blockquote>
+<p>具体来说，通过安装 lua 和 lua-nginx-module( 或 OpenResty ) 来增强 nginx 的逻辑处理，可以称为目前最流行有效的处理方案。lua 扩展带来的好处远不止 if 语句的避坑，例如带来方便地读取 POST 请求体的内容等便利操作。网上资料齐全，这里不多赘述。</p>
+<h2 id="使用-njs"><a href="#使用-njs" class="headerlink" title="使用 njs"></a>使用 njs</h2><blockquote>
+<p><a href="http://nginx.org/en/docs/njs/index.html" target="_blank" rel="noopener">http://nginx.org/en/docs/njs/index.html</a></p>
+</blockquote>
+<p>nginScript (njs) 是 nginx 在 2015 发布的 javascript 配置方案。类似于 lua-nginx-module，它也需要安装相关依赖模块。但有官方做后盾的 njs，比起 lua 要更为轻量，不需要完整的语言运行环境。并且针对 nginx 环境进行设计，理论上有更高的优化空间。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>到此，坑点和避坑的方法都阐明了，如果还想了解 nginx if 背后的机制，或有其他疑问，请继续探寻《If Is Evil》原文吧！</p>
+<p>再次附上传送门：</p>
+<blockquote>
+<p><a href="https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/" target="_blank" rel="noopener">https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/</a></p>
+</blockquote>
 
       
     </div>
@@ -425,7 +479,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://claude-ray.github.io/2017/06/14/hello-world/" title="Hello World">https://claude-ray.github.io/2017/06/14/hello-world/</a>
+      <a href="https://claude-ray.github.io/2019/01/09/nginx-ifisevil/" title="Nginx的if使用须知">https://claude-ray.github.io/2019/01/09/nginx-ifisevil/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -439,6 +493,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Nginx/" rel="tag"> <i class="fa fa-tag"></i> Nginx</a>
+          
+            <a href="/tags/If-Is-Evil/" rel="tag"> <i class="fa fa-tag"></i> If Is Evil</a>
+          
+        </div>
+      
 
       
       
@@ -448,15 +510,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/01/03/pm2-crontab/" rel="next" title="crontab 中使用 pm2">
+                <i class="fa fa-chevron-left"></i> crontab 中使用 pm2
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/06/18/Hexo搭建过程/" rel="prev" title="Hexo搭建过程">
-                Hexo搭建过程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -635,7 +697,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Why"><span class="nav-number">1.</span> <span class="nav-text">Why</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#How"><span class="nav-number">2.</span> <span class="nav-text">How</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何避免"><span class="nav-number">3.</span> <span class="nav-text">如何避免</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#官方认可的两种用法"><span class="nav-number">3.1.</span> <span class="nav-text">官方认可的两种用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#proxy-pass-中及时-break"><span class="nav-number">3.2.</span> <span class="nav-text">proxy_pass 中及时 break</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-lua"><span class="nav-number">3.3.</span> <span class="nav-text">使用 lua</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用-njs"><span class="nav-number">3.4.</span> <span class="nav-text">使用 njs</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>

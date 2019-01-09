@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/01/09/nginx-ifisevil/</loc>
+    
+    <lastmod>2019-01-09T16:49:29.027Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/01/03/pm2-crontab/</loc>
     
-    <lastmod>2019-01-03T14:34:21.896Z</lastmod>
+    <lastmod>2019-01-03T15:37:16.453Z</lastmod>
     
   </url>
   

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2019-01-03T14:34:21.896Z</updated>
+  <updated>2019-01-09T16:49:29.027Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -16,11 +16,76 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Nginx的if使用须知</title>
+    <link href="https://claude-ray.github.io/2019/01/09/nginx-ifisevil/"/>
+    <id>https://claude-ray.github.io/2019/01/09/nginx-ifisevil/</id>
+    <published>2019-01-09T14:42:14.000Z</published>
+    <updated>2019-01-09T16:49:29.027Z</updated>
+    
+    <content type="html"><![CDATA[<p>被 nginx 官方自我批判的 if 语句，《<a href="https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/" target="_blank" rel="noopener">If Is Evil</a>》——这应该成为每位开发者初次使用 nginx 的 if 之前必读的文章。</p>
+<p>即使一年前就开始用 nginx 和 if 的组合做跳转，但涉及的功能太简单，没能见识到它的真面目。当我在多个 if 内处理 proxy_pass 时，噩梦就降临了。<br><a id="more"></a></p>
+<h1 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h1><p>if 本身是 rewrite 模块的一部分，然而在非 rewrite 环境下也可以用，显然这是错误的用法，进而引发很多出乎意料的问题。</p>
+<h1 id="How"><a href="#How" class="headerlink" title="How"></a>How</h1><p>最直观的还是来看代码，下面引用 If Is Evil 的 <a href="https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/#examples" target="_blank" rel="noopener">Example 部分</a>，用 30 秒即可浏览大部分 evil 场景。</p>
+<ol>
+<li><p>只有X-Second会被设置</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /only-one-if &#123;</span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="attribute">add_header</span> X-First <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="attribute">add_header</span> X-Second <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">return</span> <span class="number">204</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>proxy_pass 不会生效</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /proxy-pass-uri &#123;</span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="comment"># nothing</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>try_files 不会生效</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /if-try-files &#123;</span><br><span class="line">     <span class="attribute">try_files</span>  /file  <span class="variable">@fallback</span>;</span><br><span class="line"></span><br><span class="line">     <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">     <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">         <span class="comment"># nothing</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>nginx 将发出段错误信号 SIGSEGV</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /crash &#123;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="comment"># fastcgi_pass here</span></span><br><span class="line">        <span class="attribute">fastcgi_pass</span>  <span class="number">127.0.0.1:9000</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="comment"># no handler here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>alias 无法正确地被继承到由 if 创建的隐式嵌套 location 中</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~* ^/if-and-alias/(?&lt;file&gt;.*)</span> &#123;</span><br><span class="line">    <span class="attribute">alias</span> /tmp/<span class="variable">$file</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="comment"># nothing</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h1 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h1><p>既然 if 如此之坑，最好的办法就是乖乖禁用 if，但拗不过诸位喜欢折腾的灵魂，特殊场景还是可以用的。下面列举最常见的避坑方案。</p>
+<h2 id="官方认可的两种用法"><a href="#官方认可的两种用法" class="headerlink" title="官方认可的两种用法"></a>官方认可的两种用法</h2><p>再怎么说，if 就是为 rewrite 服务的，如果有 bug 早被封杀了。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#The only 100% safe things which may be done inside if in a location context are:</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">return</span> ...;</span><br><span class="line"><span class="attribute">rewrite</span> ... <span class="literal">last</span>;</span><br></pre></td></tr></table></figure></p>
+<h2 id="proxy-pass-中及时-break"><a href="#proxy-pass-中及时-break" class="headerlink" title="proxy_pass 中及时 break"></a>proxy_pass 中及时 break</h2><p>当处理各种跳转逻辑时，假设你不期望因为多传了个等于 “hi” 的参数 parma2，就导致 <code>param1 ~ &quot;hello&quot;</code> 的跳转失败，那么应该在合适的地方增加 break。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /proxy-pass-uri &#123;</span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$arg_param1</span> <span class="regexp">~ "hello")</span> &#123;</span><br><span class="line">      <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/;</span><br><span class="line">      <span class="comment"># 这里的break将阻止下面if的执行</span></span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$arg_param2</span> <span class="regexp">~ "hi")</span> &#123;</span><br><span class="line">      <span class="comment"># anything</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8082/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>此外，也可以通过调整 if 的顺序来规避风险，但是容错率比 break 低了很多</p>
+</blockquote>
+<h2 id="使用-lua"><a href="#使用-lua" class="headerlink" title="使用 lua"></a>使用 lua</h2><blockquote>
+<p><a href="https://github.com/openresty/lua-nginx-module" target="_blank" rel="noopener">https://github.com/openresty/lua-nginx-module</a></p>
+</blockquote>
+<p>具体来说，通过安装 lua 和 lua-nginx-module( 或 OpenResty ) 来增强 nginx 的逻辑处理，可以称为目前最流行有效的处理方案。lua 扩展带来的好处远不止 if 语句的避坑，例如带来方便地读取 POST 请求体的内容等便利操作。网上资料齐全，这里不多赘述。</p>
+<h2 id="使用-njs"><a href="#使用-njs" class="headerlink" title="使用 njs"></a>使用 njs</h2><blockquote>
+<p><a href="http://nginx.org/en/docs/njs/index.html" target="_blank" rel="noopener">http://nginx.org/en/docs/njs/index.html</a></p>
+</blockquote>
+<p>nginScript (njs) 是 nginx 在 2015 发布的 javascript 配置方案。类似于 lua-nginx-module，它也需要安装相关依赖模块。但有官方做后盾的 njs，比起 lua 要更为轻量，不需要完整的语言运行环境。并且针对 nginx 环境进行设计，理论上有更高的优化空间。</p>
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>到此，坑点和避坑的方法都阐明了，如果还想了解 nginx if 背后的机制，或有其他疑问，请继续探寻《If Is Evil》原文吧！</p>
+<p>再次附上传送门：</p>
+<blockquote>
+<p><a href="https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/" target="_blank" rel="noopener">https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/</a></p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;被 nginx 官方自我批判的 if 语句，《&lt;a href=&quot;https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;If Is Evil&lt;/a&gt;》——这应该成为每位开发者初次使用 nginx 的 if 之前必读的文章。&lt;/p&gt;
+&lt;p&gt;即使一年前就开始用 nginx 和 if 的组合做跳转，但涉及的功能太简单，没能见识到它的真面目。当我在多个 if 内处理 proxy_pass 时，噩梦就降临了。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Nginx" scheme="https://claude-ray.github.io/categories/Nginx/"/>
+    
+    
+      <category term="Nginx" scheme="https://claude-ray.github.io/tags/Nginx/"/>
+    
+      <category term="If Is Evil" scheme="https://claude-ray.github.io/tags/If-Is-Evil/"/>
+    
+  </entry>
+  
+  <entry>
     <title>crontab 中使用 pm2</title>
     <link href="https://claude-ray.github.io/2019/01/03/pm2-crontab/"/>
     <id>https://claude-ray.github.io/2019/01/03/pm2-crontab/</id>
     <published>2019-01-03T13:56:48.000Z</published>
-    <updated>2019-01-03T14:34:21.896Z</updated>
+    <updated>2019-01-03T15:37:16.453Z</updated>
     
     <content type="html"><![CDATA[<p>本篇不是讲如何处理代码内的定时任务，而是聊聊怎么借助 crontab 等工具，定时操作 pm2 (指令)。例如，定时重启 pm2 中的进程、定时执行 pm2 save 保存运行状态，等等。<br><a id="more"></a></p>
 <h1 id="重启进程"><a href="#重启进程" class="headerlink" title="重启进程"></a>重启进程</h1><p><code>pm2 --help</code> 可以看到 pm2 自带 cron 功能，但功能仅限于重启进程。</p>
@@ -107,9 +172,9 @@
     
       <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
-      <category term="log4js" scheme="https://claude-ray.github.io/tags/log4js/"/>
-    
       <category term="pm2" scheme="https://claude-ray.github.io/tags/pm2/"/>
+    
+      <category term="log4js" scheme="https://claude-ray.github.io/tags/log4js/"/>
     
       <category term="pm2-intercom" scheme="https://claude-ray.github.io/tags/pm2-intercom/"/>
     
@@ -927,43 +992,6 @@
       <category term="Lodash" scheme="https://claude-ray.github.io/tags/Lodash/"/>
     
       <category term="npm" scheme="https://claude-ray.github.io/tags/npm/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Node获取GBK编码“字符串”</title>
-    <link href="https://claude-ray.github.io/2017/10/05/node-gbk-hex/"/>
-    <id>https://claude-ray.github.io/2017/10/05/node-gbk-hex/</id>
-    <published>2017-10-05T00:50:46.000Z</published>
-    <updated>2018-12-11T16:03:10.796Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="UTF8-to-GBK-Hex-String"><a href="#UTF8-to-GBK-Hex-String" class="headerlink" title="UTF8 to GBK Hex String"></a>UTF8 to GBK Hex String</h1><h2 id="iconv-lite"><a href="#iconv-lite" class="headerlink" title="iconv-lite"></a>iconv-lite</h2><p>通常都会使用 <code>iconv-lite</code> 这个包实现Node的编码转换，但是这个包是基于 <code>Buffer</code> 的，如果传递给其他语言的系统，需要先转换为 <code>String</code> 字符串。</p>
-<p>在网上查阅了相关资料，并没有给出很好的解答。一些比较老的回答都在说，Node中无法把Buffer转换成gbk字符串。</p>
-<p>俗话说有问题找师兄，果然，咨询同组师兄后得到了期望的结果。转换过程很巧妙，在此分享出来：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">toGBKString</span>(<span class="params">str</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> iconv.encode(str, <span class="string">'gbk'</span>)</span><br><span class="line">    .reduce(<span class="function">(<span class="params">pre, cur</span>) =&gt;</span> <span class="string">`<span class="subst">$&#123;pre&#125;</span><span class="subst">$&#123;cur.toString(<span class="number">16</span>)&#125;</span>`</span>, <span class="string">''</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>以上是不加百分号的，如果需要可以在模板字符串中自行加上。</p>
-<h2 id="2018-04-18更"><a href="#2018-04-18更" class="headerlink" title="2018-04-18更"></a>2018-04-18更</h2><p>由于<code>Buffer</code>本身支持hex的转换</p>
-<blockquote>
-<p>Buffer instances are commonly used to represent sequences of encoded characters such as UTF-8, UCS2, Base64, or even Hex-encoded data. It is possible to convert back and forth between Buffer instances and ordinary JavaScript strings by using an explicit character encoding.</p>
-</blockquote>
-<blockquote>
-<p>‘hex’ - Encode each byte as two hexadecimal characters.</p>
-</blockquote>
-<p>因此<code>reduce</code>可以继续简化为</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iconv.encode(str, <span class="string">'gbk'</span>).toString(<span class="string">'hex'</span>);</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      首先，Node内部是无法直接获取GBK编码“字符串”的，只不过使用到GBK的场景均有相应的应对方法。最初学习时，陷入了接口返回值必须是“字符串”的误区，然而想把GBK编码从Buffer强转为GBK中文String类型是做不到的。本篇借助了hex码，达成了字符串形式传输GBK数据的需要，用以发送给其他语言编写的系统。
-    
-    </summary>
-    
-      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
-    
-    
-      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
-    
-      <category term="String" scheme="https://claude-ray.github.io/tags/String/"/>
     
   </entry>
   
