@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/01/29/ways-to-avoid-svn-conflict/</loc>
+    
+    <lastmod>2019-01-29T15:55:00.076Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/01/24/nginx-proxypass-args/</loc>
     
     <lastmod>2019-01-24T16:22:28.028Z</lastmod>

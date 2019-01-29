@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="SVN," />
 
 
 
@@ -95,17 +95,18 @@
 
 
 
-<meta name="description" content="记录此次Bug原因和修复过程">
+<meta name="description" content="svn 给笔者的一大印象就是非常容易产生冲突，特别是项目加入新人后，由于初期没有强硬地制定规范，导致后期合并代码时灾难连天。决定在此分享这些“亡羊补牢”的规则，也算是避免 svn 产生合并冲突的一点经验。">
+<meta name="keywords" content="SVN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="缓存不当至服务崩溃">
-<meta property="og:url" content="https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/index.html">
+<meta property="og:title" content="如何避免svn合并冲突">
+<meta property="og:url" content="https://claude-ray.github.io/2019/01/29/ways-to-avoid-svn-conflict/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="记录此次Bug原因和修复过程">
+<meta property="og:description" content="svn 给笔者的一大印象就是非常容易产生冲突，特别是项目加入新人后，由于初期没有强硬地制定规范，导致后期合并代码时灾难连天。决定在此分享这些“亡羊补牢”的规则，也算是避免 svn 产生合并冲突的一点经验。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-21T14:51:07.646Z">
+<meta property="og:updated_time" content="2019-01-29T15:55:00.076Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="缓存不当至服务崩溃">
-<meta name="twitter:description" content="记录此次Bug原因和修复过程">
+<meta name="twitter:title" content="如何避免svn合并冲突">
+<meta name="twitter:description" content="svn 给笔者的一大印象就是非常容易产生冲突，特别是项目加入新人后，由于初期没有强硬地制定规范，导致后期合并代码时灾难连天。决定在此分享这些“亡羊补牢”的规则，也算是避免 svn 产生合并冲突的一点经验。">
 
 
 
@@ -133,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2019/01/29/ways-to-avoid-svn-conflict/"/>
 
 
 
@@ -142,7 +143,7 @@
 <link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
 
 
-  <title>缓存不当至服务崩溃 | Claude's Home</title>
+  <title>如何避免svn合并冲突 | Claude's Home</title>
   
 
 
@@ -281,7 +282,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/01/29/ways-to-avoid-svn-conflict/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -298,7 +299,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">缓存不当至服务崩溃</h1>
+          <h1 class="post-title" itemprop="name headline">如何避免svn合并冲突</h1>
         
 
         <div class="post-meta">
@@ -310,8 +311,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T22:45:20+08:00">
-                2017-12-20
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-29T22:13:36+08:00">
+                2019-01-29
               </time>
             
 
@@ -333,8 +334,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Redis/" itemprop="url" rel="index">
-                    <span itemprop="name">Redis</span>
+                  <a href="/categories/SVN/" itemprop="url" rel="index">
+                    <span itemprop="name">SVN</span>
                   </a>
                 </span>
 
@@ -350,7 +351,7 @@
 
           
           
-             <span id="/2017/12/20/缓存不当至服务崩溃/" class="leancloud_visitors" data-flag-title="缓存不当至服务崩溃">
+             <span id="/2019/01/29/ways-to-avoid-svn-conflict/" class="leancloud_visitors" data-flag-title="如何避免svn合并冲突">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -376,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  435
+                  972
                 </span>
               
 
@@ -392,16 +393,12 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2
+                  3
                 </span>
               
             </div>
           
 
-          
-              <div class="post-description">
-                  记录此次Bug原因和修复过程
-              </div>
           
 
         </div>
@@ -414,24 +411,26 @@
       
 
       
-        <h3 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h3><p>9月份优化的redis写缓存冲突，埋下了一个地雷。</p>
-<p>回顾之前的解决方案：</p>
-<p>recommend接口的返回值使用非常频繁，为了避免前端不断请求recommend接口，因此前端负责写缓存，后端负责从sql中查询数据，需要更新时再去删除此缓存。</p>
-<p>这样就留下一个问题，当前端缓存过期，会迸发大量的请求到后端，当后端的sql查询速度较慢。此时前端的请求不间断，后端就堆积了大量的sql查询，影响到其他请求，甚至宕机。</p>
-<p>之前没有出现问题的原因，是sql走了索引，查询速度正常。恰巧这个项目被交接之后，优化的过程中发现这条索引不合理，被删除了，但是遗漏了对recommend的修改，于是导致接口超时（查询时间大于Nginx配置的最大响应时间）。且缓存时间一周，等到它自然过期，被搞得措手不及。</p>
-<h3 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h3><ol>
-<li>立即为recommend设置一个非空缓存，停掉前端请求</li>
-<li>重启mysql</li>
-<li>恢复之前的索引，保证该接口下的SQL查询处于正常水平</li>
-</ol>
-<blockquote>
-<p>旧索引恢复之后，一些优化就失效了，mysql继续走了它自认为不错的毒瘤索引。要即刻进行后续工作。</p>
-</blockquote>
-<h3 id="后续工作"><a href="#后续工作" class="headerlink" title="后续工作"></a>后续工作</h3><ol>
-<li>优化此处低效的sql(select xx where xx in xx order by，没有索引自然会崩)</li>
-<li>恢复后端在该接口下写缓存的能力，使用锁（redis.setnx）或让前端走请求方式获取</li>
-<li>重新删除上述索引，恢复正常优化</li>
-</ol>
+        <p>svn 给笔者的一大印象就是非常容易产生冲突，特别是项目加入新人后，由于初期没有强硬地制定规范，导致后期合并代码时灾难连天。决定在此分享这些“亡羊补牢”的规则，也算是避免 svn 产生合并冲突的一点经验。</p>
+<a id="more"></a>
+<h2 id="一个简单的分支管理策略"><a href="#一个简单的分支管理策略" class="headerlink" title="一个简单的分支管理策略"></a>一个简单的分支管理策略</h2><p>正式分享 tips 前，先交代一下目前在用的 svn 管理策略，因为本文避免合并冲突的一些要点就是建立在此策略之上的。</p>
+<p>类似于 git 的轻度规则，主要分为 dev、master、release 三种分支。</p>
+<p>以 master 为核心，保存完整代码。release 则允许剔除未编译前端 js、测试用例、项目文档等运行环境不需要的文件，减轻发布体积。功能开发在各 dev 进行。因此 master 和 release 只需要处理代码合并。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">发布分支        主干       开发分支</span><br><span class="line"></span><br><span class="line">release1 &lt;-            &lt;- dev</span><br><span class="line">release2 &lt;-   master   &lt;- feature</span><br><span class="line">...      &lt;-            &lt;- ...</span><br></pre></td></tr></table></figure>
+<h2 id="如何避免冲突"><a href="#如何避免冲突" class="headerlink" title="如何避免冲突"></a>如何避免冲突</h2><h3 id="1-编辑器装好-svn-相关插件。"><a href="#1-编辑器装好-svn-相关插件。" class="headerlink" title="1. 编辑器装好 svn 相关插件。"></a>1. 编辑器装好 svn 相关插件。</h3><p>不同于“装机必备”的 git ，很多编辑器没有自带 svn 的管理插件，需要用户自己安装。</p>
+<p>尤其重要的功能是可以实时对比 diff，本地和远程仓库的差异一览无遗，不要再疑惑为什么本地顺畅线上崩盘了。</p>
+<p>windows 开发环境可能需要配置 svn 环境变量，但不要偷懒，这点工作一劳永逸。</p>
+<h3 id="2-细化提交。"><a href="#2-细化提交。" class="headerlink" title="2. 细化提交。"></a>2. 细化提交。</h3><p>当合并时，假如发现同一个提交下存在还未达到上线状态的变更，这种情况如果忽略合并某些代码，会导致该开发分支和 master 分支不再一致，为后继的开发者挖坑。</p>
+<h3 id="3-开发分支也要规范-commit-log。"><a href="#3-开发分支也要规范-commit-log。" class="headerlink" title="3. 开发分支也要规范 commit log。"></a>3. 开发分支也要规范 commit log。</h3><p>尽管开发分支可能在功能完成后就被删除，依然要有意识地为各个 commit 打上前缀、标签。</p>
+<p>假设某开发分支是多人协作，若 commit log 有合适的标签，可以增加合并时的检索效率，避免遗漏部分久远的提交。当然，除非业务关联性较大，放在一个分支方便做同时修改，最好还是分模块、分特性单独建开发分支。</p>
+<h3 id="4-所有的合并操作，采取针对版本号的更改。"><a href="#4-所有的合并操作，采取针对版本号的更改。" class="headerlink" title="4. 所有的合并操作，采取针对版本号的更改。"></a>4. 所有的合并操作，采取针对版本号的更改。</h3><p>其实主要面向需要长期维护的开发分支，直接合并目录树会携带大量不稳定变更。</p>
+<h3 id="5-对完整的分支执行合并。"><a href="#5-对完整的分支执行合并。" class="headerlink" title="5. 对完整的分支执行合并。"></a>5. 对完整的分支执行合并。</h3><p>对整个分支目录执行合并，而不是对单个文件、单个子目录做合并，否则结合第 2 点，这极容易埋下隐患。</p>
+<h3 id="6-牢记发布分支-release-是-master-的快照。"><a href="#6-牢记发布分支-release-是-master-的快照。" class="headerlink" title="6. 牢记发布分支 release 是 master 的快照。"></a>6. 牢记发布分支 release 是 master 的快照。</h3><p>禁止跨过 master 在 release 直接提交代码。更危险的是在 release 提交的代码和 master 不一致，好在上次遇到这么做的被我及时制止了。XD</p>
+<p>进一步要求，不要在 master 直接提交解决冲突以外的代码。</p>
+<h3 id="7-定期把-master-的所有更改合并回开发分支。"><a href="#7-定期把-master-的所有更改合并回开发分支。" class="headerlink" title="7. 定期把 master 的所有更改合并回开发分支。"></a>7. 定期把 master 的所有更改合并回开发分支。</h3><p>尤其是涉及工具类、公共模块的更改。当开发分支维护不下去时，以 master 为基准重建开发分支。</p>
+<h3 id="8-遇到-GUI-解决不了的冲突，命令行参数了解一下。"><a href="#8-遇到-GUI-解决不了的冲突，命令行参数了解一下。" class="headerlink" title="8. 遇到 GUI 解决不了的冲突，命令行参数了解一下。"></a>8. 遇到 GUI 解决不了的冲突，命令行参数了解一下。</h3><p>大杀器，说多了都是泪……</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>以上内容是笔者几乎照搬着对 git 的理解来总结的，可能并不成熟。不过经过了一年的实践，这些“规范”操作的确达到了避免冲突的目的，且远没有复杂过 git rebase 工具流。</p>
+<p>制定规范是一回事，更应该要求团队成员继续加深对版本管理库的理解，思考分支合并存在的意义，养成更好的提交习惯。</p>
 
       
     </div>
@@ -460,7 +459,7 @@
     </li>
     <li class="post-copyright-link">
       <strong>本文链接：</strong>
-      <a href="https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/" title="缓存不当至服务崩溃">https://claude-ray.github.io/2017/12/20/缓存不当至服务崩溃/</a>
+      <a href="https://claude-ray.github.io/2019/01/29/ways-to-avoid-svn-conflict/" title="如何避免svn合并冲突">https://claude-ray.github.io/2019/01/29/ways-to-avoid-svn-conflict/</a>
     </li>
     <li class="post-copyright-license">
       <strong>版权声明： </strong>
@@ -474,6 +473,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/SVN/" rel="tag"> <i class="fa fa-tag"></i> SVN</a>
+          
+        </div>
+      
 
       
       
@@ -483,8 +488,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/12/05/vscode-evernote云笔记/" rel="next" title="vscode+evernote云笔记">
-                <i class="fa fa-chevron-left"></i> vscode+evernote云笔记
+              <a href="/2019/01/24/nginx-proxypass-args/" rel="next" title="Nginx改写$args未生效踩坑">
+                <i class="fa fa-chevron-left"></i> Nginx改写$args未生效踩坑
               </a>
             
           </div>
@@ -492,10 +497,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/12/23/Array-map-parseInt-为什么返回了NaN/" rel="prev" title="Array.map(parseInt)为什么返回了NaN">
-                Array.map(parseInt)为什么返回了NaN <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -674,7 +675,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#问题描述"><span class="nav-number">1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#后续工作"><span class="nav-number">3.</span> <span class="nav-text">后续工作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的分支管理策略"><span class="nav-number">1.</span> <span class="nav-text">一个简单的分支管理策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何避免冲突"><span class="nav-number">2.</span> <span class="nav-text">如何避免冲突</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-编辑器装好-svn-相关插件。"><span class="nav-number">2.1.</span> <span class="nav-text">1. 编辑器装好 svn 相关插件。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-细化提交。"><span class="nav-number">2.2.</span> <span class="nav-text">2. 细化提交。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-开发分支也要规范-commit-log。"><span class="nav-number">2.3.</span> <span class="nav-text">3. 开发分支也要规范 commit log。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-所有的合并操作，采取针对版本号的更改。"><span class="nav-number">2.4.</span> <span class="nav-text">4. 所有的合并操作，采取针对版本号的更改。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-对完整的分支执行合并。"><span class="nav-number">2.5.</span> <span class="nav-text">5. 对完整的分支执行合并。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-牢记发布分支-release-是-master-的快照。"><span class="nav-number">2.6.</span> <span class="nav-text">6. 牢记发布分支 release 是 master 的快照。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-定期把-master-的所有更改合并回开发分支。"><span class="nav-number">2.7.</span> <span class="nav-text">7. 定期把 master 的所有更改合并回开发分支。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-遇到-GUI-解决不了的冲突，命令行参数了解一下。"><span class="nav-number">2.8.</span> <span class="nav-text">8. 遇到 GUI 解决不了的冲突，命令行参数了解一下。</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
