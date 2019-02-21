@@ -1,0 +1,972 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Debian,hostname,fqdn," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言部署 RabbitMQ、Mongodb 或其他中间件的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 host 相关奇怪的部署问题，来看作者的一波填坑历程吧~ Debian 的 默认 hostname 配置在 Debian 系的 Linux 系统，/etc/hosts中前两行默认配置如下，其中">
+<meta name="keywords" content="Debian,hostname,fqdn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="当 bind_ip:127.0.0.1 遇上 Debian 的默认 host">
+<meta property="og:url" content="https://claude-ray.github.io/2019/02/21/bindip-debian-hostname/index.html">
+<meta property="og:site_name" content="Claude&#39;s Home">
+<meta property="og:description" content="前言部署 RabbitMQ、Mongodb 或其他中间件的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 host 相关奇怪的部署问题，来看作者的一波填坑历程吧~ Debian 的 默认 hostname 配置在 Debian 系的 Linux 系统，/etc/hosts中前两行默认配置如下，其中">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-02-21T15:43:27.276Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="当 bind_ip:127.0.0.1 遇上 Debian 的默认 host">
+<meta name="twitter:description" content="前言部署 RabbitMQ、Mongodb 或其他中间件的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 host 相关奇怪的部署问题，来看作者的一波填坑历程吧~ Debian 的 默认 hostname 配置在 Debian 系的 Linux 系统，/etc/hosts中前两行默认配置如下，其中">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://claude-ray.github.io/2019/02/21/bindip-debian-hostname/"/>
+
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+
+
+  <title>当 bind_ip:127.0.0.1 遇上 Debian 的默认 host | Claude's Home</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claude's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Searching</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/02/21/bindip-debian-hostname/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">当 bind_ip:127.0.0.1 遇上 Debian 的默认 host</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-21T21:35:43+08:00">
+                2019-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/21/bindip-debian-hostname/" class="leancloud_visitors" data-flag-title="当 bind_ip:127.0.0.1 遇上 Debian 的默认 host">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <br>
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  912
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>部署 RabbitMQ、Mongodb 或其他中间件的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 <code>host</code> 相关奇怪的部署问题，来看作者的一波填坑历程吧~</p>
+<h3 id="Debian-的-默认-hostname-配置"><a href="#Debian-的-默认-hostname-配置" class="headerlink" title="Debian 的 默认 hostname 配置"></a>Debian 的 默认 hostname 配置</h3><p>在 Debian 系的 Linux 系统，<code>/etc/hosts</code>中前两行默认配置如下，其中 <code>myhostname</code> 即 <code>/etc/hostname</code> 指定的本机名称，可通过 <code>hostname</code> 指令查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">127.0.1.1 myhostname</span><br></pre></td></tr></table></figure></p>
+<p>第二行配置将本机 host 指向了 <code>127.0.1.1</code>，这又能对软件的安装造成什么影响呢？请看下面的例子。</p>
+<a id="more"></a>
+<h2 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h2><h3 id="Mongodb-举例"><a href="#Mongodb-举例" class="headerlink" title="Mongodb 举例"></a>Mongodb 举例</h3><p>例如，我决定初始化一个 Mongodb 的单实例 Replset，并设置了 bindIP 为 127.0.0.1。这时调用 <code>rs.initiate()</code>，会得到下列错误。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"ok"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="string">"errmsg"</span> : <span class="string">"No host described in new configuration 1 for replica set rs0 maps to this node"</span>,</span><br><span class="line">  <span class="string">"code"</span> : <span class="number">93</span>,</span><br><span class="line">  <span class="string">"codeName"</span> : <span class="string">"InvalidReplicaSetConfig"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中一个解决方案是，明确传递参数给 initiate 方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rs.initiate(&#123;<span class="attr">_id</span>:<span class="string">"yourReplSetName"</span>, <span class="attr">members</span>: [&#123;<span class="string">"_id"</span>:<span class="number">1</span>, <span class="string">"host"</span>:<span class="string">"yourHost:yourPort"</span>&#125;]&#125;)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>参见 <a href="https://stackoverflow.com/a/30850962" target="_blank" rel="noopener">https://stackoverflow.com/a/30850962</a></p>
+</blockquote>
+<p>而生效原因不难解释，由于在初始化过程未指定 <code>host</code> ， Mongodb 默认读取了本机的 <code>hostname</code> 作为 <code>yourHost</code> 参数值。但本机的 hostname 指向 ip 是 127.0.1.1，因此整个 <code>host</code> 参数实际变为 <code>127.0.1.1:27017</code>。而 bindIP 仅绑定了 127.0.0.1，我们并没有 127.0.1.1:27017 这个服务，通过 <code>netstat</code> 也可以证实。</p>
+<p>这也解释了另一个解决方案：修改 <code>/etc/hosts</code> 文件中本机 hostname 对应的 ip 为 127.0.0.1。</p>
+<blockquote>
+<p>参见 <a href="https://stackoverflow.com/a/29055110" target="_blank" rel="noopener">https://stackoverflow.com/a/29055110</a></p>
+</blockquote>
+<p>解决方案可能还有很多，比如可以在 bindIp 中加上 127.0.1.1。</p>
+<h3 id="RabbitMQ-举例"><a href="#RabbitMQ-举例" class="headerlink" title="RabbitMQ 举例"></a>RabbitMQ 举例</h3><p>同上，RabbitMQ 的部署也存在这个问题。因为 RabbitMQ 默认 nodename 是  rabbit@<code>hostname</code>。</p>
+<p>在 zulip 的<a href="https://github.com/zulip/zulip/issues/194" target="_blank" rel="noopener">issue</a> 中也看到维护者 timabbott 的回复。</p>
+<blockquote>
+<p>We’re working on migrating to a system where we change the default rabbitmq<br>nodename from rabbit@<code>hostname</code> to <code>zulip@localhost</code>, for new installs,<br>which I think would eliminate this problem, since <code>localhost</code> should always<br>resolve to 127.0.0.1.</p>
+</blockquote>
+<h3 id="疑惑"><a href="#疑惑" class="headerlink" title="疑惑"></a>疑惑</h3><p>既然是普遍的问题，改 hostname 对应的 host 似乎成了最便捷的解决办法。既然如此，Debian 的默认 hostname 不写成 127.0.0.1 ？</p>
+<p>这个 host 的主要作用是形成网络环路，并且 127.0.0.1 到 127.255.255.254 都是回环地址，选任一个 ip 都可以。至于为何选择 127.0.1.1，其实源于一个 bug，有兴趣可以从 debian 的 ref 追溯：<a href="https://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution" target="_blank" rel="noopener">https://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution</a></p>
+<h2 id="FQDN"><a href="#FQDN" class="headerlink" title="FQDN"></a>FQDN</h2><p>改了这个 host 配置会导致其他异常吗？要解答这个问题，需要先了解 FQDN。</p>
+<p>引用<a href="https://onebitbug.me/2014/06/25/settings-fqdn-in-linux/" target="_blank" rel="noopener">《Linux下配置FQDN》</a>的描述。</p>
+<blockquote>
+<p>通常 hostname 在某个特定的范围内应该是唯一的，以免产生冲突，这个特定的范围通常用域（dnsdomain）表示。 而 fqdn（full qulified domain name）则应该在一个更大的范围内（比如全球）唯一， 通常 fqdn 是${hostname}.${dnsdomain}。 </p>
+</blockquote>
+<p>一旦修改了hostname到127.0.0.1，python 的 getfqdn() 将返回 <code>localhost</code> 而不是 <code>myhostname.dnsdomain</code>。结论：“这是为了最大程度的兼容各种工具的的getfqdn()实现”。</p>
+<p>但如果你的项目不涉及相关内容，可以放心改动 /etc/hosts。顺便贴一个可以修改主机名对应的host为127.0.0.1”的脚本，可以加到服务的部署脚本中。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i <span class="string">"s/127.0.1.1\s<span class="variable">$(hostname)</span>/127.0.0.1 <span class="variable">$(hostname)</span>/"</span> /etc/hosts</span><br></pre></td></tr></table></figure></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>虽然是个不起眼的问题，姑且串起来看还是有点意思的，<del>就这样又水了一篇博客</del>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Claude Ray
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://claude-ray.github.io/2019/02/21/bindip-debian-hostname/" title="当 bind_ip:127.0.0.1 遇上 Debian 的默认 host">https://claude-ray.github.io/2019/02/21/bindip-debian-hostname/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Debian/" rel="tag"> <i class="fa fa-tag"></i> Debian</a>
+          
+            <a href="/tags/hostname/" rel="tag"> <i class="fa fa-tag"></i> hostname</a>
+          
+            <a href="/tags/fqdn/" rel="tag"> <i class="fa fa-tag"></i> fqdn</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/29/ways-to-avoid-svn-conflict/" rel="next" title="如何避免svn合并冲突">
+                <i class="fa fa-chevron-left"></i> 如何避免svn合并冲突
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Claude Ray" />
+          <p class="site-author-name" itemprop="name">Claude Ray</p>
+           
+              <p class="site-description motion-element" itemprop="description">Now or Never</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Claude-Ray" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://steamcommunity.com/profiles/76561198202113170" target="_blank" title="Steam">
+                  
+                    <i class="fa fa-fw fa-steam"></i>
+                  
+                  Steam
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/nebulae-pan" title="Nebulae Pan" target="_blank">Nebulae Pan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Debian-的-默认-hostname-配置"><span class="nav-number">1.1.</span> <span class="nav-text">Debian 的 默认 hostname 配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#影响"><span class="nav-number">2.</span> <span class="nav-text">影响</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mongodb-举例"><span class="nav-number">2.1.</span> <span class="nav-text">Mongodb 举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ-举例"><span class="nav-number">2.2.</span> <span class="nav-text">RabbitMQ 举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#疑惑"><span class="nav-number">2.3.</span> <span class="nav-text">疑惑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FQDN"><span class="nav-number">3.</span> <span class="nav-text">FQDN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-bolt"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claude Ray</span>
+</div>
+
+
+Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homepage</a>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("oxfadq9FejYDc5qLuDjTz9Qn-gzGzoHsz", "G412hVz4W57TiPtwh2Pl949B");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
