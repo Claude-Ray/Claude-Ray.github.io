@@ -95,18 +95,18 @@
 
 
 
-<meta name="description" content="前言部署 RabbitMQ、Mongodb 或其他中间件的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 host 相关奇怪的部署问题，来看作者的一波填坑历程吧~ Debian 的 默认 hostname 配置在 Debian 系的 Linux 系统，/etc/hosts中前两行默认配置如下，其中">
+<meta name="description" content="前言部署 RabbitMQ、MongoDB 或其他服务的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 host 相关奇怪的部署问题，来看作者的一波填坑历程吧~ Debian 的 默认 hostname 配置在 Debian 系的 Linux 发行版中，/etc/hosts 中前两行默认配置如下，其">
 <meta name="keywords" content="Debian,hostname,fqdn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="当 bind_ip:127.0.0.1 遇上 Debian 的默认 host">
 <meta property="og:url" content="https://claude-ray.github.io/2019/02/21/bindip-debian-hostname/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="前言部署 RabbitMQ、Mongodb 或其他中间件的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 host 相关奇怪的部署问题，来看作者的一波填坑历程吧~ Debian 的 默认 hostname 配置在 Debian 系的 Linux 系统，/etc/hosts中前两行默认配置如下，其中">
+<meta property="og:description" content="前言部署 RabbitMQ、MongoDB 或其他服务的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 host 相关奇怪的部署问题，来看作者的一波填坑历程吧~ Debian 的 默认 hostname 配置在 Debian 系的 Linux 发行版中，/etc/hosts 中前两行默认配置如下，其">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-02-21T15:43:27.276Z">
+<meta property="og:updated_time" content="2019-03-03T03:50:00.170Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="当 bind_ip:127.0.0.1 遇上 Debian 的默认 host">
-<meta name="twitter:description" content="前言部署 RabbitMQ、Mongodb 或其他中间件的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 host 相关奇怪的部署问题，来看作者的一波填坑历程吧~ Debian 的 默认 hostname 配置在 Debian 系的 Linux 系统，/etc/hosts中前两行默认配置如下，其中">
+<meta name="twitter:description" content="前言部署 RabbitMQ、MongoDB 或其他服务的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 host 相关奇怪的部署问题，来看作者的一波填坑历程吧~ Debian 的 默认 hostname 配置在 Debian 系的 Linux 发行版中，/etc/hosts 中前两行默认配置如下，其">
 
 
 
@@ -377,7 +377,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  912
+                  926
                 </span>
               
 
@@ -411,29 +411,29 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>部署 RabbitMQ、Mongodb 或其他中间件的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 <code>host</code> 相关奇怪的部署问题，来看作者的一波填坑历程吧~</p>
-<h3 id="Debian-的-默认-hostname-配置"><a href="#Debian-的-默认-hostname-配置" class="headerlink" title="Debian 的 默认 hostname 配置"></a>Debian 的 默认 hostname 配置</h3><p>在 Debian 系的 Linux 系统，<code>/etc/hosts</code>中前两行默认配置如下，其中 <code>myhostname</code> 即 <code>/etc/hostname</code> 指定的本机名称，可通过 <code>hostname</code> 指令查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">127.0.1.1 myhostname</span><br></pre></td></tr></table></figure></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>部署 RabbitMQ、MongoDB 或其他服务的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 <code>host</code> 相关奇怪的部署问题，来看作者的一波填坑历程吧~</p>
+<h3 id="Debian-的-默认-hostname-配置"><a href="#Debian-的-默认-hostname-配置" class="headerlink" title="Debian 的 默认 hostname 配置"></a>Debian 的 默认 hostname 配置</h3><p>在 Debian 系的 Linux 发行版中，<code>/etc/hosts</code> 中前两行默认配置如下，其中 <code>myhostname</code> 即 <code>/etc/hostname</code> 指定的本机名称，可通过 <code>hostname</code> 指令查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">127.0.1.1 myhostname</span><br></pre></td></tr></table></figure></p>
 <p>第二行配置将本机 host 指向了 <code>127.0.1.1</code>，这又能对软件的安装造成什么影响呢？请看下面的例子。</p>
 <a id="more"></a>
-<h2 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h2><h3 id="Mongodb-举例"><a href="#Mongodb-举例" class="headerlink" title="Mongodb 举例"></a>Mongodb 举例</h3><p>例如，我决定初始化一个 Mongodb 的单实例 Replset，并设置了 bindIP 为 127.0.0.1。这时调用 <code>rs.initiate()</code>，会得到下列错误。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"ok"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="string">"errmsg"</span> : <span class="string">"No host described in new configuration 1 for replica set rs0 maps to this node"</span>,</span><br><span class="line">  <span class="string">"code"</span> : <span class="number">93</span>,</span><br><span class="line">  <span class="string">"codeName"</span> : <span class="string">"InvalidReplicaSetConfig"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>其中一个解决方案是，明确传递参数给 initiate 方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rs.initiate(&#123;<span class="attr">_id</span>:<span class="string">"yourReplSetName"</span>, <span class="attr">members</span>: [&#123;<span class="string">"_id"</span>:<span class="number">1</span>, <span class="string">"host"</span>:<span class="string">"yourHost:yourPort"</span>&#125;]&#125;)</span><br></pre></td></tr></table></figure></p>
+<h2 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h2><h3 id="MongoDB-举例"><a href="#MongoDB-举例" class="headerlink" title="MongoDB 举例"></a>MongoDB 举例</h3><p>我需要初始化一个 MongoDB 的单实例 Replset，并设置了 bindIP 为 127.0.0.1。这时调用 <code>rs.initiate()</code>，便会得到下列错误。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="string">"ok"</span> : <span class="number">0</span>,</span><br><span class="line">  <span class="string">"errmsg"</span> : <span class="string">"No host described in new configuration 1 for replica set rs0 maps to this node"</span>,</span><br><span class="line">  <span class="string">"code"</span> : <span class="number">93</span>,</span><br><span class="line">  <span class="string">"codeName"</span> : <span class="string">"InvalidReplicaSetConfig"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对于上面初始化 MongoDB 遇到的问题，其中一个解决方案是明确传递参数给 initiate 方法。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rs.initiate(&#123;<span class="attr">_id</span>:<span class="string">"yourReplSetName"</span>, <span class="attr">members</span>: [&#123;<span class="string">"_id"</span>:<span class="number">1</span>, <span class="string">"host"</span>:<span class="string">"yourHost:yourPort"</span>&#125;]&#125;)</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>参见 <a href="https://stackoverflow.com/a/30850962" target="_blank" rel="noopener">https://stackoverflow.com/a/30850962</a></p>
 </blockquote>
-<p>而生效原因不难解释，由于在初始化过程未指定 <code>host</code> ， Mongodb 默认读取了本机的 <code>hostname</code> 作为 <code>yourHost</code> 参数值。但本机的 hostname 指向 ip 是 127.0.1.1，因此整个 <code>host</code> 参数实际变为 <code>127.0.1.1:27017</code>。而 bindIP 仅绑定了 127.0.0.1，我们并没有 127.0.1.1:27017 这个服务，通过 <code>netstat</code> 也可以证实。</p>
-<p>这也解释了另一个解决方案：修改 <code>/etc/hosts</code> 文件中本机 hostname 对应的 ip 为 127.0.0.1。</p>
+<p>而生效原因不难解释，由于在初始化过程未指定 <code>host</code> ， MongoDB 默认读取了本机的 <code>hostname</code> 作为 <code>yourHost</code> 参数值。但本机的 hostname 指向 ip 是 127.0.1.1，因此整个 <code>host</code> 参数实际变为 <code>127.0.1.1:27017</code>。而 bindIP 仅绑定了 127.0.0.1，我们并没有 127.0.1.1:27017 这个服务，通过 <code>netstat</code> 也可以证实。</p>
+<p>这也解释了另一个解决方法：修改 <code>/etc/hosts</code> 文件中本机 hostname 对应的 ip 为 127.0.0.1。</p>
 <blockquote>
 <p>参见 <a href="https://stackoverflow.com/a/29055110" target="_blank" rel="noopener">https://stackoverflow.com/a/29055110</a></p>
 </blockquote>
-<p>解决方案可能还有很多，比如可以在 bindIp 中加上 127.0.1.1。</p>
-<h3 id="RabbitMQ-举例"><a href="#RabbitMQ-举例" class="headerlink" title="RabbitMQ 举例"></a>RabbitMQ 举例</h3><p>同上，RabbitMQ 的部署也存在这个问题。因为 RabbitMQ 默认 nodename 是  rabbit@<code>hostname</code>。</p>
-<p>在 zulip 的<a href="https://github.com/zulip/zulip/issues/194" target="_blank" rel="noopener">issue</a> 中也看到维护者 timabbott 的回复。</p>
+<p>解决方案可能还有很多，比如可以在 bindIp 中加上 127.0.1.1…</p>
+<h3 id="RabbitMQ-举例"><a href="#RabbitMQ-举例" class="headerlink" title="RabbitMQ 举例"></a>RabbitMQ 举例</h3><p>同上，RabbitMQ 的部署也存在相似问题。因为 RabbitMQ 默认 nodename 是 rabbit@<code>hostname</code>。</p>
+<p>在这个 <a href="https://github.com/zulip/zulip/issues/194" target="_blank" rel="noopener">issue</a> 中也看到 zulip 维护者 timabbott 的描述：</p>
 <blockquote>
 <p>We’re working on migrating to a system where we change the default rabbitmq<br>nodename from rabbit@<code>hostname</code> to <code>zulip@localhost</code>, for new installs,<br>which I think would eliminate this problem, since <code>localhost</code> should always<br>resolve to 127.0.0.1.</p>
 </blockquote>
 <h3 id="疑惑"><a href="#疑惑" class="headerlink" title="疑惑"></a>疑惑</h3><p>既然是普遍的问题，改 hostname 对应的 host 似乎成了最便捷的解决办法。既然如此，Debian 的默认 hostname 不写成 127.0.0.1 ？</p>
 <p>这个 host 的主要作用是形成网络环路，并且 127.0.0.1 到 127.255.255.254 都是回环地址，选任一个 ip 都可以。至于为何选择 127.0.1.1，其实源于一个 bug，有兴趣可以从 debian 的 ref 追溯：<a href="https://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution" target="_blank" rel="noopener">https://www.debian.org/doc/manuals/debian-reference/ch05.en.html#_the_hostname_resolution</a></p>
-<h2 id="FQDN"><a href="#FQDN" class="headerlink" title="FQDN"></a>FQDN</h2><p>改了这个 host 配置会导致其他异常吗？要解答这个问题，需要先了解 FQDN。</p>
+<h2 id="FQDN"><a href="#FQDN" class="headerlink" title="FQDN"></a>FQDN</h2><p>改了这个 host 配置会导致其他异常吗？要解答这个疑问，需要先了解 FQDN。</p>
 <p>引用<a href="https://onebitbug.me/2014/06/25/settings-fqdn-in-linux/" target="_blank" rel="noopener">《Linux下配置FQDN》</a>的描述。</p>
 <blockquote>
 <p>通常 hostname 在某个特定的范围内应该是唯一的，以免产生冲突，这个特定的范围通常用域（dnsdomain）表示。 而 fqdn（full qulified domain name）则应该在一个更大的范围内（比如全球）唯一， 通常 fqdn 是${hostname}.${dnsdomain}。 </p>
@@ -689,7 +689,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Debian-的-默认-hostname-配置"><span class="nav-number">1.1.</span> <span class="nav-text">Debian 的 默认 hostname 配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#影响"><span class="nav-number">2.</span> <span class="nav-text">影响</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mongodb-举例"><span class="nav-number">2.1.</span> <span class="nav-text">Mongodb 举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ-举例"><span class="nav-number">2.2.</span> <span class="nav-text">RabbitMQ 举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#疑惑"><span class="nav-number">2.3.</span> <span class="nav-text">疑惑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FQDN"><span class="nav-number">3.</span> <span class="nav-text">FQDN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Debian-的-默认-hostname-配置"><span class="nav-number">1.1.</span> <span class="nav-text">Debian 的 默认 hostname 配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#影响"><span class="nav-number">2.</span> <span class="nav-text">影响</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#MongoDB-举例"><span class="nav-number">2.1.</span> <span class="nav-text">MongoDB 举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ-举例"><span class="nav-number">2.2.</span> <span class="nav-text">RabbitMQ 举例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#疑惑"><span class="nav-number">2.3.</span> <span class="nav-text">疑惑</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FQDN"><span class="nav-number">3.</span> <span class="nav-text">FQDN</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>

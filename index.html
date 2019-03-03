@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  912
+                  926
                 </span>
               
 
@@ -414,8 +414,8 @@
 
       
         
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>部署 RabbitMQ、Mongodb 或其他中间件的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 <code>host</code> 相关奇怪的部署问题，来看作者的一波填坑历程吧~</p>
-<h3 id="Debian-的-默认-hostname-配置"><a href="#Debian-的-默认-hostname-配置" class="headerlink" title="Debian 的 默认 hostname 配置"></a>Debian 的 默认 hostname 配置</h3><p>在 Debian 系的 Linux 系统，<code>/etc/hosts</code>中前两行默认配置如下，其中 <code>myhostname</code> 即 <code>/etc/hostname</code> 指定的本机名称，可通过 <code>hostname</code> 指令查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">127.0.1.1 myhostname</span><br></pre></td></tr></table></figure></p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>部署 RabbitMQ、MongoDB 或其他服务的单节点，有时会将 bind_ip 之类的设置写作 127.0.0.1。然而在 Debian 系统这么操作可能就给自己挖了“坑”，不管你有没有遇到过 <code>host</code> 相关奇怪的部署问题，来看作者的一波填坑历程吧~</p>
+<h3 id="Debian-的-默认-hostname-配置"><a href="#Debian-的-默认-hostname-配置" class="headerlink" title="Debian 的 默认 hostname 配置"></a>Debian 的 默认 hostname 配置</h3><p>在 Debian 系的 Linux 发行版中，<code>/etc/hosts</code> 中前两行默认配置如下，其中 <code>myhostname</code> 即 <code>/etc/hostname</code> 指定的本机名称，可通过 <code>hostname</code> 指令查看。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1 localhost</span><br><span class="line">127.0.1.1 myhostname</span><br></pre></td></tr></table></figure></p>
 <p>第二行配置将本机 host 指向了 <code>127.0.1.1</code>，这又能对软件的安装造成什么影响呢？请看下面的例子。</p>
           <!--noindex-->
           <div class="post-button text-center">
