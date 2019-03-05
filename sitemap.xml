@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/about/index.html</loc>
+    
+    <lastmod>2019-03-05T17:12:34.381Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://claude-ray.github.io/2017/12/20/%E7%BC%93%E5%AD%98%E4%B8%8D%E5%BD%93%E8%87%B3%E6%9C%8D%E5%8A%A1%E5%B4%A9%E6%BA%83/</loc>
+    
+    <lastmod>2019-03-05T17:12:02.499Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/02/21/bindip-debian-hostname/</loc>
     
     <lastmod>2019-03-03T03:50:00.170Z</lastmod>
@@ -61,13 +75,6 @@
     <loc>https://claude-ray.github.io/2018/12/15/iptables-wont-block-established-connections/</loc>
     
     <lastmod>2018-12-15T10:53:28.715Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/about/index.html</loc>
-    
-    <lastmod>2018-12-14T15:26:39.469Z</lastmod>
     
   </url>
   
@@ -173,13 +180,6 @@
     <loc>https://claude-ray.github.io/2017/12/23/Array-map-parseInt-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%94%E5%9B%9E%E4%BA%86NaN/</loc>
     
     <lastmod>2017-12-23T11:35:36.042Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2017/12/20/%E7%BC%93%E5%AD%98%E4%B8%8D%E5%BD%93%E8%87%B3%E6%9C%8D%E5%8A%A1%E5%B4%A9%E6%BA%83/</loc>
-    
-    <lastmod>2017-12-21T14:51:07.646Z</lastmod>
     
   </url>
   
