@@ -561,7 +561,7 @@
     <link href="https://claude-ray.github.io/2018/10/18/koa-content/"/>
     <id>https://claude-ray.github.io/2018/10/18/koa-content/</id>
     <published>2018-10-18T14:16:05.000Z</published>
-    <updated>2018-12-11T15:46:17.206Z</updated>
+    <updated>2019-03-07T16:00:19.666Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a>Content-Type</h1><p>众所周知，koa可以方便地通过<code>ctx.type=</code>来设置响应头的<code>Content-Type</code>。</p>
 <p>但下面这段代码，当响应体ctx.body为<code>object</code>时，无论怎么设置ctx.type，收到的Content-Type都是<code>application/json</code>。</p>
@@ -594,8 +594,8 @@
 <p>最初我错想为交给了node底层处理，而且确实在http模块中有对content-length的设置，但它只有在完全未指定headers时才会添加。[<a href="https://github.com/nodejs/node/blob/master/lib/_http_outgoing.js]" target="_blank" rel="noopener">https://github.com/nodejs/node/blob/master/lib/_http_outgoing.js]</a></p>
 </blockquote>
 <p>实际对json类型的值判断字节长度非常容易，JSON.stringify加Buffer.byteLength即可。目录内搜索一下对this.length或ctx.length的赋值，果然，在响应的最终res.end()之前看到了该处理。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// koa/lib/application.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">respond</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// responses</span></span><br><span class="line">  <span class="keyword">if</span> (Buffer.isBuffer(body)) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> body) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (body <span class="keyword">instanceof</span> Stream) <span class="keyword">return</span> body.pipe(res);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// body: json</span></span><br><span class="line">  body = <span class="built_in">JSON</span>.stringify(body);</span><br><span class="line">  <span class="keyword">if</span> (!res.headersSent) &#123;</span><br><span class="line">    ctx.length = Buffer.byteLength(body);</span><br><span class="line">  &#125;</span><br><span class="line">  res.end(body);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>那为什么不在最后一步重新对content-length进行赋值呢？</p>
-<p>我的理解是，set body和onerror时完成自动设置已经是仁尽义至了，会在之后主动设置content-length的人未免不是怀有特殊目的，否则开放的<code>ctx.length=</code>功能也毫无用武之地。因此反而能为使用者的发挥留有余地，即使改出了差错也不能怪罪到koa头上。保持目前的写法，恰到好处。</p>
+<p>因此，一般我们对 json 类型的返回值显式更改 <code>ctx.length</code> 是没实际意义的，koa 的默认在 res.end 前强制把 length 覆盖。这个处理可以避免使用者错误地认为 body.length 就是响应数据的长度。</p>
+<p>如果非要修改，去使用 ctx.res.writeHead 吧，如此一来，res.headersSent 内的处理就被会跳过了。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>koa的源码解析文章实在太多了，所以早先没有打算像express那样写一篇逐句分析，而且确实简单易读，<del>恐怕没写完就太监了</del>。但时间一久，很多细节就忘掉了，会遇到此类问题说明对其底层不够熟悉。就此写一篇笔记，发出来加深记忆。[真香.jpg]</p>
 ]]></content>
     

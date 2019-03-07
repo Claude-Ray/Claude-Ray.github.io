@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2018/10/18/koa-content/</loc>
+    
+    <lastmod>2019-03-07T16:00:19.666Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/about/index.html</loc>
     
     <lastmod>2019-03-05T17:12:34.381Z</lastmod>
@@ -82,13 +89,6 @@
     <loc>https://claude-ray.github.io/2017/10/05/lodash-3-to-4/</loc>
     
     <lastmod>2018-12-11T16:05:56.208Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2018/10/18/koa-content/</loc>
-    
-    <lastmod>2018-12-11T15:46:17.206Z</lastmod>
     
   </url>
   
