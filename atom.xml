@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2019-03-03T03:50:00.170Z</updated>
+  <updated>2019-03-12T16:55:41.808Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -14,6 +14,70 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>MySQL 分页查询优化思路</title>
+    <link href="https://claude-ray.github.io/2019/03/11/mysql-pagination/"/>
+    <id>https://claude-ray.github.io/2019/03/11/mysql-pagination/</id>
+    <published>2019-03-11T14:11:05.000Z</published>
+    <updated>2019-03-12T16:55:41.808Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>突破查询瓶颈的方法有很多，但这里先不谈分库分表之类，当头问题就一个：单数据表分页查询过慢怎么办？</p>
+<p>其实讲分页优化的博客真不少，但很多博主只顾分享忽略了细节，还有很多值得补充的地方。笔者回顾了在 BBS 项目的优化经历，尽可能结合实际来聊聊分页查询的个人见解。也希望读者在亲身操作中验证，任何优化脱离了实际场景都是纸上谈兵。</p>
+<a id="more"></a>
+<h2 id="分页方式"><a href="#分页方式" class="headerlink" title="分页方式"></a>分页方式</h2><p>常见的数据分页包括传统分页和流式分页。</p>
+<h3 id="传统分页"><a href="#传统分页" class="headerlink" title="传统分页"></a>传统分页</h3><p>传统分页的逻辑如下</p>
+<ol>
+<li>首页：确定一页显示的条目数，以及根据哪个字段排序显示，如时间倒序。按序查询出一页数量的数据，不使用偏移量，作为第一页展示。</li>
+<li>上一页：除了首页都有上一页，非常简单地判断即可。</li>
+<li>下一页或跳转：通过页数能确定当前数据的偏移量，和数据总数比较可以判断是否还有下一页。偏移量可用于获取下一页的信息。</li>
+<li>总页数：只要记住数据总量，除一下就能得到页数。结合跳转功能使用。</li>
+<li>最后一页：部分系统会设计末页，根据总页数或总量即“跳”到最后一页。</li>
+</ol>
+<p>但跳转功能为查询效率带来了极大挑战，一方面带着偏移量查询 MySQL 效率不高，另一方面功能上也存在一定缺陷，例如浏览当前页面的过程中发生数据新增或删除，页码编号已经重置，此时翻页后会出现数据“重复”或“缺失”的问题。</p>
+<h3 id="流式分页"><a href="#流式分页" class="headerlink" title="流式分页"></a>流式分页</h3><p>流式分页简单得多，即只能一页一页向下加载，偏移量不固定，不提供跳转。常见于移动端，它不仅解决了传统分页的功能缺陷，间接对查询性能有所提升。</p>
+<p>因此分页设计时产品层的优化必不可少，尽量选择流式分页。</p>
+<p>不过 BBS 类型的 Web 项目为了方便用户，奉行 PC 端使用传统分页，移动端使用流式分页的设计理念。如果对这种设计没概念，可以左转百度贴吧。这要求我们必须直面传统分页带来的性能挑战。</p>
+<h2 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h2><p>索引优化的套路属于另一个范畴了，应当视具体数据分布来处理。在这里主要强调一点，使用覆盖索引避免回表查询。因为 InnoDB 查询偏移量 offset 的过程是先查出 offset + limit 条数据，再抛弃前 offset 条数据，偏移量过大时查询效率将低到令人发指。</p>
+<p>因此，必须禁止分页查询时使用<code>select *</code>，充分利用索引中存储的信息，才能避免大量的回表取值操作。</p>
+<p>不必追求一次查询得到完整结果，如果索引不包含待查询的字段，只查出主键 id 亦可，如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> table_name</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> create_time <span class="keyword">desc</span></span><br><span class="line"><span class="keyword">limit</span> <span class="number">10000</span>,<span class="number">10</span>;</span><br></pre></td></tr></table></figure></p>
+<p>拿到 id 的集合后，大部分博客的处理都将这一步作为子查询，使用 <code>in</code>、<code>join</code> 或<code>比较符</code>继续查出数据详情。</p>
+<p>但我们应当慎用子查询，尽量将查 id 和查数据分开进行，这便于之后的<a href="#缓存优化">缓存优化</a>。</p>
+<h2 id="缓存优化"><a href="#缓存优化" class="headerlink" title="缓存优化"></a>缓存优化</h2><p>要提升查询效率，最终实现的效果必然是所有查询都命中缓存。</p>
+<p>页数，或者说总条数，是应该放到缓存中的，但同时也丧失了准确性。如果你十分看重总数的真实性，注意加上定时同步等防范机制。</p>
+<p>对分页数据的缓存，不要直接以页数存储整页数据，否则任何数据的增减都将使所有页缓存作废。</p>
+<p>区分开哪些内容是频繁更新的、哪些是相对稳定的。相对一页应该存哪几条数据，具体数据内容的更新频率低很多，因此较好的做法是使用 hash 缓存每一页的 id 列表，使用 string (whatever) 缓存每一条数据。</p>
+<p>拿到 id 列表之后，无需回表，可直接到 redis 获取对应信息。</p>
+<blockquote>
+<p>另外针对新手提醒一点，不要 for 循环查询 redis，多次请求 redis 的网络开销得不偿失。要用 pipeline 包起来，且整个管道操作是非原子的，不会阻塞 redis。而另一类原生批量操作，如 mget 是原子的，会阻塞其他 redis 操作。</p>
+</blockquote>
+<h2 id="末页优化"><a href="#末页优化" class="headerlink" title="末页优化"></a>末页优化</h2><p>喜欢翻旧账的人可能不多，但看到“最后一页”按钮时，可就没几个人能忍住不点一下，其受欢迎程度可能不如“第二页”，但肯定超过“四五六七八…页”。</p>
+<p>尽管经过了上面的优化，在数据量超过一定程度，过大的偏移依然会成为困扰。笔者在使用才 500 万的数据做复杂查询时，offset 效率就又一次成为瓶颈。</p>
+<p>不少的点击量加大了数据的查询压力，若是查询过慢导致内容半天加载不出来，更会诱发用户主动刷新发起更多请求。</p>
+<p>虽然理论上 B+Tree 近乎二分查找，但查询第一页的效率总是非常快，那么能保证末页的速度达到和首页一样快，也就达成了优化目标。看下面的 sql 就能明白了~</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> table_name</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> create_time <span class="keyword">asc</span></span><br><span class="line"><span class="keyword">limit</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>截止到 5.7 版本，MySQL 并没有在索引上区分 asc 和 desc，因此不需要新建索引，这两种顺序的查询速度一样快！</p>
+<p>反向 order 实现了末页等同于首页查询效率的效果，从业务角度讲，只要判断查询量超过总条数一半时，就可以反向 order 了。</p>
+<p>注意此时查询的一页数据是反过来的，别忘了对 id 列表反转一下。除此之外，这种查询会导致最后一页永远是“排满”的，如有必要，可借助总数量修正最后一页要显示的条数，这样末页看起来和优化前一个样儿了。</p>
+<p>也许是需要这么处理的场景比较少，最近只在这篇<a href="http://seanlook.com/2018/03/21/mysql-pagination-no-offset/" target="_blank" rel="noopener">文章</a>看到了相同的做法，该作者对细节的讲解更多，推荐一下。</p>
+<h2 id="no-offset"><a href="#no-offset" class="headerlink" title="no offset"></a>no offset</h2><p>有 offset 的地方就有坑，干脆不要用了！服务端缓存好每一页的最小 id 确实问题不大，用 <code>&gt;</code>、<code>&lt;</code> 的效率比 offset 高多了。可惜按时间排序的数据 id 不一定是递增的，增删过后的更新难度较大。</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>搜索引擎不一定能优化分页效率，例如 Elasticsearch 要通过集群各个节点的搜集才能查到偏移量之后的数据……</p>
+<p>最后，任何不严谨的地方恳请斧正。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;突破查询瓶颈的方法有很多，但这里先不谈分库分表之类，当头问题就一个：单数据表分页查询过慢怎么办？&lt;/p&gt;
+&lt;p&gt;其实讲分页优化的博客真不少，但很多博主只顾分享忽略了细节，还有很多值得补充的地方。笔者回顾了在 BBS 项目的优化经历，尽可能结合实际来聊聊分页查询的个人见解。也希望读者在亲身操作中验证，任何优化脱离了实际场景都是纸上谈兵。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="MySQL" scheme="https://claude-ray.github.io/categories/MySQL/"/>
+    
+    
+      <category term="MySQL" scheme="https://claude-ray.github.io/tags/MySQL/"/>
+    
+  </entry>
   
   <entry>
     <title>当 bind_ip:127.0.0.1 遇上 Debian 的默认 host</title>
@@ -933,71 +997,6 @@
     
     
       <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Array.map(parseInt)为什么返回了NaN</title>
-    <link href="https://claude-ray.github.io/2017/12/23/Array-map-parseInt-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%94%E5%9B%9E%E4%BA%86NaN/"/>
-    <id>https://claude-ray.github.io/2017/12/23/Array-map-parseInt-为什么返回了NaN/</id>
-    <published>2017-12-23T11:29:48.000Z</published>
-    <updated>2017-12-23T11:35:36.042Z</updated>
-    
-    <content type="html"><![CDATA[<p>为什么没有得到想要的<code>[1, 2, 3]</code>？先来看parseInt的<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt" target="_blank" rel="noopener">文档</a>。</p>
-<h2 id="parseInt"><a href="#parseInt" class="headerlink" title="parseInt"></a>parseInt</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parseInt(string, radix);</span><br></pre></td></tr></table></figure>
-<h3 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h3><ul>
-<li><code>string</code>是必传参数，要被解析的字符串，排在起始处的空格会被忽略。</li>
-<li><code>radix</code>这是可选参数，但不了解的话就容易踩坑。它是一个介于2和36之间的整数(数学系统的基础)，表示上述字符串的基数。例如10代表十进制。此外，不指定该参数或0，均表示为以十进制。如果以<code>0x</code> 或 <code>0X</code> 开头，表示十六进制。</li>
-</ul>
-<h3 id="描述"><a href="#描述" class="headerlink" title="描述"></a>描述</h3><p>parseInt 函数将其第一个参数转换为字符串，解析它，并返回一个整数或NaN。如果不是NaN，返回的值将是作为指定基数（基数）中的数字的第一个参数的整数。</p>
-<p>基数大于 10 时，用字母表中的字母来表示大于 9 的数字。例如十六进制中，使用 A 到 F。</p>
-<h3 id="一些细节（keng）"><a href="#一些细节（keng）" class="headerlink" title="一些细节（keng）"></a>一些细节（keng）</h3><ol>
-<li><p>一些数中可能包含e字符（例如6.022e23），使用parseInt去截取包含e字符数值部分会造成难以预料的结果。例如：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'6.022e23'</span>, <span class="number">10</span>); <span class="comment">// 返回 6</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'6.022e2'</span>, <span class="number">10</span>);  <span class="comment">// 返回 602</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>当parseInt遇到不属于radix参数所指定的基数中的字符（eg: 有人告诉你<code>0103101</code>是2进制），那么该字符（3）和其后的字符（101）都将被忽略，接着返回已经解析的整数部分（010）。parseInt 将截取整数部分，开头和结尾的空白符允许存在，会被忽略。那么NaN的出现情况就是，<code>string</code>的第一个字符（除空白）不属于radix指定进制时，因为parseInt什么都没有解析到。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'123'</span>, <span class="string">'afdsaf'</span>); <span class="comment">// 返回123</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在没有指定基数，或者基数为 0 的情况下，JavaScript 作如下处理：</p>
-<ul>
-<li>string 以’0x’或者’0X’开头, 则基数是16 (16进制).</li>
-<li>string 以’0’开头, 基数是8（八进制）或者10（十进制），那么具体是哪个基数由实现环境决定。ECMAScript 5 规定使用10，但是并不是所有的浏览器都遵循这个规定。因此，永远都要明确给出radix参数的值。</li>
-<li>string 以其它任何值开头，则基数是10 (十进制)。</li>
-</ul>
-</li>
-<li><p>将整型数值以特定基数转换成它的字符串值可以使用 <code>intValue.toString(radix);</code></p>
-</li>
-</ol>
-<h2 id="Array-map"><a href="#Array-map" class="headerlink" title="Array.map"></a>Array.map</h2><p>其实看完parseInt的文档就已经清晰了，再来看<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map" target="_blank" rel="noopener">map</a></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> new_array = arr.map(<span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params">currentValue[, index[, array]]</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// Return element for new_array</span></span><br><span class="line">&#125;[, thisArg])</span><br></pre></td></tr></table></figure>
-<h3 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h3><p>通常情况下，<code>callback</code> 只需要接受一个参数，就是正在被遍历的数组元素本身。但这并不意味着 map 只给 callback 传了一个参数。</p>
-<ul>
-<li><code>callback</code>: 生成新数组元素的函数，使用三个参数：<ul>
-<li><code>currentValue</code>: 正在处理的当前元素。</li>
-<li><code>index</code>: 当前元素的索引。</li>
-<li><code>array</code>: map 方法被调用的数组。</li>
-</ul>
-</li>
-<li><code>thisArg</code>: 可选，执行 callback 函数时 使用的this 值。</li>
-</ul>
-<blockquote>
-<p>返回值是一个新数组，每个元素都是回调函数的值。</p>
-</blockquote>
-<h2 id="最终分析"><a href="#最终分析" class="headerlink" title="最终分析"></a>最终分析</h2><p>调用<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(console.log)</code>观察，列举出当<code>[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(parseInt)</code>的时候发生了什么。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>, [<span class="string">'1'</span>, <span class="string">'2'</span>, <span class="string">'3'</span>]);</span><br></pre></td></tr></table></figure></p>
-<p>由于parseInt只接受了前两个参数，过滤掉array得到如下。<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">parseInt</span>(<span class="string">'1'</span>, <span class="number">0</span>); <span class="comment">// radix为0，按十进制输出1</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'2'</span>, <span class="number">1</span>); <span class="comment">// radix为1，不满足2到36范围</span></span><br><span class="line"><span class="built_in">parseInt</span>(<span class="string">'3'</span>, <span class="number">2</span>); <span class="comment">// radix为2，将3看成二进制数，但3并不是二进制，无法转换</span></span><br></pre></td></tr></table></figure></p>
-<p>再换一个数组，也可以按照此逻辑推算正确结果了。</p>
-]]></content>
-    
-    <summary type="html">
-    
-      简单来说，当调用`[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;].map(parseInt)`的时候，会返回什么结果？答案是`[1, NaN, NaN]`。
-    
-    </summary>
-    
-      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
-    
-    
-      <category term="JavaScript" scheme="https://claude-ray.github.io/tags/JavaScript/"/>
     
   </entry>
   
