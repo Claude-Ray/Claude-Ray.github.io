@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2019-03-13T16:20:35.414Z</updated>
+  <updated>2019-03-14T14:14:55.003Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -20,13 +20,14 @@
     <link href="https://claude-ray.github.io/2019/03/11/mysql-pagination/"/>
     <id>https://claude-ray.github.io/2019/03/11/mysql-pagination/</id>
     <published>2019-03-11T14:11:05.000Z</published>
-    <updated>2019-03-13T16:20:35.414Z</updated>
+    <updated>2019-03-14T14:14:55.003Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>突破查询瓶颈的方法有很多，但这里先不谈分库分表之流，当头问题就一个：单数据表分页查询过慢怎么办？</p>
 <p>其实讲分页优化的博客真不少，但很多博主只顾分享点子忽略了细节，还有很多值得补充的地方。笔者回顾了曾经在千万级 BBS 项目的优化经历，尽可能结合实际地聊聊个人对分页查询的见解。也希望读者在亲身操作中验证，任何优化脱离了实际场景都是纸上谈兵。</p>
 <a id="more"></a>
 <h2 id="分页方式"><a href="#分页方式" class="headerlink" title="分页方式"></a>分页方式</h2><p>首先介绍最常见的数据分页方式，即传统分页和流式分页。</p>
-<h3 id="传统分页"><a href="#传统分页" class="headerlink" title="传统分页"></a>传统分页</h3><p>传统分页的基本逻辑是每页展示固定的条目数、通过页码分页和翻页，包含要素如下：</p>
+<h3 id="传统分页"><a href="#传统分页" class="headerlink" title="传统分页"></a>传统分页</h3><p><img src="/image/mysql-pagination/01.png" alt="贴吧PC分页"></p>
+<p>传统分页的基本逻辑是每页展示固定的条目数、通过页码分页和翻页，包含要素如下：</p>
 <ul>
 <li>首页：按序查询出一页长度的数据，作为顶部数据，无须处理偏移量。</li>
 <li>下一页：除了末页都有下一页。通过页数能确定当前数据的偏移量，和数据总数比较可以判断是否还有下一页。偏移量可用于获取下一页的信息。</li>
@@ -36,7 +37,8 @@
 <li>末页：许多系统会支持跳转到最后一页，根据总页数或总量即可实现。</li>
 </ul>
 <p>翻页和跳转功能为查询效率带来了极大挑战，一方面带着偏移量的 MySQL 查询效率不高，另一方面功能上也存在缺陷，例如浏览当前页面的过程中发生数据新增或删除，页码编号已经重置，此时翻页后会出现数据“重复”或“缺失”的问题。</p>
-<h3 id="流式分页"><a href="#流式分页" class="headerlink" title="流式分页"></a>流式分页</h3><p>流式分页简单得多，即只能一页一页向下加载，偏移量不固定，不提供跳转。常见于移动端，它不仅解决了传统分页的功能缺陷，间接对查询性能有所提升。</p>
+<h3 id="流式分页"><a href="#流式分页" class="headerlink" title="流式分页"></a>流式分页</h3><p><img src="/image/mysql-pagination/02.png" alt="贴吧Mobile分页"></p>
+<p>流式分页简单得多，即只能一页一页向下加载，偏移量不固定，不提供跳转。常见于移动端，它不仅解决了传统分页的功能缺陷，间接对查询性能有所提升。</p>
 <p>因此分页设计时产品层的优化必不可少，尽量选择流式分页。</p>
 <p>不过 BBS 类型的 Web 项目为了方便用户，奉行 PC 端使用传统分页，移动端使用流式分页的设计理念。如果对这种设计没概念，可以左转百度贴吧。这要求我们必须直面传统分页带来的性能挑战。</p>
 <h2 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h2><p>索引优化的套路属于另一个范畴了，应当视具体引擎、数据分布、锁等信息来权衡处理。在这里主要强调一点，使用覆盖索引避免回表查询。因为 InnoDB 查询偏移量 offset 的过程是先查出 offset + limit 条数据，再抛弃前 offset 条数据，偏移量过大时查询效率将低到令人发指。</p>
@@ -45,7 +47,7 @@
 <p>拿到 id 的集合后，大部分博客的处理都将这一步作为子查询，使用 <code>in</code>、<code>join</code> 或<code>比较符</code>继续查出数据详情。</p>
 <p>但我们应当慎用子查询，尽量将查 id 和查数据分开进行，这便于之后的<a href="#缓存优化">缓存优化</a>。</p>
 <h2 id="缓存优化"><a href="#缓存优化" class="headerlink" title="缓存优化"></a>缓存优化</h2><p>要提升查询效率，最终实现的效果必然是所有查询都命中缓存。</p>
-<p>页数，或者说总条数，是应该放到缓存中的，但同时也丧失了准确性。如果你十分看重总数的真实性，注意加上定时同步等防范机制。</p>
+<p>为了避免频繁使用 count()，数据总数应当放在缓存中，但同时也破坏了一致性。如果你十分看重总数目的准确性，注意加上定时任务或缓存淘汰等同步机制。</p>
 <p>对分页数据的缓存，不要直接以页数存储整页数据，否则任何数据的增减都将使所有页缓存作废。</p>
 <p>区分开哪些内容是频繁更新的、哪些是相对稳定的。相对一页应该存哪几条数据，具体数据内容的更新频率低很多，因此较好的做法是使用 hash 缓存每一页的 id 列表，使用 string (whatever) 缓存每一条数据。</p>
 <p>拿到 id 列表之后，无需回表，可直接到 redis 获取对应信息。</p>
@@ -376,9 +378,9 @@
     
       <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
-      <category term="pm2" scheme="https://claude-ray.github.io/tags/pm2/"/>
-    
       <category term="log4js" scheme="https://claude-ray.github.io/tags/log4js/"/>
+    
+      <category term="pm2" scheme="https://claude-ray.github.io/tags/pm2/"/>
     
       <category term="pm2-intercom" scheme="https://claude-ray.github.io/tags/pm2-intercom/"/>
     
