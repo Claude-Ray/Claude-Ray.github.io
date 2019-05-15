@@ -378,9 +378,9 @@
     
       <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
-      <category term="log4js" scheme="https://claude-ray.github.io/tags/log4js/"/>
-    
       <category term="pm2" scheme="https://claude-ray.github.io/tags/pm2/"/>
+    
+      <category term="log4js" scheme="https://claude-ray.github.io/tags/log4js/"/>
     
       <category term="pm2-intercom" scheme="https://claude-ray.github.io/tags/pm2-intercom/"/>
     
@@ -472,7 +472,7 @@
     <link href="https://claude-ray.github.io/2018/12/01/ss-local/"/>
     <id>https://claude-ray.github.io/2018/12/01/ss-local/</id>
     <published>2018-12-01T14:03:28.000Z</published>
-    <updated>2018-12-02T07:38:29.788Z</updated>
+    <updated>2019-05-15T04:37:02.099Z</updated>
     
     <content type="html"><![CDATA[<p>ss-local是<a href="https://github.com/shadowsocks/shadowsocks-libev" target="_blank" rel="noopener">shadowsocks-libev</a>提供的客户端工具，若想正常使用需先准备一台机器部署shadowsocks服务端以作为代理。</p>
 <h2 id="一、安装准备"><a href="#一、安装准备" class="headerlink" title="一、安装准备"></a>一、安装准备</h2><p>Ubuntu 16以上直接用apt安装，其他发行版可以查阅文档<a href="https://github.com/shadowsocks/shadowsocks-libev#installation" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks-libev#installation</a><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install shadowsocks-libev</span><br></pre></td></tr></table></figure></p>
@@ -486,6 +486,14 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 端口号按之前配置local.json的local_port来填写，默认1080</span></span><br><span class="line"><span class="keyword">var</span> proxy = <span class="string">'SOCKS5 127.0.0.1:1081'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 走代理的host</span></span><br><span class="line"><span class="keyword">var</span> hosts = [</span><br><span class="line">  <span class="string">'evernote.com'</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FindProxyForURL</span>(<span class="params">url, host</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; hosts.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (host.endsWith(hosts[i])) <span class="keyword">return</span> proxy;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'DIRECT'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * REF:</span></span><br><span class="line"><span class="comment"> * genpac 2.1.0</span></span><br><span class="line"><span class="comment"> * https://github.com/JinnLynn/genpac</span></span><br><span class="line"><span class="comment"> * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">String</span>.prototype.endsWith) &#123;</span><br><span class="line">  <span class="built_in">String</span>.prototype.endsWith = <span class="function"><span class="keyword">function</span>(<span class="params">searchString, position</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> subjectString = <span class="keyword">this</span>.toString();</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> position !== <span class="string">'number'</span> || !<span class="built_in">isFinite</span>(position) || <span class="built_in">Math</span>.floor(position) !== position || position &gt; subjectString.length) &#123;</span><br><span class="line">        position = subjectString.length;</span><br><span class="line">    &#125;</span><br><span class="line">    position -= searchString.length;</span><br><span class="line">    <span class="keyword">var</span> lastIndex = subjectString.indexOf(searchString, position);</span><br><span class="line">    <span class="keyword">return</span> lastIndex !== <span class="number">-1</span> &amp;&amp; lastIndex === position;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="五、配置系统代理"><a href="#五、配置系统代理" class="headerlink" title="五、配置系统代理"></a>五、配置系统代理</h2><p>这一步可以通过export来设置，但没找到automatic的配置方法，干脆用系统自带的proxy来处理。按如下步骤一路点，最后填上PAC文件的路径。</p>
 <p>Network -&gt; Network proxy -&gt; Automatic -&gt; Configuration URL -&gt; <code>/etc/proxy/my.pac</code></p>
+<h3 id="浏览器插件"><a href="#浏览器插件" class="headerlink" title="浏览器插件"></a>浏览器插件</h3><blockquote>
+<p>2019-05-15 更新</p>
+</blockquote>
+<p>最近安装了几次 Ubuntu 18.04 都无法通过上述系统配置实现自动跳转，仅全局代理生效，尚未找出原因。</p>
+<p>目前推荐的解决方案是通过 <code>SwitchyOmega</code> 等 chrome 插件设置自动代理，一次配置随处生效（也可以在单机上选择性关闭），操作更为方案，无须再到系统配置了。</p>
+<ul>
+<li>SwitchyOmega: <a href="https://github.com/FelisCatus/SwitchyOmega" target="_blank" rel="noopener">https://github.com/FelisCatus/SwitchyOmega</a></li>
+</ul>
 ]]></content>
     
     <summary type="html">
@@ -675,9 +683,9 @@
       <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
     
     
-      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
-    
       <category term="JavaScript" scheme="https://claude-ray.github.io/tags/JavaScript/"/>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
       <category term="Koa" scheme="https://claude-ray.github.io/tags/Koa/"/>
     
