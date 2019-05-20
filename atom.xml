@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2019-03-14T14:14:55.003Z</updated>
+  <updated>2019-05-20T15:29:02.529Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -14,6 +14,318 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Node.js APM 产品调研</title>
+    <link href="https://claude-ray.github.io/2019/05/19/node-apm-product-research/"/>
+    <id>https://claude-ray.github.io/2019/05/19/node-apm-product-research/</id>
+    <published>2019-05-19T13:52:35.000Z</published>
+    <updated>2019-05-20T15:29:02.529Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://en.wikipedia.org/wiki/Application_performance_management" target="_blank" rel="noopener">Application Performance Management</a>（简称 APM）是监控服务的一套技术手段，致力于监控并管理程序的性能和可用性。</p>
+<p>不妨思考一下，当有用户反映操作无响应，如何排查问题？惯例是先自己尝试重现，如果没重现，再换一个人试试，bla bla…</p>
+<p>从用户击下按键开始，到服务呈现最终效果的过程中，有哪些因素会导致阻塞？</p>
+<p>是否真的未响应？有没有可能是网络过慢导致？</p>
+<p>丢包？用户网络质量还是机房故障？出现在机群哪一层？</p>
+<p>代码BUG？自己的还是别人的？</p>
+<p>能快速定位是哪一环节出了问题吗？</p>
+<p>用户的请求从客户端 -&gt; CDN -&gt; 代理 -&gt; 中间层 -&gt; 服务1 -&gt; 服务2 -&gt; …</p>
+<p>线上应用的性能表现是极为复杂的，运维的感知总是慢于业务，人工监控或草木皆兵、或亡羊补牢。因此需要一个合理的监控措施以便诊断服务质量，提高运维和业务的工作效率，间接服务于提升用户体验。</p>
+<p>尽管上面的例子和请求链路相关，许多人就将 APM 和 <code>分布式链路跟踪系统</code> 混为一谈，其实并不恰当。 APM 当然可以承载 Tracing 工作，但除此之外还包含内存、CPU、RT、TPS、QPS等等监控职能，链路分析仅是其中一环罢了。为了更清晰地阐述，下面先简单介绍一下 APM 的基本定义。</p>
+<h2 id="关于-APM"><a href="#关于-APM" class="headerlink" title="关于 APM"></a>关于 APM</h2><p>APM 是 <code>Gartner</code> 抽象出的一个管理模型，有如下定义。</p>
+<p><img src="/image/node-apm-product-research/apm-coneptual-framework.jpg" alt="APM Coneptual Framework"></p>
+<p>2016 年， Gartner 又将上述 5 个维度更新为 3 个新维度。</p>
+<ul>
+<li>数字体验监控 (DEM)：对应用户体验监控</li>
+<li>应用发现、跟踪、诊断 (ADTD)：整合并了应用架构映射、事务分析、深度应用诊断</li>
+<li>应用分析 (AA)：对应分析与报告</li>
+</ul>
+<p>除了 DEM ，基本概念和旧维度呈对应关系，为了方便理解，下面提一下 Gartner 对 DEM 的定义。</p>
+<blockquote>
+<p>an availability and performance monitoring discipline that supports the optimization of the operational experience and behavior of a digital agent, human or machine, as it interacts with enterprise applications and services. For the purposes of this evaluation, it includes real-user monitoring (RUM) and synthetic transaction monitoring (STM) for both web- and mobile-based end users.</p>
+</blockquote>
+<p>实质依然是通过用户的角度分析关键业务（RUM），通过测试消除潜在的错误和性能瓶颈（STM），以数字化增强监控分析能力。</p>
+<h1 id="主流-APM-简介"><a href="#主流-APM-简介" class="headerlink" title="主流 APM 简介"></a>主流 APM 简介</h1><h2 id="商业软件"><a href="#商业软件" class="headerlink" title="商业软件"></a>商业软件</h2><h3 id="New-Relic"><a href="#New-Relic" class="headerlink" title="New Relic"></a>New Relic</h3><blockquote>
+<p><a href="https://newrelic.com/nodejs" target="_blank" rel="noopener">https://newrelic.com/nodejs</a></p>
+</blockquote>
+<p>New Relic 是绝对专业的 APM 公司，并凭借其技术产品 2014 年上市，且不说其他版本的 APM，在 Node.js 领域是绝对的 APM 龙头。虽然监控服务需要付费，在云端才能使用，但其 SDK 源代码完全开放，可以清晰地看到它对各探针的实现，对接入方开发者十分友好，也因此成为各监控服务的模仿对象。</p>
+<p>是付费用户的首选。</p>
+<h3 id="AppDynamics"><a href="#AppDynamics" class="headerlink" title="AppDynamics"></a>AppDynamics</h3><blockquote>
+<p><a href="https://www.appdynamics.com/nodejs" target="_blank" rel="noopener">https://www.appdynamics.com/nodejs</a></p>
+</blockquote>
+<p>AppDynamics 一直是 New Relic 的竞争对手，有意思的是，两家公司的创始人分别是来自同一家公司的首席架构师、CEO ，并在同一年创立。</p>
+<p>AppDynamics 公司在 2016 年上市，它提供的服务也非常强大，但和 New Relic 的市场定位不同，New Relic 初期战略主要针对小型创业公司，而 AppDynamics 则专攻企业。且 AppDynamics 可以在公司内部数据中心运行，而不只是作为云端服务。</p>
+<p>其 SDK 代码不完全开放，部分使用了 jar 包和二进制文件。</p>
+<h3 id="Dynatrace"><a href="#Dynatrace" class="headerlink" title="Dynatrace"></a>Dynatrace</h3><blockquote>
+<p><a href="https://www.dynatrace.com/technologies/nodejs-monitoring/" target="_blank" rel="noopener">https://www.dynatrace.com/technologies/nodejs-monitoring/</a></p>
+</blockquote>
+<p>Dynatrace 和 New Relic、AppDynamics 并称为 APM 产业三大领军者，但在 Node.js 的市场占有率和热度很低，不开放源代码，无法深度化定制，难以认可它已经是成熟的产品。</p>
+<h3 id="atatus"><a href="#atatus" class="headerlink" title="atatus"></a>atatus</h3><blockquote>
+<p><a href="https://www.atatus.com/for/nodejs" target="_blank" rel="noopener">https://www.atatus.com/for/nodejs</a></p>
+</blockquote>
+<p>支持功能一般，只能算二线产品，况且其 SDK 做了代码混淆。</p>
+<h3 id="听云"><a href="#听云" class="headerlink" title="听云"></a>听云</h3><blockquote>
+<p><a href="https://doc.tingyun.com/server/html/node/install.html" target="_blank" rel="noopener">https://doc.tingyun.com/server/html/node/install.html</a></p>
+</blockquote>
+<p>国内团队，可以限量免费试用。估计很多人体验过，其很多功能（代码）借鉴自 New Relic ，功能相仿，好在做了一些针对性地强化，不过多介绍。</p>
+<p>有 New Relic 做“后盾”，服务不会差到哪去，小型团队不妨一用。</p>
+<h3 id="oneapm"><a href="#oneapm" class="headerlink" title="oneapm"></a>oneapm</h3><blockquote>
+<p><a href="https://www.oneapm.com/ai/nodejs.html" target="_blank" rel="noopener">https://www.oneapm.com/ai/nodejs.html</a></p>
+</blockquote>
+<p>有兴趣的话自己了解吧。因为乱打广告，SDK 几乎照搬 New Relic，不太讨喜，可以感受到其团队水平不如听云。</p>
+<h2 id="开源免费方案"><a href="#开源免费方案" class="headerlink" title="开源免费方案"></a>开源免费方案</h2><h3 id="Alinode"><a href="#Alinode" class="headerlink" title="Alinode"></a>Alinode</h3><p>由于这个方案存在较多争议，因此额外给了一些篇幅补充介绍。</p>
+<h4 id="开发者介绍"><a href="#开发者介绍" class="headerlink" title="开发者介绍"></a>开发者介绍</h4><p>hyj1991 解释过 Alinode 对 Node Runtime 增加了哪些改动：</p>
+<ul>
+<li>增加了一些 V8 没有对外暴露的接口，比如 GC Trace 来动态输出 GC 日志</li>
+<li>埋了一些点以性能损耗更低的方式采集进程级别的 CPU 和 Memory 数据</li>
+<li>增加了动态开启 CPU / Memory / GC 状态采集的开关</li>
+</ul>
+<p>而对于负责开发者业务相关的 API 和功能逻辑，并无任何改动，这也是为什么 AliNode 和官方的 Runtime 可以无缝对切的原因。</p>
+<p>至于安全问题，主要是担心会采集业务数据上报，但是实际上 AliNode 内核的上述改动，都不会直接向云端发送任何数据，而都是以本地 Log 的方式写入大家配置的 NODE_LOG_DIR 目录下，日志文件以 <code>node-日志.log</code> 的形式命名，不放心的话可以查看此文件内容。</p>
+<p>实际上大家在控制台看到的数据，最后不管使用的是 egg-alinode 还是 agenthub 均是通过 agentx 这个库采集上报的，这个库首先它是开源的，大家可以自行阅读相关采集代码观察是否上报了敏感数据。最后实在对安全问题存在疑虑的，可以通过 Wireshark 等抓包工具，来抓取 AliNode 输出的日志和 Agentx 上报的数据内容，看看是否上报的数据中存在大家非常担心的敏感数据。</p>
+<h4 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h4><p>严格来说 Alinode 不能算作开源方案，但其实它只有后台和启动代码是闭源的，尤其对小团队而言接入成本低，是非常值得考虑的接入方案。</p>
+<p>而且由于日志收集进程开源，除了没有开源的收集 v8 内部性能的功能，其他信息都可以通过接入自己的日志系统或后台进行分析。</p>
+<p>但从企业角度出发，还是完全由自己掌控的方案更放心。</p>
+<h3 id="Easy-Monitor"><a href="#Easy-Monitor" class="headerlink" title="Easy Monitor"></a>Easy Monitor</h3><blockquote>
+<p><a href="https://github.com/hyj1991/easy-monitor" target="_blank" rel="noopener">https://github.com/hyj1991/easy-monitor</a></p>
+</blockquote>
+<p>终于提到了一个完全开源的方案了，它的开发者同样是 hyj1991，可惜功能实在简单，仅提供性能监控，维护度较低。</p>
+<p>目前最大的价值是作为学习项目，而不是投入生产环境。</p>
+<h3 id="Pandora-js"><a href="#Pandora-js" class="headerlink" title="Pandora.js"></a>Pandora.js</h3><blockquote>
+<p><a href="https://midwayjs.org/pandora/zh-cn/" target="_blank" rel="noopener">https://midwayjs.org/pandora/zh-cn/</a></p>
+</blockquote>
+<p>来自阿里 midwayjs 团队，是类似于 PM2 的一个启动进程，因此最大优点是无代码侵入。</p>
+<p>目前功能尚不完备，支持star、restart、stop，调试时为了查看 debugger 记录，可加上 <code>--inspect</code> 参数，暂不支持平滑 reload。</p>
+<p>Dashboard 只能单机部署单机监控，无法集群监控，目前 midway 的使用方案是结合 ElasticSearch。</p>
+<p>据说已经在阿里内部落地，现在正重构 2.0 版本，等待此项目成熟可考虑使用。很希望能替代臃肿的 PM2。</p>
+<h3 id="Prometheus"><a href="#Prometheus" class="headerlink" title="Prometheus"></a>Prometheus</h3><blockquote>
+<p><a href="https://prometheus.io/" target="_blank" rel="noopener">https://prometheus.io/</a></p>
+</blockquote>
+<p>在国外非常流行，相比业务方，更多地被运维熟知，是一种监控和报警的开源生态。SDK 和界面有多重组合方式，Node.js 一般结合 <code>prom-client</code>(非官方 npm 包) + <code>Granfana</code> 使用。</p>
+<p>只做性能采集，不支持 trace 跟踪。目前已知缺陷是内存占用较高和日志量巨大，数据可以选择本地存储或远程接口存储。</p>
+<p>开源的一大选择方案，落地可能对运维团队要求较高。</p>
+<h3 id="Elastic-APM"><a href="#Elastic-APM" class="headerlink" title="Elastic APM"></a>Elastic APM</h3><blockquote>
+<p><a href="https://www.elastic.co/solutions/apm" target="_blank" rel="noopener">https://www.elastic.co/solutions/apm</a></p>
+</blockquote>
+<ul>
+<li>APM: <a href="https://www.elastic.co/guide/en/apm/get-started/current/index.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/apm/get-started/current/index.html</a></li>
+<li>Node Client: <a href="https://www.elastic.co/guide/en/apm/agent/nodejs/current/index.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/apm/agent/nodejs/current/index.html</a></li>
+<li>Kibana APM: <a href="https://www.elastic.co/guide/en/kibana/current/xpack-apm.html" target="_blank" rel="noopener">https://www.elastic.co/guide/en/kibana/current/xpack-apm.html</a></li>
+</ul>
+<p>这是 Elastic 体系下的完全开源的 APM 解决方案，也提供商业付费服务。文档一如既往地丰富，上面列举了其中三个入口。</p>
+<p>日志采集进程为 golang 编写的 apm-server，最终将数据存储到 ElasticSearch，Kibana 内置了 APM 基础看板。</p>
+<p>官方提供 API 来支持深度定制，golang 降低了二次开发的成本，更不用担心 Kibana 看板功能不够用。总之，是相当全面的解决方案，之后会单独开一篇文章介绍。</p>
+<h1 id="选型概述"><a href="#选型概述" class="headerlink" title="选型概述"></a>选型概述</h1><h2 id="要点维度"><a href="#要点维度" class="headerlink" title="要点维度"></a>要点维度</h2><h3 id="性能监控"><a href="#性能监控" class="headerlink" title="性能监控"></a>性能监控</h3><p>进程级的 CPU、内存指标监控，这是 APM 最基本功能，普遍支持。</p>
+<p>更高级的是 V8 监控，heap 信息，做出 profile 等诊断。但实际上 Node 最新版本已经暴露出 V8 heap 的接口，profile 也完全可以需要时主动创建，重要性反而不是特别高。</p>
+<h3 id="代码级监控"><a href="#代码级监控" class="headerlink" title="代码级监控"></a>代码级监控</h3><p>监控到代码细节，不是简单的错误定位，而是分析哪段代码有内存泄露、提供 SQL 慢查询日志等更实用的功能。</p>
+<h3 id="事务监控"><a href="#事务监控" class="headerlink" title="事务监控"></a>事务监控</h3><p>分析业务流程、请求响应时间等。</p>
+<h3 id="框架支持"><a href="#框架支持" class="headerlink" title="框架支持"></a>框架支持</h3><p>要实现对 npm 依赖的监控，例如路由的追踪，是需要明确定制化到特定包的，例如 express、koa、bluebird、sequelize 等。</p>
+<p>这里只考虑了主流的 Express 和 Koa HTTP 框架，有特殊需要的请进一步到官方了解。</p>
+<h3 id="链路追踪"><a href="#链路追踪" class="headerlink" title="链路追踪"></a>链路追踪</h3><p>一个请求从创建到响应的链路分析。</p>
+<h3 id="分布式部署"><a href="#分布式部署" class="headerlink" title="分布式部署"></a>分布式部署</h3><p>能否识别集群的部署状况。</p>
+<h3 id="外部依赖"><a href="#外部依赖" class="headerlink" title="外部依赖"></a>外部依赖</h3><p>需要哪些数据库等外部依赖。</p>
+<h3 id="代码侵入"><a href="#代码侵入" class="headerlink" title="代码侵入"></a>代码侵入</h3><p>对代码侵入程度越低，接入越方便，避免对业务造成影响。</p>
+<p>除了引入 SDK 的方式，是否有使用 async hook，是否对第三方库做了热 Patch，类似 Java 动态字节码探针，都可能对业务形成一定隐患。</p>
+<h3 id="社区活跃度"><a href="#社区活跃度" class="headerlink" title="社区活跃度"></a>社区活跃度</h3><p>分技术层面的参考，但还是很重要的指标。可以参考 npm 最近一个月的平局周下载量。</p>
+<h2 id="关于-Node-js"><a href="#关于-Node-js" class="headerlink" title="关于 Node.js"></a>关于 Node.js</h2><p>Node.js 在服务端尤其是中间层表现不俗，但如果经验不足的情况下将 Node 落地，没有任何监控，承担的风险太大。</p>
+<p>小团队的发布流程和运维支撑通常较弱，难以避免线上故障，这一阶段，快速响应和处理才能降低损失。</p>
+<p>考虑到 APM 的接入成本，有必要分清接入功能的优先级。</p>
+<p>在虚拟化、容器化的现在，大部分性能指标的采集工作都可以在业务之外进行，因此性能采集只要能做到进程级的监控即可。</p>
+<p>分布式全链路追踪，不是只在 Node 一端接入就有效果的，必然是根据运维和后端技术栈，选择使用 Zipkin 等更合理的开源方案。</p>
+<p>如果上面的观点你还算认可，那么我们选型上应该更关注 APM 服务对代码级监控的支持力度、侵入程度、社区活跃度和接入成本。</p>
+<h2 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h2><p>综上，APM 的选型参考如下</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>Express</th>
+<th>Koa</th>
+<th>性能</th>
+<th>代码级</th>
+<th>事务</th>
+<th>链路</th>
+<th>分布式</th>
+<th>侵入</th>
+<th>实现方式</th>
+<th>npm周下载量(+)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>newrelic</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>中</td>
+<td>探针</td>
+<td>30.1k</td>
+</tr>
+<tr>
+<td>appdynamics</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>中</td>
+<td>探针</td>
+<td>9.5k</td>
+</tr>
+<tr>
+<td>dynatrace</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>中</td>
+<td>探针</td>
+<td>0.1k</td>
+</tr>
+<tr>
+<td>atatus</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>×</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>中</td>
+<td>探针</td>
+<td>0.6k</td>
+</tr>
+<tr>
+<td>tingyun</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>中</td>
+<td>探针</td>
+<td>0.3k</td>
+</tr>
+<tr>
+<td>one apm</td>
+<td>✓</td>
+<td>×</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>中</td>
+<td>探针</td>
+<td>0.1k</td>
+</tr>
+<tr>
+<td>alinode</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>无</td>
+<td>run time</td>
+<td>-</td>
+</tr>
+<tr>
+<td>easy monitor</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+<td>✓</td>
+<td>低</td>
+<td>探针</td>
+<td>0.1k</td>
+</tr>
+<tr>
+<td>pandora</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>×</td>
+<td>✓</td>
+<td>✓</td>
+<td>×</td>
+<td>低</td>
+<td>进程启动器</td>
+<td>0.2k</td>
+</tr>
+<tr>
+<td>Prometheus</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>×</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>中</td>
+<td>探针</td>
+<td>20.1k</td>
+</tr>
+<tr>
+<td>elastic apm</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>×</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>中</td>
+<td>探针</td>
+<td>24.6k</td>
+</tr>
+</tbody>
+</table>
+<h2 id="自研"><a href="#自研" class="headerlink" title="自研"></a>自研</h2><p>普遍场景下，在日志层面做好业务监控即可，参考下面的流程，只要不涉及 Stack、SQL 等代码级监控，就能以较低开发成本、低侵入式地实现核心业务监控。</p>
+<ol>
+<li>基于 Node.js 自带的 API 完成探针，并在关键业务做好相关埋点，将数据(日志)打点到 Kafka。</li>
+<li>另起服务进程，专门消费 Kafka 的监控队列，推送到 ElasticSearch 服务中。</li>
+<li>通过 Kibana 的看板完成一系列定制化的数据分析。</li>
+</ol>
+<p>如果是更复杂的需求，则不建议造轮子，而是基于开源方案二次开发。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>无论如何，我更倾向选用开源方案，但目前开原方案的代码级监控都是短板，那么这也成为自研和深度定制的困难所在。</p>
+<p>末尾重申，APM 属于运维技术的范畴，业务方自己搭建时，最好结合自身需求定制，当心过犹不及。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://en.wikipedia.org/wiki/Application_performance_management" target="_blank" rel="noopener">维基百科-Application performance management</a></li>
+<li><a href="http://network.51cto.com/art/201503/469273.htm" target="_blank" rel="noopener">什么是真正的APM？</a></li>
+<li><a href="https://www.zhihu.com/question/315261662" target="_blank" rel="noopener">关于Nodejs的性能监控思考？</a></li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      近期调研了当下 Node.js 主流的 APM 产品，为期不到一周，本文以介绍基本状况为主，引申对 APM 中间件选型乃至自研的一些思考。APM 虽和业务关系紧密，但实属于运维管理范畴，笔者从业务的角度思考，易受限于使用场景，请路过的读者及时指教问题。
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
+    
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
+      <category term="APM" scheme="https://claude-ray.github.io/tags/APM/"/>
+    
+  </entry>
   
   <entry>
     <title>MySQL 分页查询优化思路</title>
@@ -378,9 +690,9 @@
     
       <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
-      <category term="pm2" scheme="https://claude-ray.github.io/tags/pm2/"/>
-    
       <category term="log4js" scheme="https://claude-ray.github.io/tags/log4js/"/>
+    
+      <category term="pm2" scheme="https://claude-ray.github.io/tags/pm2/"/>
     
       <category term="pm2-intercom" scheme="https://claude-ray.github.io/tags/pm2-intercom/"/>
     
@@ -971,36 +1283,6 @@
     <summary type="html">
     
       Node中使用request请求得到的数据为乱码，分析可能的情况并列举解决方案。
-    
-    </summary>
-    
-      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
-    
-    
-      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>使用chokidar监视文件更新</title>
-    <link href="https://claude-ray.github.io/2018/01/27/%E4%BD%BF%E7%94%A8chokidar%E7%9B%91%E8%A7%86%E6%96%87%E4%BB%B6%E6%9B%B4%E6%96%B0/"/>
-    <id>https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/</id>
-    <published>2018-01-27T04:57:42.000Z</published>
-    <updated>2018-10-31T14:15:18.654Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="监视文件"><a href="#监视文件" class="headerlink" title="监视文件"></a>监视文件</h2><p>使用<code>chokidar</code>，可以监视指定路径下目录、文件的变动。由于我只关注更改，因此监视<code>change</code>事件即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs   = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> chokidar = <span class="built_in">require</span>(<span class="string">'chokidar'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = watchChange;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 监听目录或文件变动</span></span><br><span class="line"><span class="comment"> * @param &#123;string|array&#125; paths    目录或文件路径</span></span><br><span class="line"><span class="comment"> * @param &#123;function&#125;     onChange 回调函数</span></span><br><span class="line"><span class="comment"> * @return &#123;Promise.&lt;*&gt;&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchChange</span>(<span class="params">paths, onChange</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onChange !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`onChange (<span class="subst">$&#123;onChange&#125;</span>) is not a function`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(paths)) paths = [paths];</span><br><span class="line"></span><br><span class="line">  paths.forEach(<span class="function"><span class="params">path</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!(path &amp;&amp; fs.existsSync(path))) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`can't find path <span class="subst">$&#123;path&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  chokidar.watch(paths)</span><br><span class="line">    <span class="comment">// .on('add', filepath =&gt; &#123;console.log('you can watch more events by chains')&#125;)</span></span><br><span class="line">    .on(<span class="string">'change'</span>, filepath =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> filename = path.basename(filepath);</span><br><span class="line">      onChange(filename);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="更新缓存"><a href="#更新缓存" class="headerlink" title="更新缓存"></a>更新缓存</h2><p>为了避免每次取内容都读文件，使用了<code>lodash.memoize</code>缓存读取结果。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">readFile</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getFile = _.memoize(readFile);</span><br></pre></td></tr></table></figure>
-<p>要更新这部分缓存，可以使用如下方法。用大文件测试了内存占用，没有泄露产生。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getFile.cache.set(file, readFile(file));</span><br></pre></td></tr></table></figure>
-<p>完整部分，加上了try catch。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchTpl</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    watchFiles(<span class="string">'./test'</span>, file =&gt; &#123;</span><br><span class="line">      getFile.cache.set(file, readFile(file));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">watchTpl();</span><br></pre></td></tr></table></figure></p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>由于使用场景明确，代码实现较简单，没有考虑太多情况，也算不上热更新。但借这种思路，可以完成配置文件甚至功能模块的更新。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://ngtmuzi.com/Node监视文件以实现热更新/" target="_blank" rel="noopener">Node监视文件以实现热更新</a><br><a href="http://fex.baidu.com/blog/2015/05/nodejs-hot-swapping/" target="_blank" rel="noopener">Node.js Web应用代码热更新的另类思路</a></p>
-]]></content>
-    
-    <summary type="html">
-    
-      为了提高文件读取效率，有时会将文件内容缓存到内存再使用。但是当文件发生更改，如何将改动更新到缓存而又不重启Node进程。
     
     </summary>
     
