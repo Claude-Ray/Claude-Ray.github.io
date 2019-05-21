@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2019-05-20T15:29:02.529Z</updated>
+  <updated>2019-05-21T14:30:54.574Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="https://claude-ray.github.io/2019/05/19/node-apm-product-research/"/>
     <id>https://claude-ray.github.io/2019/05/19/node-apm-product-research/</id>
     <published>2019-05-19T13:52:35.000Z</published>
-    <updated>2019-05-20T15:29:02.529Z</updated>
+    <updated>2019-05-21T14:30:54.574Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://en.wikipedia.org/wiki/Application_performance_management" target="_blank" rel="noopener">Application Performance Management</a>（简称 APM）是监控服务的一套技术手段，致力于监控并管理程序的性能和可用性。</p>
 <p>不妨思考一下，当有用户反映操作无响应，如何排查问题？惯例是先自己尝试重现，如果没重现，再换一个人试试，bla bla…</p>
@@ -34,6 +34,14 @@
 <p>尽管上面的例子和请求链路相关，许多人就将 APM 和 <code>分布式链路跟踪系统</code> 混为一谈，其实并不恰当。 APM 当然可以承载 Tracing 工作，但除此之外还包含内存、CPU、RT、TPS、QPS等等监控职能，链路分析仅是其中一环罢了。为了更清晰地阐述，下面先简单介绍一下 APM 的基本定义。</p>
 <h2 id="关于-APM"><a href="#关于-APM" class="headerlink" title="关于 APM"></a>关于 APM</h2><p>APM 是 <code>Gartner</code> 抽象出的一个管理模型，有如下定义。</p>
 <p><img src="/image/node-apm-product-research/apm-coneptual-framework.jpg" alt="APM Coneptual Framework"></p>
+<p>通俗的说法如下</p>
+<ol>
+<li>终端用户体验：反馈真实用户的体验，包括高峰时的服务、组件平均响应时间。</li>
+<li>应用架构映射：能否分析真实请求链路。</li>
+<li>应用事务分析：要求有序、完整地记录事务信息，能够定位两个操作是否为同一个用户，且信息具备唯一性。</li>
+<li>深度应用诊断：用户反馈问题时，能精准定位问题点，通常需要做更底层的监控。同时又有着部署简单、副作用低的要求，这是 APM 应用的主要难点所在。</li>
+<li>分析与报告：数据要实时且精准，大数据的存储与查询，目前已经不难应对。</li>
+</ol>
 <p>2016 年， Gartner 又将上述 5 个维度更新为 3 个新维度。</p>
 <ul>
 <li>数字体验监控 (DEM)：对应用户体验监控</li>

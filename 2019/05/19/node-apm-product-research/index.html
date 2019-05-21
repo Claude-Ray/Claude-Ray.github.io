@@ -104,7 +104,7 @@
 <meta property="og:description" content="近期调研了当下 Node.js 主流的 APM 产品，为期不到一周，本文以介绍基本状况为主，引申对 APM 中间件选型乃至自研的一些思考。APM 虽和业务关系紧密，但实属于运维管理范畴，笔者从业务的角度思考，易受限于使用场景，请路过的读者及时指教问题。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://claude-ray.github.io/image/node-apm-product-research/apm-coneptual-framework.jpg">
-<meta property="og:updated_time" content="2019-05-20T15:29:02.529Z">
+<meta property="og:updated_time" content="2019-05-21T14:30:54.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js APM 产品调研">
 <meta name="twitter:description" content="近期调研了当下 Node.js 主流的 APM 产品，为期不到一周，本文以介绍基本状况为主，引申对 APM 中间件选型乃至自研的一些思考。APM 虽和业务关系紧密，但实属于运维管理范畴，笔者从业务的角度思考，易受限于使用场景，请路过的读者及时指教问题。">
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,265
+                  3,457
                 </span>
               
 
@@ -395,7 +395,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  12
+                  13
                 </span>
               
             </div>
@@ -429,6 +429,14 @@
 <p>尽管上面的例子和请求链路相关，许多人就将 APM 和 <code>分布式链路跟踪系统</code> 混为一谈，其实并不恰当。 APM 当然可以承载 Tracing 工作，但除此之外还包含内存、CPU、RT、TPS、QPS等等监控职能，链路分析仅是其中一环罢了。为了更清晰地阐述，下面先简单介绍一下 APM 的基本定义。</p>
 <h2 id="关于-APM"><a href="#关于-APM" class="headerlink" title="关于 APM"></a>关于 APM</h2><p>APM 是 <code>Gartner</code> 抽象出的一个管理模型，有如下定义。</p>
 <p><img src="/image/node-apm-product-research/apm-coneptual-framework.jpg" alt="APM Coneptual Framework"></p>
+<p>通俗的说法如下</p>
+<ol>
+<li>终端用户体验：反馈真实用户的体验，包括高峰时的服务、组件平均响应时间。</li>
+<li>应用架构映射：能否分析真实请求链路。</li>
+<li>应用事务分析：要求有序、完整地记录事务信息，能够定位两个操作是否为同一个用户，且信息具备唯一性。</li>
+<li>深度应用诊断：用户反馈问题时，能精准定位问题点，通常需要做更底层的监控。同时又有着部署简单、副作用低的要求，这是 APM 应用的主要难点所在。</li>
+<li>分析与报告：数据要实时且精准，大数据的存储与查询，目前已经不难应对。</li>
+</ol>
 <p>2016 年， Gartner 又将上述 5 个维度更新为 3 个新维度。</p>
 <ul>
 <li>数字体验监控 (DEM)：对应用户体验监控</li>
