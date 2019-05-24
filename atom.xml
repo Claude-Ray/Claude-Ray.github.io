@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2019-05-24T15:17:49.054Z</updated>
+  <updated>2019-05-24T15:21:44.243Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>让 Node Server 优雅退出</title>
+    <title>让 Node.js Server 优雅退出</title>
     <link href="https://claude-ray.github.io/2019/05/23/node-graceful-server/"/>
     <id>https://claude-ray.github.io/2019/05/23/node-graceful-server/</id>
     <published>2019-05-23T07:12:28.000Z</published>
-    <updated>2019-05-24T15:17:49.054Z</updated>
+    <updated>2019-05-24T15:21:44.243Z</updated>
     
     <content type="html"><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>服务进程登场时往往“蓄势而发”，犹抱琵琶半遮面，真正的服务端口跑起来之前做了太多准备工作，然而落幕工作常被人草草了之。</p>
 <p>如何让进程自然结束，这本是 hello world 级的基础内容，却有很多项目忽视了这一步的必要性以及重要性。</p>
@@ -38,13 +38,13 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">process.on(<span class="string">'uncaughtException'</span>, <span class="keyword">async</span> err =&gt; &#123;</span><br><span class="line">  logger.error(<span class="string">`Uncaught exception:`</span>, err)</span><br><span class="line">  server.close(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    logger.info(<span class="string">'Server is closed'</span>)</span><br><span class="line">    process.exit(<span class="number">1</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>然而这离我们的目标还有段距离，代码运行一段时间就会遇到问题，异常记录是有了，server 迟迟没有退出的迹象。因为有很多 http 请求是 keep-alive 的，只要这些连接释放不掉，server 就无法 close，同时会有源源不断的新请求进来。</p>
 <p>这也是为什么有人采用 setTimeout 计时强制关闭超时的 server.close。然而 setTimeout 方式治标不治本，既然阻塞退出的根源是 keep-alive 没能立刻关闭，就通过 <a href="https://nodejs.org/api/http.html#http_server_keepalivetimeout" target="_blank" rel="noopener">server.keepAliveTimeout</a> (新增于v8.0.0) 缩短其持续的时间吧。</p>
-<p>另外，我们为了把可能的错误都收集起来，server.close 的异常也放到在日志中去(然而，Node 只会在这里抛出一种错误，并且后面会证明这一步没什么必要)。</p>
+<p>另外，我们为了把可能的错误都收集起来，server.close 的异常也放到在日志中去(然而，Node.js 只会在这里抛出一种错误，并且后面会证明这一步没什么必要)。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">process.on(<span class="string">'uncaughtException'</span>, <span class="keyword">async</span> err =&gt; &#123;</span><br><span class="line">  logger.fatal(<span class="string">`Uncaught exception:`</span>, err)</span><br><span class="line">  server.keepAliveTimeout = <span class="number">1</span></span><br><span class="line">  server.close(<span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (e) &#123;</span><br><span class="line">      logger.error(<span class="string">'Error while server is closing'</span>, e)</span><br><span class="line">    &#125;</span><br><span class="line">    logger.info(<span class="string">'Server is closed'</span>)</span><br><span class="line">    process.exit(<span class="number">1</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    logger.warn(<span class="string">'Server close timeout! Process exit 1'</span>)</span><br><span class="line">    process.exit(<span class="number">1</span>)</span><br><span class="line">  &#125;, <span class="number">10000</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>上面的代码依然保留了 setTimeout 的退出方式，避免有时候真的出现特殊异常。</p>
 <p>接下来我就介绍一种导致关闭失败的情况：该 server 被用来建立了 websocket 连接，如果不显示执行 sockets 的 close 方法，仍然被认为有连接未被释放。因此，不得不再加上socket的处理。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.sockets.server.close()</span><br></pre></td></tr></table></figure></p>
 <p>好吧，进程终于可以正常退出了，这就完了吗？当然没有！</p>
 <p>如果程序中还保持着 mysql，redis 等等服务的连接，或者有异步的操作的话，继续等这些连接关闭、任务执行完毕吧。</p>
-<h2 id="unhandledRejection"><a href="#unhandledRejection" class="headerlink" title="unhandledRejection"></a>unhandledRejection</h2><p>再提一下 unhandledRejection，尽管目前 Node 不会因此而主动退出进程，但将来会。</p>
+<h2 id="unhandledRejection"><a href="#unhandledRejection" class="headerlink" title="unhandledRejection"></a>unhandledRejection</h2><p>再提一下 unhandledRejection，尽管目前 Node.js 不会因此而主动退出进程，但将来会。</p>
 <blockquote>
 <p>In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code</p>
 </blockquote>
@@ -1065,9 +1065,9 @@
       <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
     
     
-      <category term="JavaScript" scheme="https://claude-ray.github.io/tags/JavaScript/"/>
-    
       <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
+      <category term="JavaScript" scheme="https://claude-ray.github.io/tags/JavaScript/"/>
     
       <category term="Koa" scheme="https://claude-ray.github.io/tags/Koa/"/>
     
