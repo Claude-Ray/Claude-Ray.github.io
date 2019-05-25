@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Claude&#39;s Home">
 <meta property="og:description" content="前言服务进程登场时往往“蓄势而发”，犹抱琵琶半遮面，真正的服务端口跑起来之前做了太多准备工作，然而落幕工作常被人草草了之。 如何让进程自然结束，这本是 hello world 级的基础内容，却有很多项目忽视了这一步的必要性以及重要性。 目前使用 PM2 作为进程管理的项目仍占多数，有相关意识的朋友使用 pm2 reload 让进程“平滑”重启，但这就不需要额外的代码处理了吗？ 举个例子，未捕获的异">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-24T15:21:44.243Z">
+<meta property="og:updated_time" content="2019-05-25T03:23:21.316Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="让 Node.js Server 优雅退出">
 <meta name="twitter:description" content="前言服务进程登场时往往“蓄势而发”，犹抱琵琶半遮面，真正的服务端口跑起来之前做了太多准备工作，然而落幕工作常被人草草了之。 如何让进程自然结束，这本是 hello world 级的基础内容，却有很多项目忽视了这一步的必要性以及重要性。 目前使用 PM2 作为进程管理的项目仍占多数，有相关意识的朋友使用 pm2 reload 让进程“平滑”重启，但这就不需要额外的代码处理了吗？ 举个例子，未捕获的异">
@@ -355,7 +355,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,283
+                  1,427
                 </span>
               
 
@@ -400,15 +400,21 @@
 <p>预先约定，本篇示例代码中出现的 <code>logger</code> 均为 log4js 或 console 等日志模块的伪代码。</p>
 </blockquote>
 <p>默认情况下，控制台打印 <code>Uncaught exception xxx</code> 之后直接退出。如果是用 log4js 记录日志到文件或推送远程日志库，不好意思，很可能发现记录中什么错误信息都没留下。</p>
-<p>优雅退出的核心方法是调用 <a href="https://nodejs.org/api/net.html#net_server_close_callback" target="_blank" rel="noopener">server.close([callback])</a>，用于停止 server 接受建立新的连接，并保持已经存在的连接。当所有的连接关闭同时 server 响应 ‘close’ 事件时，server 才会最终关闭，并调用回调函数（可选的）。另外, 如果服务器在未开启状态下执行 close，将会抛出 error 作为回调函数的唯一参数。</p>
+<h3 id="server-close-是核心"><a href="#server-close-是核心" class="headerlink" title="server.close() 是核心"></a>server.close() 是核心</h3><p>优雅退出的核心方法是调用 <a href="https://nodejs.org/api/net.html#net_server_close_callback" target="_blank" rel="noopener">server.close([callback])</a>，用于停止 server 接受建立新的连接，并保持已经存在的连接。当所有的连接关闭同时 server 响应 ‘close’ 事件时，server 才会最终关闭，并调用回调函数（可选的）。另外, 如果服务器在未开启状态下执行 close，将会抛出 error 作为回调函数的唯一参数。</p>
 <p>在 close 回调函数里可确保没有未结束的请求，也就能放心结束进程。网上随处可见的最基本的处理版本如下：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">process.on(<span class="string">'uncaughtException'</span>, <span class="keyword">async</span> err =&gt; &#123;</span><br><span class="line">  logger.error(<span class="string">`Uncaught exception:`</span>, err)</span><br><span class="line">  server.close(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    logger.info(<span class="string">'Server is closed'</span>)</span><br><span class="line">    process.exit(<span class="number">1</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>然而这离我们的目标还有段距离，代码运行一段时间就会遇到问题，异常记录是有了，server 迟迟没有退出的迹象。因为有很多 http 请求是 keep-alive 的，只要这些连接释放不掉，server 就无法 close，同时会有源源不断的新请求进来。</p>
+<h3 id="确保-close-成功"><a href="#确保-close-成功" class="headerlink" title="确保 close 成功"></a>确保 close 成功</h3><p>然而这离我们的目标还有段距离，代码运行一段时间就会遇到问题，异常记录是有了，server 迟迟没有退出的迹象。因为有很多 http 请求是 keep-alive 的，只要这些连接释放不掉，server 就无法 close，同时会有源源不断的新请求进来。</p>
 <p>这也是为什么有人采用 setTimeout 计时强制关闭超时的 server.close。然而 setTimeout 方式治标不治本，既然阻塞退出的根源是 keep-alive 没能立刻关闭，就通过 <a href="https://nodejs.org/api/http.html#http_server_keepalivetimeout" target="_blank" rel="noopener">server.keepAliveTimeout</a> (新增于v8.0.0) 缩短其持续的时间吧。</p>
-<p>另外，我们为了把可能的错误都收集起来，server.close 的异常也放到在日志中去(然而，Node.js 只会在这里抛出一种错误，并且后面会证明这一步没什么必要)。</p>
+<p>另外，我们为了把可能的错误都收集起来，server.close 的异常也放到在日志中去。</p>
+<blockquote>
+<p>事实上，Node.js 只会在这里抛出一种错误 <code>ERR_SERVER_NOT_RUNNING</code>，<a href="https://github.com/nodejs/node/blob/master/lib/net.js#L1517" target="_blank" rel="noopener">源码</a>为证，所以这里日志没太多必要，下一小节会加深这个想法。</p>
+</blockquote>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">process.on(<span class="string">'uncaughtException'</span>, <span class="keyword">async</span> err =&gt; &#123;</span><br><span class="line">  logger.fatal(<span class="string">`Uncaught exception:`</span>, err)</span><br><span class="line">  server.keepAliveTimeout = <span class="number">1</span></span><br><span class="line">  server.close(<span class="function"><span class="params">e</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (e) &#123;</span><br><span class="line">      logger.error(<span class="string">'Error while server is closing'</span>, e)</span><br><span class="line">    &#125;</span><br><span class="line">    logger.info(<span class="string">'Server is closed'</span>)</span><br><span class="line">    process.exit(<span class="number">1</span>)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">    logger.warn(<span class="string">'Server close timeout! Process exit 1'</span>)</span><br><span class="line">    process.exit(<span class="number">1</span>)</span><br><span class="line">  &#125;, <span class="number">10000</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>上面的代码依然保留了 setTimeout 的退出方式，避免有时候真的出现特殊异常。</p>
-<p>接下来我就介绍一种导致关闭失败的情况：该 server 被用来建立了 websocket 连接，如果不显示执行 sockets 的 close 方法，仍然被认为有连接未被释放。因此，不得不再加上socket的处理。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.sockets.server.close()</span><br></pre></td></tr></table></figure></p>
+<h3 id="close-其他连接"><a href="#close-其他连接" class="headerlink" title="close 其他连接"></a>close 其他连接</h3><p>接下来介绍一种会导致关闭失败的情况：该 server 被用来建立了 websocket 连接。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> io = <span class="built_in">require</span>(<span class="string">'socket.io'</span>)(server);</span><br></pre></td></tr></table></figure></p>
+<p>如果不显示执行 socket server 的 close 方法，仍然被认为有连接未被释放。因此，不得不再加上 socket 的处理，当然你也可以考虑其他方式断开 socket 连接。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.sockets.server.close()</span><br></pre></td></tr></table></figure>
+<p>需要提醒的是，像上面这样 http 和 websocket 共用端口，直接关闭 websocket 意味着将对同一个 server 调用两次 close 方法，可能导致 http 服务的 close 回调抛错，还记得该回调函数只会抛出的一种错误吗？It’s it! 也许 close 回调中的错误真的没有记录的必要了。</p>
 <p>好吧，进程终于可以正常退出了，这就完了吗？当然没有！</p>
 <p>如果程序中还保持着 mysql，redis 等等服务的连接，或者有异步的操作的话，继续等这些连接关闭、任务执行完毕吧。</p>
 <h2 id="unhandledRejection"><a href="#unhandledRejection" class="headerlink" title="unhandledRejection"></a>unhandledRejection</h2><p>再提一下 unhandledRejection，尽管目前 Node.js 不会因此而主动退出进程，但将来会。</p>
@@ -671,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uncaughtException"><span class="nav-number">2.</span> <span class="nav-text">uncaughtException</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unhandledRejection"><span class="nav-number">3.</span> <span class="nav-text">unhandledRejection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SIGINT"><span class="nav-number">4.</span> <span class="nav-text">SIGINT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PM2-Graceful-Shutdown"><span class="nav-number">5.</span> <span class="nav-text">PM2 Graceful Shutdown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#uncaughtException"><span class="nav-number">2.</span> <span class="nav-text">uncaughtException</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#server-close-是核心"><span class="nav-number">2.1.</span> <span class="nav-text">server.close() 是核心</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#确保-close-成功"><span class="nav-number">2.2.</span> <span class="nav-text">确保 close 成功</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#close-其他连接"><span class="nav-number">2.3.</span> <span class="nav-text">close 其他连接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#unhandledRejection"><span class="nav-number">3.</span> <span class="nav-text">unhandledRejection</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SIGINT"><span class="nav-number">4.</span> <span class="nav-text">SIGINT</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PM2-Graceful-Shutdown"><span class="nav-number">5.</span> <span class="nav-text">PM2 Graceful Shutdown</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">6.</span> <span class="nav-text">小结</span></a></li></ol></div>
             
 
           </div>
