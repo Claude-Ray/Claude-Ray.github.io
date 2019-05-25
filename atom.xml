@@ -88,7 +88,7 @@
     <link href="https://claude-ray.github.io/2019/05/19/node-apm-product-research/"/>
     <id>https://claude-ray.github.io/2019/05/19/node-apm-product-research/</id>
     <published>2019-05-19T13:52:35.000Z</published>
-    <updated>2019-05-21T14:30:54.574Z</updated>
+    <updated>2019-05-25T10:04:05.669Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://en.wikipedia.org/wiki/Application_performance_management" target="_blank" rel="noopener">Application Performance Management</a>（简称 APM）是监控服务的一套技术手段，致力于监控并管理程序的性能和可用性。</p>
 <p>不妨思考一下，当有用户反映操作无响应，如何排查问题？惯例是先自己尝试重现，如果没重现，再换一个人试试，bla bla…</p>
@@ -207,7 +207,7 @@
 <p>小团队的发布流程和运维支撑通常较弱，难以避免线上故障，这一阶段，快速响应和处理才能降低损失。</p>
 <p>考虑到 APM 的接入成本，有必要分清接入功能的优先级。</p>
 <p>在虚拟化、容器化的现在，大部分性能指标的采集工作都可以在业务之外进行，因此性能采集只要能做到进程级的监控即可。</p>
-<p>分布式全链路追踪，不是只在 Node 一端接入就有效果的，必然是根据运维和后端技术栈，选择使用 Zipkin 等更合理的开源方案。</p>
+<p>分布式全链路追踪，不是只在 Node 一端接入就有效果的，必然要结合运维和后端技术栈，选择使用 Zipkin 等更流行的 opentracing 开源方案。</p>
 <p>如果上面的观点你还算认可，那么我们选型上应该更关注 APM 服务对代码级监控的支持力度、侵入程度、社区活跃度和接入成本。</p>
 <h2 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h2><p>综上，APM 的选型参考如下</p>
 <table>
@@ -314,7 +314,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>无</td>
+<td>极低</td>
 <td>run time</td>
 <td>-</td>
 </tr>
@@ -362,7 +362,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>×</td>
+<td>✓</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
@@ -1071,9 +1071,9 @@
       <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
     
     
-      <category term="JavaScript" scheme="https://claude-ray.github.io/tags/JavaScript/"/>
-    
       <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
+      <category term="JavaScript" scheme="https://claude-ray.github.io/tags/JavaScript/"/>
     
       <category term="Koa" scheme="https://claude-ray.github.io/tags/Koa/"/>
     

@@ -104,7 +104,7 @@
 <meta property="og:description" content="近期调研了当下 Node.js 主流的 APM 产品，为期不到一周，本文以介绍基本状况为主，引申对 APM 中间件选型乃至自研的一些思考。APM 虽和业务关系紧密，但实属于运维管理范畴，笔者从业务的角度思考，易受限于使用场景，请路过的读者及时指教问题。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://claude-ray.github.io/image/node-apm-product-research/apm-coneptual-framework.jpg">
-<meta property="og:updated_time" content="2019-05-21T14:30:54.574Z">
+<meta property="og:updated_time" content="2019-05-25T10:04:05.669Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js APM 产品调研">
 <meta name="twitter:description" content="近期调研了当下 Node.js 主流的 APM 产品，为期不到一周，本文以介绍基本状况为主，引申对 APM 中间件选型乃至自研的一些思考。APM 虽和业务关系紧密，但实属于运维管理范畴，笔者从业务的角度思考，易受限于使用场景，请路过的读者及时指教问题。">
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,457
+                  3,459
                 </span>
               
 
@@ -534,7 +534,7 @@
 <p>小团队的发布流程和运维支撑通常较弱，难以避免线上故障，这一阶段，快速响应和处理才能降低损失。</p>
 <p>考虑到 APM 的接入成本，有必要分清接入功能的优先级。</p>
 <p>在虚拟化、容器化的现在，大部分性能指标的采集工作都可以在业务之外进行，因此性能采集只要能做到进程级的监控即可。</p>
-<p>分布式全链路追踪，不是只在 Node 一端接入就有效果的，必然是根据运维和后端技术栈，选择使用 Zipkin 等更合理的开源方案。</p>
+<p>分布式全链路追踪，不是只在 Node 一端接入就有效果的，必然要结合运维和后端技术栈，选择使用 Zipkin 等更流行的 opentracing 开源方案。</p>
 <p>如果上面的观点你还算认可，那么我们选型上应该更关注 APM 服务对代码级监控的支持力度、侵入程度、社区活跃度和接入成本。</p>
 <h2 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h2><p>综上，APM 的选型参考如下</p>
 <table>
@@ -641,7 +641,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>无</td>
+<td>极低</td>
 <td>run time</td>
 <td>-</td>
 </tr>
@@ -689,7 +689,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>×</td>
+<td>✓</td>
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
