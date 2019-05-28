@@ -1,0 +1,1031 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Node.js,APM,Elastic-APM,V8," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="前言根据上一篇《Node.js APM 产品调研》的市场调研结果，笔者更青睐 Elastic APM 这个开源产品，故决定带来它的一篇专题介绍。 尽管团队已经开始试用，但踩坑时间较短，与其编写测评，不如先带大家走进这个项目，剖析个别令人感兴趣的技术点。">
+<meta name="keywords" content="Node.js,APM,Elastic-APM,V8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Node.js APM 产品调研：Elastic APM">
+<meta property="og:url" content="https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/index.html">
+<meta property="og:site_name" content="Claude&#39;s Home">
+<meta property="og:description" content="前言根据上一篇《Node.js APM 产品调研》的市场调研结果，笔者更青睐 Elastic APM 这个开源产品，故决定带来它的一篇专题介绍。 尽管团队已经开始试用，但踩坑时间较短，与其编写测评，不如先带大家走进这个项目，剖析个别令人感兴趣的技术点。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-28T04:54:42.772Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Node.js APM 产品调研：Elastic APM">
+<meta name="twitter:description" content="前言根据上一篇《Node.js APM 产品调研》的市场调研结果，笔者更青睐 Elastic APM 这个开源产品，故决定带来它的一篇专题介绍。 尽管团队已经开始试用，但踩坑时间较短，与其编写测评，不如先带大家走进这个项目，剖析个别令人感兴趣的技术点。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/"/>
+
+
+
+
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+
+
+  <title>Node.js APM 产品调研：Elastic APM | Claude's Home</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claude's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Searching</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Node.js APM 产品调研：Elastic APM</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-27T22:46:05+08:00">
+                2019-05-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/05/27/elastic-apm-node-research/" class="leancloud_visitors" data-flag-title="Node.js APM 产品调研：Elastic APM">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <br>
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,536
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>根据上一篇《<a href="https://claude-ray.github.io/2019/05/19/node-apm-product-research/">Node.js APM 产品调研</a>》的市场调研结果，笔者更青睐 Elastic APM 这个开源产品，故决定带来它的一篇专题介绍。</p>
+<p>尽管团队已经开始试用，但踩坑时间较短，与其编写测评，不如先带大家走进这个项目，剖析个别令人感兴趣的技术点。</p>
+<a id="more"></a>
+<h1 id="基础介绍"><a href="#基础介绍" class="headerlink" title="基础介绍"></a>基础介绍</h1><h2 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h2><p>从 github 的信息来看，项目从 2011 年 11 月开工，已经不算新项目，期间基本就是单人维护的状态，进展到现在颇为不易。</p>
+<p>两任作者分别是 Sentry 的核心成员 Matt Robenolt，以及 Elastic 团队的 Node.js 专职开发 Thomas Watson，同时他也是 Node.js 团队的核心贡献者之一。</p>
+<p>对 Elastic APM 完全没有接触过的读者，可以先阅读 nswbmw/node-in-debugging 中的<a href="https://github.com/nswbmw/node-in-debugging/blob/master/5.2%20Elastic%20APM.md" target="_blank" rel="noopener">介绍</a>。</p>
+<h2 id="基本功能"><a href="#基本功能" class="headerlink" title="基本功能"></a>基本功能</h2><p>官方文档是相当细致了，使用前推荐阅读。除了基本功能，这里列举一些值得关注的点</p>
+<ul>
+<li>支持自定义 Node 框架和路由。Agent 记录路由的原理都是 patch 各路由中间件的 match 方法，倘若 SDK 没有对你在用的路由库提供支持，可以选择手动记录或自行 patch。</li>
+<li>支持主动上报错误 stack，并且帮你在看板上定位异常的来源代码。</li>
+<li>支持采集 http 请求的 body 参数，默认关闭。一旦开启，可以构成非常强大的日志分析。但不建议在 apm agent 做这种处理，会给监控赋予了太多职能，有需要最好结合全链路 tracing 方案使用额外的 logger agent。</li>
+<li>过滤敏感信息，根据请求头、或自定义维度。</li>
+<li>支持定制 Transaction, Span， 额外的 custom 数据。</li>
+<li>性能优化指南，结合自身业务需要，调整采样率、上报频率、请求体的限制。</li>
+<li>支持 opentracing</li>
+<li>支持 kubernetes</li>
+</ul>
+<h2 id="数据上报"><a href="#数据上报" class="headerlink" title="数据上报"></a>数据上报</h2><p>首先我们简称 Elastic APM client 为 agent。agent 到日志采集服务 apm-server 的通讯方式为 http 或 https。请求方法被封装到了 <code>elastic-http-client</code> 模块，负责将 Transaction, Error, Metric, Span 这类指标发送到 apm-server，并且还包含格式检查、过长的信息截断的功能。</p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><p>相比商业 APM 项目，elastic-apm-node 结构非常简洁。</p>
+<p>基本的目录信息如下</p>
+<ul>
+<li>lib<ul>
+<li>filters</li>
+<li>instrumentation<ul>
+<li>module</li>
+</ul>
+</li>
+<li>metrics<ul>
+<li>platform</li>
+</ul>
+</li>
+<li>middleware</li>
+</ul>
+</li>
+</ul>
+<p>除了 filters 和 middleware 服务于内部功能，分别用于过滤敏感请求头(auth、cookie) 和异常捕获，剩下的就是核心功能  <code>Transaction</code>、<code>Error</code>、<code>Metric</code> 所在目录了。</p>
+<p>接下来，我将围绕这三大功能进行介绍。</p>
+<h1 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h1><h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><p>通常错误日志包含了哪一行代码报错，但只有翻看代码才能确认究竟哪段代码出现问题。APM 提供了可以在看板界面直接确认异常代码的解决方案。</p>
+<p>核心代码如下，目的是为了在 Error 对象中通过 __error_callsites 属性获取到 callsites 信息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> formatter = <span class="built_in">require</span>(<span class="string">'./lib/node-0.10-formatter'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> orig = <span class="built_in">Error</span>.prepareStackTrace</span><br><span class="line"><span class="built_in">Error</span>.prepareStackTrace = <span class="function"><span class="keyword">function</span> (<span class="params">err, callsites</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(err, <span class="string">'__error_callsites'</span>, &#123;</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    writable: <span class="literal">false</span>,</span><br><span class="line">    value: callsites</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (orig || formatter)(err, callsites)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  err.stack</span><br><span class="line">  <span class="keyword">return</span> err.__error_callsites</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码中只有一个不常见的方法 <code>Error.prepareStackTrace</code>，并且在 Node.js 的 API 中找不到，因为它实际是 V8 暴露的接口。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Error</span>.prepareStackTrace(error, structuredStackTrace)</span><br></pre></td></tr></table></figure>
+<p>这个接口常常被用来格式化错误信息，<code>structuredStackTrace</code> 包含了一组 CallSite 对象，CallSite 对象支持的方法有：getThis, getTypeName, getFunction, getFunctionName, getMethodName, getFileName, getLineNumber, getColumnNumber, getEvalOrigin, isToplevel, isEval, isNative, isConstructor, isAsync, isPromiseAll, getPromiseIndex</p>
+<p>因此借助 CallSite 可以拿到 Error 抛出的文件、行列位置。</p>
+<ul>
+<li><code>getFileName</code>: if this function was defined in a script returns the name of the script</li>
+<li><code>getLineNumber</code>: if this function was defined in a script returns the current line number</li>
+<li><code>getColumnNumber</code>: if this function was defined in a script returns the current column number</li>
+</ul>
+<p>最后通过 <code>source-map</code> 模块的缓存，获取执行前后的代码。</p>
+<p>处理 Error stack 的意义对 JS 直接编写的项目意义可能不是那么大，但假如开发者使用了 TS、或其他原因使生产环境的代码经过了一定编译，这时直接抛出的 Error stack 信息对开发者相当不友好。特定场景下 source-map 的代码映射变得至关重要。</p>
+<p>默认地，Elastic APM 只记录 uncaughtException 和一小部分内部 patch 代码的错误。如果有较强的查错需求，得主动在业务中调用 <code>agent.captureError</code> 方法记录异常。</p>
+<p>另外，若项目有特殊异常上报等原因需要监听 uncaughtException 事件，<strong>应当在 agent start() 之前覆盖 <a href="https://www.elastic.co/guide/en/apm/agent/nodejs/current/agent-api.html#apm-handle-uncaught-exceptions" target="_blank" rel="noopener">agent.handleUncaughtExceptions</a> 方法</strong>，这样才能使其默认的捕获后 exit 的处理失效，以免进程在任务执行结束之前被 APM 的监听器强制结束。</p>
+<h2 id="Metric"><a href="#Metric" class="headerlink" title="Metric"></a>Metric</h2><p>一般来说，Node.js 原生暴露的接口足够对进程性能的基本状况有所判断了，但 APM 系统总是希望监控更详细的信息。</p>
+<p>尤其是系统 CPU、内存占用率的走势图。一部分探针选择用纯 JS 计算，另一部分探针选择使用 C++ 获取/计算。使用 C++ 的库一般还会获取更复杂的指标，如 <a href="https://github.com/RuntimeTools/appmetrics" target="_blank" rel="noopener">appmetrics</a> 会获取一部分 GC、Event loop 信息（然而 GC 耗费占比的监控在 Node.js Runtime 下无法实现，信息来自：<a href="https://www.zhihu.com/question/315261661/answer/637417008" target="_blank" rel="noopener">关于Nodejs的性能监控思考？ - hyj1991的回答 - 知乎</a>）</p>
+<p>Elastic APM 是相对小清新的一派，如果发现当前服务环境 <code>process.platform</code> 是 Linux，它会从/proc/ 目录定时获取系统性能快照，无需额外计算，如果是其他系统，再使用 JS 通过算法计算。</p>
+<blockquote>
+<p>proc 文件的描述可以查看 linux 文件系统文档 <a href="https://github.com/torvalds/linux/blob/master/Documentation/filesystems/proc.txt" target="_blank" rel="noopener">https://github.com/torvalds/linux/blob/master/Documentation/filesystems/proc.txt</a></p>
+</blockquote>
+<ul>
+<li>/proc/meminfo: 记录系统内存信息，用来获取两个指标：MemAvailable 和 MemTotal。对应 <code>os.totalmem()</code> 和 <code>os.freemem()</code>。</li>
+<li>/proc/stat: 记录 CPU 活动信息，用来获取两个指标：cpuTotal 和 cpuUsage。这一步用 Node.js 计算略麻烦，需要定时缓存 <code>os.cpus()</code> 的 <code>times.total</code> <code>times.idle</code>指标。</li>
+<li>/proc/self/stat: 不同于前面两个记录系统级信息的文件，此文件记录了当前进程的所有活动信息。用来获取进程 CPU 使用率和 RSS 内存。对应 <code>processTop.cpu().percent / cpus.length</code> 和 <code>process.memoryUsage().rss</code>。</li>
+</ul>
+<h2 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h2><p>Elastic APM 中的事务，类似于 opentracing 中的 Span，但把一个请求中所有的 Span 抽象为一个概念。</p>
+<p>Transaction 实现的基础是各种代码钩子。</p>
+<h3 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h3><p>通过 patch ，做一些信息采集，例如 Koa 框架的。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">koa, agent, &#123; version, enabled &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!enabled) <span class="keyword">return</span> koa</span><br><span class="line"></span><br><span class="line">  agent.setFramework(&#123; <span class="attr">name</span>: <span class="string">'koa'</span>, version, <span class="attr">overwrite</span>: <span class="literal">false</span> &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> koa</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">shimmer.wrap(Router.prototype, <span class="string">'match'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">orig</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">_, method</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> matched = orig.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> method !== <span class="string">'string'</span>) &#123;</span><br><span class="line">      agent.logger.debug(<span class="string">'unexpected method type in koa-router prototype.match: %s'</span>, <span class="keyword">typeof</span> method)</span><br><span class="line">      <span class="keyword">return</span> matched</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(matched &amp;&amp; matched.pathAndMethod)) &#123;</span><br><span class="line">      <span class="keyword">const</span> layer = matched.pathAndMethod.find(<span class="function"><span class="keyword">function</span> (<span class="params">layer</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> layer &amp;&amp; layer.opts &amp;&amp; layer.opts.end === <span class="literal">true</span></span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> path = layer &amp;&amp; layer.path</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> path === <span class="string">'string'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> name = method + <span class="string">' '</span> + path</span><br><span class="line">        agent._instrumentation.setDefaultTransactionName(name)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        agent.logger.debug(<span class="string">'unexpected path type in koa-router prototype.match: %s'</span>, <span class="keyword">typeof</span> path)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      agent.logger.debug(<span class="string">'unexpected match result in koa-router prototype.match: %s'</span>, <span class="keyword">typeof</span> matched)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> matched</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>上面的 patch 配合 <code>require-in-the-middle</code> 模块，完成了对各框架的包装。</p>
+<h3 id="async-hook"><a href="#async-hook" class="headerlink" title="async-hook"></a>async-hook</h3><p>利用 async-hook 实现记录整串请求，来看两个代码片段。</p>
+<p>首先是基于 async-hook 封装了 Instrumentation 的 <code>currentTransaction</code> 方法，使异步操作中随时可以拿到当前 async scope id 下的 Transaction 实例。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> asyncHooks = <span class="built_in">require</span>(<span class="string">'async_hooks'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">ins</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> asyncHook = asyncHooks.createHook(&#123; init, before, destroy &#125;)</span><br><span class="line">  <span class="keyword">const</span> contexts = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> activeTransactions = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(ins, <span class="string">'currentTransaction'</span>, &#123;</span><br><span class="line">    get () &#123;</span><br><span class="line">      <span class="keyword">const</span> asyncId = asyncHooks.executionAsyncId()</span><br><span class="line">      <span class="keyword">return</span> activeTransactions.get(asyncId) || <span class="literal">null</span></span><br><span class="line">    &#125;,</span><br><span class="line">    set (trans) &#123;</span><br><span class="line">      <span class="keyword">const</span> asyncId = asyncHooks.executionAsyncId()</span><br><span class="line">      <span class="keyword">if</span> (trans) &#123;</span><br><span class="line">        activeTransactions.set(asyncId, trans)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        activeTransactions.delete(asyncId)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>下面是 currentTransaction 的一处应用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Instrumentation.prototype.bindFunction = <span class="function"><span class="keyword">function</span> (<span class="params">original</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> original !== <span class="string">'function'</span> || original.name === <span class="string">'elasticAPMCallbackWrapper'</span>) <span class="keyword">return</span> original</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> ins = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">var</span> trans = <span class="keyword">this</span>.currentTransaction</span><br><span class="line">  <span class="keyword">var</span> span = <span class="keyword">this</span>.currentSpan</span><br><span class="line">  <span class="keyword">if</span> (trans &amp;&amp; !trans.sampled) &#123;</span><br><span class="line">    <span class="keyword">return</span> original</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> elasticAPMCallbackWrapper</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">elasticAPMCallbackWrapper</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> prevTrans = ins.currentTransaction</span><br><span class="line">    ins.currentTransaction = trans</span><br><span class="line">    ins.bindingSpan = <span class="literal">null</span></span><br><span class="line">    ins.activeSpan = span</span><br><span class="line">    <span class="keyword">if</span> (trans) trans.sync = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span> (span) span.sync = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">var</span> result = original.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">    ins.currentTransaction = prevTrans</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>async hook 是 Node.js 8 以后出现的概念，为了兼容旧版本，Elastic APM 借助 <code>async-listener</code> 模块做了一些兼容，尽管 Elastic APM 官方不推荐使用低版本 Node.js 接入。</p>
+<p>虽然 async hook 更进一步可以帮助优化异步调用栈，改善异步 Error 信息的可读性，但 APM 很难从底层判断哪些异步 CallSite 是用户想保留的，所以没有做这种处理。</p>
+<h3 id="Span-Trace"><a href="#Span-Trace" class="headerlink" title="Span Trace"></a>Span Trace</h3><p>Span 用来记录 db 操作、http、websocket 远程调用等细致操作，Elastic APM 同时记录了调用栈。</p>
+<p>我们知道，console.trace() 方法可以用来定位 trace 信息，它实际使用了 V8 Error 暴露的另一个方法 <code>Error.captureStackTrace(error, constructorOpt)</code>。</p>
+<p><code>error</code> 是用来记录 trace 信息的必传对象，captureStackTrace 会将字符串附加到 error 对象的 stack 属性上。</p>
+<p><code>constructorOpt</code> 是用来隐藏底层调用栈的可选函数，用法如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyError</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Error</span>.captureStackTrace(<span class="keyword">this</span>, MyError);</span><br><span class="line">  <span class="comment">// Any other initialization goes here.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h4><p>上面提到的 V8 Error trace API，结合 TJ 的 <code>callsite</code> 更容易理解，功能是获取当前的 CallSite 集合。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> orig = <span class="built_in">Error</span>.prepareStackTrace;</span><br><span class="line">  <span class="built_in">Error</span>.prepareStackTrace = <span class="function"><span class="keyword">function</span>(<span class="params">_, stack</span>)</span>&#123; <span class="keyword">return</span> stack; &#125;;</span><br><span class="line">  <span class="keyword">var</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>;</span><br><span class="line">  <span class="built_in">Error</span>.captureStackTrace(err, <span class="built_in">arguments</span>.callee);</span><br><span class="line">  <span class="keyword">var</span> stack = err.stack;</span><br><span class="line">  <span class="built_in">Error</span>.prepareStackTrace = orig;</span><br><span class="line">  <span class="keyword">return</span> stack;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>不得不说，和活跃的商业巨头产品相比，Elastic APM 目前的功能支持度存在不少差距。如果想在 APM 专业领域探索，绕不开对 New Relic 源码的学习。 XD</p>
+<p>但 Elastic APM Node.js 依然是目前最值得关注的开源探针式监控方案，其 agent 基础功能支持度较好，代码结构也很简单，希望能被更多人使用，帮助它更快成长~</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://github.com/elastic/apm-agent-nodejs" target="_blank" rel="noopener">https://github.com/elastic/apm-agent-nodejs</a></li>
+<li><a href="https://v8.dev/docs/stack-trace-api" target="_blank" rel="noopener">https://v8.dev/docs/stack-trace-api</a></li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong>本文作者：</strong>
+      Claude Ray
+    </li>
+    <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/" title="Node.js APM 产品调研：Elastic APM">https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong>
+      本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Node-js/" rel="tag"> <i class="fa fa-tag"></i> Node.js</a>
+          
+            <a href="/tags/APM/" rel="tag"> <i class="fa fa-tag"></i> APM</a>
+          
+            <a href="/tags/Elastic-APM/" rel="tag"> <i class="fa fa-tag"></i> Elastic-APM</a>
+          
+            <a href="/tags/V8/" rel="tag"> <i class="fa fa-tag"></i> V8</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/23/node-graceful-server/" rel="next" title="让 Node.js Server 优雅退出">
+                <i class="fa fa-chevron-left"></i> 让 Node.js Server 优雅退出
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="Claude Ray" />
+          <p class="site-author-name" itemprop="name">Claude Ray</p>
+           
+              <p class="site-description motion-element" itemprop="description">Now or Never</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Claude-Ray" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://steamcommunity.com/profiles/76561198202113170" target="_blank" title="Steam">
+                  
+                    <i class="fa fa-fw fa-steam"></i>
+                  
+                  Steam
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://github.com/nebulae-pan" title="Nebulae Pan" target="_blank">Nebulae Pan</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#基础介绍"><span class="nav-number">2.</span> <span class="nav-text">基础介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#项目背景"><span class="nav-number">2.1.</span> <span class="nav-text">项目背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基本功能"><span class="nav-number">2.2.</span> <span class="nav-text">基本功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据上报"><span class="nav-number">2.3.</span> <span class="nav-text">数据上报</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">2.4.</span> <span class="nav-text">目录结构</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#核心功能"><span class="nav-number">3.</span> <span class="nav-text">核心功能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Error"><span class="nav-number">3.1.</span> <span class="nav-text">Error</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Metric"><span class="nav-number">3.2.</span> <span class="nav-text">Metric</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transaction"><span class="nav-number">3.3.</span> <span class="nav-text">Transaction</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#patch"><span class="nav-number">3.3.1.</span> <span class="nav-text">patch</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#async-hook"><span class="nav-number">3.3.2.</span> <span class="nav-text">async-hook</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Span-Trace"><span class="nav-number">3.3.3.</span> <span class="nav-text">Span Trace</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#小插曲"><span class="nav-number">3.3.3.1.</span> <span class="nav-text">小插曲</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-bolt"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claude Ray</span>
+</div>
+
+
+Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homepage</a>
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("oxfadq9FejYDc5qLuDjTz9Qn-gzGzoHsz", "G412hVz4W57TiPtwh2Pl949B");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
