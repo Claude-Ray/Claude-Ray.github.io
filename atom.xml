@@ -204,7 +204,7 @@
     <link href="https://claude-ray.github.io/2019/05/19/node-apm-product-research/"/>
     <id>https://claude-ray.github.io/2019/05/19/node-apm-product-research/</id>
     <published>2019-05-19T13:52:35.000Z</published>
-    <updated>2019-05-25T10:04:05.669Z</updated>
+    <updated>2019-05-30T15:50:55.451Z</updated>
     
     <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><a href="https://en.wikipedia.org/wiki/Application_performance_management" target="_blank" rel="noopener">Application Performance Management</a>（简称 APM）是监控服务的一套技术手段，致力于监控并管理程序的性能和可用性。</p>
 <p>不妨思考一下，当有用户反映操作无响应，如何排查问题？惯例是先自己尝试重现，如果没重现，再换一个人试试，bla bla…</p>
@@ -317,7 +317,7 @@
 <h3 id="分布式部署"><a href="#分布式部署" class="headerlink" title="分布式部署"></a>分布式部署</h3><p>能否识别集群的部署状况。</p>
 <h3 id="外部依赖"><a href="#外部依赖" class="headerlink" title="外部依赖"></a>外部依赖</h3><p>需要哪些数据库等外部依赖。</p>
 <h3 id="代码侵入"><a href="#代码侵入" class="headerlink" title="代码侵入"></a>代码侵入</h3><p>对代码侵入程度越低，接入越方便，避免对业务造成影响。</p>
-<p>除了引入 SDK 的方式，是否有使用 async hook，是否对第三方库做了热 Patch，类似 Java 动态字节码探针，都可能对业务形成一定隐患。</p>
+<p>虽然移除一个模块时代码的改动大小是评判侵入性高低的一般标准，并且下面也将遵循此标准来进行评价。但必须留意，除了引入 SDK 的方式，如何使用 async hook、如何对第三方库做 Patch(类似 Java 动态字节码探针)，再低的侵入都可能埋下隐患。</p>
 <h3 id="社区活跃度"><a href="#社区活跃度" class="headerlink" title="社区活跃度"></a>社区活跃度</h3><p>分技术层面的参考，但还是很重要的指标。可以参考 npm 最近一个月的平局周下载量。</p>
 <h2 id="关于-Node-js"><a href="#关于-Node-js" class="headerlink" title="关于 Node.js"></a>关于 Node.js</h2><p>Node.js 在服务端尤其是中间层表现不俗，但如果经验不足的情况下将 Node 落地，没有任何监控，承担的风险太大。</p>
 <p>小团队的发布流程和运维支撑通常较弱，难以避免线上故障，这一阶段，快速响应和处理才能降低损失。</p>
@@ -352,7 +352,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>30.1k</td>
 </tr>
@@ -365,7 +365,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>9.5k</td>
 </tr>
@@ -378,7 +378,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>0.1k</td>
 </tr>
@@ -391,7 +391,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>0.6k</td>
 </tr>
@@ -404,7 +404,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>0.3k</td>
 </tr>
@@ -417,7 +417,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>0.1k</td>
 </tr>
@@ -430,7 +430,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>极低</td>
+<td>无</td>
 <td>run time</td>
 <td>-</td>
 </tr>
@@ -456,7 +456,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>×</td>
-<td>低</td>
+<td>极低</td>
 <td>进程启动器</td>
 <td>0.2k</td>
 </tr>
@@ -469,7 +469,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>20.1k</td>
 </tr>
@@ -482,7 +482,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>24.6k</td>
 </tr>

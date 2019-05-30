@@ -104,7 +104,7 @@
 <meta property="og:description" content="近期调研了当下 Node.js 主流的 APM 产品，为期不到一周，本文以介绍基本状况为主，引申对 APM 中间件选型乃至自研的一些思考。APM 虽和业务关系紧密，但实属于运维管理范畴，笔者从业务的角度思考，易受限于使用场景，请路过的读者及时指教问题。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://claude-ray.github.io/image/node-apm-product-research/apm-coneptual-framework.jpg">
-<meta property="og:updated_time" content="2019-05-25T10:04:05.669Z">
+<meta property="og:updated_time" content="2019-05-30T15:50:55.451Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js APM 产品调研">
 <meta name="twitter:description" content="近期调研了当下 Node.js 主流的 APM 产品，为期不到一周，本文以介绍基本状况为主，引申对 APM 中间件选型乃至自研的一些思考。APM 虽和业务关系紧密，但实属于运维管理范畴，笔者从业务的角度思考，易受限于使用场景，请路过的读者及时指教问题。">
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,459
+                  3,506
                 </span>
               
 
@@ -528,7 +528,7 @@
 <h3 id="分布式部署"><a href="#分布式部署" class="headerlink" title="分布式部署"></a>分布式部署</h3><p>能否识别集群的部署状况。</p>
 <h3 id="外部依赖"><a href="#外部依赖" class="headerlink" title="外部依赖"></a>外部依赖</h3><p>需要哪些数据库等外部依赖。</p>
 <h3 id="代码侵入"><a href="#代码侵入" class="headerlink" title="代码侵入"></a>代码侵入</h3><p>对代码侵入程度越低，接入越方便，避免对业务造成影响。</p>
-<p>除了引入 SDK 的方式，是否有使用 async hook，是否对第三方库做了热 Patch，类似 Java 动态字节码探针，都可能对业务形成一定隐患。</p>
+<p>虽然移除一个模块时代码的改动大小是评判侵入性高低的一般标准，并且下面也将遵循此标准来进行评价。但必须留意，除了引入 SDK 的方式，如何使用 async hook、如何对第三方库做 Patch(类似 Java 动态字节码探针)，再低的侵入都可能埋下隐患。</p>
 <h3 id="社区活跃度"><a href="#社区活跃度" class="headerlink" title="社区活跃度"></a>社区活跃度</h3><p>分技术层面的参考，但还是很重要的指标。可以参考 npm 最近一个月的平局周下载量。</p>
 <h2 id="关于-Node-js"><a href="#关于-Node-js" class="headerlink" title="关于 Node.js"></a>关于 Node.js</h2><p>Node.js 在服务端尤其是中间层表现不俗，但如果经验不足的情况下将 Node 落地，没有任何监控，承担的风险太大。</p>
 <p>小团队的发布流程和运维支撑通常较弱，难以避免线上故障，这一阶段，快速响应和处理才能降低损失。</p>
@@ -563,7 +563,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>30.1k</td>
 </tr>
@@ -576,7 +576,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>9.5k</td>
 </tr>
@@ -589,7 +589,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>0.1k</td>
 </tr>
@@ -602,7 +602,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>0.6k</td>
 </tr>
@@ -615,7 +615,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>0.3k</td>
 </tr>
@@ -628,7 +628,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>0.1k</td>
 </tr>
@@ -641,7 +641,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>极低</td>
+<td>无</td>
 <td>run time</td>
 <td>-</td>
 </tr>
@@ -667,7 +667,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>×</td>
-<td>低</td>
+<td>极低</td>
 <td>进程启动器</td>
 <td>0.2k</td>
 </tr>
@@ -680,7 +680,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>20.1k</td>
 </tr>
@@ -693,7 +693,7 @@
 <td>✓</td>
 <td>✓</td>
 <td>✓</td>
-<td>中</td>
+<td>低</td>
 <td>探针</td>
 <td>24.6k</td>
 </tr>
