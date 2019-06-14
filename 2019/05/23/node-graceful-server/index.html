@@ -103,7 +103,7 @@
 <meta property="og:site_name" content="Claude&#39;s Home">
 <meta property="og:description" content="前言服务进程登场时往往“蓄势而发”，犹抱琵琶半遮面，真正的服务端口跑起来之前做了太多准备工作，然而落幕工作常被人草草了之。 如何让进程自然结束，这本是 hello world 级的基础内容，却有很多项目忽视了这一步的必要性以及重要性。 目前使用 PM2 作为进程管理的项目仍占多数，有相关意识的朋友使用 pm2 reload 让进程“平滑”重启，但这就不需要额外的代码处理了吗？ 举个例子，未捕获的异">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-25T03:23:21.316Z">
+<meta property="og:updated_time" content="2019-06-14T10:12:44.632Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="让 Node.js Server 优雅退出">
 <meta name="twitter:description" content="前言服务进程登场时往往“蓄势而发”，犹抱琵琶半遮面，真正的服务端口跑起来之前做了太多准备工作，然而落幕工作常被人草草了之。 如何让进程自然结束，这本是 hello world 级的基础内容，却有很多项目忽视了这一步的必要性以及重要性。 目前使用 PM2 作为进程管理的项目仍占多数，有相关意识的朋友使用 pm2 reload 让进程“平滑”重启，但这就不需要额外的代码处理了吗？ 举个例子，未捕获的异">
@@ -355,7 +355,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,427
+                  1,425
                 </span>
               
 
@@ -414,7 +414,7 @@
 <h3 id="close-其他连接"><a href="#close-其他连接" class="headerlink" title="close 其他连接"></a>close 其他连接</h3><p>接下来介绍一种会导致关闭失败的情况：该 server 被用来建立了 websocket 连接。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> io = <span class="built_in">require</span>(<span class="string">'socket.io'</span>)(server);</span><br></pre></td></tr></table></figure></p>
 <p>如果不显示执行 socket server 的 close 方法，仍然被认为有连接未被释放。因此，不得不再加上 socket 的处理，当然你也可以考虑其他方式断开 socket 连接。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">io.sockets.server.close()</span><br></pre></td></tr></table></figure>
-<p>需要提醒的是，像上面这样 http 和 websocket 共用端口，直接关闭 websocket 意味着将对同一个 server 调用两次 close 方法，可能导致 http 服务的 close 回调抛错，还记得该回调函数只会抛出的一种错误吗？It’s it! 也许 close 回调中的错误真的没有记录的必要了。</p>
+<p>需要提醒的是，像上面这样 http 和 websocket 共用端口，直接关闭 websocket 意味着将对同一个 server 调用两次 close 方法，可能导致 http 服务的 close 回调抛错，还记得该回调函数只会抛出的一种错误吗？Bingo! 也许 close 回调中的错误真的没有记录的必要了。</p>
 <p>好吧，进程终于可以正常退出了，这就完了吗？当然没有！</p>
 <p>如果程序中还保持着 mysql，redis 等等服务的连接，或者有异步的操作的话，继续等这些连接关闭、任务执行完毕吧。</p>
 <h2 id="unhandledRejection"><a href="#unhandledRejection" class="headerlink" title="unhandledRejection"></a>unhandledRejection</h2><p>再提一下 unhandledRejection，尽管目前 Node.js 不会因此而主动退出进程，但将来会。</p>
