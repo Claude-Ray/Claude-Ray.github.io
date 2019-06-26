@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Nginx,If Is Evil," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Nginx,If Is Evil,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2019/01/09/nginx-ifisevil/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2019/01/09/nginx-ifisevil/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -412,7 +412,9 @@
 
       
         <p>被 nginx 官方自我批判的 if 语句，《<a href="https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/" target="_blank" rel="noopener">If Is Evil</a>》——这应该成为每位开发者初次使用 nginx 的 if 之前必读的文章。</p>
-<p>即使一年前就开始用 nginx 和 if 的组合做跳转，但涉及的功能太简单，没能见识到它的真面目。当我在多个 if 内处理 proxy_pass 时，噩梦就降临了。<br><a id="more"></a></p>
+<p>即使一年前就开始用 nginx 和 if 的组合做跳转，但涉及的功能太简单，没能见识到它的真面目。当我在多个 if 内处理 proxy_pass 时，噩梦就降临了。</p>
+<a id="more"></a>
+
 <h1 id="Why"><a href="#Why" class="headerlink" title="Why"></a>Why</h1><p>if 本身是 rewrite 模块的一部分，然而在非 rewrite 环境下也可以用，显然这是错误的用法，进而引发很多出乎意料的问题。</p>
 <h1 id="How"><a href="#How" class="headerlink" title="How"></a>How</h1><p>最直观的还是来看代码，下面引用 If Is Evil 的 <a href="https://www.nginx.com/resources/wiki/start/topics/depth/ifisevil/#examples" target="_blank" rel="noopener">Example 部分</a>，用 30 秒即可浏览大部分 evil 场景。</p>
 <ol>
@@ -430,11 +432,16 @@
 </li>
 <li><p>alias 无法正确地被继承到由 if 创建的隐式嵌套 location 中</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> <span class="regexp">~* ^/if-and-alias/(?&lt;file&gt;.*)</span> &#123;</span><br><span class="line">    <span class="attribute">alias</span> /tmp/<span class="variable">$file</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$true</span>) &#123;</span><br><span class="line">        <span class="comment"># nothing</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h1 id="如何避免"><a href="#如何避免" class="headerlink" title="如何避免"></a>如何避免</h1><p>既然 if 如此之坑，最好的办法就是乖乖禁用 if，但拗不过诸位喜欢折腾的灵魂，特殊场景还是可以用的。下面列举最常见的避坑方案。</p>
-<h2 id="官方认可的两种用法"><a href="#官方认可的两种用法" class="headerlink" title="官方认可的两种用法"></a>官方认可的两种用法</h2><p>再怎么说，if 就是为 rewrite 服务的，如果有 bug 早被封杀了。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#The only 100% safe things which may be done inside if in a location context are:</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">return</span> ...;</span><br><span class="line"><span class="attribute">rewrite</span> ... <span class="literal">last</span>;</span><br></pre></td></tr></table></figure></p>
-<h2 id="proxy-pass-中及时-break"><a href="#proxy-pass-中及时-break" class="headerlink" title="proxy_pass 中及时 break"></a>proxy_pass 中及时 break</h2><p>当处理各种跳转逻辑时，假设你不期望因为多传了个等于 “hi” 的参数 parma2，就导致 <code>param1 ~ &quot;hello&quot;</code> 的跳转失败，那么应该在合适的地方增加 break。<br><figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /proxy-pass-uri &#123;</span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$arg_param1</span> <span class="regexp">~ "hello")</span> &#123;</span><br><span class="line">      <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/;</span><br><span class="line">      <span class="comment"># 这里的break将阻止下面if的执行</span></span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$arg_param2</span> <span class="regexp">~ "hi")</span> &#123;</span><br><span class="line">      <span class="comment"># anything</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8082/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="官方认可的两种用法"><a href="#官方认可的两种用法" class="headerlink" title="官方认可的两种用法"></a>官方认可的两种用法</h2><p>再怎么说，if 就是为 rewrite 服务的，如果有 bug 早被封杀了。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#The only 100% safe things which may be done inside if in a location context are:</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">return</span> ...;</span><br><span class="line"><span class="attribute">rewrite</span> ... <span class="literal">last</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="proxy-pass-中及时-break"><a href="#proxy-pass-中及时-break" class="headerlink" title="proxy_pass 中及时 break"></a>proxy_pass 中及时 break</h2><p>当处理各种跳转逻辑时，假设你不期望因为多传了个等于 “hi” 的参数 parma2，就导致 <code>param1 ~ &quot;hello&quot;</code> 的跳转失败，那么应该在合适的地方增加 break。</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /proxy-pass-uri &#123;</span><br><span class="line">    <span class="attribute">set</span> <span class="variable">$true</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$arg_param1</span> <span class="regexp">~ "hello")</span> &#123;</span><br><span class="line">      <span class="attribute">proxy_pass</span> http://127.0.0.1:8080/;</span><br><span class="line">      <span class="comment"># 这里的break将阻止下面if的执行</span></span><br><span class="line">      break;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">if</span> (<span class="variable">$arg_param2</span> <span class="regexp">~ "hi")</span> &#123;</span><br><span class="line">      <span class="comment"># anything</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">proxy_pass</span> http://127.0.0.1:8082/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <blockquote>
 <p>此外，也可以通过调整 if 的顺序来规避风险，但是容错率比 break 低了很多</p>
 </blockquote>
@@ -570,7 +577,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -581,9 +588,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -646,7 +651,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -721,7 +726,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

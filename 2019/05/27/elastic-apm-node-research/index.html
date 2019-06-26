@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Node.js,APM,Elastic-APM,V8," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Node.js,APM,Elastic-APM,V8,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -414,6 +414,7 @@
         <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>根据上一篇《<a href="https://claude-ray.github.io/2019/05/19/node-apm-product-research/">Node.js APM 产品调研</a>》的市场调研结果，笔者更青睐 Elastic APM 这个开源产品，故决定带来它的一篇专题介绍。</p>
 <p>尽管团队已经开始试用，但踩坑时间较短，与其编写测评，不如先带大家走进这个项目，剖析个别令人感兴趣的技术点。</p>
 <a id="more"></a>
+
 <h1 id="基础介绍"><a href="#基础介绍" class="headerlink" title="基础介绍"></a>基础介绍</h1><h2 id="项目背景"><a href="#项目背景" class="headerlink" title="项目背景"></a>项目背景</h2><p>从 github 的信息来看，项目从 2011 年 11 月开工，已经不算新项目，期间基本就是单人维护的状态，进展到现在颇为不易。</p>
 <p>两任作者分别是 Sentry 的核心成员 Matt Robenolt，以及 Elastic 团队的 Node.js 专职开发 Thomas Watson，同时他也是 Node.js 团队的核心贡献者之一。</p>
 <p>对 Elastic APM 完全没有接触过的读者，可以先阅读 nswbmw/node-in-debugging 中的<a href="https://github.com/nswbmw/node-in-debugging/blob/master/5.2%20Elastic%20APM.md" target="_blank" rel="noopener">介绍</a>。</p>
@@ -451,8 +452,10 @@
 <h1 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a>核心功能</h1><h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><p>通常错误日志包含了哪一行代码报错，但只有翻看代码才能确认究竟哪段代码出现问题。APM 提供了可以在看板界面直接确认异常代码的解决方案。</p>
 <p>核心代码如下，目的是为了在 Error 对象中通过 __error_callsites 属性获取到 callsites 信息。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> formatter = <span class="built_in">require</span>(<span class="string">'./lib/node-0.10-formatter'</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> orig = <span class="built_in">Error</span>.prepareStackTrace</span><br><span class="line"><span class="built_in">Error</span>.prepareStackTrace = <span class="function"><span class="keyword">function</span> (<span class="params">err, callsites</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(err, <span class="string">'__error_callsites'</span>, &#123;</span><br><span class="line">    enumerable: <span class="literal">false</span>,</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    writable: <span class="literal">false</span>,</span><br><span class="line">    value: callsites</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (orig || formatter)(err, callsites)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">err</span>) </span>&#123;</span><br><span class="line">  err.stack</span><br><span class="line">  <span class="keyword">return</span> err.__error_callsites</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>上面代码中只有一个不常见的方法 <code>Error.prepareStackTrace</code>，并且在 Node.js 的 API 中找不到，因为它实际是 V8 暴露的接口。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Error</span>.prepareStackTrace(error, structuredStackTrace)</span><br></pre></td></tr></table></figure>
+
 <p>这个接口常常被用来格式化错误信息，<code>structuredStackTrace</code> 包含了一组 CallSite 对象，CallSite 对象支持的方法有：getThis, getTypeName, getFunction, getFunctionName, getMethodName, getFileName, getLineNumber, getColumnNumber, getEvalOrigin, isToplevel, isEval, isNative, isConstructor, isAsync, isPromiseAll, getPromiseIndex</p>
 <p>因此借助 CallSite 可以拿到 Error 抛出的文件、行列位置。</p>
 <ul>
@@ -477,21 +480,30 @@
 </ul>
 <h2 id="Transaction"><a href="#Transaction" class="headerlink" title="Transaction"></a>Transaction</h2><p>Elastic APM 中的事务，类似于 opentracing 中的 Span，但把一个请求中所有的 Span 抽象为一个概念。</p>
 <p>Transaction 实现的基础是各种代码钩子。</p>
-<h3 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h3><p>通过 patch ，做一些信息采集，例如 Koa 框架的。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">koa, agent, &#123; version, enabled &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!enabled) <span class="keyword">return</span> koa</span><br><span class="line"></span><br><span class="line">  agent.setFramework(&#123; <span class="attr">name</span>: <span class="string">'koa'</span>, version, <span class="attr">overwrite</span>: <span class="literal">false</span> &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> koa</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="patch"><a href="#patch" class="headerlink" title="patch"></a>patch</h3><p>通过 patch ，做一些信息采集，例如 Koa 框架的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">koa, agent, &#123; version, enabled &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!enabled) <span class="keyword">return</span> koa</span><br><span class="line"></span><br><span class="line">  agent.setFramework(&#123; <span class="attr">name</span>: <span class="string">'koa'</span>, version, <span class="attr">overwrite</span>: <span class="literal">false</span> &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> koa</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">shimmer.wrap(Router.prototype, <span class="string">'match'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">orig</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">_, method</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> matched = orig.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> method !== <span class="string">'string'</span>) &#123;</span><br><span class="line">      agent.logger.debug(<span class="string">'unexpected method type in koa-router prototype.match: %s'</span>, <span class="keyword">typeof</span> method)</span><br><span class="line">      <span class="keyword">return</span> matched</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(matched &amp;&amp; matched.pathAndMethod)) &#123;</span><br><span class="line">      <span class="keyword">const</span> layer = matched.pathAndMethod.find(<span class="function"><span class="keyword">function</span> (<span class="params">layer</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> layer &amp;&amp; layer.opts &amp;&amp; layer.opts.end === <span class="literal">true</span></span><br><span class="line">      &#125;)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">var</span> path = layer &amp;&amp; layer.path</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> path === <span class="string">'string'</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> name = method + <span class="string">' '</span> + path</span><br><span class="line">        agent._instrumentation.setDefaultTransactionName(name)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        agent.logger.debug(<span class="string">'unexpected path type in koa-router prototype.match: %s'</span>, <span class="keyword">typeof</span> path)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      agent.logger.debug(<span class="string">'unexpected match result in koa-router prototype.match: %s'</span>, <span class="keyword">typeof</span> matched)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> matched</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
 <p>上面的 patch 配合 <code>require-in-the-middle</code> 模块，完成了对各框架的包装。</p>
 <h3 id="async-hook"><a href="#async-hook" class="headerlink" title="async-hook"></a>async-hook</h3><p>利用 async-hook 实现记录整串请求，来看两个代码片段。</p>
 <p>首先是基于 async-hook 封装了 Instrumentation 的 <code>currentTransaction</code> 方法，使异步操作中随时可以拿到当前 async scope id 下的 Transaction 实例。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> asyncHooks = <span class="built_in">require</span>(<span class="string">'async_hooks'</span>)</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">ins</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> asyncHook = asyncHooks.createHook(&#123; init, before, destroy &#125;)</span><br><span class="line">  <span class="keyword">const</span> contexts = <span class="keyword">new</span> <span class="built_in">WeakMap</span>()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> activeTransactions = <span class="keyword">new</span> <span class="built_in">Map</span>()</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(ins, <span class="string">'currentTransaction'</span>, &#123;</span><br><span class="line">    get () &#123;</span><br><span class="line">      <span class="keyword">const</span> asyncId = asyncHooks.executionAsyncId()</span><br><span class="line">      <span class="keyword">return</span> activeTransactions.get(asyncId) || <span class="literal">null</span></span><br><span class="line">    &#125;,</span><br><span class="line">    set (trans) &#123;</span><br><span class="line">      <span class="keyword">const</span> asyncId = asyncHooks.executionAsyncId()</span><br><span class="line">      <span class="keyword">if</span> (trans) &#123;</span><br><span class="line">        activeTransactions.set(asyncId, trans)</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        activeTransactions.delete(asyncId)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>下面是 currentTransaction 的一处应用</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">Instrumentation.prototype.bindFunction = <span class="function"><span class="keyword">function</span> (<span class="params">original</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> original !== <span class="string">'function'</span> || original.name === <span class="string">'elasticAPMCallbackWrapper'</span>) <span class="keyword">return</span> original</span><br><span class="line"></span><br><span class="line">  <span class="keyword">var</span> ins = <span class="keyword">this</span></span><br><span class="line">  <span class="keyword">var</span> trans = <span class="keyword">this</span>.currentTransaction</span><br><span class="line">  <span class="keyword">var</span> span = <span class="keyword">this</span>.currentSpan</span><br><span class="line">  <span class="keyword">if</span> (trans &amp;&amp; !trans.sampled) &#123;</span><br><span class="line">    <span class="keyword">return</span> original</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> elasticAPMCallbackWrapper</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">elasticAPMCallbackWrapper</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> prevTrans = ins.currentTransaction</span><br><span class="line">    ins.currentTransaction = trans</span><br><span class="line">    ins.bindingSpan = <span class="literal">null</span></span><br><span class="line">    ins.activeSpan = span</span><br><span class="line">    <span class="keyword">if</span> (trans) trans.sync = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">if</span> (span) span.sync = <span class="literal">false</span></span><br><span class="line">    <span class="keyword">var</span> result = original.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">    ins.currentTransaction = prevTrans</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>async hook 是 Node.js 8 以后出现的概念，为了兼容旧版本，Elastic APM 借助 <code>async-listener</code> 模块做了一些兼容，尽管 Elastic APM 官方不推荐使用低版本 Node.js 接入。</p>
 <p>虽然 async hook 更进一步可以帮助优化异步调用栈，改善异步 Error 信息的可读性，但 APM 很难从底层判断哪些异步 CallSite 是用户想保留的，所以没有做这种处理。</p>
 <h3 id="Span-Trace"><a href="#Span-Trace" class="headerlink" title="Span Trace"></a>Span Trace</h3><p>Span 用来记录 db 操作、http、websocket 远程调用等细致操作，Elastic APM 同时记录了调用栈。</p>
 <p>我们知道，console.trace() 方法可以用来定位 trace 信息，它实际使用了 V8 Error 暴露的另一个方法 <code>Error.captureStackTrace(error, constructorOpt)</code>。</p>
 <p><code>error</code> 是用来记录 trace 信息的必传对象，captureStackTrace 会将字符串附加到 error 对象的 stack 属性上。</p>
-<p><code>constructorOpt</code> 是用来隐藏底层调用栈的可选函数，用法如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyError</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Error</span>.captureStackTrace(<span class="keyword">this</span>, MyError);</span><br><span class="line">  <span class="comment">// Any other initialization goes here.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h4 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h4><p>上面提到的 V8 Error trace API，结合 TJ 的 <code>callsite</code> 更容易理解，功能是获取当前的 CallSite 集合。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> orig = <span class="built_in">Error</span>.prepareStackTrace;</span><br><span class="line">  <span class="built_in">Error</span>.prepareStackTrace = <span class="function"><span class="keyword">function</span>(<span class="params">_, stack</span>)</span>&#123; <span class="keyword">return</span> stack; &#125;;</span><br><span class="line">  <span class="keyword">var</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>;</span><br><span class="line">  <span class="built_in">Error</span>.captureStackTrace(err, <span class="built_in">arguments</span>.callee);</span><br><span class="line">  <span class="keyword">var</span> stack = err.stack;</span><br><span class="line">  <span class="built_in">Error</span>.prepareStackTrace = orig;</span><br><span class="line">  <span class="keyword">return</span> stack;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><code>constructorOpt</code> 是用来隐藏底层调用栈的可选函数，用法如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyError</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">Error</span>.captureStackTrace(<span class="keyword">this</span>, MyError);</span><br><span class="line">  <span class="comment">// Any other initialization goes here.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="小插曲"><a href="#小插曲" class="headerlink" title="小插曲"></a>小插曲</h4><p>上面提到的 V8 Error trace API，结合 TJ 的 <code>callsite</code> 更容易理解，功能是获取当前的 CallSite 集合。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="keyword">var</span> orig = <span class="built_in">Error</span>.prepareStackTrace;</span><br><span class="line">  <span class="built_in">Error</span>.prepareStackTrace = <span class="function"><span class="keyword">function</span>(<span class="params">_, stack</span>)</span>&#123; <span class="keyword">return</span> stack; &#125;;</span><br><span class="line">  <span class="keyword">var</span> err = <span class="keyword">new</span> <span class="built_in">Error</span>;</span><br><span class="line">  <span class="built_in">Error</span>.captureStackTrace(err, <span class="built_in">arguments</span>.callee);</span><br><span class="line">  <span class="keyword">var</span> stack = err.stack;</span><br><span class="line">  <span class="built_in">Error</span>.prepareStackTrace = orig;</span><br><span class="line">  <span class="keyword">return</span> stack;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>不得不说，和活跃的商业巨头产品相比，Elastic APM 目前的功能支持度存在不少差距。如果想在 APM 专业领域探索，绕不开对 New Relic 源码的学习。 XD</p>
 <p>但 Elastic APM Node.js 依然是目前最值得关注的开源探针式监控方案，其 agent 基础功能支持度较好，代码结构也很简单，希望能被更多人使用，帮助它更快成长~</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
@@ -617,7 +629,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -628,9 +640,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -693,7 +703,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -768,7 +778,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

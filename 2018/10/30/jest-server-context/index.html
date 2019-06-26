@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Node.js,Jest,Unit Testing," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Node.js,Jest,Unit Testing,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/10/30/jest-server-context/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/10/30/jest-server-context/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -429,14 +429,18 @@
 <p>详见issue <a href="https://github.com/facebook/jest/issues/6007" target="_blank" rel="noopener">https://github.com/facebook/jest/issues/6007</a></p>
 </blockquote>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/setup.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// 这个变量并不会传到test case中</span></span><br><span class="line">  global.setup = <span class="string">'setup'</span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <h2 id="globalTeardown-string"><a href="#globalTeardown-string" class="headerlink" title="globalTeardown [string]"></a>globalTeardown [string]</h2><blockquote>
 <p>This option allows the use of a custom global teardown module which exports an async function that is triggered once after all test suites. This function gets Jest’s globalConfig object as a parameter.</p>
 </blockquote>
 <p>同globalSetup，该异步函数只会在整个测试生命周期末执行一次。用途可以是运行环境重置，还原或drop数据库等。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/teardown.js</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">`这里和<span class="subst">$&#123;global.setup&#125;</span>运行环境一致`</span>);</span><br><span class="line">  <span class="keyword">return</span> process.exit(<span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="testEnvironment-string"><a href="#testEnvironment-string" class="headerlink" title="testEnvironment [string]"></a>testEnvironment [string]</h2><p>通常是指定运行环境，默认浏览器，nodejs需要指定为<code>node</code>。</p>
 <p>当然也可以指定为一个文件。该文件需要继承自<code>jest-environment-node</code>，并实现<code>setup</code>、<code>teardown</code>和<code>runScript</code>三个方法。</p>
-<p>以官文的demo举例<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/env.js</span></span><br><span class="line"><span class="keyword">const</span> NodeEnvironment = <span class="built_in">require</span>(<span class="string">'jest-environment-node'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomEnvironment</span> <span class="keyword">extends</span> <span class="title">NodeEnvironment</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(config) &#123;</span><br><span class="line">    <span class="keyword">super</span>(config);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> setup() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">super</span>.setup();</span><br><span class="line">    <span class="keyword">await</span> someSetupTasks();</span><br><span class="line">    <span class="keyword">this</span>.global.someGlobalObject = createGlobalObject();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> teardown() &#123;</span><br><span class="line">    <span class="keyword">this</span>.global.someGlobalObject = destroyGlobalObject();</span><br><span class="line">    <span class="keyword">await</span> someTeardownTasks();</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">super</span>.teardown();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  runScript(script) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.runScript(script);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CustomEnvironment;</span><br></pre></td></tr></table></figure></p>
+<p>以官文的demo举例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/env.js</span></span><br><span class="line"><span class="keyword">const</span> NodeEnvironment = <span class="built_in">require</span>(<span class="string">'jest-environment-node'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CustomEnvironment</span> <span class="keyword">extends</span> <span class="title">NodeEnvironment</span> </span>&#123;</span><br><span class="line">  <span class="keyword">constructor</span>(config) &#123;</span><br><span class="line">    <span class="keyword">super</span>(config);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> setup() &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">super</span>.setup();</span><br><span class="line">    <span class="keyword">await</span> someSetupTasks();</span><br><span class="line">    <span class="keyword">this</span>.global.someGlobalObject = createGlobalObject();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">async</span> teardown() &#123;</span><br><span class="line">    <span class="keyword">this</span>.global.someGlobalObject = destroyGlobalObject();</span><br><span class="line">    <span class="keyword">await</span> someTeardownTasks();</span><br><span class="line">    <span class="keyword">await</span> <span class="keyword">super</span>.teardown();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  runScript(script) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">super</span>.runScript(script);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = CustomEnvironment;</span><br></pre></td></tr></table></figure>
+
 <p>这里上下文环境支持通过<code>this.global</code>将变量共享到每个测试文件。</p>
 <p><code>jest-environment-node</code>方法说明：</p>
 <ul>
@@ -451,6 +455,7 @@
 <h2 id="setupTestFrameworkScriptFile-string"><a href="#setupTestFrameworkScriptFile-string" class="headerlink" title="setupTestFrameworkScriptFile [string]"></a>setupTestFrameworkScriptFile [string]</h2><p>同env的runScript。</p>
 <h1 id="Jest生命周期"><a href="#Jest生命周期" class="headerlink" title="Jest生命周期"></a>Jest生命周期</h1><p>了解jest常用的一些启动配置后，应该对加载顺序有了大概的认知。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">1.</span><br><span class="line">globaSetup -&gt;</span><br><span class="line"></span><br><span class="line">  2.</span><br><span class="line">  env.setup (every test suit) -&gt;</span><br><span class="line">  env.runScript (every test case) -&gt;</span><br><span class="line">  env.teardown (every test suit) -&gt;</span><br><span class="line"></span><br><span class="line">  3.</span><br><span class="line">  repeat...</span><br><span class="line"></span><br><span class="line">    n.</span><br><span class="line">    -&gt; globalTeardown</span><br></pre></td></tr></table></figure>
+
 <h1 id="Context共享"><a href="#Context共享" class="headerlink" title="Context共享"></a>Context共享</h1><h2 id="调整Server启动位置"><a href="#调整Server启动位置" class="headerlink" title="调整Server启动位置"></a>调整Server启动位置</h2><p>根据不同的测试场景，选择合适的server启动位置：</p>
 <ol>
 <li><p>仅接口层测试。对测试代码的加载流程要求最低，只需要保证测试用例执行前启动http服务即可。可以加在jest的任何一环。如无特殊处理，http服务启动一次就好，放在globalSetup为妙。</p>
@@ -462,7 +467,10 @@
 </ol>
 <p>针对第三种情况，我选择将测试入口限制为单个文件(test suit)，其他测试文件用<code>require()</code>引入。此时，jest的env.setup和setupGlobal效果一致，因为jest认为只是启动了单个测试文件。如下，index.test.js的<code>beforeAll</code>具备了所有测试用例的最高优先级，保证server启动早于测试执行，并实现测试用例和server共享上下文。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test/index.test.js</span></span><br><span class="line"></span><br><span class="line">beforeAll(<span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="comment">// launcher server</span></span><br><span class="line">  <span class="keyword">await</span> load();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="comment">// require all test files</span></span><br><span class="line"><span class="built_in">require</span>(<span class="string">'./file.test.js'</span>);</span><br></pre></td></tr></table></figure>
-<p>综上，总的package.json<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"demo"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"jest ./test/index"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"jest"</span>: &#123;</span><br><span class="line">    <span class="attr">"testEnvironment"</span>: <span class="string">"./test/env.js"</span>,</span><br><span class="line">    <span class="attr">"globalSetup"</span>: <span class="string">"./test/setup.js"</span>,</span><br><span class="line">    <span class="attr">"globalTeardown"</span>: <span class="string">"./test/teardown.js"</span>,</span><br><span class="line">    <span class="attr">"globals"</span>: &#123;</span><br><span class="line">      <span class="attr">"testBoolean"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+<p>综上，总的package.json</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"name"</span>: <span class="string">"demo"</span>,</span><br><span class="line">  <span class="attr">"version"</span>: <span class="string">"0.0.1"</span>,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"test"</span>: <span class="string">"jest ./test/index"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"jest"</span>: &#123;</span><br><span class="line">    <span class="attr">"testEnvironment"</span>: <span class="string">"./test/env.js"</span>,</span><br><span class="line">    <span class="attr">"globalSetup"</span>: <span class="string">"./test/setup.js"</span>,</span><br><span class="line">    <span class="attr">"globalTeardown"</span>: <span class="string">"./test/teardown.js"</span>,</span><br><span class="line">    <span class="attr">"globals"</span>: &#123;</span><br><span class="line">      <span class="attr">"testBoolean"</span>: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h2><p>参考egg的做法，统一将上下文放在app，并通过<code>egg-mock</code>来获取。</p>
 
       
@@ -585,7 +593,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -596,9 +604,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -661,7 +667,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -736,7 +742,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

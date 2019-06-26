@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Ubuntu,proxy," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Ubuntu,proxy,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/12/01/ss-local/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/12/01/ss-local/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -416,15 +416,27 @@
 
       
         <p>ss-local是<a href="https://github.com/shadowsocks/shadowsocks-libev" target="_blank" rel="noopener">shadowsocks-libev</a>提供的客户端工具，若想正常使用需先准备一台机器部署shadowsocks服务端以作为代理。</p>
-<h2 id="一、安装准备"><a href="#一、安装准备" class="headerlink" title="一、安装准备"></a>一、安装准备</h2><p>Ubuntu 16以上直接用apt安装，其他发行版可以查阅文档<a href="https://github.com/shadowsocks/shadowsocks-libev#installation" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks-libev#installation</a><br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install shadowsocks-libev</span><br></pre></td></tr></table></figure></p>
-<h2 id="二、编辑配置文件"><a href="#二、编辑配置文件" class="headerlink" title="二、编辑配置文件"></a>二、编辑配置文件</h2><h3 id="配置代理服地址"><a href="#配置代理服地址" class="headerlink" title="配置代理服地址"></a>配置代理服地址</h3><p>参考config.json修改local.json，填写代理服务器的地址。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/shadowsocks-libev/config.json /etc/shadowsocks-libev/local.json</span><br><span class="line">sudo vi /etc/shadowsocks-libev/local.json</span><br></pre></td></tr></table></figure></p>
-<p>建议<code>local_port</code>不要使用默认的1080，例如改为1081。主要是避免和ss-server（在安装后默认作为<code>shadowsocks-libev.service</code>启动）抢占端口，或者选择手动停掉ss-server。<br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"代理服地址"</span>,</span><br><span class="line">  <span class="attr">"server_port"</span>: <span class="string">"代理服端口"</span>,</span><br><span class="line">  <span class="attr">"local_port"</span>: <span class="number">1081</span>,</span><br><span class="line">  <span class="attr">"password"</span>: <span class="string">"代理服密码"</span>,</span><br><span class="line">  <span class="attr">"timeout"</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">"method"</span>: <span class="string">"chacha20-ietf-poly1305"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="一、安装准备"><a href="#一、安装准备" class="headerlink" title="一、安装准备"></a>一、安装准备</h2><p>Ubuntu 16以上直接用apt安装，其他发行版可以查阅文档<a href="https://github.com/shadowsocks/shadowsocks-libev#installation" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks-libev#installation</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install shadowsocks-libev</span><br></pre></td></tr></table></figure>
+
+<h2 id="二、编辑配置文件"><a href="#二、编辑配置文件" class="headerlink" title="二、编辑配置文件"></a>二、编辑配置文件</h2><h3 id="配置代理服地址"><a href="#配置代理服地址" class="headerlink" title="配置代理服地址"></a>配置代理服地址</h3><p>参考config.json修改local.json，填写代理服务器的地址。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/shadowsocks-libev/config.json /etc/shadowsocks-libev/local.json</span><br><span class="line">sudo vi /etc/shadowsocks-libev/local.json</span><br></pre></td></tr></table></figure>
+
+<p>建议<code>local_port</code>不要使用默认的1080，例如改为1081。主要是避免和ss-server（在安装后默认作为<code>shadowsocks-libev.service</code>启动）抢占端口，或者选择手动停掉ss-server。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"代理服地址"</span>,</span><br><span class="line">  <span class="attr">"server_port"</span>: <span class="string">"代理服端口"</span>,</span><br><span class="line">  <span class="attr">"local_port"</span>: <span class="number">1081</span>,</span><br><span class="line">  <span class="attr">"password"</span>: <span class="string">"代理服密码"</span>,</span><br><span class="line">  <span class="attr">"timeout"</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">"method"</span>: <span class="string">"chacha20-ietf-poly1305"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="配置systemd-service"><a href="#配置systemd-service" class="headerlink" title="配置systemd service"></a>配置systemd service</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /lib/systemd/system/shadowsocks-libev-local@.service</span><br></pre></td></tr></table></figure>
-<p>替换其中ExecStart的配置路径<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/ss-local -c /etc/shadowsocks-libev/local.json</span><br></pre></td></tr></table></figure></p>
-<h2 id="三、启动服务"><a href="#三、启动服务" class="headerlink" title="三、启动服务"></a>三、启动服务</h2><p>使用systemctl或service管理服务<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动</span></span><br><span class="line">sudo systemctl start shadowsocks-libev-local@.</span><br><span class="line"><span class="comment">#或 $ sudo service shadowsocks-libev-local@.service start</span></span><br><span class="line"><span class="comment">#查看运行情况</span></span><br><span class="line">sudo systemctl status shadowsocks-libev-local@.</span><br><span class="line"><span class="comment">#配置开机自启</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> shadowsocks-libev-local@.</span><br></pre></td></tr></table></figure></p>
+
+<p>替换其中ExecStart的配置路径</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/ss-local -c /etc/shadowsocks-libev/local.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="三、启动服务"><a href="#三、启动服务" class="headerlink" title="三、启动服务"></a>三、启动服务</h2><p>使用systemctl或service管理服务</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动</span></span><br><span class="line">sudo systemctl start shadowsocks-libev-local@.</span><br><span class="line"><span class="comment">#或 $ sudo service shadowsocks-libev-local@.service start</span></span><br><span class="line"><span class="comment">#查看运行情况</span></span><br><span class="line">sudo systemctl status shadowsocks-libev-local@.</span><br><span class="line"><span class="comment">#配置开机自启</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> shadowsocks-libev-local@.</span><br></pre></td></tr></table></figure>
+
 <h2 id="四、配置PAC文件"><a href="#四、配置PAC文件" class="headerlink" title="四、配置PAC文件"></a>四、配置PAC文件</h2><p>PAC的语法是js，规则非常简单。核心点是实现<code>FindProxyForURL</code>函数，判断当前域名是否使用代理，不需要代理的域名直接返回<code>DIRECT</code>。</p>
 <p>因此内容自己实现就可以，但不支持es6及以上特定，这里参考<a href="https://github.com/JinnLynn/genpac" target="_blank" rel="noopener">genpac</a>加上endsWith的polyfill。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 端口号按之前配置local.json的local_port来填写，默认1080</span></span><br><span class="line"><span class="keyword">var</span> proxy = <span class="string">'SOCKS5 127.0.0.1:1081'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 走代理的host</span></span><br><span class="line"><span class="keyword">var</span> hosts = [</span><br><span class="line">  <span class="string">'evernote.com'</span></span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">FindProxyForURL</span>(<span class="params">url, host</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; hosts.length; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (host.endsWith(hosts[i])) <span class="keyword">return</span> proxy;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'DIRECT'</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * REF:</span></span><br><span class="line"><span class="comment"> * genpac 2.1.0</span></span><br><span class="line"><span class="comment"> * https://github.com/JinnLynn/genpac</span></span><br><span class="line"><span class="comment"> * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/endsWith</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">if</span> (!<span class="built_in">String</span>.prototype.endsWith) &#123;</span><br><span class="line">  <span class="built_in">String</span>.prototype.endsWith = <span class="function"><span class="keyword">function</span>(<span class="params">searchString, position</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> subjectString = <span class="keyword">this</span>.toString();</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> position !== <span class="string">'number'</span> || !<span class="built_in">isFinite</span>(position) || <span class="built_in">Math</span>.floor(position) !== position || position &gt; subjectString.length) &#123;</span><br><span class="line">        position = subjectString.length;</span><br><span class="line">    &#125;</span><br><span class="line">    position -= searchString.length;</span><br><span class="line">    <span class="keyword">var</span> lastIndex = subjectString.indexOf(searchString, position);</span><br><span class="line">    <span class="keyword">return</span> lastIndex !== <span class="number">-1</span> &amp;&amp; lastIndex === position;</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="五、配置系统代理"><a href="#五、配置系统代理" class="headerlink" title="五、配置系统代理"></a>五、配置系统代理</h2><p>这一步可以通过export来设置，但没找到automatic的配置方法，干脆用系统自带的proxy来处理。按如下步骤一路点，最后填上PAC文件的路径。</p>
 <p>Network -&gt; Network proxy -&gt; Automatic -&gt; Configuration URL -&gt; <code>/etc/proxy/my.pac</code></p>
 <h3 id="浏览器插件"><a href="#浏览器插件" class="headerlink" title="浏览器插件"></a>浏览器插件</h3><blockquote>
@@ -554,7 +566,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -565,9 +577,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -630,7 +640,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -705,7 +715,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

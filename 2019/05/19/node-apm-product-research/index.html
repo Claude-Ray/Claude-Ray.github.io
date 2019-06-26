@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Node.js,APM," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Node.js,APM,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -136,7 +136,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2019/05/19/node-apm-product-research/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2019/05/19/node-apm-product-research/">
 
 
 
@@ -179,7 +179,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -209,7 +209,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -219,7 +219,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -229,7 +229,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -239,7 +239,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -249,7 +249,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -288,7 +288,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -324,7 +324,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,641
+                  3,652
                 </span>
               
 
@@ -540,168 +540,7 @@
 <p>分布式全链路追踪，不是只在 Node 一端接入就有效果的，必然要结合运维和后端技术栈，选择使用 Zipkin 等更流行的 opentracing 开源方案。</p>
 <p>如果上面的观点你还算认可，那么我们选型上应该更关注 APM 服务对代码级监控的支持力度、侵入程度、社区活跃度和接入成本。</p>
 <h2 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h2><p>综上，APM 的选型参考如下</p>
-<table>
-<thead>
-<tr>
-<th>名称</th>
-<th>Express</th>
-<th>Koa</th>
-<th>性能</th>
-<th>代码级</th>
-<th>事务</th>
-<th>链路</th>
-<th>分布式</th>
-<th>侵入</th>
-<th>实现方式</th>
-<th>npm周下载量(+)</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>newrelic</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>低</td>
-<td>探针</td>
-<td>30.1k</td>
-</tr>
-<tr>
-<td>appdynamics</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>低</td>
-<td>探针</td>
-<td>9.5k</td>
-</tr>
-<tr>
-<td>dynatrace</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>低</td>
-<td>探针</td>
-<td>0.1k</td>
-</tr>
-<tr>
-<td>atatus</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>×</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>低</td>
-<td>探针</td>
-<td>0.6k</td>
-</tr>
-<tr>
-<td>tingyun</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>低</td>
-<td>探针</td>
-<td>0.3k</td>
-</tr>
-<tr>
-<td>one apm</td>
-<td>✓</td>
-<td>×</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>低</td>
-<td>探针</td>
-<td>0.1k</td>
-</tr>
-<tr>
-<td>alinode</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>无</td>
-<td>run time</td>
-<td>-</td>
-</tr>
-<tr>
-<td>easy monitor</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>×</td>
-<td>×</td>
-<td>×</td>
-<td>✓</td>
-<td>低</td>
-<td>探针</td>
-<td>0.1k</td>
-</tr>
-<tr>
-<td>pandora</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>×</td>
-<td>✓</td>
-<td>✓</td>
-<td>×</td>
-<td>极低</td>
-<td>进程启动器</td>
-<td>0.2k</td>
-</tr>
-<tr>
-<td>Prometheus</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>×</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>低</td>
-<td>探针</td>
-<td>20.1k</td>
-</tr>
-<tr>
-<td>elastic apm</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>✓</td>
-<td>低</td>
-<td>探针</td>
-<td>24.6k</td>
-</tr>
-</tbody>
-</table>
+<p>|名称|Express|Koa|性能|代码级|事务|链路|分布式|侵入|实现方式|npm周下载量(+)|<br>|-|-|-|-|-|-|-|-|-|-|-|-|<br>|newrelic     |✓|✓|✓|✓|✓|✓|✓|低|探针|30.1k|<br>|appdynamics  |✓|✓|✓|✓|✓|✓|✓|低|探针|9.5k|<br>|dynatrace    |✓|✓|✓|✓|✓|✓|✓|低|探针|0.1k|<br>|atatus       |✓|✓|✓|×|✓|✓|✓|低|探针|0.6k|<br>|tingyun      |✓|✓|✓|✓|✓|✓|✓|低|探针|0.3k|<br>|one apm      |✓|×|✓|✓|✓|✓|✓|低|探针|0.1k|<br>|alinode      |✓|✓|✓|✓|✓|✓|✓|无|run time|-|<br>|easy monitor |✓|✓|✓|×|×|×|✓|低|探针|0.1k|<br>|pandora      |✓|✓|✓|×|✓|✓|×|极低|进程启动器|0.2k|<br>|Prometheus   |✓|✓|✓|×|✓|✓|✓|低|探针|20.1k|<br>|elastic apm  |✓|✓|✓|✓|✓|✓|✓|低|探针|24.6k|</p>
 <h2 id="自研"><a href="#自研" class="headerlink" title="自研"></a>自研</h2><p>普遍场景下，在日志层面做好业务监控即可，参考下面的流程，只要不涉及 Stack、SQL 等代码级监控，就能以较低开发成本、低侵入式地实现核心业务监控。</p>
 <ol>
 <li>基于 Node.js 自带的 API 完成探针，并在关键业务做好相关埋点，将数据(日志)打点到 Kafka。</li>
@@ -835,7 +674,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -846,9 +685,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -911,7 +748,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -986,7 +823,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

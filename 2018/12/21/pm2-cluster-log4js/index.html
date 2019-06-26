@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Node.js,log4js,pm2,pm2-intercom," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Node.js,pm2,log4js,pm2-intercom,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -96,7 +96,7 @@
 
 
 <meta name="description" content="log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。 log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。 官方提供的方案是安装 pm2-intercom，并在代码配置">
-<meta name="keywords" content="Node.js,log4js,pm2,pm2-intercom">
+<meta name="keywords" content="Node.js,pm2,log4js,pm2-intercom">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PM2 cluster + log4js？并不理想的组合">
 <meta property="og:url" content="https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/index.html">
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -413,8 +413,12 @@
       
         <h1 id="log4js-和-cluster"><a href="#log4js-和-cluster" class="headerlink" title="log4js 和 cluster"></a>log4js 和 cluster</h1><h2 id="写策略"><a href="#写策略" class="headerlink" title="写策略"></a>写策略</h2><p>node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。</p>
 <p>log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。</p>
-<p>官方提供的方案是安装 <code>pm2-intercom</code>，并在代码配置 log4js 时打开 <code>pm2: true</code> 选项，其原理也是选出一个负责写文件的主进程。<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 install pm2-intercom</span><br></pre></td></tr></table></figure></p>
-<h2 id="选举-master"><a href="#选举-master" class="headerlink" title="选举 master"></a>选举 master</h2><p>log4js 选择主进程的<a href="https://github.com/log4js-node/log4js-node/blob/master/lib/clustering.js#L13" target="_blank" rel="noopener">策略</a>：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isPM2Master = <span class="function"><span class="params">()</span> =&gt;</span> pm2 &amp;&amp; process.env[pm2InstanceVar] === <span class="string">'0'</span>;</span><br><span class="line"><span class="keyword">const</span> isMaster = <span class="function"><span class="params">()</span> =&gt;</span> disabled || cluster.isMaster || isPM2Master();</span><br></pre></td></tr></table></figure></p>
+<p>官方提供的方案是安装 <code>pm2-intercom</code>，并在代码配置 log4js 时打开 <code>pm2: true</code> 选项，其原理也是选出一个负责写文件的主进程。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 install pm2-intercom</span><br></pre></td></tr></table></figure>
+
+<h2 id="选举-master"><a href="#选举-master" class="headerlink" title="选举 master"></a>选举 master</h2><p>log4js 选择主进程的<a href="https://github.com/log4js-node/log4js-node/blob/master/lib/clustering.js#L13" target="_blank" rel="noopener">策略</a>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isPM2Master = <span class="function"><span class="params">()</span> =&gt;</span> pm2 &amp;&amp; process.env[pm2InstanceVar] === <span class="string">'0'</span>;</span><br><span class="line"><span class="keyword">const</span> isMaster = <span class="function"><span class="params">()</span> =&gt;</span> disabled || cluster.isMaster || isPM2Master();</span><br></pre></td></tr></table></figure>
+
 <p>其中 disabled 是 log4js 的 disableClustering 选项，设置为 true 后，所有进程都将作为 master 进而拥有写文件的权限，这并没有解决安全问题。它存在的价值后面再说。</p>
 <p>每个 pm2 启动的进程都有唯一的 process.env.NODE_APP_INSTANCE 标识，<code>process.env.NODE_APP_INSTANCE === &#39;0&#39;</code> 是常见的选择主从方式。多进程同时记录日志时，也可以用此方式指定唯一的进程负责写文件，避免同时写文件造成的冲突。此外 pm2 支持通过重命名 <code>instance_var</code> 来改变 process.env 的标记名，目的是解决和 <code>node-config</code> 包共用导致的异常。</p>
 <blockquote>
@@ -429,7 +433,9 @@
 <h2 id="option-disableClustering-不是银弹"><a href="#option-disableClustering-不是银弹" class="headerlink" title="option.disableClustering 不是银弹"></a>option.disableClustering 不是银弹</h2><p>上面再次提到 <code>disableClustering</code> 选项，不错，pm2-intercom 异常的场景可以拿它救场，但要注意它本身不适用于直接写文件，每个进程都被赋予了 master 权限，会再次引发开篇的冲突问题。官方文档也明确警示：<code>Be careful if you’re logging to files</code>。</p>
 <h1 id="pm2-intercom-粗解"><a href="#pm2-intercom-粗解" class="headerlink" title="pm2-intercom 粗解"></a>pm2-intercom 粗解</h1><p>这个模块是简易的 IPC，借助 <code>process.send</code> 方法，将多个进程的数据包统一发送至 pm2 中编号为 0 的 pm2-intercom 进程，此进程再将收到的消息推送至项目进程中的一个。</p>
 <p>在log4js的使用场景，表现为各自进程的日志首先发送到 pm2-intercom，由 pm2-intercom 分发到全部进程，但只有 log4js isMaster 才会写文件。</p>
-<p>分发代码如下<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">packet</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">async</span>.forEachLimit(process_list, <span class="number">3</span>, <span class="function"><span class="keyword">function</span>(<span class="params">proc, next</span>) </span>&#123;</span><br><span class="line">    sendDataToProcessId(proc.pm_id, packet);</span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="built_in">console</span>.error(err);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>分发代码如下</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span>(<span class="params">packet</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">async</span>.forEachLimit(process_list, <span class="number">3</span>, <span class="function"><span class="keyword">function</span>(<span class="params">proc, next</span>) </span>&#123;</span><br><span class="line">    sendDataToProcessId(proc.pm_id, packet);</span><br><span class="line">  &#125;, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (err) <span class="built_in">console</span>.error(err);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>如果想在多进程模式下记录日志到同一个文件，log4js + PM2 显然不是完美的组合。winston 也有人反馈丢日志的<a href="https://github.com/winstonjs/winston/issues/1466" target="_blank" rel="noopener">问题</a>，但没有得到官方回复前，仍需要验证。</p>
 <p>如果想安全记录日志，还是得分多个文件，或脱离 pm2，像 egg 一样在框架层面自行 cluster。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ul>
@@ -488,9 +494,9 @@
           
             <a href="/tags/Node-js/" rel="tag"> <i class="fa fa-tag"></i> Node.js</a>
           
-            <a href="/tags/log4js/" rel="tag"> <i class="fa fa-tag"></i> log4js</a>
-          
             <a href="/tags/pm2/" rel="tag"> <i class="fa fa-tag"></i> pm2</a>
+          
+            <a href="/tags/log4js/" rel="tag"> <i class="fa fa-tag"></i> log4js</a>
           
             <a href="/tags/pm2-intercom/" rel="tag"> <i class="fa fa-tag"></i> pm2-intercom</a>
           
@@ -565,7 +571,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -576,9 +582,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -641,7 +645,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -716,7 +720,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

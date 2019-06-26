@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Node.js," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Node.js,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/01/27/使用chokidar监视文件更新/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -415,12 +415,18 @@
       
 
       
-        <h2 id="监视文件"><a href="#监视文件" class="headerlink" title="监视文件"></a>监视文件</h2><p>使用<code>chokidar</code>，可以监视指定路径下目录、文件的变动。由于我只关注更改，因此监视<code>change</code>事件即可。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs   = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> chokidar = <span class="built_in">require</span>(<span class="string">'chokidar'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = watchChange;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 监听目录或文件变动</span></span><br><span class="line"><span class="comment"> * @param &#123;string|array&#125; paths    目录或文件路径</span></span><br><span class="line"><span class="comment"> * @param &#123;function&#125;     onChange 回调函数</span></span><br><span class="line"><span class="comment"> * @return &#123;Promise.&lt;*&gt;&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchChange</span>(<span class="params">paths, onChange</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onChange !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`onChange (<span class="subst">$&#123;onChange&#125;</span>) is not a function`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(paths)) paths = [paths];</span><br><span class="line"></span><br><span class="line">  paths.forEach(<span class="function"><span class="params">path</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!(path &amp;&amp; fs.existsSync(path))) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`can't find path <span class="subst">$&#123;path&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  chokidar.watch(paths)</span><br><span class="line">    <span class="comment">// .on('add', filepath =&gt; &#123;console.log('you can watch more events by chains')&#125;)</span></span><br><span class="line">    .on(<span class="string">'change'</span>, filepath =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> filename = path.basename(filepath);</span><br><span class="line">      onChange(filename);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+        <h2 id="监视文件"><a href="#监视文件" class="headerlink" title="监视文件"></a>监视文件</h2><p>使用<code>chokidar</code>，可以监视指定路径下目录、文件的变动。由于我只关注更改，因此监视<code>change</code>事件即可。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> fs   = <span class="built_in">require</span>(<span class="string">'fs'</span>);</span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">'path'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> chokidar = <span class="built_in">require</span>(<span class="string">'chokidar'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = watchChange;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 监听目录或文件变动</span></span><br><span class="line"><span class="comment"> * @param &#123;string|array&#125; paths    目录或文件路径</span></span><br><span class="line"><span class="comment"> * @param &#123;function&#125;     onChange 回调函数</span></span><br><span class="line"><span class="comment"> * @return &#123;Promise.&lt;*&gt;&#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchChange</span>(<span class="params">paths, onChange</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> onChange !== <span class="string">'function'</span>) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`onChange (<span class="subst">$&#123;onChange&#125;</span>) is not a function`</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">Array</span>.isArray(paths)) paths = [paths];</span><br><span class="line"></span><br><span class="line">  paths.forEach(<span class="function"><span class="params">path</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!(path &amp;&amp; fs.existsSync(path))) <span class="keyword">throw</span> <span class="built_in">Error</span>(<span class="string">`can't find path <span class="subst">$&#123;path&#125;</span>`</span>);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  chokidar.watch(paths)</span><br><span class="line">    <span class="comment">// .on('add', filepath =&gt; &#123;console.log('you can watch more events by chains')&#125;)</span></span><br><span class="line">    .on(<span class="string">'change'</span>, filepath =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> filename = path.basename(filepath);</span><br><span class="line">      onChange(filename);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="更新缓存"><a href="#更新缓存" class="headerlink" title="更新缓存"></a>更新缓存</h2><p>为了避免每次取内容都读文件，使用了<code>lodash.memoize</code>缓存读取结果。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">readFile</span>(<span class="params">params</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getFile = _.memoize(readFile);</span><br></pre></td></tr></table></figure>
+
 <p>要更新这部分缓存，可以使用如下方法。用大文件测试了内存占用，没有泄露产生。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">getFile.cache.set(file, readFile(file));</span><br></pre></td></tr></table></figure>
-<p>完整部分，加上了try catch。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchTpl</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    watchFiles(<span class="string">'./test'</span>, file =&gt; &#123;</span><br><span class="line">      getFile.cache.set(file, readFile(file));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">watchTpl();</span><br></pre></td></tr></table></figure></p>
+
+<p>完整部分，加上了try catch。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">watchTpl</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    watchFiles(<span class="string">'./test'</span>, file =&gt; &#123;</span><br><span class="line">      getFile.cache.set(file, readFile(file));</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">watchTpl();</span><br></pre></td></tr></table></figure>
+
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>由于使用场景明确，代码实现较简单，没有考虑太多情况，也算不上热更新。但借这种思路，可以完成配置文件甚至功能模块的更新。</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p><a href="https://ngtmuzi.com/Node监视文件以实现热更新/" target="_blank" rel="noopener">Node监视文件以实现热更新</a><br><a href="http://fex.baidu.com/blog/2015/05/nodejs-hot-swapping/" target="_blank" rel="noopener">Node.js Web应用代码热更新的另类思路</a></p>
 
@@ -540,7 +546,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -551,9 +557,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -616,7 +620,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -691,7 +695,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

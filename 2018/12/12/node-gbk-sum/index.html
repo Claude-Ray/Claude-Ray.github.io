@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Node.js,String,GBK编码," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Node.js,String,GBK编码,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/12/12/node-gbk-sum/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/12/12/node-gbk-sum/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -419,19 +419,33 @@
 <p>引用：<a href="https://claude-ray.github.io/2018/02/26/request%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/#%E7%BC%96%E7%A0%81">request返回值中文乱码问题</a></p>
 </blockquote>
 <h2 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h2><p>这里直接用<code>iconv-lite</code>处理略显复杂，建议上<a href="https://github.com/node-modules/urlencode" target="_blank" rel="noopener">urlencode</a>。</p>
-<p>post请求时stringify整个body对象，用options.form提交。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(body, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
-<p>querystring则stringify后再拼到url中。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(qs, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
-<h2 id="接口返回值"><a href="#接口返回值" class="headerlink" title="接口返回值"></a>接口返回值</h2><p>以koa举例，返回值先使用<code>iconv-lite</code>转为gbk Buffer，随后设置响应头的content-type。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.body = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">ctx.type = <span class="string">'text/plain; charset=gbk'</span>;</span><br></pre></td></tr></table></figure></p>
-<h2 id="接口参数"><a href="#接口参数" class="headerlink" title="接口参数"></a>接口参数</h2><p>同样以koa举例，结合<code>koa-bodyparser</code>，一般http method的原始参数分布在ctx.request.rawBody和ctx.request.querystring中，使用<code>urlencode.parse</code>解析。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">urlencode.parse(ctx.request.rawBody, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br><span class="line">urlencode.parse(ctx.request.querystring, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>post请求时stringify整个body对象，用options.form提交。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(body, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>querystring则stringify后再拼到url中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(qs, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="接口返回值"><a href="#接口返回值" class="headerlink" title="接口返回值"></a>接口返回值</h2><p>以koa举例，返回值先使用<code>iconv-lite</code>转为gbk Buffer，随后设置响应头的content-type。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.body = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">ctx.type = <span class="string">'text/plain; charset=gbk'</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="接口参数"><a href="#接口参数" class="headerlink" title="接口参数"></a>接口参数</h2><p>同样以koa举例，结合<code>koa-bodyparser</code>，一般http method的原始参数分布在ctx.request.rawBody和ctx.request.querystring中，使用<code>urlencode.parse</code>解析。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">urlencode.parse(ctx.request.rawBody, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br><span class="line">urlencode.parse(ctx.request.querystring, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure>
+
 <p>特别地，当请求格式为multipart或json时需要结合具体情况具体分析。</p>
 <p>例如，使用<code>busboy</code>等multipart解析库会将请求body挂在<code>ctx.request.body</code>上，规范的请求方式是会对字符进行url encode的，这时可以按gbk编码对字段decode（由于不能直接url decode，实际处理方法为转hex后再经buffer解码）。</p>
 <p>如果请求参数是经过binary处理的，则binary decode。</p>
-<p>综上，处理姿势大致如下。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">lodash.mapValues(ctx.request.body, value =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (!value) <span class="keyword">return</span> value;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> buff = <span class="regexp">/^(%\w&#123;2&#125;)+$/</span>.test(value)</span><br><span class="line">    ? Buffer.from(value.replace(<span class="regexp">/%/g</span>, <span class="string">''</span>), <span class="string">'hex'</span>)</span><br><span class="line">    : Buffer.from(value, <span class="string">'binary'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> iconv.decode(buff, <span class="string">'gbk'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>综上，处理姿势大致如下。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">lodash.mapValues(ctx.request.body, value =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (!value) <span class="keyword">return</span> value;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> buff = <span class="regexp">/^(%\w&#123;2&#125;)+$/</span>.test(value)</span><br><span class="line">    ? Buffer.from(value.replace(<span class="regexp">/%/g</span>, <span class="string">''</span>), <span class="string">'hex'</span>)</span><br><span class="line">    : Buffer.from(value, <span class="string">'binary'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> iconv.decode(buff, <span class="string">'gbk'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
 <p>想兼容更多情况是比较复杂的，即使做基础服务也不必包容所有不规范的传值，大可以拒绝解析，因此按需调整即可。</p>
 <p>如果能约定使用十六进制传参更好，处理hex就不需要在参数获取上额外操作了。可惜一般用到gbk的场景都是难以变更的、需要兼容的，否则肯定是让调用方改传utf8，皆大欢喜。</p>
 <h2 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h2><p>默认方式（<code>encoding: null</code>）就是操作buffer，iconv转换无压力。</p>
-<p>读：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = fs.readFileSync(<span class="string">'test.txt'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(iconv.decode(buff, <span class="string">'gbk'</span>));</span><br></pre></td></tr></table></figure></p>
-<p>写：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">fs.writeFileSync(<span class="string">'test.txt'</span>, buff);</span><br></pre></td></tr></table></figure></p>
+<p>读：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = fs.readFileSync(<span class="string">'test.txt'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(iconv.decode(buff, <span class="string">'gbk'</span>));</span><br></pre></td></tr></table></figure>
+
+<p>写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">fs.writeFileSync(<span class="string">'test.txt'</span>, buff);</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -553,7 +567,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -564,9 +578,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -629,7 +641,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -704,7 +716,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

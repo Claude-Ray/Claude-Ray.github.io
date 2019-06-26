@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="JavaScript,Captcha,Canvas," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="JavaScript,Captcha,Canvas,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/09/02/node-image-captcha/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/09/02/node-image-captcha/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -422,14 +422,22 @@
 <p><code>opts.*</code>标注的是需要自行完善的属性或方法。图形验证码作为系统安全的一环，就不开放源码了，请谅解。</p>
 </blockquote>
 <h3 id="1-创建canvas-ctx"><a href="#1-创建canvas-ctx" class="headerlink" title="1. 创建canvas ctx"></a>1. 创建canvas ctx</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canvas = <span class="keyword">new</span> Canvas(opts.width, opts.height);</span><br><span class="line"><span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br></pre></td></tr></table></figure>
+
 <h3 id="2-透明度"><a href="#2-透明度" class="headerlink" title="2. 透明度"></a>2. 透明度</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.globalAlpha = opts.opacity;</span><br></pre></td></tr></table></figure>
+
 <h3 id="3-背景色填充"><a href="#3-背景色填充" class="headerlink" title="3. 背景色填充"></a>3. 背景色填充</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.fillStyle = opts.bgc;</span><br><span class="line">ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br></pre></td></tr></table></figure>
+
 <h3 id="4-写字"><a href="#4-写字" class="headerlink" title="4. 写字"></a>4. 写字</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; opts.length; i++) &#123;</span><br><span class="line">  <span class="comment">// 字体和随机字号</span></span><br><span class="line">  ctx.font = <span class="string">`<span class="subst">$&#123;opts.fontSize&#125;</span>px <span class="subst">$&#123;opts.font&#125;</span>`</span>;</span><br><span class="line">  <span class="comment">// 颜色</span></span><br><span class="line">  ctx.fillStyle = opts.randomColor();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 旋转角度，使用save/restore保存之前填充的状态</span></span><br><span class="line">  ctx.save();</span><br><span class="line">  ctx.rotate(opts.randomAngle());</span><br><span class="line">  <span class="comment">// 填充字体</span></span><br><span class="line">  ctx.fillText(opts.text[i], opts.wordSpaceX, opts.wordSpaceY);</span><br><span class="line">  ctx.restore();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="5-干扰线"><a href="#5-干扰线" class="headerlink" title="5. 干扰线"></a>5. 干扰线</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 干扰线宽度</span></span><br><span class="line">ctx.lineWidth = opts.lineWidth;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length - <span class="number">2</span>; i++) &#123;</span><br><span class="line">  ctx.strokeStyle = opts.randomColor();</span><br><span class="line">  <span class="comment">// 绘制路径起始点</span></span><br><span class="line">  ctx.beginPath();</span><br><span class="line">  <span class="comment">// 移动画笔</span></span><br><span class="line">  ctx.moveTo(opts.x1, opts.y1));</span><br><span class="line">  ctx.lineTo(opts.x2, opts.y2));</span><br><span class="line">  <span class="comment">// 画线</span></span><br><span class="line">  ctx.stroke();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="6-干扰点"><a href="#6-干扰点" class="headerlink" title="6. 干扰点"></a>6. 干扰点</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据密度计算个数</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; opts.pixelNum; i++) &#123;</span><br><span class="line">  ctx.fillStyle = opts.randomColor();</span><br><span class="line">  ctx.beginPath();</span><br><span class="line">  <span class="comment">// 用实心圆作为点</span></span><br><span class="line">  ctx.arc(opts.x, opts.y, opts.radius, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI);</span><br><span class="line">  ctx.fill();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>最后的图片产出分多种：<code>Buffer</code>，<code>DataUrl</code>和<code>Stream</code>，就从官方文档上看例子吧，注意1.x和2.x的版本差异。</p>
 <h2 id="应急方案"><a href="#应急方案" class="headerlink" title="应急方案"></a>应急方案</h2><h3 id="背景色"><a href="#背景色" class="headerlink" title="背景色"></a>背景色</h3><p>挑选一些对人眼友好的颜色，随机筛选几个拼接成渐变色背景，可以略微提高识别成本。但对于成熟的破解算法无意义，如果和字体颜色过接近，用户识别也会特别痛苦。</p>
-<p>举个简单的3段式，抛砖引玉。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gradient = ctx.createLinearGradient(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br><span class="line"></span><br><span class="line">gradient.addColorStop(<span class="number">0</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">0.5</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">1</span>, opts.randomBGC());</span><br><span class="line"></span><br><span class="line">ctx.fillStyle = gradient;</span><br><span class="line">ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br></pre></td></tr></table></figure></p>
+<p>举个简单的3段式，抛砖引玉。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gradient = ctx.createLinearGradient(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br><span class="line"></span><br><span class="line">gradient.addColorStop(<span class="number">0</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">0.5</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">1</span>, opts.randomBGC());</span><br><span class="line"></span><br><span class="line">ctx.fillStyle = gradient;</span><br><span class="line">ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br></pre></td></tr></table></figure>
+
 <h3 id="空心字体"><a href="#空心字体" class="headerlink" title="空心字体"></a>空心字体</h3><p>canvas原生支持的几个字体差别实在不大，有个技巧是绘制空心字体，在验证码被攻击时，可以加入支持应急，在攻击者没有准备的情况下，可以立刻起到拦截效果。</p>
 <p>用法很简单，将上面写字用到的<code>fillStyle</code>替换为<code>strokeStyle</code>，<code>fillText</code>替换为<code>strokeText</code>。</p>
 <h2 id="Lib选择"><a href="#Lib选择" class="headerlink" title="Lib选择"></a>Lib选择</h2><p>起初，使用<code>gm</code>和<code>GraphicsMagick</code>的组合，但经压测发现了严重的性能问题，在<a href="https://stackoverflow.com/questions/23795669/graphicsmagick-for-node-js-gm-module-performance" target="_blank" rel="noopener">StackOverFlow</a>上也看到了原因，于是决定更换绘图方案。</p>
@@ -574,7 +582,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -585,9 +593,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -650,7 +656,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -725,7 +731,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

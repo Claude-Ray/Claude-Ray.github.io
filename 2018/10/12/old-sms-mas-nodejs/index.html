@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Node.js,MySQL," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Node.js,MySQL,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/10/12/old-sms-mas-nodejs/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/10/12/old-sms-mas-nodejs/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -415,7 +415,9 @@
       
 
       
-        <h2 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h2><p>如果使用<code>old authentication</code>方式连接4.1版本之前的mysql，<code>sequelize</code>和<code>mysql2</code>无法通过认证：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123; Error: Access denied <span class="keyword">for</span> user: <span class="string">'@127.0.0.x'</span> (Using password: NO)</span><br><span class="line">    at Packet.asError (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packets/packet.js:714:13)</span><br><span class="line">    at ClientHandshake.Command.execute (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/commands/command.js:28:22)</span><br><span class="line">    at Connection.handlePacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:513:28)</span><br><span class="line">    at PacketParser.onPacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:81:16)</span><br><span class="line">    at PacketParser.executeStart (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packet_parser.js:76:14)</span><br><span class="line">    at Socket.&lt;anonymous&gt; (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:89:29)</span><br><span class="line">    at Socket.emit (events.js:182:13)</span><br><span class="line">    at addChunk (_stream_readable.js:283:12)</span><br><span class="line">    at readableAddChunk (_stream_readable.js:264:11)</span><br><span class="line">    at Socket.Readable.push (_stream_readable.js:219:10)</span><br><span class="line">    at TCP.onread (net.js:639:20)</span><br><span class="line">  code: <span class="string">'ER_ACCESS_DENIED_ERROR'</span>,</span><br><span class="line">  errno: 1045,</span><br><span class="line">  sqlState: <span class="string">''</span>,</span><br><span class="line">  sqlMessage:</span><br><span class="line">   <span class="string">'Access denied for user: \'</span>@127.0.0.x\<span class="string">' (Using password: NO)'</span> &#125;</span><br></pre></td></tr></table></figure></p>
+        <h2 id="数据库连接"><a href="#数据库连接" class="headerlink" title="数据库连接"></a>数据库连接</h2><p>如果使用<code>old authentication</code>方式连接4.1版本之前的mysql，<code>sequelize</code>和<code>mysql2</code>无法通过认证：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123; Error: Access denied <span class="keyword">for</span> user: <span class="string">'@127.0.0.x'</span> (Using password: NO)</span><br><span class="line">    at Packet.asError (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packets/packet.js:714:13)</span><br><span class="line">    at ClientHandshake.Command.execute (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/commands/command.js:28:22)</span><br><span class="line">    at Connection.handlePacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:513:28)</span><br><span class="line">    at PacketParser.onPacket (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:81:16)</span><br><span class="line">    at PacketParser.executeStart (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/packet_parser.js:76:14)</span><br><span class="line">    at Socket.&lt;anonymous&gt; (/home/claude/Workspace/packages/sql/node_modules/mysql2/lib/connection.js:89:29)</span><br><span class="line">    at Socket.emit (events.js:182:13)</span><br><span class="line">    at addChunk (_stream_readable.js:283:12)</span><br><span class="line">    at readableAddChunk (_stream_readable.js:264:11)</span><br><span class="line">    at Socket.Readable.push (_stream_readable.js:219:10)</span><br><span class="line">    at TCP.onread (net.js:639:20)</span><br><span class="line">  code: <span class="string">'ER_ACCESS_DENIED_ERROR'</span>,</span><br><span class="line">  errno: 1045,</span><br><span class="line">  sqlState: <span class="string">''</span>,</span><br><span class="line">  sqlMessage:</span><br><span class="line">   <span class="string">'Access denied for user: \'</span>@127.0.0.x\<span class="string">' (Using password: NO)'</span> &#125;</span><br></pre></td></tr></table></figure>
+
 <p>处理倒不困难，在不能改动数据库的情况下，可以改用npm包<code>mysql</code>。</p>
 <h2 id="编码转换"><a href="#编码转换" class="headerlink" title="编码转换"></a>编码转换</h2><p>移动mas的接入文档有描述如下：</p>
 <blockquote>
@@ -425,7 +427,9 @@
 <p>但如果想从数据库中读取，同事在创建连接时指定了<code>charset=latin1</code>获取到的中文是乱码。</p>
 <p>这涉及到mysql如何用<code>latin1</code>存储中文的问题：<code>latin1</code>为0x00 to 0xFF范围的单字节编码（<code>ASCII</code>是它的子集），理论上单字节范围可以无损存储数据，任意编码均可以用字节流形式存储。</p>
 <p>也就是说，mas机写入之前用的是gbk字节流，读取时直接用nodejs默认的utf8编码自然不行。那么怎样读出二进制数据呢？在npm <code>mysql</code>库的README中搜索<code>buffer</code>字样，找到了如下方法。</p>
-<p>mysqljs支持在query中自定义<a href="https://github.com/mysqljs/mysql#string" target="_blank" rel="noopener">typeCast</a>方法，可用于提取数据的步骤进行编码转换。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mysql = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</span><br><span class="line"><span class="keyword">const</span> connection = mysql.createConnection(&#123;</span><br><span class="line">  host     : <span class="string">'localhost'</span>,</span><br><span class="line">  user     : <span class="string">'me'</span>,</span><br><span class="line">  password : <span class="string">'secret'</span>,</span><br><span class="line">  database : <span class="string">'my_db'</span>,</span><br><span class="line">  charset  : <span class="string">'latin1'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.connect();</span><br><span class="line"></span><br><span class="line">connection.query(&#123;</span><br><span class="line">  sql: <span class="string">'SELECT * FROM tbl_user'</span>,</span><br><span class="line">  typeCast: <span class="function">(<span class="params">field, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// converting `tbl_user.name` to utf8 string:</span></span><br><span class="line">    <span class="keyword">if</span> (field.name === <span class="string">'username'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> iconv.decode(field.buffer(), <span class="string">'gbk'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, (error, results, fields) =&gt; &#123;</span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>mysqljs支持在query中自定义<a href="https://github.com/mysqljs/mysql#string" target="_blank" rel="noopener">typeCast</a>方法，可用于提取数据的步骤进行编码转换。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> mysql = <span class="built_in">require</span>(<span class="string">'mysql'</span>);</span><br><span class="line"><span class="keyword">const</span> iconv = <span class="built_in">require</span>(<span class="string">'iconv-lite'</span>);</span><br><span class="line"><span class="keyword">const</span> connection = mysql.createConnection(&#123;</span><br><span class="line">  host     : <span class="string">'localhost'</span>,</span><br><span class="line">  user     : <span class="string">'me'</span>,</span><br><span class="line">  password : <span class="string">'secret'</span>,</span><br><span class="line">  database : <span class="string">'my_db'</span>,</span><br><span class="line">  charset  : <span class="string">'latin1'</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">connection.connect();</span><br><span class="line"></span><br><span class="line">connection.query(&#123;</span><br><span class="line">  sql: <span class="string">'SELECT * FROM tbl_user'</span>,</span><br><span class="line">  typeCast: <span class="function">(<span class="params">field, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// converting `tbl_user.name` to utf8 string:</span></span><br><span class="line">    <span class="keyword">if</span> (field.name === <span class="string">'username'</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> iconv.decode(field.buffer(), <span class="string">'gbk'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;, (error, results, fields) =&gt; &#123;</span><br><span class="line">  <span class="comment">//</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
 <p>其中typeCast的参数field包含</p>
 <ul>
 <li>type 字段类型，<code>VARCHAR</code>等（<a href="https://github.com/mysqljs/mysql/blob/master/lib/protocol/packets/RowDataPacket.js#L41" target="_blank" rel="noopener">详情链接</a>）</li>
@@ -559,7 +563,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -570,9 +574,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -635,7 +637,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -710,7 +712,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

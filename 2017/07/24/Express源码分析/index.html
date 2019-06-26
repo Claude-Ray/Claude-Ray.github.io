@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Node.js,Express," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="Node.js,Express,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2017/07/24/Express源码分析/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2017/07/24/Express源码分析/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -423,18 +423,24 @@
 <h3 id="2-应用创建-express-js"><a href="#2-应用创建-express-js" class="headerlink" title="2 应用创建 express.js"></a>2 应用创建 <code>express.js</code></h3><ol>
 <li><p>从入口程序进入这里，第一句就是</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">exports = module.exports = createApplication;</span><br></pre></td></tr></table></figure>
+
 <p>对这个写法进行总结：</p>
 <ul>
 <li>API文档中有详细解释， <code>exports</code> 就是一个shortcut。所有供外部调用的方法或变量均需挂载在exports变量上，<br>当需要将一个文件当做一个类导出时，就需要通过 <code>module.exports</code> 而不是 <code>exports</code>。</li>
-<li>进一步讲讲， <code>exports</code> 是 <code>module.exports</code> 的引用，他们的初值都是空对象 <code>{}</code>。<br>require加载模块时使用的是 <code>module.exports</code> 而不是 <code>exports</code>。<br>搞不清楚关系的一直使用<code>module.exports</code>也没问题。</li>
+<li>进一步讲讲， <code>exports</code> 是 <code>module.exports</code> 的引用，他们的初值都是空对象 <code>{}</code>。
+require加载模块时使用的是 <code>module.exports</code> 而不是 <code>exports</code>。
+搞不清楚关系的一直使用<code>module.exports</code>也没问题。</li>
 <li>module.exports 指向新的对象时，exports 断开了与 module.exports 的引用。<br>而API上的说法不然， <code>When the module.exports property is being completely replaced by a new object, it is common to also reassign exports</code> 。<br>起初我从直观上理解，认为两者说辞是相反的，且经过验证，exports 确实会断开引用。因此是对API说明的理解有偏差。</li>
 </ul>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 上面写法等价于</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// module.exports 指向新的对象时，exports 断开了与 module.exports 的引用</span></span><br><span class="line"><span class="built_in">module</span>.exports = createApplication;</span><br><span class="line"><span class="comment">// 若还想使用exports添加属性，让 exports 重新指向 module.exports 即可</span></span><br><span class="line">exports = <span class="built_in">module</span>.exports;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p><code>express.js</code> 返回一个 app 作为 <code>createApplication</code> 的回调函数每个http请求都可以触发执行 <code>app.handle</code> 来执行中间件。<br><code>app.handle</code> 调用了router组件的 <code>handle(req, res, out)</code> 函数链式执行中间件。<br>通过 <a href="#merge-descriptors"><code>merge-descriptors</code></a> 中间件将 <code>application</code> 和 <code>events.EventEmitter</code> 合并(类似于继承)到 app 中。<br>而 <code>app.request</code> 和 <code>app.response</code> 通过 <code>Object.create</code> 方式继承request和response得到。完成以上操作后，调用 <code>application.init()</code> 进行初始化。</p>
 </li>
-<li>通过 <code>exports</code> 暴露出 express 内主要的构造器、原型。</li>
-<li>末尾处遍历的数组内是已经移除的 <code>Express 3.x</code> 内置模块，当使用者不知情而直接使用时，提醒他们需要额外安装，提供了更友好的报错信息。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  <span class="string">'json'</span>,</span><br><span class="line">  <span class="string">'urlencoded'</span>,</span><br><span class="line">  <span class="string">'bodyParser'</span>,</span><br><span class="line">  <span class="string">'compress'</span>,</span><br><span class="line">  <span class="string">'cookieSession'</span>,</span><br><span class="line">  <span class="string">'session'</span>,</span><br><span class="line">  <span class="string">'logger'</span>,</span><br><span class="line">  <span class="string">'cookieParser'</span>,</span><br><span class="line">  <span class="string">'favicon'</span>,</span><br><span class="line">  <span class="string">'responseTime'</span>,</span><br><span class="line">  <span class="string">'errorHandler'</span>,</span><br><span class="line">  <span class="string">'timeout'</span>,</span><br><span class="line">  <span class="string">'methodOverride'</span>,</span><br><span class="line">  <span class="string">'vhost'</span>,</span><br><span class="line">  <span class="string">'csrf'</span>,</span><br><span class="line">  <span class="string">'directory'</span>,</span><br><span class="line">  <span class="string">'limit'</span>,</span><br><span class="line">  <span class="string">'multipart'</span>,</span><br><span class="line">  <span class="string">'staticCache'</span>,</span><br><span class="line">].forEach(<span class="function">(<span class="params">name</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(exports, name, &#123;</span><br><span class="line">    get         : <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Most middleware (like '</span> + name + <span class="string">') is no longer bundled with Express and must be installed separately. Please see https://github.com/senchalabs/connect#middleware.'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<li><p>通过 <code>exports</code> 暴露出 express 内主要的构造器、原型。</p>
+</li>
+<li><p>末尾处遍历的数组内是已经移除的 <code>Express 3.x</code> 内置模块，当使用者不知情而直接使用时，提醒他们需要额外安装，提供了更友好的报错信息。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  <span class="string">'json'</span>,</span><br><span class="line">  <span class="string">'urlencoded'</span>,</span><br><span class="line">  <span class="string">'bodyParser'</span>,</span><br><span class="line">  <span class="string">'compress'</span>,</span><br><span class="line">  <span class="string">'cookieSession'</span>,</span><br><span class="line">  <span class="string">'session'</span>,</span><br><span class="line">  <span class="string">'logger'</span>,</span><br><span class="line">  <span class="string">'cookieParser'</span>,</span><br><span class="line">  <span class="string">'favicon'</span>,</span><br><span class="line">  <span class="string">'responseTime'</span>,</span><br><span class="line">  <span class="string">'errorHandler'</span>,</span><br><span class="line">  <span class="string">'timeout'</span>,</span><br><span class="line">  <span class="string">'methodOverride'</span>,</span><br><span class="line">  <span class="string">'vhost'</span>,</span><br><span class="line">  <span class="string">'csrf'</span>,</span><br><span class="line">  <span class="string">'directory'</span>,</span><br><span class="line">  <span class="string">'limit'</span>,</span><br><span class="line">  <span class="string">'multipart'</span>,</span><br><span class="line">  <span class="string">'staticCache'</span>,</span><br><span class="line">].forEach(<span class="function">(<span class="params">name</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(exports, name, &#123;</span><br><span class="line">    get         : <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Most middleware (like '</span> + name + <span class="string">') is no longer bundled with Express and must be installed separately. Please see https://github.com/senchalabs/connect#middleware.'</span>);</span><br><span class="line">    &#125;,</span><br><span class="line">    configurable: <span class="literal">true</span></span><br><span class="line">  &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h3 id="3-应用-application-js"><a href="#3-应用-application-js" class="headerlink" title="3 应用 application.js"></a>3 应用 <code>application.js</code></h3><h4 id="初始化-app-defaultConfiguration"><a href="#初始化-app-defaultConfiguration" class="headerlink" title="初始化 app.defaultConfiguration"></a>初始化 <code>app.defaultConfiguration</code></h4><ol>
@@ -446,10 +452,12 @@
 <p>在这里单步执行，可以直观查看所有默认默认信息。</p>
 </blockquote>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * initialize application configuration.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">app.defaultConfiguration = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 初始化app的默认配置</span></span><br><span class="line">  <span class="keyword">let</span> env = process.env.NODE_ENV || <span class="string">'development'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// default settings</span></span><br><span class="line">  <span class="keyword">this</span>.enable(<span class="string">'x-powered-by'</span>);</span><br><span class="line">  <span class="keyword">this</span>.set(<span class="string">'etag'</span>, <span class="string">'weak'</span>);</span><br><span class="line">  <span class="keyword">this</span>.set(<span class="string">'env'</span>, env);</span><br><span class="line">  <span class="keyword">this</span>.set(<span class="string">'query parser'</span>, <span class="string">'extended'</span>);</span><br><span class="line">  <span class="keyword">this</span>.set(<span class="string">'subdomain offset'</span>, <span class="number">2</span>);</span><br><span class="line">  <span class="keyword">this</span>.set(<span class="string">'trust proxy'</span>, <span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(<span class="keyword">this</span>.settings, trustProxyDefaultSymbol, &#123;</span><br><span class="line">    configurable: <span class="literal">true</span>,</span><br><span class="line">    value       : <span class="literal">true</span></span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  debug(<span class="string">'booting in %s mode'</span>, env);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 监听 mount 事件：当向express添加中间件时就会触发</span></span><br><span class="line">  <span class="keyword">this</span>.on(<span class="string">'mount'</span>, <span class="function"><span class="keyword">function</span> <span class="title">onmount</span>(<span class="params">parent</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// inherit trust proxy</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.settings[trustProxyDefaultSymbol] === <span class="literal">true</span></span><br><span class="line">      &amp;&amp; <span class="keyword">typeof</span> parent.settings[<span class="string">'trust proxy fn'</span>] === <span class="string">'function'</span>) &#123;</span><br><span class="line">      <span class="keyword">delete</span> <span class="keyword">this</span>.settings[<span class="string">'trust proxy'</span>];</span><br><span class="line">      <span class="keyword">delete</span> <span class="keyword">this</span>.settings[<span class="string">'trust proxy fn'</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// inherit protos</span></span><br><span class="line">    <span class="comment">// 将每个中间件的request, response, engine, settings对象的__proto__形成原型链</span></span><br><span class="line">    <span class="comment">// 最顶层的request, response对象是Node原生的request和response对象，在createApplication中定义</span></span><br><span class="line">    <span class="comment">// 源码是: setPrototypeOf(this.request, parent.request); ...</span></span><br><span class="line">    <span class="comment">// 等价于</span></span><br><span class="line">    <span class="keyword">this</span>.request.__proto__ = parent.request.__proto__;</span><br><span class="line">    <span class="keyword">this</span>.response.__proto__ = parent.response.__proto__;</span><br><span class="line">    <span class="keyword">this</span>.engine.__proto__ = parent.engine.__proto__;</span><br><span class="line">    <span class="keyword">this</span>.settings.__proto__ = parent.settings.__proto__;</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// setup locals</span></span><br><span class="line">  <span class="keyword">this</span>.locals = <span class="built_in">Object</span>.create(<span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// top-most app is mounted at /</span></span><br><span class="line">  <span class="keyword">this</span>.mountpath = <span class="string">'/'</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// default locals</span></span><br><span class="line">  <span class="keyword">this</span>.locals.settings = <span class="keyword">this</span>.settings;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//default configuration</span></span><br><span class="line">  <span class="keyword">this</span>.set(<span class="string">'view'</span>, View);</span><br><span class="line">  <span class="keyword">this</span>.set(<span class="string">'views'</span>, resolve(<span class="string">'views'</span>));</span><br><span class="line">  <span class="keyword">this</span>.set(<span class="string">'jsonp callback name'</span>, <span class="string">'callback'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (env === <span class="string">'production'</span>) &#123;</span><br><span class="line">    <span class="keyword">this</span>.enable(<span class="string">'view cache'</span>);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">Object</span>.defineProperty(<span class="keyword">this</span>, <span class="string">'router'</span>, &#123;</span><br><span class="line">    get: <span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'\'app.router\' is deprecated!\nPlease update your app.'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ol>
 <h4 id="添加中间件-app-use"><a href="#添加中间件-app-use" class="headerlink" title="添加中间件 app.use"></a>添加中间件 <code>app.use</code></h4><h4 id="渲染视图-app-render"><a href="#渲染视图-app-render" class="headerlink" title="渲染视图 app.render"></a>渲染视图 <code>app.render</code></h4><h3 id="请求扩展-request-js"><a href="#请求扩展-request-js" class="headerlink" title="请求扩展 request.js"></a>请求扩展 <code>request.js</code></h3><h3 id="响应扩展-response-js"><a href="#响应扩展-response-js" class="headerlink" title="响应扩展 response.js"></a>响应扩展 <code>response.js</code></h3><h2 id="关联的其他模块"><a href="#关联的其他模块" class="headerlink" title="关联的其他模块"></a>关联的其他模块</h2><h3 id="merge-descriptors"><a href="#merge-descriptors" class="headerlink" title="merge-descriptors"></a>merge-descriptors</h3><ul>
 <li>源码很简单，通过foreach循环，依次将源对象的元素合并给目标对象。没有用到<code>Object.defineProperties</code> ，而是对每个操作符进行判断。<br>如果 <code>redefine</code> (undefined则赋值为true)设置为false并且某一属性目标对象已经包含，则不再进行处理。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// merge-descriptors 的简化实现</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> hasOwnProperty = <span class="built_in">Object</span>.prototype.hasOwnProperty;</span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function">(<span class="params">dest, src, redefine</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// check</span></span><br><span class="line">  <span class="keyword">if</span> (!dest || !src) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">TypeError</span>(<span class="string">'dest or src is required'</span>);</span><br><span class="line">  <span class="keyword">if</span> (redefine === <span class="literal">undefined</span>) redefine = <span class="literal">true</span>;</span><br><span class="line">  <span class="built_in">Object</span>.getOwnPropertyNames(src).forEach(<span class="function"><span class="keyword">function</span> <span class="title">forEachOwnPropertyName</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// skip</span></span><br><span class="line">    <span class="keyword">if</span> (!redefine &amp;&amp; hasOwnProperty.call(dest, name)) <span class="keyword">return</span>;</span><br><span class="line">    <span class="comment">// copy</span></span><br><span class="line">    <span class="keyword">let</span> descriptor = <span class="built_in">Object</span>.getOwnPropertyDescriptor(src, name);</span><br><span class="line">    <span class="built_in">Object</span>.defineProperty(dest, name, descriptor);</span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="keyword">return</span> dest;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 </li>
 </ul>
 
@@ -571,7 +579,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -582,9 +590,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -647,7 +653,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -722,7 +728,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

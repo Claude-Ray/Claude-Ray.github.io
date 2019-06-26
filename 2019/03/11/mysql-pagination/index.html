@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="MySQL," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="MySQL,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -137,7 +137,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2019/03/11/mysql-pagination/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2019/03/11/mysql-pagination/">
 
 
 
@@ -180,7 +180,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -210,7 +210,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -220,7 +220,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -230,7 +230,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -240,7 +240,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -250,7 +250,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -289,7 +289,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -325,7 +325,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -417,6 +417,7 @@
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>突破查询瓶颈的方法有很多，但这里先不谈分库分表之流，当头问题就一个：单数据表分页查询过慢怎么办？</p>
 <p>其实讲分页优化的博客真不少，但很多博主只顾分享点子忽略了细节，还有很多值得补充的地方。笔者回顾了曾经在千万级 BBS 项目的优化经历，尽可能结合实际地聊聊个人对分页查询的见解。也希望读者在亲身操作中验证，任何优化脱离了实际场景都是纸上谈兵。</p>
 <a id="more"></a>
+
 <h2 id="分页方式"><a href="#分页方式" class="headerlink" title="分页方式"></a>分页方式</h2><p>首先介绍最常见的数据分页方式，即传统分页和流式分页。</p>
 <h3 id="传统分页"><a href="#传统分页" class="headerlink" title="传统分页"></a>传统分页</h3><p><img src="/image/mysql-pagination/01.png" alt="贴吧PC分页"></p>
 <p>传统分页的基本逻辑是每页展示固定的条目数、通过页码分页和翻页，包含要素如下：</p>
@@ -435,7 +436,9 @@
 <p>不过 BBS 类型的 Web 项目为了方便用户，奉行 PC 端使用传统分页，移动端使用流式分页的设计理念。如果对这种设计没概念，可以左转百度贴吧。这要求我们必须直面传统分页带来的性能挑战。</p>
 <h2 id="索引优化"><a href="#索引优化" class="headerlink" title="索引优化"></a>索引优化</h2><p>索引优化的套路属于另一个范畴了，应当视具体引擎、数据分布、锁等信息来权衡处理。在这里主要强调一点，使用覆盖索引避免回表查询。因为 InnoDB 查询偏移量 offset 的过程是先查出 offset + limit 条数据，再抛弃前 offset 条数据，偏移量过大时查询效率将低到令人发指。</p>
 <p>因此，必须禁止分页查询时使用<code>select *</code>，充分利用索引中存储的信息，才能避免大量的回表取值操作。</p>
-<p>不必追求一次查询得到完整结果，如果索引不包含待查询的字段，只查出主键 id 亦可，如下：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> table_name</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> create_time <span class="keyword">desc</span></span><br><span class="line"><span class="keyword">limit</span> <span class="number">10000</span>,<span class="number">10</span>;</span><br></pre></td></tr></table></figure></p>
+<p>不必追求一次查询得到完整结果，如果索引不包含待查询的字段，只查出主键 id 亦可，如下：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> table_name</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> create_time <span class="keyword">desc</span></span><br><span class="line"><span class="keyword">limit</span> <span class="number">10000</span>,<span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
 <p>拿到 id 的集合后，大部分博客的处理都将这一步作为子查询，使用 <code>in</code>、<code>join</code> 或<code>比较符</code>继续查出数据详情。</p>
 <p>但我们应当慎用子查询，尽量将查 id 和查数据分开进行，这便于之后的<a href="#缓存优化">缓存优化</a>。</p>
 <h2 id="缓存优化"><a href="#缓存优化" class="headerlink" title="缓存优化"></a>缓存优化</h2><p>要提升查询效率，最终实现的效果必然是所有查询都命中缓存。</p>
@@ -451,6 +454,7 @@
 <p>不少的点击量加大了数据的查询压力，若是查询过慢导致内容半天加载不出来，更会诱发用户主动刷新发起更多请求。想想就够恐怖的。</p>
 <p>笔者在使用才 500 万的数据做复杂查询时，offset 效率就又一次成为瓶颈。但查询第一页的效率总是非常快，那只要保证末页的速度达到和首页一样快，也就能达成优化目标。具体做法看下面的 sql ：</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="keyword">id</span> <span class="keyword">from</span> table_name</span><br><span class="line"><span class="keyword">order</span> <span class="keyword">by</span> create_time <span class="keyword">asc</span></span><br><span class="line"><span class="keyword">limit</span> <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+
 <p><code>反向排序</code> 实现了末页等同于首页查询效率的效果。截止到 5.7 版本，MySQL 并没有在索引上区分 asc 和 desc，因此不需要新建索引，即可享用另一面的极速查询！</p>
 <p>而且不仅仅是末页，实际上只要判断出偏移量超过总数目的一半，就可以进行反向 order 了。</p>
 <p>注意此时得到一页数据的顺序也是反过来的，别忘了对该列表做个反转。除此之外，这种查询会导致最后一页永远是“排满”的，如有必要，可借助总数量修正最后一页应显示的条数，这样末页看起来和优化前一个样儿了。</p>
@@ -575,7 +579,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -586,9 +590,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -651,7 +653,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -726,7 +728,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>

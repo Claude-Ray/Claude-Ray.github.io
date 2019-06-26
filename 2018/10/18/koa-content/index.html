@@ -6,10 +6,10 @@
 
 
 <html class="theme-next mist use-motion" lang="zh-Hans">
-<head>
-  <meta charset="UTF-8"/>
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 
 
@@ -19,8 +19,8 @@
 
 
 
-<meta http-equiv="Cache-Control" content="no-transform" />
-<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
 
 
 
@@ -38,7 +38,7 @@
 
   
   
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -72,23 +72,23 @@
 
 
 
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
 
-<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
-
-
-  <meta name="keywords" content="Node.js,JavaScript,Koa," />
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css">
 
 
-
-
-
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml" />
+  <meta name="keywords" content="JavaScript,Node.js,Koa,">
 
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1">
 
 
 
@@ -96,7 +96,7 @@
 
 
 <meta name="description" content="透过ctx.body setter的执行过程，分析koa如何设置响应头content-type和content-length，以及一些注意事项。">
-<meta name="keywords" content="Node.js,JavaScript,Koa">
+<meta name="keywords" content="JavaScript,Node.js,Koa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="koa之Content-Type与Content-Length">
 <meta property="og:url" content="https://claude-ray.github.io/2018/10/18/koa-content/index.html">
@@ -134,7 +134,7 @@
 
 
 
-  <link rel="canonical" href="https://claude-ray.github.io/2018/10/18/koa-content/"/>
+  <link rel="canonical" href="https://claude-ray.github.io/2018/10/18/koa-content/">
 
 
 
@@ -177,7 +177,7 @@
     
 
     <div class="custom-logo-site-title">
-      <a href="/"  class="brand" rel="start">
+      <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Claude's Home</span>
         <span class="logo-line-after"><i></i></span>
@@ -207,7 +207,7 @@
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
             
             首页
           </a>
@@ -217,7 +217,7 @@
         <li class="menu-item menu-item-categories">
           <a href="/categories/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
             
             分类
           </a>
@@ -227,7 +227,7 @@
         <li class="menu-item menu-item-about">
           <a href="/about/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
             
             关于
           </a>
@@ -237,7 +237,7 @@
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             归档
           </a>
@@ -247,7 +247,7 @@
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
             
             标签
           </a>
@@ -286,7 +286,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
@@ -322,7 +322,7 @@
           </span>
 
           
-            <span class="post-category" >
+            <span class="post-category">
             
               <span class="post-meta-divider">|</span>
             
@@ -418,8 +418,10 @@
         <h1 id="Content-Type"><a href="#Content-Type" class="headerlink" title="Content-Type"></a>Content-Type</h1><p>众所周知，koa可以方便地通过<code>ctx.type=</code>来设置响应头的<code>Content-Type</code>。</p>
 <p>但下面这段代码，当响应体ctx.body为<code>object</code>时，无论怎么设置ctx.type，收到的Content-Type都是<code>application/json</code>。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ctx.type = <span class="string">'text/html'</span>;</span><br><span class="line">ctx.body = &#123; <span class="attr">type</span>: <span class="string">'json'</span> &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 得到的content-type依然为application/json</span></span><br></pre></td></tr></table></figure>
+
 <p>为什么设置被覆盖了，要通过一小段koa源码来解释。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// koa/lib/response.js</span></span><br><span class="line"></span><br><span class="line">set body(val) &#123;</span><br><span class="line">  <span class="keyword">const</span> original = <span class="keyword">this</span>._body;</span><br><span class="line">  <span class="keyword">this</span>._body = val;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">this</span>.res.headersSent) <span class="keyword">return</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// no content</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="literal">null</span> == val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!statuses.empty[<span class="keyword">this</span>.status]) <span class="keyword">this</span>.status = <span class="number">204</span>;</span><br><span class="line">    <span class="keyword">this</span>.remove(<span class="string">'Content-Type'</span>);</span><br><span class="line">    <span class="keyword">this</span>.remove(<span class="string">'Content-Length'</span>);</span><br><span class="line">    <span class="keyword">this</span>.remove(<span class="string">'Transfer-Encoding'</span>);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// set the status</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">this</span>._explicitStatus) <span class="keyword">this</span>.status = <span class="number">200</span>;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// set the content-type only if not yet set</span></span><br><span class="line">  <span class="keyword">const</span> setType = !<span class="keyword">this</span>.header[<span class="string">'content-type'</span>];</span><br><span class="line"></span><br><span class="line">  <span class="comment">// string</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> val) &#123;</span><br><span class="line">    <span class="keyword">if</span> (setType) <span class="keyword">this</span>.type = <span class="regexp">/^\s*&lt;/</span>.test(val) ? <span class="string">'html'</span> : <span class="string">'text'</span>;</span><br><span class="line">    <span class="keyword">this</span>.length = Buffer.byteLength(val);</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// buffer</span></span><br><span class="line">  <span class="keyword">if</span> (Buffer.isBuffer(val)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (setType) <span class="keyword">this</span>.type = <span class="string">'bin'</span>;</span><br><span class="line">    <span class="keyword">this</span>.length = val.length;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// stream</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'function'</span> == <span class="keyword">typeof</span> val.pipe) &#123;</span><br><span class="line">    onFinish(<span class="keyword">this</span>.res, destroy.bind(<span class="literal">null</span>, val));</span><br><span class="line">    ensureErrorHandler(val, err =&gt; <span class="keyword">this</span>.ctx.onerror(err));</span><br><span class="line"></span><br><span class="line">    <span class="comment">// overwriting</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">null</span> != original &amp;&amp; original != val) <span class="keyword">this</span>.remove(<span class="string">'Content-Length'</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (setType) <span class="keyword">this</span>.type = <span class="string">'bin'</span>;</span><br><span class="line">    <span class="keyword">return</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// json</span></span><br><span class="line">  <span class="keyword">this</span>.remove(<span class="string">'Content-Length'</span>);</span><br><span class="line">  <span class="keyword">this</span>.type = <span class="string">'json'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>熟悉koa源码的同学可能还记得，如果ctx.type未设置，会根据传给body的值类型赋予<code>Content-Type</code>默认值。</p>
 <ul>
 <li><code>null/undefined</code>：type什么的不存在的，即使有也会被删掉，并设置’No Content’ 204状态码</li>
@@ -445,7 +447,9 @@
 <blockquote>
 <p>最初我错想为交给了node底层处理，而且确实在http模块中有对content-length的设置，但它只有在完全未指定headers时才会添加。[<a href="https://github.com/nodejs/node/blob/master/lib/_http_outgoing.js]" target="_blank" rel="noopener">https://github.com/nodejs/node/blob/master/lib/_http_outgoing.js]</a></p>
 </blockquote>
-<p>实际对json类型的值判断字节长度非常容易，JSON.stringify加Buffer.byteLength即可。目录内搜索一下对this.length或ctx.length的赋值，果然，在响应的最终res.end()之前看到了该处理。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// koa/lib/application.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">respond</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// responses</span></span><br><span class="line">  <span class="keyword">if</span> (Buffer.isBuffer(body)) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> body) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (body <span class="keyword">instanceof</span> Stream) <span class="keyword">return</span> body.pipe(res);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// body: json</span></span><br><span class="line">  body = <span class="built_in">JSON</span>.stringify(body);</span><br><span class="line">  <span class="keyword">if</span> (!res.headersSent) &#123;</span><br><span class="line">    ctx.length = Buffer.byteLength(body);</span><br><span class="line">  &#125;</span><br><span class="line">  res.end(body);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>实际对json类型的值判断字节长度非常容易，JSON.stringify加Buffer.byteLength即可。目录内搜索一下对this.length或ctx.length的赋值，果然，在响应的最终res.end()之前看到了该处理。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// koa/lib/application.js</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">respond</span>(<span class="params">ctx</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// responses</span></span><br><span class="line">  <span class="keyword">if</span> (Buffer.isBuffer(body)) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (<span class="string">'string'</span> == <span class="keyword">typeof</span> body) <span class="keyword">return</span> res.end(body);</span><br><span class="line">  <span class="keyword">if</span> (body <span class="keyword">instanceof</span> Stream) <span class="keyword">return</span> body.pipe(res);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// body: json</span></span><br><span class="line">  body = <span class="built_in">JSON</span>.stringify(body);</span><br><span class="line">  <span class="keyword">if</span> (!res.headersSent) &#123;</span><br><span class="line">    ctx.length = Buffer.byteLength(body);</span><br><span class="line">  &#125;</span><br><span class="line">  res.end(body);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>因此，一般我们对 json 类型的返回值显式更改 <code>ctx.length</code> 是没实际意义的，koa 的默认在 res.end 前强制把 length 覆盖。这个处理可以避免使用者错误地认为 body.length 就是响应数据的长度。</p>
 <p>如果非要修改，去使用 ctx.res.writeHead 吧，如此一来，res.headersSent 内的处理就被会跳过了。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>koa的源码解析文章实在太多了，所以早先没有打算像express那样写一篇逐句分析，而且确实简单易读，<del>恐怕没写完就太监了</del>。但时间一久，很多细节就忘掉了，会遇到此类问题说明对其底层不够熟悉。就此写一篇笔记，发出来加深记忆。[真香.jpg]</p>
@@ -493,9 +497,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Node-js/" rel="tag"> <i class="fa fa-tag"></i> Node.js</a>
-          
             <a href="/tags/JavaScript/" rel="tag"> <i class="fa fa-tag"></i> JavaScript</a>
+          
+            <a href="/tags/Node-js/" rel="tag"> <i class="fa fa-tag"></i> Node.js</a>
           
             <a href="/tags/Koa/" rel="tag"> <i class="fa fa-tag"></i> Koa</a>
           
@@ -570,7 +574,7 @@
 
       
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
             文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview">
@@ -581,9 +585,7 @@
 
       <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-          <img class="site-author-image" itemprop="image"
-               src="/images/avatar.jpg"
-               alt="Claude Ray" />
+          <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
           <p class="site-author-name" itemprop="name">Claude Ray</p>
            
               <p class="site-description motion-element" itemprop="description">Now or Never</p>
@@ -646,7 +648,7 @@
               </span>
             
               <span class="links-of-author-item">
-                <a href="https://twitter.com/91Claude_Ray" target="_blank" title="Twitter">
+                <a href="https://twitter.com/Claude__Ray" target="_blank" title="Twitter">
                   
                     <i class="fa fa-fw fa-twitter"></i>
                   
@@ -721,7 +723,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <div class="copyright">
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2019</span>
