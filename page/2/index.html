@@ -339,6 +339,226 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/12/21/pm2-cluster-log4js/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/21/pm2-cluster-log4js/" class="post-title-link" itemprop="url">PM2 cluster + log4js？并不理想的组合</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-21 20:49:03" itemprop="dateCreated datePublished" datetime="2018-12-21T20:49:03+08:00">2018-12-21</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-22 13:53:09" itemprop="dateModified" datetime="2018-12-22T13:53:09+08:00">2018-12-22</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+          
+            <br>
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article: </span>
+                
+                <span title="Symbols count in article:">
+                  902
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  3 mins.
+                </span>
+              
+            </div>
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>
+              log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。
+log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 p
+              ...
+            </p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/12/21/pm2-cluster-log4js/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/12/15/iptables-wont-block-established-connections/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -425,17 +645,20 @@
           
 
           
-            <div class="post-symbolscount">
+          
+            <br>
+            <div class="post-wordcount">
               
-
-              
+                
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">589</span>
+                <span title="Symbols count in article:">
+                  316
+                </span>
               
 
               
@@ -449,9 +672,14 @@
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Reading time">
+                  1 mins.
+                </span>
               
             </div>
+          
+          
+
           
 
           
@@ -638,17 +866,20 @@ Wh
           
 
           
-            <div class="post-symbolscount">
+          
+            <br>
+            <div class="post-wordcount">
               
-
-              
+                
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">1k</span>
+                <span title="Symbols count in article:">
+                  628
+                </span>
               
 
               
@@ -662,9 +893,14 @@ Wh
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Reading time">
+                  2 mins.
+                </span>
               
             </div>
+          
+          
+
           
 
           
@@ -852,17 +1088,20 @@ Wh
           
 
           
-            <div class="post-symbolscount">
+          
+            <br>
+            <div class="post-wordcount">
               
-
-              
+                
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">948</span>
+                <span title="Symbols count in article:">
+                  691
+                </span>
               
 
               
@@ -876,9 +1115,14 @@ Wh
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Reading time">
+                  3 mins.
+                </span>
               
             </div>
+          
+          
+
           
 
           
@@ -1059,17 +1303,20 @@ Wh
           
 
           
-            <div class="post-symbolscount">
+          
+            <br>
+            <div class="post-wordcount">
               
-
-              
+                
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">2k</span>
+                <span title="Symbols count in article:">
+                  1.2k
+                </span>
               
 
               
@@ -1083,9 +1330,14 @@ Wh
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">2 mins.</span>
+                <span title="Reading time">
+                  4 mins.
+                </span>
               
             </div>
+          
+          
+
           
 
           
@@ -1254,17 +1506,20 @@ Wh
           
 
           
-            <div class="post-symbolscount">
+          
+            <br>
+            <div class="post-wordcount">
               
-
-              
+                
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">758</span>
+                <span title="Symbols count in article:">
+                  434
+                </span>
               
 
               
@@ -1278,9 +1533,14 @@ Wh
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Reading time">
+                  1 mins.
+                </span>
               
             </div>
+          
+          
+
           
 
           
@@ -1467,17 +1727,20 @@ Wh
           
 
           
-            <div class="post-symbolscount">
+          
+            <br>
+            <div class="post-wordcount">
               
-
-              
+                
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">2.1k</span>
+                <span title="Symbols count in article:">
+                  1.3k
+                </span>
               
 
               
@@ -1491,9 +1754,14 @@ Wh
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">2 mins.</span>
+                <span title="Reading time">
+                  5 mins.
+                </span>
               
             </div>
+          
+          
+
           
 
           
@@ -1674,17 +1942,20 @@ Wh
           
 
           
-            <div class="post-symbolscount">
+          
+            <br>
+            <div class="post-wordcount">
               
-
-              
+                
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">793</span>
+                <span title="Symbols count in article:">
+                  665
+                </span>
               
 
               
@@ -1698,9 +1969,14 @@ Wh
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Reading time">
+                  3 mins.
+                </span>
               
             </div>
+          
+          
+
           
 
           
@@ -1881,17 +2157,20 @@ Wh
           
 
           
-            <div class="post-symbolscount">
+          
+            <br>
+            <div class="post-wordcount">
               
-
-              
+                
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">1.2k</span>
+                <span title="Symbols count in article:">
+                  896
+                </span>
               
 
               
@@ -1905,9 +2184,14 @@ Wh
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Reading time">
+                  3 mins.
+                </span>
               
             </div>
+          
+          
+
           
 
           
@@ -2088,17 +2372,20 @@ Wh
           
 
           
-            <div class="post-symbolscount">
+          
+            <br>
+            <div class="post-wordcount">
               
-
-              
+                
                 <span class="post-meta-item-icon">
                   <i class="fa fa-file-word-o"></i>
                 </span>
                 
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
-                <span title="Symbols count in article">1.5k</span>
+                <span title="Symbols count in article:">
+                  932
+                </span>
               
 
               
@@ -2112,9 +2399,14 @@ Wh
                 
                   <span class="post-meta-item-text">Reading time &asymp;</span>
                 
-                <span title="Reading time">1 mins.</span>
+                <span title="Reading time">
+                  3 mins.
+                </span>
               
             </div>
+          
+          
+
           
 
           
@@ -2138,213 +2430,6 @@ Wh
           
             <div class="post-button text-center">
               <a class="btn" href="/2018/08/23/ubuntu16to18md/">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/07/31/阿里云验证码node接入/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Claude's Home">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/07/31/阿里云验证码node接入/" class="post-title-link" itemprop="url">阿里云验证码node接入</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-07-31 22:51:14" itemprop="dateCreated datePublished" datetime="2018-07-31T22:51:14+08:00">2018-07-31</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-10-31 22:16:55" itemprop="dateModified" datetime="2018-10-31T22:16:55+08:00">2018-10-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-symbolscount">
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Symbols count in article: </span>
-                
-                <span title="Symbols count in article">1k</span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Reading time &asymp;</span>
-                
-                <span title="Reading time">1 mins.</span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          分享接入过程和心得
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/07/31/阿里云验证码node接入/">
                 Read more &raquo;
               </a>
             </div>
@@ -2437,7 +2522,7 @@ Wh
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2662,25 +2747,18 @@ Wh
   <span class="author" itemprop="copyrightHolder">Claude Ray</span>
 
   
+
+  
+  
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    
-      <span class="post-meta-item-text">Symbols count total: </span>
-    
-    <span title="Symbols count total">47k</span>
+    <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">30.3k</span>
+  
   
 
-  
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    
-      <span class="post-meta-item-text">Reading time total &asymp;</span>
-    
-    <span title="Reading time total">43 mins.</span>
   
 </div>
 
