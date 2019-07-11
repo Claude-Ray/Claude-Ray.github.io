@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://claude-ray.github.io/2019/06/28/hexo-theme-next-upgrade-7/</loc>
+    <loc>https://claude-ray.github.io/2019/07/11/elastic-apm-node-express/</loc>
     
-    <lastmod>2019-06-28T16:01:05.562Z</lastmod>
+    <lastmod>2019-07-11T15:42:12.444Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://claude-ray.github.io/2019/05/19/node-apm-product-research/</loc>
     
-    <lastmod>2019-06-20T06:55:54.600Z</lastmod>
+    <lastmod>2019-07-01T11:41:16.829Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://claude-ray.github.io/2019/06/28/hexo-theme-next-upgrade-7/</loc>
+    
+    <lastmod>2019-06-28T16:01:05.562Z</lastmod>
     
   </url>
   

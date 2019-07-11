@@ -1,0 +1,1069 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Introductionelastic-apm-node 提供了非常友好的定制化支持，本篇将示范如何为 express 框架添加路由 patch，以满足信息上报的优化。">
+<meta name="keywords" content="Node.js,APM,Elastic-APM">
+<meta property="og:type" content="article">
+<meta property="og:title" content="elastic-apm-node扩展篇——Express">
+<meta property="og:url" content="https://claude-ray.github.io/2019/07/11/elastic-apm-node-express/index.html">
+<meta property="og:site_name" content="Claude&#39;s Home">
+<meta property="og:description" content="Introductionelastic-apm-node 提供了非常友好的定制化支持，本篇将示范如何为 express 框架添加路由 patch，以满足信息上报的优化。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-11T15:42:12.444Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="elastic-apm-node扩展篇——Express">
+<meta name="twitter:description" content="Introductionelastic-apm-node 提供了非常友好的定制化支持，本篇将示范如何为 express 框架添加路由 patch，以满足信息上报的优化。">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://claude-ray.github.io/2019/07/11/elastic-apm-node-express/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>elastic-apm-node扩展篇——Express | Claude's Home</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claude's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Searching</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/07/11/elastic-apm-node-express/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">elastic-apm-node扩展篇——Express
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-11 22:54:59 / Modified: 23:42:12" itemprop="dateCreated datePublished" datetime="2019-07-11T22:54:59+08:00">2019-07-11</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+          
+            <br>
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article: </span>
+                
+                <span title="Symbols count in article:">
+                  1.5k
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  6 mins.
+                </span>
+              
+            </div>
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>elastic-apm-node 提供了非常友好的定制化支持，本篇将示范如何为 express 框架添加路由 patch，以满足信息上报的优化。</p>
+<a id="more"></a>
+
+<p>许多开发者在定制开源依赖时，都选择了 fork 源码，在此基础上提交修改，作为新的模块来“维护”。这样做的稳定性极高，等于对依赖加上了版本锁，不用担心动态版本的安全问题。</p>
+<p>但弊端也非常大，最重要的是需要投入精力定时跟进官方包的更新。除了要小心 <code>breaking change</code>，任何你需要的 <code>fix</code> 或 <code>feature</code>，都要重新更新发布自己的模块。维护成本极高，甚至大部分情况是没人维护的。</p>
+<p>幸亏 elastic-apm-node 有不错的扩展性，我们不用 fork，只需要做一个包裹层二次封装。</p>
+<p>定制的出发点要立在合理的需求上，我们拿 vue-ssr 官网的 demo 举例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> createApp = <span class="built_in">require</span>(<span class="string">'/path/to/built-server-bundle.js'</span>)</span><br><span class="line"></span><br><span class="line">server.get(<span class="string">'*'</span>, (req, res) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> context = &#123; <span class="attr">url</span>: req.url &#125;</span><br><span class="line"></span><br><span class="line">  createApp(context).then(<span class="function"><span class="params">app</span> =&gt;</span> &#123;</span><br><span class="line">    renderer.renderToString(app, (err, html) =&gt; &#123;</span><br><span class="line">      <span class="keyword">if</span> (err) &#123;</span><br><span class="line">        <span class="keyword">if</span> (err.code === <span class="number">404</span>) &#123;</span><br><span class="line">          res.status(<span class="number">404</span>).end(<span class="string">'Page not found'</span>)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          res.status(<span class="number">500</span>).end(<span class="string">'Internal Server Error'</span>)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        res.end(html)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>默认情况下，无论请求 url 是指向哪个页面路由，Kibana apm 界面看到的事务信息永远都是 <code>GET *</code>，显然无法满足我们观测请求量的需要。</p>
+<h1 id="route"><a href="#route" class="headerlink" title="route *"></a>route <code>*</code></h1><p>路由是 * 动态匹配的，要想获取到真实路由，比较容易的方案是读取 <code>req.path</code>，但最好的方案是直接拿到原始表达式，这样 <code>/user/:id</code> 形式的路由也能较好地折叠呈现。</p>
+<p>但 vue ssr 项目通常将页面路由规则存放在前端，这种情况也无法在 express 的 router 上做文章，只能回到原始的 url path 方案了。</p>
+<p>在 <code>node_modules/elastic-apm-node/lib/instrumentation/modules/express.js</code> 的 <code>patchLayer</code> 中加入如下代码</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// <span class="doctag">NOTE:</span> add below this code block</span></span><br><span class="line"><span class="keyword">if</span> (!layer.route &amp;&amp; layerPath &amp;&amp; <span class="keyword">typeof</span> next === <span class="string">'function'</span>) &#123; &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// <span class="doctag">NOTE:</span> patch route * up</span></span><br><span class="line"><span class="keyword">if</span> (layer.route &amp;&amp; layerPath === <span class="string">'*'</span> &amp;&amp; layer.path) &#123;</span><br><span class="line">  <span class="keyword">const</span> name = req.method + <span class="string">' '</span> + layer.path</span><br><span class="line">  agent._instrumentation.setDefaultTransactionName(name)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>你也可以对 path 内部加上正则校验，遇到纯数值、32 位或 16 位定长 id，便将其当作 <code>:id</code>，将内容掩盖处理，以达成简易的路由还原效果。</p>
+<p>最后，由于这个已经修改了 express route 的 wrap，但 shimmer 的代码决定了一个函数只能有一个 wrapper。因此想替换掉原有的 wrapper，必须先 unwrap express 的 route，然后再执行 shimmer.wrap 。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// <span class="doctag">NOTE:</span> rewarp express router</span></span><br><span class="line">shimmer.unwrap(routerProto, <span class="string">'route'</span>)</span><br><span class="line"></span><br><span class="line">shimmer.wrap(routerProto, <span class="string">'route'</span>, orig =&gt; &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">route</span> (<span class="params">path</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> route = orig.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">    <span class="keyword">var</span> layer = <span class="keyword">this</span>.stack[<span class="keyword">this</span>.stack.length - <span class="number">1</span>]</span><br><span class="line">    patchLayer(layer, path)</span><br><span class="line">    <span class="keyword">return</span> route</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>其他的 patch 同理。</p>
+<h1 id="addPatch"><a href="#addPatch" class="headerlink" title="addPatch"></a>addPatch</h1><p>上面介绍了完成需求的方法，但本篇主旨是扩展，而非在源码上直接修改。这就要使用 apm agent 暴露的 <a href="https://www.elastic.co/guide/en/apm/agent/nodejs/master/agent-api.html#apm-add-patch" target="_blank" rel="noopener">addPatch</a> 接口。可在此基础上完成所有定制框架和路由的处理。</p>
+<p>特别提示，有别于上面的 wrapper，针对同一个 npm 模块，elastic-apm-node 支持添加多个 patch。因此不必要的时候，无需删除 elastic agent 已经添加的 patch，直接在引入 apm 的地方调用 addPatch 即可。</p>
+<p>还是以 express 为例，把 patch 的新方法写在另一个 <code>instrumentation/express.js</code> 文件中。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> apm = <span class="built_in">require</span>(<span class="string">'elastic-apm-node'</span>).start()</span><br><span class="line"></span><br><span class="line">apm.addPatch(<span class="string">'express'</span>, <span class="built_in">require</span>.resolve(<span class="string">'./instrumentation/express'</span>))</span><br></pre></td></tr></table></figure>
+
+<p>./instrumentation/express.js 的实现可以参考原 agent v2.12.1 版本中的 <a href="https://github.com/elastic/apm-agent-nodejs/blob/master/lib/instrumentation/modules/express.js" target="_blank" rel="noopener">express</a>，需要修改的内容上文已经提到了，需要补充代码的位置参考如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Original file: https://github.com/elastic/apm-agent-nodejs/blob/master/lib/instrumentation/modules/express.js</span></span><br><span class="line"><span class="comment">// License: https://github.com/elastic/apm-agent-nodejs/blob/master/LICENSE</span></span><br><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> isError = <span class="built_in">require</span>(<span class="string">'core-util-is'</span>).isError</span><br><span class="line"><span class="keyword">const</span> semver = <span class="built_in">require</span>(<span class="string">'semver'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 工具模块直接引用 agent，不必重复实现</span></span><br><span class="line"><span class="keyword">const</span> shimmer = <span class="built_in">require</span>(<span class="string">'elastic-apm-node/lib/instrumentation/shimmer'</span>)</span><br><span class="line"><span class="keyword">const</span> symbols = <span class="built_in">require</span>(<span class="string">'elastic-apm-node/lib/symbols'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 剩余未经标注的代码均来自原 agent 的 express 文件，只需要复制必要的部分</span></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">express, agent, &#123; version, enabled &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 框架识别、版本号校验、路由兼容性的一些处理，以及内部函数，从文件原样复制即可</span></span><br><span class="line">  <span class="comment">// 省略代码若干行……</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">patchLayer</span> (<span class="params">layer, layerPath</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!layer[layerPatchedSymbol]) &#123;</span><br><span class="line">      layer[layerPatchedSymbol] = <span class="literal">true</span></span><br><span class="line">      agent.logger.debug(<span class="string">'shimming express.Router.Layer.handle function:'</span>, layer.name)</span><br><span class="line">      shimmer.wrap(layer, <span class="string">'handle'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">orig</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">let</span> handle</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (orig.length !== <span class="number">4</span>) &#123;</span><br><span class="line">          handle = <span class="function"><span class="keyword">function</span> (<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (!layer.route &amp;&amp; layerPath &amp;&amp; <span class="keyword">typeof</span> next === <span class="string">'function'</span>) &#123;</span><br><span class="line">              safePush(req, symbols.expressMountStack, layerPath)</span><br><span class="line">              <span class="built_in">arguments</span>[<span class="number">2</span>] = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                <span class="keyword">if</span> (!(req.route &amp;&amp; <span class="built_in">arguments</span>[<span class="number">0</span>] <span class="keyword">instanceof</span> <span class="built_in">Error</span>)) &#123;</span><br><span class="line">                  req[symbols.expressMountStack].pop()</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> next.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">              &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// <span class="doctag">NOTE:</span> 在这里添加 `*` 等路由定制代码</span></span><br><span class="line">            <span class="keyword">if</span> (layer.route &amp;&amp; layerPath === <span class="string">'*'</span> &amp;&amp; layer.path) &#123;</span><br><span class="line">              <span class="keyword">const</span> name = req.method + <span class="string">' '</span> + layer.path</span><br><span class="line">              agent._instrumentation.setDefaultTransactionName(name)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> orig.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; </span><br><span class="line">        <span class="comment">// 省略若干行……</span></span><br><span class="line">        <span class="keyword">return</span> handle</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// 省略若干行……</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// <span class="doctag">NOTE:</span> 记得加一行 unwrap</span></span><br><span class="line">  shimmer.unwrap(routerProto, <span class="string">'route'</span>)</span><br><span class="line">  <span class="comment">// 并重新 wrap，代码复制过来即可</span></span><br><span class="line">  shimmer.wrap(routerProto, <span class="string">'route'</span>, orig =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> <span class="title">route</span> (<span class="params">path</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> route = orig.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line">      <span class="keyword">var</span> layer = <span class="keyword">this</span>.stack[<span class="keyword">this</span>.stack.length - <span class="number">1</span>]</span><br><span class="line">      patchLayer(layer, path)</span><br><span class="line">      <span class="keyword">return</span> route</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="comment">// 剩余代码处理基本到此位置了，不需要处理的 wrapper 保持不动就好</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> express</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="unknown-route"><a href="#unknown-route" class="headerlink" title="unknown route"></a>unknown route</h1><p>在使用中发现，通过 app.use 引入的路由全部被标记为 <code>unknown route</code>，正准备在 patch 中修复这个问题的时候，在这个 <a href="https://github.com/elastic/apm-agent-nodejs/issues/1008" target="_blank" rel="noopener">issue</a> 中找到了根源。</p>
+<p>此问题在 <code>v2.11.5</code> 版本后修复，升级版本就行，不用折腾了~</p>
+<h1 id="Afterword"><a href="#Afterword" class="headerlink" title="Afterword"></a>Afterword</h1><p>给 elastic-apm-node 编写拓展时明显体会到高扩展性的优势。在设计工具类时，良好的扩展性给用户带来了非常多的便利，遇到这类第三方依赖的 bug 时，作为用户的我们可以在 <strong>不修改原始代码的情况下自行将其修复</strong>。</p>
+<p>特别是近期接触了较多 GNU 精神，向所有在项目中为扩展性挥洒汗水的开发者致敬。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Claude Ray</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://claude-ray.github.io/2019/07/11/elastic-apm-node-express/" title="elastic-apm-node扩展篇——Express">https://claude-ray.github.io/2019/07/11/elastic-apm-node-express/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+          
+            <a href="/tags/APM/" rel="tag"># APM</a>
+          
+            <a href="/tags/Elastic-APM/" rel="tag"># Elastic-APM</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/28/hexo-theme-next-upgrade-7/" rel="next" title="Hexo NexT 主题升级">
+                <i class="fa fa-chevron-left"></i> Hexo NexT 主题升级
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
+            
+              <p class="site-author-name" itemprop="name">Claude Ray</p>
+              <div class="site-description motion-element" itemprop="description">Now or Never</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Claude-Ray" title="GitHub &rarr; https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Claude__Ray" title="Twitter &rarr; https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam &rarr; https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/nebulae-pan" title="https://github.com/nebulae-pan" rel="noopener" target="_blank">Nebulae Pan</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Introduction"><span class="nav-number">1.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#route"><span class="nav-number">2.</span> <span class="nav-text">route *</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#addPatch"><span class="nav-number">3.</span> <span class="nav-text">addPatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#unknown-route"><span class="nav-number">4.</span> <span class="nav-text">unknown route</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Afterword"><span class="nav-number">5.</span> <span class="nav-text">Afterword</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-bolt"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claude Ray</span>
+
+  
+
+  
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">31.7k</span>
+  
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homepage</a>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
