@@ -94,18 +94,18 @@
 
 
 
-  <meta name="description" content="JS的图形验证码已有很多开源实现，可以直接用npm引入，但如果综合考虑性能和契合度时，还是亲自动手造一个好。当然实现起来并不复杂，且方便结合自身需求调整，在此分享一下使用node-canvas绘制验证码的几个心得。">
-<meta name="keywords" content="JavaScript,Captcha,Canvas">
+  <meta name="description" content="前言本篇是为 elastic-apm-node 编写拓展系列的第二篇，主要介绍 egg 框架的定制指南。 单独拿 egg 出来讲，是因为市面主流的 APM 工具几乎都没有为 egg 提供支持。一方面 egg 底层基于 koa ，并且 egg-router 也是 koa-router 的二次封装，两者相似以致插件可以平稳切换，agent 的补丁方式也基本是一致的。另一方面，agent 代码必须早于">
+<meta name="keywords" content="Node.js,APM,Elastic-APM,Egg">
 <meta property="og:type" content="article">
-<meta property="og:title" content="node图形验证码实现">
-<meta property="og:url" content="https://claude-ray.github.io/2018/09/02/node-image-captcha/index.html">
+<meta property="og:title" content="elastic-apm-node扩展篇——Egg">
+<meta property="og:url" content="https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="JS的图形验证码已有很多开源实现，可以直接用npm引入，但如果综合考虑性能和契合度时，还是亲自动手造一个好。当然实现起来并不复杂，且方便结合自身需求调整，在此分享一下使用node-canvas绘制验证码的几个心得。">
+<meta property="og:description" content="前言本篇是为 elastic-apm-node 编写拓展系列的第二篇，主要介绍 egg 框架的定制指南。 单独拿 egg 出来讲，是因为市面主流的 APM 工具几乎都没有为 egg 提供支持。一方面 egg 底层基于 koa ，并且 egg-router 也是 koa-router 的二次封装，两者相似以致插件可以平稳切换，agent 的补丁方式也基本是一致的。另一方面，agent 代码必须早于">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-10-31T14:12:50.376Z">
+<meta property="og:updated_time" content="2019-07-12T14:00:57.942Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="node图形验证码实现">
-<meta name="twitter:description" content="JS的图形验证码已有很多开源实现，可以直接用npm引入，但如果综合考虑性能和契合度时，还是亲自动手造一个好。当然实现起来并不复杂，且方便结合自身需求调整，在此分享一下使用node-canvas绘制验证码的几个心得。">
+<meta name="twitter:title" content="elastic-apm-node扩展篇——Egg">
+<meta name="twitter:description" content="前言本篇是为 elastic-apm-node 编写拓展系列的第二篇，主要介绍 egg 框架的定制指南。 单独拿 egg 出来讲，是因为市面主流的 APM 工具几乎都没有为 egg 提供支持。一方面 egg 底层基于 koa ，并且 egg-router 也是 koa-router 的二次封装，两者相似以致插件可以平稳切换，agent 的补丁方式也基本是一致的。另一方面，agent 代码必须早于">
 
 
 
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="https://claude-ray.github.io/2018/09/02/node-image-captcha/">
+  <link rel="canonical" href="https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>node图形验证码实现 | Claude's Home</title>
+  <title>elastic-apm-node扩展篇——Egg | Claude's Home</title>
   
 
 
@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2018/09/02/node-image-captcha/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -357,7 +357,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">node图形验证码实现
+          <h1 class="post-title" itemprop="name headline">elastic-apm-node扩展篇——Egg
 
               
             
@@ -383,24 +383,12 @@
                 
               
 
-              <time title="Created: 2018-09-02 21:46:55" itemprop="dateCreated datePublished" datetime="2018-09-02T21:46:55+08:00">2018-09-02</time>
+              <time title="Created: 2019-07-12 21:18:53 / Modified: 22:00:57" itemprop="dateCreated datePublished" datetime="2019-07-12T21:18:53+08:00">2019-07-12</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-10-31 22:12:50" itemprop="dateModified" datetime="2018-10-31T22:12:50+08:00">2018-10-31</time>
               
             
           </span>
@@ -448,7 +436,7 @@
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
                 <span title="Symbols count in article:">
-                  896
+                  810
                 </span>
               
 
@@ -474,8 +462,6 @@
           
 
           
-            <div class="post-description">JS的图形验证码已有很多开源实现，可以直接用npm引入，但如果综合考虑性能和契合度时，还是亲自动手造一个好。当然实现起来并不复杂，且方便结合自身需求调整，在此分享一下使用node-canvas绘制验证码的几个心得。</div>
-          
 
         </div>
       </header>
@@ -490,52 +476,35 @@
       
 
       
-        <h2 id="Requirements"><a href="#Requirements" class="headerlink" title="Requirements"></a>Requirements</h2><p>参考文档安装基础图形库，<a href="https://github.com/Automattic/node-canvas" target="_blank" rel="noopener">node-canvas</a>。</p>
-<p>建议使用<code>npm install canvas@next</code>安装2.x版本，兼容Windows开发环境，接口功能更完善。</p>
-<p>此外，MDN的<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/CanvasRenderingContext2D" target="_blank" rel="noopener">canvas相关文档</a>也可以作为重要参考。</p>
-<h2 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h2><blockquote>
-<p><code>opts.*</code>标注的是需要自行完善的属性或方法。图形验证码作为系统安全的一环，就不开放源码了，请谅解。</p>
-</blockquote>
-<h3 id="1-创建canvas-ctx"><a href="#1-创建canvas-ctx" class="headerlink" title="1. 创建canvas ctx"></a>1. 创建canvas ctx</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> canvas = <span class="keyword">new</span> Canvas(opts.width, opts.height);</span><br><span class="line"><span class="keyword">const</span> ctx = canvas.getContext(<span class="string">'2d'</span>);</span><br></pre></td></tr></table></figure>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>本篇是为 elastic-apm-node 编写拓展系列的第二篇，主要介绍 egg 框架的定制指南。</p>
+<p>单独拿 egg 出来讲，是因为市面主流的 APM 工具几乎都没有为 egg 提供支持。一方面 egg 底层基于 koa ，并且 egg-router 也是 koa-router 的二次封装，两者相似以致插件可以平稳切换，agent 的补丁方式也基本是一致的。另一方面，agent 代码必须早于 egg 和 egg-router 的加载才能生效，egg-bin、egg-script 等生态决定了编写框架之上的插件很难做到零代码入侵。</p>
+<p>APM agent 作为 npm package 不适合做这样的事，更好的方法是我们利用 egg 工具链的接口，在引入 agent 的代码层处理好 egg 的配置。</p>
+<a id="more"></a>
 
-<h3 id="2-透明度"><a href="#2-透明度" class="headerlink" title="2. 透明度"></a>2. 透明度</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ctx.globalAlpha = opts.opacity;</span><br></pre></td></tr></table></figure>
+<h1 id="在-egg-前-require"><a href="#在-egg-前-require" class="headerlink" title="在 egg 前 require"></a>在 egg 前 require</h1><p>我们先考虑如何将 APM agent 早于 egg 执行，解决 patch 此框架主要问题，然后再完成定制化操作。</p>
+<p>好在 egg 是提供了相关方法的，最底层的 API 是 <code>startCluster</code> 方法，可以传入 <code>require</code> 参数指明你要率先执行模块。</p>
+<h2 id="方案一：修改启动文件"><a href="#方案一：修改启动文件" class="headerlink" title="方案一：修改启动文件"></a>方案一：修改启动文件</h2><p>假设把 APM 的引入和配置放在了根目录 elastic-apm.js 中，新建一个类似下面这样的 app.js 作为 egg 的启动文件，用最原始的 <code>node app.js</code> 启动服务就好了。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">require</span>(<span class="string">'egg'</span>).startCluster(&#123;</span><br><span class="line">  <span class="built_in">require</span>: [ <span class="built_in">require</span>.resolve(<span class="string">'./elastic-apm'</span>) ],</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
-<h3 id="3-背景色填充"><a href="#3-背景色填充" class="headerlink" title="3. 背景色填充"></a>3. 背景色填充</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.fillStyle = opts.bgc;</span><br><span class="line">ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br></pre></td></tr></table></figure>
-
-<h3 id="4-写字"><a href="#4-写字" class="headerlink" title="4. 写字"></a>4. 写字</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; opts.length; i++) &#123;</span><br><span class="line">  <span class="comment">// 字体和随机字号</span></span><br><span class="line">  ctx.font = <span class="string">`<span class="subst">$&#123;opts.fontSize&#125;</span>px <span class="subst">$&#123;opts.font&#125;</span>`</span>;</span><br><span class="line">  <span class="comment">// 颜色</span></span><br><span class="line">  ctx.fillStyle = opts.randomColor();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 旋转角度，使用save/restore保存之前填充的状态</span></span><br><span class="line">  ctx.save();</span><br><span class="line">  ctx.rotate(opts.randomAngle());</span><br><span class="line">  <span class="comment">// 填充字体</span></span><br><span class="line">  ctx.fillText(opts.text[i], opts.wordSpaceX, opts.wordSpaceY);</span><br><span class="line">  ctx.restore();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="5-干扰线"><a href="#5-干扰线" class="headerlink" title="5. 干扰线"></a>5. 干扰线</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 干扰线宽度</span></span><br><span class="line">ctx.lineWidth = opts.lineWidth;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; length - <span class="number">2</span>; i++) &#123;</span><br><span class="line">  ctx.strokeStyle = opts.randomColor();</span><br><span class="line">  <span class="comment">// 绘制路径起始点</span></span><br><span class="line">  ctx.beginPath();</span><br><span class="line">  <span class="comment">// 移动画笔</span></span><br><span class="line">  ctx.moveTo(opts.x1, opts.y1));</span><br><span class="line">  ctx.lineTo(opts.x2, opts.y2));</span><br><span class="line">  <span class="comment">// 画线</span></span><br><span class="line">  ctx.stroke();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="6-干扰点"><a href="#6-干扰点" class="headerlink" title="6. 干扰点"></a>6. 干扰点</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 根据密度计算个数</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; opts.pixelNum; i++) &#123;</span><br><span class="line">  ctx.fillStyle = opts.randomColor();</span><br><span class="line">  ctx.beginPath();</span><br><span class="line">  <span class="comment">// 用实心圆作为点</span></span><br><span class="line">  ctx.arc(opts.x, opts.y, opts.radius, <span class="number">0</span>, <span class="number">2</span> * <span class="built_in">Math</span>.PI);</span><br><span class="line">  ctx.fill();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>最后的图片产出分多种：<code>Buffer</code>，<code>DataUrl</code>和<code>Stream</code>，就从官方文档上看例子吧，注意1.x和2.x的版本差异。</p>
-<h2 id="应急方案"><a href="#应急方案" class="headerlink" title="应急方案"></a>应急方案</h2><h3 id="背景色"><a href="#背景色" class="headerlink" title="背景色"></a>背景色</h3><p>挑选一些对人眼友好的颜色，随机筛选几个拼接成渐变色背景，可以略微提高识别成本。但对于成熟的破解算法无意义，如果和字体颜色过接近，用户识别也会特别痛苦。</p>
-<p>举个简单的3段式，抛砖引玉。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> gradient = ctx.createLinearGradient(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br><span class="line"></span><br><span class="line">gradient.addColorStop(<span class="number">0</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">0.5</span>, opts.randomBGC());</span><br><span class="line">gradient.addColorStop(<span class="number">1</span>, opts.randomBGC());</span><br><span class="line"></span><br><span class="line">ctx.fillStyle = gradient;</span><br><span class="line">ctx.fillRect(<span class="number">0</span>, <span class="number">0</span>, opts.width, opts.height);</span><br></pre></td></tr></table></figure>
-
-<h3 id="空心字体"><a href="#空心字体" class="headerlink" title="空心字体"></a>空心字体</h3><p>canvas原生支持的几个字体差别实在不大，有个技巧是绘制空心字体，在验证码被攻击时，可以加入支持应急，在攻击者没有准备的情况下，可以立刻起到拦截效果。</p>
-<p>用法很简单，将上面写字用到的<code>fillStyle</code>替换为<code>strokeStyle</code>，<code>fillText</code>替换为<code>strokeText</code>。</p>
-<h2 id="Lib选择"><a href="#Lib选择" class="headerlink" title="Lib选择"></a>Lib选择</h2><p>起初，使用<code>gm</code>和<code>GraphicsMagick</code>的组合，但经压测发现了严重的性能问题，在<a href="https://stackoverflow.com/questions/23795669/graphicsmagick-for-node-js-gm-module-performance" target="_blank" rel="noopener">StackOverFlow</a>上也看到了原因，于是决定更换绘图方案。</p>
 <blockquote>
-<p>The gm module calls out to a command-line tool. You might look at using graphicsmagick2 instead, which is an actual binding to the graphicsmagick library. Unfortunately there is no documentation, so you’ll have to read the source for that (which isn’t too long).</p>
+<p>!!! 不推荐：必须放弃 egg-bin 和 egg-scripts 作为启动器，需要自己补上很多操作。</p>
 </blockquote>
-<p>测试了npm上几个热门验证码模块，有两种相对高效的实现</p>
-<ol>
-<li>c++调用canvas运行环境（node-canvas）</li>
-<li>无外部依赖，纯js绘图（trek-captcha）</li>
-</ol>
-<p>两年以上没人维护的包没有进行测试，有个自称1200/s的ccap，按我的需求出图，效率不及上面的一半。</p>
-<p>最终选择了性能出色的node-canvas。</p>
-<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>以上用法是作者半年前尝试推行AI验证无果的无奈产物，终于在近期被大举攻破时宣告灭亡。</p>
-<p>在AI面前，图形验证码的防御力是非常低的，建议处理验证码业务的各位趁早接入行为识别。</p>
-<p>希望可以帮到有需要的同学。</p>
-<p>Last but not least，附两篇他人的精彩调研：</p>
-<ul>
-<li><p><a href="https://www.jianshu.com/p/c63b78a373ad" target="_blank" rel="noopener">验证码WEB端产品调研（一）：Google reCAPTCHA</a></p>
-</li>
-<li><p><a href="https://www.jianshu.com/p/c64902f60c7c" target="_blank" rel="noopener">验证码WEB端产品调研（二）：极限验证</a></p>
-</li>
-</ul>
+<h2 id="方案二：修改-package-json"><a href="#方案二：修改-package-json" class="headerlink" title="方案二：修改 package.json"></a>方案二：修改 package.json</h2><blockquote>
+<p>要求 <code>egg-bin</code> 版本 &gt;= <a href="https://github.com/eggjs/egg-bin/blob/master/History.md#4100--2019-01-04" target="_blank" rel="noopener">4.10.0</a></p>
+</blockquote>
+<p>在 <code>package.json</code> 中添加 <code>egg.require</code> 配置，用法来自 <a href="https://github.com/eggjs/egg/issues/2844#issuecomment-409457550" target="_blank" rel="noopener">issue 讨论</a>。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"egg"</span>: &#123;</span><br><span class="line">    <span class="attr">"require"</span>: [ <span class="string">"./elastic-apm.js"</span> ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"egg-scripts start"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是目前最推荐的做法，不影响 egg 工具链的正常使用。</p>
+<h1 id="编写补丁"><a href="#编写补丁" class="headerlink" title="编写补丁"></a>编写补丁</h1><h2 id="instrumentation-egg-js"><a href="#instrumentation-egg-js" class="headerlink" title="instrumentation/egg.js"></a>instrumentation/egg.js</h2><p>仿照 <a href="https://github.com/elastic/apm-agent-nodejs/blob/master/lib/instrumentation/modules/koa.js" target="_blank" rel="noopener">instrumentation/koa.js</a>，修改框架 name，注意开启 overwrite 选项，为了覆盖引用 koa 带来的标识。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">egg, agent, &#123; version, enabled &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!enabled) <span class="keyword">return</span> egg</span><br><span class="line">  <span class="comment">// 注意开启 overwrite，这样才能覆盖 koa 标识</span></span><br><span class="line">  agent.setFramework(&#123; <span class="attr">name</span>: <span class="string">'egg'</span>, version, <span class="attr">overwrite</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">  <span class="keyword">return</span> egg</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="instrumentation-egg-router-js"><a href="#instrumentation-egg-router-js" class="headerlink" title="instrumentation/egg-router.js"></a>instrumentation/egg-router.js</h2><p>唯一需要修改的就是去掉 <a href="https://github.com/elastic/apm-agent-nodejs/blob/master/lib/instrumentation/modules/koa-router.js" target="_blank" rel="noopener">instrumentation/koa-router.js</a> 的版本验证。考虑到 egg 引入的 koa 版本都是同时期最新，无须担心 egg 自身版本问题。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> shimmer = <span class="built_in">require</span>(<span class="string">'elastic-apm-node/lib/instrumentation/shimmer'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">Router, agent, &#123; version, enabled &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!enabled) <span class="keyword">return</span> Router</span><br><span class="line"></span><br><span class="line">  agent.logger.debug(<span class="string">'shimming koa-router prototype.match function'</span>)</span><br><span class="line">  shimmer.wrap(Router.prototype, <span class="string">'match'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">orig</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params">_, method</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> matched = orig.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">typeof</span> method !== <span class="string">'string'</span>) &#123;</span><br><span class="line">        agent.logger.debug(<span class="string">'unexpected method type in koa-router prototype.match: %s'</span>, <span class="keyword">typeof</span> method)</span><br><span class="line">        <span class="keyword">return</span> matched</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (<span class="built_in">Array</span>.isArray(matched &amp;&amp; matched.pathAndMethod)) &#123;</span><br><span class="line">        <span class="keyword">const</span> layer = matched.pathAndMethod.find(<span class="function"><span class="keyword">function</span> (<span class="params">layer</span>) </span>&#123;</span><br><span class="line">          <span class="keyword">return</span> layer &amp;&amp; layer.opts &amp;&amp; layer.opts.end === <span class="literal">true</span></span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> path = layer &amp;&amp; layer.path</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">typeof</span> path === <span class="string">'string'</span>) &#123;</span><br><span class="line">          <span class="keyword">var</span> name = method + <span class="string">' '</span> + path</span><br><span class="line">          agent._instrumentation.setDefaultTransactionName(name)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          agent.logger.debug(<span class="string">'unexpected path type in koa-router prototype.match: %s'</span>, <span class="keyword">typeof</span> path)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        agent.logger.debug(<span class="string">'unexpected match result in koa-router prototype.match: %s'</span>, <span class="keyword">typeof</span> matched)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> matched</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> Router</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="添加补丁"><a href="#添加补丁" class="headerlink" title="添加补丁"></a>添加补丁</h1><p>回到最初的 elastic-apm.js 文件，在其中设置 addPatch，大功告成。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span>;</span><br><span class="line"><span class="keyword">const</span> apm = <span class="built_in">require</span>(<span class="string">'elastic-apm-node'</span>).start(&#123;</span><br><span class="line">  <span class="comment">// options</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">apm.addPatch(<span class="string">'egg'</span>, <span class="built_in">require</span>.resolve(<span class="string">'./instrumentation/egg'</span>))</span><br><span class="line">apm.addPatch(<span class="string">'@eggjs/router'</span>, <span class="built_in">require</span>.resolve(<span class="string">'./instrumentation/egg-router'</span>))</span><br></pre></td></tr></table></figure>
+
 
       
     </div>
@@ -570,7 +539,7 @@
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     
-    <a href="https://claude-ray.github.io/2018/09/02/node-image-captcha/" title="node图形验证码实现">https://claude-ray.github.io/2018/09/02/node-image-captcha/</a>
+    <a href="https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/" title="elastic-apm-node扩展篇——Egg">https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
@@ -586,11 +555,13 @@
         
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+            <a href="/tags/Node-js/" rel="tag"># Node.js</a>
           
-            <a href="/tags/Captcha/" rel="tag"># Captcha</a>
+            <a href="/tags/APM/" rel="tag"># APM</a>
           
-            <a href="/tags/Canvas/" rel="tag"># Canvas</a>
+            <a href="/tags/Elastic-APM/" rel="tag"># Elastic-APM</a>
+          
+            <a href="/tags/Egg/" rel="tag"># Egg</a>
           
         </div>
       
@@ -603,8 +574,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/23/ubuntu16to18md/" rel="next" title="ubuntu16.04升级18.04LTS">
-                <i class="fa fa-chevron-left"></i> ubuntu16.04升级18.04LTS
+              <a href="/2019/07/11/elastic-apm-node-express/" rel="next" title="elastic-apm-node扩展篇——Express">
+                <i class="fa fa-chevron-left"></i> elastic-apm-node扩展篇——Express
               </a>
             
           </div>
@@ -612,10 +583,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/12/old-sms-mas-nodejs/" rel="prev" title="Nodejs使用MySQL 4.1的问题解决">
-                Nodejs使用MySQL 4.1的问题解决 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -902,7 +869,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Requirements"><span class="nav-number">1.</span> <span class="nav-text">Requirements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tips"><span class="nav-number">2.</span> <span class="nav-text">Tips</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-创建canvas-ctx"><span class="nav-number">2.1.</span> <span class="nav-text">1. 创建canvas ctx</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-透明度"><span class="nav-number">2.2.</span> <span class="nav-text">2. 透明度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-背景色填充"><span class="nav-number">2.3.</span> <span class="nav-text">3. 背景色填充</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-写字"><span class="nav-number">2.4.</span> <span class="nav-text">4. 写字</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-干扰线"><span class="nav-number">2.5.</span> <span class="nav-text">5. 干扰线</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-干扰点"><span class="nav-number">2.6.</span> <span class="nav-text">6. 干扰点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应急方案"><span class="nav-number">3.</span> <span class="nav-text">应急方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#背景色"><span class="nav-number">3.1.</span> <span class="nav-text">背景色</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#空心字体"><span class="nav-number">3.2.</span> <span class="nav-text">空心字体</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lib选择"><span class="nav-number">4.</span> <span class="nav-text">Lib选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">5.</span> <span class="nav-text">结语</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在-egg-前-require"><span class="nav-number">2.</span> <span class="nav-text">在 egg 前 require</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方案一：修改启动文件"><span class="nav-number">2.1.</span> <span class="nav-text">方案一：修改启动文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案二：修改-package-json"><span class="nav-number">2.2.</span> <span class="nav-text">方案二：修改 package.json</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编写补丁"><span class="nav-number">3.</span> <span class="nav-text">编写补丁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#instrumentation-egg-js"><span class="nav-number">3.1.</span> <span class="nav-text">instrumentation/egg.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instrumentation-egg-router-js"><span class="nav-number">3.2.</span> <span class="nav-text">instrumentation/egg-router.js</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加补丁"><span class="nav-number">4.</span> <span class="nav-text">添加补丁</span></a></li></ol></div>
             
 
           </div>
