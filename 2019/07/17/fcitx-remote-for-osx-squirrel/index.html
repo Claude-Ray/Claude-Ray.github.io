@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.2">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.1.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.1.2">
+
+
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.1.2" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.2',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="初衷是解决中文输入法在 vim/evil 键位下的 insert 模式和 normal 模式的切换问题，实现 normal 模式自动切英文、insert 模式回复之前的输入状态。 当然各编辑器都有各自知名的解决方案，本次主要吐槽 Mac 平台 fcitx-remote-for-osx 和 squirrel 输入法间的“摩擦”。">
+<meta name="keywords" content="squirrel,Vim,emacs evil,input method">
+<meta property="og:type" content="article">
+<meta property="og:title" content="fcitx-remote-for-osx 设置 Squirrel 输入法切换">
+<meta property="og:url" content="https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/index.html">
+<meta property="og:site_name" content="Claude&#39;s Home">
+<meta property="og:description" content="初衷是解决中文输入法在 vim/evil 键位下的 insert 模式和 normal 模式的切换问题，实现 normal 模式自动切英文、insert 模式回复之前的输入状态。 当然各编辑器都有各自知名的解决方案，本次主要吐槽 Mac 平台 fcitx-remote-for-osx 和 squirrel 输入法间的“摩擦”。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-17T12:57:29.543Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="fcitx-remote-for-osx 设置 Squirrel 输入法切换">
+<meta name="twitter:description" content="初衷是解决中文输入法在 vim/evil 键位下的 insert 模式和 normal 模式的切换问题，实现 normal 模式自动切英文、insert 模式回复之前的输入状态。 当然各编辑器都有各自知名的解决方案，本次主要吐槽 Mac 平台 fcitx-remote-for-osx 和 squirrel 输入法间的“摩擦”。">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+
+
+
+  
+  
+  <link rel="canonical" href="https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>fcitx-remote-for-osx 设置 Squirrel 输入法切换 | Claude's Home</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claude's Home</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">Searching</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">fcitx-remote-for-osx 设置 Squirrel 输入法切换
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-07-17 20:55:30 / Modified: 20:57:29" itemprop="dateCreated datePublished" datetime="2019-07-17T20:55:30+08:00">2019-07-17</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/随笔/" itemprop="url" rel="index"><span itemprop="name">随笔</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+          
+            <br>
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article: </span>
+                
+                <span title="Symbols count in article:">
+                  728
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  2 mins.
+                </span>
+              
+            </div>
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>初衷是解决中文输入法在 vim/evil 键位下的 <code>insert</code> 模式和 <code>normal</code> 模式的切换问题，实现 <code>normal</code> 模式自动切英文、<code>insert</code> 模式回复之前的输入状态。</p>
+<p>当然各编辑器都有各自知名的解决方案，本次主要吐槽 Mac 平台 fcitx-remote-for-osx 和 squirrel 输入法间的“摩擦”。</p>
+<a id="more"></a>
+
+<p>在读本篇之前，默认你已经按照 fcitx-remote-for-osx <a href="https://github.com/xcodebuild/fcitx-remote-for-osx" target="_blank" rel="noopener">文档</a>进行了相关操作，并最终遇到了切换失败的问题，否则下文将对你没有帮助。</p>
+<p>本来文档中指定的安装方法很简单</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install fcitx-remote-for-osx --with-input-method=&lt;method&gt;</span><br></pre></td></tr></table></figure>
+
+<p>可是目前 homebrew 的 formula 移除了 options，无法指定 <code>--with-input-method</code>，上面指令的直接结果将是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Error: invalid option: --with-input-method=squirrel-rime</span><br></pre></td></tr></table></figure>
+
+<p>最初参考这个 <a href="https://github.com/xcodebuild/fcitx-remote-for-osx/issues/38#issuecomment-468114160" target="_blank" rel="noopener">issue</a>，通过 brew cap 安装 fcitx-remote-for-osx</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">brew tap codefalling/fcitx-remote-for-osx</span><br><span class="line">brew install codefalling/fcitx-remote-for-osx/fcitx-remote-for-osx --with-squirrel-rime</span><br></pre></td></tr></table></figure>
+
+<p>但是安装版本太老，引发了新的问题，无论是在 terminal，还是在 vim、emacs、vscode 中，只能切换到英文，无法切回 squirrel。</p>
+<blockquote>
+<p>可以执行 <code>fcitx-remote -t</code> 来测试能否反复切换中英文输入法。</p>
+</blockquote>
+<p>这时候通过 fcitx-remote-for-osx 的 <a href="https://github.com/xcodebuild/fcitx-remote-for-osx/blob/master/build.py" target="_blank" rel="noopener">build</a> 文件，发现 squirrel 有两种 bundle identitier</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">InputMethod = &#123;</span><br><span class="line">    <span class="string">'squirrel-rime'</span>: <span class="string">'com.googlecode.rimeime.inputmethod.Squirrel.Rime'</span>,</span><br><span class="line">    <span class="string">'squirrel-rime-upstream'</span>: <span class="string">'im.rime.inputmethod.Squirrel.Rime'</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>查看已安装rime的 Identifier</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">osascript -e <span class="string">'id of app "squirrel"'</span></span><br></pre></td></tr></table></figure>
+
+<p>结果可能是 <code>im.rime.*</code> 或 <code>com.googlecode.rimeime.*</code>。我这里的输出为 <code>im.rime.inputmethod.Squirrel</code>，说明要使用 <code>squirrel-rime-upstream</code> 作为编译选项。</p>
+<p>可惜 tap 安装的旧版没有这个选项，最后决定直接用源码编译，等新版本修复了再回归 homebrew 管理。<code>build.py</code> 文件内容本来就简单，并且作者在 <a href="https://github.com/xcodebuild/fcitx-remote-for-osx/tree/feature/special-input-method#install" target="_blank" rel="noopener">special-input-method分支</a> 提供了编译安装的文档，效果和 homebrew install 是一致的。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/dangxuandev/fcitx-remote-for-osx</span><br><span class="line"><span class="built_in">cd</span> fcitx-remote-for-osx</span><br><span class="line">./build.py build squirrel-rime-upstream</span><br><span class="line">cp ./fcitx-remote-squirrel-rime-upstream /usr/<span class="built_in">local</span>/bin/fcitx-remote</span><br><span class="line">ln -snf /usr/<span class="built_in">local</span>/bin/fcitx-remote /usr/<span class="built_in">local</span>/bin/fcitx-remote-squirrel-rime</span><br></pre></td></tr></table></figure>
+
+<p>基本可以正常使用了，也没有出现切换延迟较高的问题，但偶尔遇到 squirrel 卡住，无法切换中英，在 squirrel issues 可以看到了有许多相关 bug。但是并没有人给出终极的解决方案，佛振认为这是其他软件的问题，暂不予关注，等他参与修复可能遥遥无期。详见这个已关闭的 <a href="https://github.com/rime/squirrel/issues/292" target="_blank" rel="noopener">issue</a></p>
+<p>在写这篇文章的过程中，就触发了一次卡死状态……但切换输入法、或切换窗口就可以恢复。而在 VSCode 配置 vim 插件的<a href="https://github.com/VSCodeVim/Vim#input-method" target="_blank" rel="noopener">自动切换</a>后 100% 重现。</p>
+<p>毕竟中文输入场景很少，完美输入方案在个人看来是不存在的，也就不再多折腾它了，暂且容忍一段时间，等出现频率高了再找解决方案吧。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Claude Ray</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/" title="fcitx-remote-for-osx 设置 Squirrel 输入法切换">https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/squirrel/" rel="tag"># squirrel</a>
+          
+            <a href="/tags/Vim/" rel="tag"># Vim</a>
+          
+            <a href="/tags/emacs-evil/" rel="tag"># emacs evil</a>
+          
+            <a href="/tags/input-method/" rel="tag"># input method</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/12/elastic-apm-node-egg/" rel="next" title="elastic-apm-node 扩展篇 —— Egg">
+                <i class="fa fa-chevron-left"></i> elastic-apm-node 扩展篇 —— Egg
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Claude Ray">
+            
+              <p class="site-author-name" itemprop="name">Claude Ray</p>
+              <div class="site-description motion-element" itemprop="description">Now or Never</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">categories</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">38</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/Claude-Ray" title="GitHub &rarr; https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://twitter.com/Claude__Ray" title="Twitter &rarr; https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam &rarr; https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://github.com/nebulae-pan" title="https://github.com/nebulae-pan" rel="noopener" target="_blank">Nebulae Pan</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+
+      
+
+    </div>
+  </aside>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-bolt"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claude Ray</span>
+
+  
+
+  
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span class="post-meta-item-text">Symbols count total: </span>
+    <span title="Symbols count total">33.3k</span>
+  
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homepage</a>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.2"></script>
+
+  <script src="/js/motion.js?v=7.1.2"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.2"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.2"></script>
+
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+
+  
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
