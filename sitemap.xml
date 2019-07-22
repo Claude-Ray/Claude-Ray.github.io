@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/05/19/node-apm-product-research/</loc>
+    
+    <lastmod>2019-07-22T04:13:12.242Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</loc>
     
     <lastmod>2019-07-17T12:57:29.543Z</lastmod>
@@ -19,13 +26,6 @@
     <loc>https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/</loc>
     
     <lastmod>2019-07-12T14:06:40.788Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2019/05/19/node-apm-product-research/</loc>
-    
-    <lastmod>2019-07-01T11:41:16.829Z</lastmod>
     
   </url>
   
