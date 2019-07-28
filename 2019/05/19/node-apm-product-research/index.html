@@ -103,7 +103,7 @@
 <meta property="og:description" content="近期调研了当下 Node.js 主流的 APM 产品，为期不到一周，本文以介绍基本状况为主，引申对 APM 中间件选型乃至自研的一些思考。APM 虽和业务关系紧密，但实属于运维管理范畴，笔者从业务的角度思考，易受限于使用场景，请路过的读者及时指教问题。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://claude-ray.github.io/image/node-apm-product-research/apm-coneptual-framework.jpg">
-<meta property="og:updated_time" content="2019-07-22T04:13:12.242Z">
+<meta property="og:updated_time" content="2019-07-28T09:07:39.696Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Node.js APM 产品调研">
 <meta name="twitter:description" content="近期调研了当下 Node.js 主流的 APM 产品，为期不到一周，本文以介绍基本状况为主，引申对 APM 中间件选型乃至自研的一些思考。APM 虽和业务关系紧密，但实属于运维管理范畴，笔者从业务的角度思考，易受限于使用场景，请路过的读者及时指教问题。">
@@ -402,7 +402,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-07-22 12:13:12" itemprop="dateModified" datetime="2019-07-22T12:13:12+08:00">2019-07-22</time>
+                <time title="Modified: 2019-07-28 17:07:39" itemprop="dateModified" datetime="2019-07-28T17:07:39+08:00">2019-07-28</time>
               
             
           </span>
@@ -450,7 +450,7 @@
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
                 <span title="Symbols count in article:">
-                  3.6k
+                  3.7k
                 </span>
               
 
@@ -603,7 +603,7 @@
 <h3 id="分布式部署"><a href="#分布式部署" class="headerlink" title="分布式部署"></a>分布式部署</h3><p>能否识别集群的部署状况。</p>
 <h3 id="代码侵入"><a href="#代码侵入" class="headerlink" title="代码侵入"></a>代码侵入</h3><p>对代码侵入程度越低，接入越方便，避免对业务造成影响。</p>
 <p>虽然移除一个模块时代码的改动大小是评判侵入性高低的一般标准，并且下面也将遵循此标准来进行评价。但必须留意，除了引入 SDK 的方式，如何使用 async hook、如何对第三方库做 Patch(类似 Java 动态字节码探针)，再低的侵入都可能埋下隐患。</p>
-<h3 id="社区活跃度"><a href="#社区活跃度" class="headerlink" title="社区活跃度"></a>社区活跃度</h3><p>分技术层面的参考，但还是很重要的指标。可以参考 npm 最近一个月的平局周下载量。</p>
+<h3 id="社区活跃度"><a href="#社区活跃度" class="headerlink" title="社区活跃度"></a>社区活跃度</h3><p>社区活力是很重要的软指标，但我们拿不到服务商未公开的统计数据，只能以 npm 最近的下载量作为参考。</p>
 <h3 id="数据安全"><a href="#数据安全" class="headerlink" title="数据安全"></a>数据安全</h3><p>只有开源和小部分商业方案支持数据内网存储，这样才能最大地保障数据安全。</p>
 <p>但如果项目本身不设置重要数据，这个问题就得结合自身情况重新考量。</p>
 <h3 id="外部依赖"><a href="#外部依赖" class="headerlink" title="外部依赖"></a>外部依赖</h3><p>如果选择自行存储数据，就需要考虑部署数据库等依赖的成本。</p>
