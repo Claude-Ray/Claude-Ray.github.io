@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/08/01/travis-npm-cache/</loc>
+    
+    <lastmod>2019-08-01T15:17:12.726Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/</loc>
     
     <lastmod>2019-07-30T08:42:35.397Z</lastmod>
