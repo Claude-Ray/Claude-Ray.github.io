@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/08/08/node-hang-up/</loc>
+    
+    <lastmod>2019-08-08T15:58:32.110Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://claude-ray.github.io/2019/05/23/node-graceful-server/</loc>
+    
+    <lastmod>2019-08-08T15:52:43.269Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/08/01/travis-npm-cache/</loc>
     
     <lastmod>2019-08-01T15:17:12.726Z</lastmod>
@@ -47,13 +61,6 @@
     <loc>https://claude-ray.github.io/2019/06/28/hexo-theme-next-upgrade-7/</loc>
     
     <lastmod>2019-06-28T16:01:05.562Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2019/05/23/node-graceful-server/</loc>
-    
-    <lastmod>2019-06-14T10:12:44.632Z</lastmod>
     
   </url>
   
