@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="Claude&#39;s Home">
 <meta property="og:description" content="Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。  该算法来自 nginx 的一次 commit：Upstream: smooth weighted round-robin balancing  在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-10T08:34:15.927Z">
+<meta property="og:updated_time" content="2019-08-10T08:56:05.831Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx SWRR 算法解读">
 <meta name="twitter:description" content="Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。  该算法来自 nginx 的一次 commit：Upstream: smooth weighted round-robin balancing  在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，">
@@ -383,7 +383,7 @@
                 
               
 
-              <time title="Created: 2019-08-10 13:13:49 / Modified: 16:34:15" itemprop="dateCreated datePublished" datetime="2019-08-10T13:13:49+08:00">2019-08-10</time>
+              <time title="Created: 2019-08-10 13:13:49 / Modified: 16:56:05" itemprop="dateCreated datePublished" datetime="2019-08-10T13:13:49+08:00">2019-08-10</time>
             
 
             
@@ -502,7 +502,21 @@
 <td>0</td>
 </tr>
 </tbody></table>
-<p>经过加权<br>|CWa|CWb|CWc|<br>|—|—|—|<br>|Wa|Wb|Wc|</p>
+<p>经过加权</p>
+<table>
+<thead>
+<tr>
+<th>CWa</th>
+<th>CWb</th>
+<th>CWc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Wa</td>
+<td>Wb</td>
+<td>Wc</td>
+</tr>
+</tbody></table>
 <p>W 中最大值为 Wa，减去 Wn，可以表示为 CWa = Wa - Wn = 0 - (Wb + Wc)</p>
 <table>
 <thead>
@@ -523,12 +537,40 @@
 <td>Wc</td>
 </tr>
 </tbody></table>
-<p>依此类推，第二次选择之后，CW 变为<br>|CWa|CWb|CWc|<br>|—|—|—|<br>|2 * Wa - Wn * 2|2 * Wb|2 * Wc|</p>
+<p>依此类推，第二次选择之后，CW 变为</p>
+<table>
+<thead>
+<tr>
+<th>CWa</th>
+<th>CWb</th>
+<th>CWc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>2 * Wa - Wn * 2</td>
+<td>2 * Wb</td>
+<td>2 * Wc</td>
+</tr>
+</tbody></table>
 <p>根据算法，无论选择哪个节点，每次轮询的操作等于降低最大的权重，逐步提高最小值的权重，但 CW 的总和始终为 0。</p>
 <p>不妨设 n = n1 + n2 + n3，每次选择的结果都可以表示为</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 = n * Wa + n * Wb + n * Wc - n * Wn</span><br><span class="line">  = (n * Wa - n1 * Wn) + (n * Wb - n2 * Wn) + (n * Wc - n3 * Wn)</span><br><span class="line">  = (n ＊ Wa - n * Wn) + Wb + n * Wc</span><br></pre></td></tr></table></figure>
 
-<p>第 n 次选择之后，CW 等同于<br>|CWa|CWb|CWc|<br>|—|—|—|<br>|n * Wa - Wn * n|n * Wb|n * Wc|</p>
+<p>第 n 次选择之后，CW 等同于</p>
+<table>
+<thead>
+<tr>
+<th>CWa</th>
+<th>CWb</th>
+<th>CWc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>n * Wa - Wn * n</td>
+<td>n * Wb</td>
+<td>n * Wc</td>
+</tr>
+</tbody></table>
 <p>因此当选择次数达到 Wn 时，平衡关系为</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Wn * 0 = Wn * (Wa + Wb + Wc - Wn)</span><br><span class="line">       = (Wn * Wa - Wa * Wn) + (Wn * Wb - Wb * Wn) + (Wn * Wc - Wc * Wn)</span><br></pre></td></tr></table></figure>
 
