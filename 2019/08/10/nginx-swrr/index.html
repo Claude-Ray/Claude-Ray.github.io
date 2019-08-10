@@ -94,16 +94,18 @@
 
 
 
-  <meta name="description" content="Now or Never">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Claude&#39;s Home">
-<meta property="og:url" content="https://claude-ray.github.io/archives/page/4/index.html">
+  <meta name="description" content="Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。  该算法来自 nginx 的一次 commit：Upstream: smooth weighted round-robin balancing  在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，">
+<meta name="keywords" content="Nginx,load balance">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nginx SWRR 算法解读">
+<meta property="og:url" content="https://claude-ray.github.io/2019/08/10/nginx-swrr/index.html">
 <meta property="og:site_name" content="Claude&#39;s Home">
-<meta property="og:description" content="Now or Never">
+<meta property="og:description" content="Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。  该算法来自 nginx 的一次 commit：Upstream: smooth weighted round-robin balancing  在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-08-10T08:34:15.927Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Claude&#39;s Home">
-<meta name="twitter:description" content="Now or Never">
+<meta name="twitter:title" content="Nginx SWRR 算法解读">
+<meta name="twitter:description" content="Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。  该算法来自 nginx 的一次 commit：Upstream: smooth weighted round-robin balancing  在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，">
 
 
 
@@ -113,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="https://claude-ray.github.io/archives/page/4/">
+  <link rel="canonical" href="https://claude-ray.github.io/2019/08/10/nginx-swrr/">
 
 
 
@@ -123,7 +125,7 @@
   };
 </script>
 
-  <title>Archive | Claude's Home</title>
+  <title>Nginx SWRR 算法解读 | Claude's Home</title>
   
 
 
@@ -171,7 +173,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -277,7 +279,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -297,28 +299,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -344,326 +324,317 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/08/10/nginx-swrr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Home">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Nginx SWRR 算法解读
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-10 13:13:49 / Modified: 16:34:15" itemprop="dateCreated datePublished" datetime="2019-08-10T13:13:49+08:00">2019-08-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+          
+            <br>
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Symbols count in article: </span>
+                
+                <span title="Symbols count in article:">
+                  695
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Reading time &asymp;</span>
+                
+                <span title="Reading time">
+                  2 mins.
+                </span>
+              
+            </div>
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-      <span class="archive-page-counter">
-        
-        
-         
-        
-        OK! 38 posts in total. Keep on posting.
-      </span>
       
 
       
+        <p>Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。</p>
+<blockquote>
+<p>该算法来自 nginx 的一次 commit：<a href="https://github.com/phusion/nginx/commit/27e94984486058d73157038f7950a0a36ecc6e35" target="_blank" rel="noopener">Upstream: smooth weighted round-robin balancing</a></p>
+</blockquote>
+<p>在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，并阅读了 SWRR 的实现。</p>
+<p>介绍此算法的文章有很多，但还没发现哪里用数学角度给出证明过程的，虽然并不复杂，这里把自己粗劣的思路分享一下。为了便于理解，只考虑算法核心的 current_weight，忽略受异常波动影响的 effective_weight。</p>
+<a id="more"></a>
 
-        
-        
+<hr>
+<p>假设有三个服务器节点 A B C，它们的权重分别为 Wa、Wb、Wc 并保持不变。根据 SWRR 算法，用 CWa CWb CWc 分别表示每台服务器的当前权重，初始值均为 0。Wn 表示所有服务器节点权重的总和，即 Wn = Wa + Wb + Wc。</p>
+<p>每次开始选择，各节点的 CW 会增加对应 W 值的大小。从中选择 CW 最大的节点，并将其值减去 Wn。</p>
+<p>不妨设 A 为权重最大的节点，首次开始选择时，当前权重均为 0</p>
+<table>
+<thead>
+<tr>
+<th>CWa</th>
+<th>CWb</th>
+<th>CWc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<p>经过加权<br>|CWa|CWb|CWc|<br>|—|—|—|<br>|Wa|Wb|Wc|</p>
+<p>W 中最大值为 Wa，减去 Wn，可以表示为 CWa = Wa - Wn = 0 - (Wb + Wc)</p>
+<table>
+<thead>
+<tr>
+<th>CWa</th>
+<th>CWb</th>
+<th>CWc</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>1 * Wa - Wn * 1</td>
+<td>Wb</td>
+<td>Wc</td>
+</tr>
+<tr>
+<td>-(Wb+Wc)</td>
+<td>Wb</td>
+<td>Wc</td>
+</tr>
+</tbody></table>
+<p>依此类推，第二次选择之后，CW 变为<br>|CWa|CWb|CWc|<br>|—|—|—|<br>|2 * Wa - Wn * 2|2 * Wb|2 * Wc|</p>
+<p>根据算法，无论选择哪个节点，每次轮询的操作等于降低最大的权重，逐步提高最小值的权重，但 CW 的总和始终为 0。</p>
+<p>不妨设 n = n1 + n2 + n3，每次选择的结果都可以表示为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 = n * Wa + n * Wb + n * Wc - n * Wn</span><br><span class="line">  = (n * Wa - n1 * Wn) + (n * Wb - n2 * Wn) + (n * Wc - n3 * Wn)</span><br><span class="line">  = (n ＊ Wa - n * Wn) + Wb + n * Wc</span><br></pre></td></tr></table></figure>
+
+<p>第 n 次选择之后，CW 等同于<br>|CWa|CWb|CWc|<br>|—|—|—|<br>|n * Wa - Wn * n|n * Wb|n * Wc|</p>
+<p>因此当选择次数达到 Wn 时，平衡关系为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Wn * 0 = Wn * (Wa + Wb + Wc - Wn)</span><br><span class="line">       = (Wn * Wa - Wa * Wn) + (Wn * Wb - Wb * Wn) + (Wn * Wc - Wc * Wn)</span><br></pre></td></tr></table></figure>
+
+<p>此时 CW 又重新回到 0 的起点，证得此轮询是一个周期，且周期长度等于权重之和，每个节点分别被选中了等于各自权重值的次数。</p>
+<p>更多节点的证明同上。</p>
+<hr>
+<p>相比普通的轮询选择，高权重的节点在此过程中不断让权给低权节点，实现平滑轮询。</p>
+<p>至于增加了的 effective_weight 概念，变数在于每次选中后 CW 减去的 Wn 总权重变为总当前权重。随着代码阅读很容易理解，就不单独证明了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+      <div>
         
 
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Claude Ray</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    
+    <a href="https://claude-ray.github.io/2019/08/10/nginx-swrr/" title="Nginx SWRR 算法解读">https://claude-ray.github.io/2019/08/10/nginx-swrr/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
         
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
+        
+        <div class="post-tags">
+          
+            <a href="/tags/Nginx/" rel="tag"># Nginx</a>
+          
+            <a href="/tags/load-balance/" rel="tag"># load balance</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/08/node-hang-up/" rel="next" title="记一次 Node.js 进程挂起的 BUG 追踪">
+                <i class="fa fa-chevron-left"></i> 记一次 Node.js 进程挂起的 BUG 追踪
+              </a>
+            
           </div>
-        
-        
 
-        
+          <span class="post-nav-divider"></span>
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2017/12/23/Array-map-parseInt-为什么返回了NaN/" itemprop="url">
+          <div class="post-nav-prev post-nav-item">
             
-              <span itemprop="name">Array.map(parseInt)为什么返回了NaN</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-12-23T19:29:48+08:00" content="2017-12-23">
-          12-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+          </div>
+        </div>
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2017/12/20/缓存不当至服务崩溃/" itemprop="url">
-            
-              <span itemprop="name">缓存不当至服务崩溃</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-12-20T22:45:20+08:00" content="2017-12-20">
-          12-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2017/12/05/vscode-evernote云笔记/" itemprop="url">
-            
-              <span itemprop="name">vscode+evernote云笔记</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-12-05T23:40:53+08:00" content="2017-12-05">
-          12-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2017/10/05/lodash-3-to-4/" itemprop="url">
-            
-              <span itemprop="name">lodash3升级4踩坑</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-10-05T09:15:09+08:00" content="2017-10-05">
-          10-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2017/10/05/node-gbk-hex/" itemprop="url">
-            
-              <span itemprop="name">Node获取GBK编码“字符串”</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-10-05T08:50:46+08:00" content="2017-10-05">
-          10-05
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2017/07/24/Express源码分析/" itemprop="url">
-            
-              <span itemprop="name">Express源码分析</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-07-24T22:54:05+08:00" content="2017-07-24">
-          07-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2017/06/18/Hexo搭建过程/" itemprop="url">
-            
-              <span itemprop="name">Hexo搭建过程</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-06-18T22:09:28+08:00" content="2017-06-18">
-          06-18
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2017/06/14/hello-world/" itemprop="url">
-            
-              <span itemprop="name">Hello World</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-06-14T00:29:04+08:00" content="2017-06-14">
-          06-14
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-    </div>
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -1057,6 +1028,10 @@ Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homep
 
 
   
+  <script src="/js/scrollspy.js?v=7.1.2"></script>
+<script src="/js/post-details.js?v=7.1.2"></script>
+
+
 
   
 
@@ -1072,6 +1047,8 @@ Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homep
 
   
 
+
+  
 
 
   

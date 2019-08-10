@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/08/10/nginx-swrr/</loc>
+    
+    <lastmod>2019-08-10T08:34:15.927Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/08/08/node-hang-up/</loc>
     
     <lastmod>2019-08-08T15:58:32.110Z</lastmod>
