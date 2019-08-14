@@ -99,17 +99,17 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx SWRR 算法解读">
 <meta property="og:url" content="https://claude-ray.github.io/2019/08/10/nginx-swrr/index.html">
-<meta property="og:site_name" content="Claude&#39;s Home">
+<meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。  该算法来自 nginx 的一次 commit：Upstream: smooth weighted round-robin balancing  在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-10T08:56:05.831Z">
+<meta property="og:updated_time" content="2019-08-14T14:40:46.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx SWRR 算法解读">
 <meta name="twitter:description" content="Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。  该算法来自 nginx 的一次 commit：Upstream: smooth weighted round-robin balancing  在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，">
 
 
 
-  <link rel="alternate" href="/atom.xml" title="Claude's Home" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
 
 
 
@@ -125,7 +125,7 @@
   };
 </script>
 
-  <title>Nginx SWRR 算法解读 | Claude's Home</title>
+  <title>Nginx SWRR 算法解读 | Claude's Blog</title>
   
 
 
@@ -184,7 +184,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Claude's Home</span>
+        <span class="site-title">Claude's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -349,7 +349,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Claude's Home">
+      <meta itemprop="name" content="Claude's Blog">
     </span>
 
     
@@ -383,12 +383,24 @@
                 
               
 
-              <time title="Created: 2019-08-10 13:13:49 / Modified: 16:56:05" itemprop="dateCreated datePublished" datetime="2019-08-10T13:13:49+08:00">2019-08-10</time>
+              <time title="Created: 2019-08-10 13:13:49" itemprop="dateCreated datePublished" datetime="2019-08-10T13:13:49+08:00">2019-08-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-08-14 22:40:46" itemprop="dateModified" datetime="2019-08-14T22:40:46+08:00">2019-08-14</time>
               
             
           </span>
@@ -436,7 +448,7 @@
                   <span class="post-meta-item-text">Symbols count in article: </span>
                 
                 <span title="Symbols count in article:">
-                  695
+                  741
                 </span>
               
 
@@ -579,6 +591,7 @@
 <hr>
 <p>相比普通的轮询选择，高权重的节点在此过程中不断让权给低权节点，实现平滑轮询。</p>
 <p>至于增加了的 effective_weight 概念，变数在于每次选中后 CW 减去的 Wn 总权重变为总当前权重。随着代码阅读很容易理解，就不单独证明了。</p>
+<h2 id="update"><a href="#update" class="headerlink" title="update"></a>update</h2><p>碰巧读到了这篇 <a href="https://tenfy.cn/2018/11/12/smooth-weighted-round-robin/" target="_blank" rel="noopener">nginx平滑的基于权重轮询算法分析</a>，里面证明严谨多了，XD，是我之前想看的数学推理，在此推荐。</p>
 
       
     </div>
@@ -696,8 +709,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -935,6 +957,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#update"><span class="nav-number">1.</span> <span class="nav-text">update</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
