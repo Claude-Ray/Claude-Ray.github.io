@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/08/24/remove-easyconnect-daemons-on-mac/</loc>
+    
+    <lastmod>2019-08-24T06:29:54.391Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</loc>
+    
+    <lastmod>2019-08-24T06:18:55.090Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/08/10/nginx-swrr/</loc>
     
     <lastmod>2019-08-14T14:40:46.918Z</lastmod>
@@ -40,13 +54,6 @@
     <loc>https://claude-ray.github.io/2019/05/19/node-apm-product-research/</loc>
     
     <lastmod>2019-07-28T09:07:39.696Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</loc>
-    
-    <lastmod>2019-07-17T12:57:29.543Z</lastmod>
     
   </url>
   
