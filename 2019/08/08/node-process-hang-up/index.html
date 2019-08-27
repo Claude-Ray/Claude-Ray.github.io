@@ -98,11 +98,11 @@
 <meta name="keywords" content="Node.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次 Node.js 进程挂起的 BUG 追踪">
-<meta property="og:url" content="https://claude-ray.github.io/2019/08/08/node-hang-up/index.html">
+<meta property="og:url" content="https://claude-ray.github.io/2019/08/08/node-process-hang-up/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="前言先把干货放前面，辅助排查的 npm 模块有：wtfnode，why-is-node-running，active-handles 等，使用方法差不多如下，可以查看各自的文档。 123456const wtf = require(&apos;wtfnode&apos;);// your codes// track downwtf.dump();  也可以更深入地排查，因为上述模块的核心都是 Node.js 文档未标">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-08T15:58:32.110Z">
+<meta property="og:updated_time" content="2019-08-27T10:08:57.380Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次 Node.js 进程挂起的 BUG 追踪">
 <meta name="twitter:description" content="前言先把干货放前面，辅助排查的 npm 模块有：wtfnode，why-is-node-running，active-handles 等，使用方法差不多如下，可以查看各自的文档。 123456const wtf = require(&apos;wtfnode&apos;);// your codes// track downwtf.dump();  也可以更深入地排查，因为上述模块的核心都是 Node.js 文档未标">
@@ -115,7 +115,7 @@
 
   
   
-  <link rel="canonical" href="https://claude-ray.github.io/2019/08/08/node-hang-up/">
+  <link rel="canonical" href="https://claude-ray.github.io/2019/08/08/node-process-hang-up/">
 
 
 
@@ -340,7 +340,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/08/08/node-hang-up/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/08/08/node-process-hang-up/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -383,12 +383,24 @@
                 
               
 
-              <time title="Created: 2019-08-08 21:31:02 / Modified: 23:58:32" itemprop="dateCreated datePublished" datetime="2019-08-08T21:31:02+08:00">2019-08-08</time>
+              <time title="Created: 2019-08-08 21:31:02" itemprop="dateCreated datePublished" datetime="2019-08-08T21:31:02+08:00">2019-08-08</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-08-27 18:08:57" itemprop="dateModified" datetime="2019-08-27T18:08:57+08:00">2019-08-27</time>
               
             
           </span>
@@ -524,7 +536,7 @@
 </ol>
 <p>补充方案：<br>通过 process.env 向 apm 传递自定义参数，便于控制配置项。</p>
 <p>最后 apm 启动头部长这个样子</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义 APM_ENABLE 作为开关条件</span></span><br><span class="line"><span class="keyword">const</span> enableAPM = process.env.APM_ENABLE || process.env.NODE_ENV || !process.env.ETS_REGISTER_PID;</span><br><span class="line"><span class="keyword">if</span> (enableAPM) &#123;</span><br><span class="line">  <span class="comment">// 除了 NODE_ENV，也可以使用自定义的 ENV</span></span><br><span class="line">  <span class="keyword">const</span> options = getOptionsByENV(process.env.NODE_ENV)</span><br><span class="line">  apm.start(options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义 APM_ENABLE 作为开关条件</span></span><br><span class="line"><span class="keyword">const</span> enableAPM = process.env.APM_ENABLE || (process.env.NODE_ENV &amp;&amp; !process.env.ETS_REGISTER_PID);</span><br><span class="line"><span class="keyword">if</span> (enableAPM) &#123;</span><br><span class="line">  <span class="comment">// 除了 NODE_ENV，也可以使用自定义的 ENV</span></span><br><span class="line">  <span class="keyword">const</span> options = getOptionsByENV(process.env.NODE_ENV)</span><br><span class="line">  apm.start(options);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>虽然没结论，但进程挂起的根本原因是没错的。找 BUG 最耗时的是方向歪了，试过用干净的 Node.js 代码模拟，没能复现问题。而 wtfnode 和其他跟踪模块，因为 callsite 覆盖问题，也没能提供清晰的调用栈，或许应该考虑从修复 callsite 这个方向入手？</p>
 <p>To be continue? </p>
@@ -563,7 +575,7 @@
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     
-    <a href="https://claude-ray.github.io/2019/08/08/node-hang-up/" title="记一次 Node.js 进程挂起的 BUG 追踪">https://claude-ray.github.io/2019/08/08/node-hang-up/</a>
+    <a href="https://claude-ray.github.io/2019/08/08/node-process-hang-up/" title="记一次 Node.js 进程挂起的 BUG 追踪">https://claude-ray.github.io/2019/08/08/node-process-hang-up/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
