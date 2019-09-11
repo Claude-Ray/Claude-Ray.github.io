@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2019-08-24T06:29:54.391Z</updated>
+  <updated>2019-09-11T15:00:57.213Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>From Journeyman to Master</title>
+    <link href="https://claude-ray.github.io/2019/09/10/from-journeyman-to-master/"/>
+    <id>https://claude-ray.github.io/2019/09/10/from-journeyman-to-master/</id>
+    <published>2019-09-10T15:45:17.000Z</published>
+    <updated>2019-09-11T15:00:57.213Z</updated>
+    
+    <content type="html"><![CDATA[<p>《 The Pragmatic Programmer: From Journeyman to Master 》这本书已加入愿望单许久，最近终于在通勤路上读完了。对于处于或将处于熟练工阶段的程序员，毫无疑问这是本值得用心阅读的书，因此我也写一下短评和推荐理由。</p><p>作为思想指导性读物，首先它具备不挑剔阅读设备的优点，电子书随处可见的内链（实体书则是页码）可以方便地跳到引用的章节，也能帮读者构建知识的关联体系，因此你可以放心挑选你感兴趣的专题。</p><p>其次，它比《 Code Complete 》更凝练，比《 Unix 编程艺术》更平和。尤其推荐给所有所谓的中级程序员，这一点也体现在了书的副标题上 —— 面向读者为 <code>journeyman</code>，也就是训练有素的熟手。</p><p>虽然中文版将其译为“小工”，私以为也得是足够可靠的小工，更像是许多大牛自谦的说辞，而不代表毫无软件工程基础的 <code>newbie</code>。对于真正的新人而言，阅读此类书籍所遭受的影响可能是深远的，却也可能不及耳旁风。因为随着当代软件工程的普及程度，阅读时多半会觉得这些道理显而易见、理所当然，“几乎都是课堂和应试中学过的”，这种感觉在《 Code Complete 》更甚。建议没有多少工作经验的人，先去读《 Clean Code 》和 《 Refactor 》，实践更为重要，至于编程思考类的读物凭兴趣看一本足以。</p><p>上面是说对未出师的准程序员意义相对较小，而下山历练之人，亲历过绝望的 deadline、妥协的设计以及巨大的屎山，不论将它们克服还是被击败，都更能体会到为何如此常识便是属于大师的技巧与原则。在阅读过程中，就像面向一面镜子自我矫正，你可以不断反思近段时间的行为、状态是否得当。</p><p>接下来分享几个阅读本书的 tips：</p><ul><li>类似《人月神话》，本书用到了大量的比喻，只凭目录的小标题无法直观地理解作者想表达的主旨。放在最后的附录《Quick Reference Guide》原本是用作复习的，但其实它非常值得在正文前初步阅读，作为章节目录的补充，非常契合跳越式阅读的需要。</li><li>英文原版更利于理解作者的思想，透过标题也得承认这一点。</li><li>由于个人记笔记经常疏于回顾，为了提高转化效率，就得强迫自己复习思考。我把《Quick Reference Guide》默背着一字一句地敲了下来，效率不算高，但终究是极短时间内让自己多了一些复习过程，所有不清晰的点也在这一步排除掉了。作为一种输出形式，时间性价比极高。</li></ul><p>然后聊聊对个人印象最深的几个点，虽然不擅长写读后感，但假设有人翻到了这篇博客，希望可以抛砖引玉。</p><ul><li>没有完美的软件，不要任何时候都奉行完美主义，尤其要知道什么时候该停下来。这个对我而言是最为欠缺的，吹毛求疵耗费了大量时间和精力，但从自身角度很难评估哪些时候哪种做法是正确的，正所谓当局者迷。我能想到的对策，除了自省，还必须要走出自己的小圈子，多吸取他人经验。</li><li>不要容忍低劣的设计，留着祸患无穷，盘它，一次不行多来几次，不需要犹豫。我经常认为是自己没有考量好才没有动手，回想起来其实就是犹豫，错失了很多磨练的机会。计算常有遗漏，而踩坑则不然，真动起手来才能弄明白设计者的初衷。只有你不希望为这个软件续命时才可以忽视它……（大误</li><li>提供解决方案，而不是借口。就算心底没想着找借口抵赖，表达方式上也要额外注意，为了提供更有价值的信息，最后解释甚至不解释。这一点可能我做的还好，<del>甩锅是不存在的</del>，而且非常抵触三句之内讲不到重点的沟通。</li></ul><p>原本还想贴一下读书笔记，不然篇幅太短，认真考虑了一下决定不发了，毕竟博客只想放个人产出的东西，书中自有黄金屋，未经加工的笔记还是偷摸着恶心自己吧。</p><p>最后是想对自己说的话。</p><p>事实上我还远未达到熟练工的程度，遇到没挑战的事只能代表未跳出舒适区。矫正可以帮助自己找到舒适区，而破除壁障，需要在技术根本上出力。最近手痒又折腾起周边工具，看一些效率宝典（包括开篇这本书），想寻求新的突破，久而久之其实也是一种逃避。是时候直面最大的舒适区，把焦点回到编码上，突破更多的自我设限，Keep your mind sharp！</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;《 The Pragmatic Programmer: From Journeyman to Master 》这本书已加入愿望单许久，最近终于在通勤路上读完了。对于处于或将处于熟练工阶段的程序员，毫无疑问这是本值得用心阅读的书，因此我也写一下短评和推荐理由。&lt;/p&gt;
+&lt;p&gt;
+      
+    
+    </summary>
+    
+      <category term="随笔" scheme="https://claude-ray.github.io/categories/%E9%9A%8F%E7%AC%94/"/>
+    
+    
+      <category term="Books" scheme="https://claude-ray.github.io/tags/Books/"/>
+    
+  </entry>
   
   <entry>
     <title>Mac 上移除 EasyConnect 常驻后台进程</title>
@@ -289,9 +315,9 @@
     
       <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
-      <category term="pm2" scheme="https://claude-ray.github.io/tags/pm2/"/>
-    
       <category term="graceful-server" scheme="https://claude-ray.github.io/tags/graceful-server/"/>
+    
+      <category term="pm2" scheme="https://claude-ray.github.io/tags/pm2/"/>
     
   </entry>
   
@@ -492,9 +518,9 @@
     
       <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
     
-      <category term="log4js" scheme="https://claude-ray.github.io/tags/log4js/"/>
-    
       <category term="pm2" scheme="https://claude-ray.github.io/tags/pm2/"/>
+    
+      <category term="log4js" scheme="https://claude-ray.github.io/tags/log4js/"/>
     
       <category term="pm2-intercom" scheme="https://claude-ray.github.io/tags/pm2-intercom/"/>
     
@@ -524,36 +550,6 @@
       <category term="iptables" scheme="https://claude-ray.github.io/tags/iptables/"/>
     
       <category term="Linux" scheme="https://claude-ray.github.io/tags/Linux/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>总结node处理GBK编码</title>
-    <link href="https://claude-ray.github.io/2018/12/12/node-gbk-sum/"/>
-    <id>https://claude-ray.github.io/2018/12/12/node-gbk-sum/</id>
-    <published>2018-12-12T14:49:00.000Z</published>
-    <updated>2018-12-18T16:17:00.896Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Node内部不支持直接操作GBK字符串，而实际也并不需要如此。</p><p>总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用utf8。编码转换主要基于<code>iconv-lite</code>库。</p><p>总结已经写在了前头，下面再列举几种http服务中常见的处理场景。</p><h1 id="常见场景"><a href="#常见场景" class="headerlink" title="常见场景"></a>常见场景</h1><h2 id="请求返回值"><a href="#请求返回值" class="headerlink" title="请求返回值"></a>请求返回值</h2><p>最常用且容易处理，通常我们使用<code>request</code>发起http请求，options中设置<code>encoding: null</code>，这样返回的res.body为buffer，再对buffer进行解码<code>iconv.decode(res.body, encoding)</code>。</p><blockquote><p>引用：<a href="https://claude-ray.github.io/2018/02/26/request%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/#%E7%BC%96%E7%A0%81">request返回值中文乱码问题</a></p></blockquote><h2 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h2><p>这里直接用<code>iconv-lite</code>处理略显复杂，建议上<a href="https://github.com/node-modules/urlencode" target="_blank" rel="noopener">urlencode</a>。</p><p>post请求时stringify整个body对象，用options.form提交。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(body, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure><p>querystring则stringify后再拼到url中。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(qs, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure><h2 id="接口返回值"><a href="#接口返回值" class="headerlink" title="接口返回值"></a>接口返回值</h2><p>以koa举例，返回值先使用<code>iconv-lite</code>转为gbk Buffer，随后设置响应头的content-type。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.body = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">ctx.type = <span class="string">'text/plain; charset=gbk'</span>;</span><br></pre></td></tr></table></figure><h2 id="接口参数"><a href="#接口参数" class="headerlink" title="接口参数"></a>接口参数</h2><p>同样以koa举例，结合<code>koa-bodyparser</code>，一般http method的原始参数分布在ctx.request.rawBody和ctx.request.querystring中，使用<code>urlencode.parse</code>解析。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">urlencode.parse(ctx.request.rawBody, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br><span class="line">urlencode.parse(ctx.request.querystring, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure><p>特别地，当请求格式为multipart或json时需要结合具体情况具体分析。</p><p>例如，使用<code>busboy</code>等multipart解析库会将请求body挂在<code>ctx.request.body</code>上，规范的请求方式是会对字符进行url encode的，这时可以按gbk编码对字段decode（由于不能直接url decode，实际处理方法为转hex后再经buffer解码）。</p><p>如果请求参数是经过binary处理的，则binary decode。</p><p>综上，处理姿势大致如下。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">lodash.mapValues(ctx.request.body, value =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (!value) <span class="keyword">return</span> value;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> buff = <span class="regexp">/^(%\w&#123;2&#125;)+$/</span>.test(value)</span><br><span class="line">    ? Buffer.from(value.replace(<span class="regexp">/%/g</span>, <span class="string">''</span>), <span class="string">'hex'</span>)</span><br><span class="line">    : Buffer.from(value, <span class="string">'binary'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> iconv.decode(buff, <span class="string">'gbk'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure><p>想兼容更多情况是比较复杂的，即使做基础服务也不必包容所有不规范的传值，大可以拒绝解析，因此按需调整即可。</p><p>如果能约定使用十六进制传参更好，处理hex就不需要在参数获取上额外操作了。可惜一般用到gbk的场景都是难以变更的、需要兼容的，否则肯定是让调用方改传utf8，皆大欢喜。</p><h2 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h2><p>默认方式（<code>encoding: null</code>）就是操作buffer，iconv转换无压力。</p><p>读：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = fs.readFileSync(<span class="string">'test.txt'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(iconv.decode(buff, <span class="string">'gbk'</span>));</span><br></pre></td></tr></table></figure><p>写：</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">fs.writeFileSync(<span class="string">'test.txt'</span>, buff);</span><br></pre></td></tr></table></figure>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;概述&quot;&gt;&lt;a href=&quot;#概述&quot; class=&quot;headerlink&quot; title=&quot;概述&quot;&gt;&lt;/a&gt;概述&lt;/h1&gt;&lt;p&gt;Node内部不支持直接操作GBK字符串，而实际也并不需要如此。&lt;/p&gt;
-&lt;p&gt;总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用u
-      
-    
-    </summary>
-    
-      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
-    
-    
-      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
-    
-      <category term="String" scheme="https://claude-ray.github.io/tags/String/"/>
-    
-      <category term="GBK编码" scheme="https://claude-ray.github.io/tags/GBK%E7%BC%96%E7%A0%81/"/>
     
   </entry>
   

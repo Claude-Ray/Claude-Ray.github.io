@@ -428,6 +428,19 @@
           
             
             
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">Comments: </span>
+                <a href="/2018/08/23/ubuntu16to18md/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/08/23/ubuntu16to18md/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -625,6 +638,13 @@
           
 
   
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+      </div>
+    </div>
+
+  
 
 
 
@@ -673,7 +693,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">39</span>
+                    <span class="site-state-item-count">40</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -817,7 +837,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">44</span>
+                      
+                    
+                    <span class="site-state-item-count">45</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
@@ -949,7 +971,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     <span class="post-meta-item-text">Symbols count total: </span>
-    <span title="Symbols count total">37.1k</span>
+    <span title="Symbols count total">38.5k</span>
   
   
 
@@ -1072,6 +1094,56 @@ Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homep
   
 
   
+  
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://claude-ray.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+
+
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://claude-ray.github.io/2018/08/23/ubuntu16to18md/";
+    this.page.identifier = "2018/08/23/ubuntu16to18md/";
+    this.page.title = 'ubuntu16.04升级18.04LTS';
+    };
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://claude-ray.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+  
+    $(function() {
+      var offsetTop = $('#comments').offset().top - $(window).height();
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        $(window).on('scroll.disqus_scroll', function() {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          var scrollTop = $(window).scrollTop();
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            $(window).off('.disqus_scroll');
+            loadComments();
+          }
+        });
+      }
+    });
+  
+</script>
+
+
+
 
 
   

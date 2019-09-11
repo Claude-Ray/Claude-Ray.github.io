@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/09/10/from-journeyman-to-master/</loc>
+    
+    <lastmod>2019-09-11T15:00:57.213Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/08/08/node-process-hang-up/</loc>
     
     <lastmod>2019-08-27T10:08:57.380Z</lastmod>
