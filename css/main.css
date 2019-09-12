@@ -1027,7 +1027,7 @@ pre .javascript .function {
   border-bottom: none;
   color: #222;
   display: inline-block;
-  line-height: 1.25em;
+  line-height: 1.375em;
   padding: 0 40px;
   position: relative;
 }
@@ -1043,7 +1043,7 @@ pre .javascript .function {
 .site-title {
   display: inline-block;
   font-family: 'Lato', "PingFang SC", "Microsoft YaHei", sans-serif;
-  font-size: 1.25em;
+  font-size: 1.375em;
   font-weight: normal;
   line-height: 1.5;
   vertical-align: top;
@@ -1687,7 +1687,7 @@ article:last-child .post-eof {
 }
 .links-of-author a::before,
 .links-of-author span.exturl::before {
-  background: #7d582b;
+  background: #ff50a2;
   border-radius: 50%;
   content: ' ';
   display: inline-block;
@@ -1913,7 +1913,7 @@ article:last-child .post-eof {
 .site-state-item-count {
   color: inherit;
   display: block;
-  font-size: 1.125em;
+  font-size: 1.25em;
   font-weight: 600;
   text-align: center;
 }
