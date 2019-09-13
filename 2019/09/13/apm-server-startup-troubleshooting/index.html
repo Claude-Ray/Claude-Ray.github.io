@@ -56,19 +56,21 @@
   };
 </script>
 
-  <meta name="description" content="本篇不是讲如何处理代码内的定时任务，而是聊聊怎么借助 crontab 等工具，定时操作 pm2 (指令)。例如，定时重启 pm2 中的进程、定时执行 pm2 save 保存运行状态，等等。">
-<meta name="keywords" content="pm2,crontab">
+  <meta name="description" content="本来是几个月前在 Ubuntu 部署 Elastic apm-server 遇到的问题，当时处理起来没遇到特别的卡点，就只是把解决过程丢到 Evernote 了。最近发现还有人在重复踩这个坑，因此我把笔记整理之后搬到这里作一个极简的分享。">
+<meta name="keywords" content="APM,Elastic-APM,apm-server,Debian">
 <meta property="og:type" content="article">
-<meta property="og:title" content="crontab 中使用 pm2">
-<meta property="og:url" content="https://claude-ray.github.io/2019/01/03/pm2-crontab/index.html">
+<meta property="og:title" content="如何解决 Debian 系 Elastic apm-server 7.x 启动失败">
+<meta property="og:url" content="https://claude-ray.github.io/2019/09/13/apm-server-startup-troubleshooting/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
-<meta property="og:description" content="本篇不是讲如何处理代码内的定时任务，而是聊聊怎么借助 crontab 等工具，定时操作 pm2 (指令)。例如，定时重启 pm2 中的进程、定时执行 pm2 save 保存运行状态，等等。">
+<meta property="og:description" content="本来是几个月前在 Ubuntu 部署 Elastic apm-server 遇到的问题，当时处理起来没遇到特别的卡点，就只是把解决过程丢到 Evernote 了。最近发现还有人在重复踩这个坑，因此我把笔记整理之后搬到这里作一个极简的分享。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-03T15:37:16.453Z">
+<meta property="og:image" content="https://claude-ray.github.io/image/apm-server-startup-troubleshooting/kibana-apm-server-tutorial.png">
+<meta property="og:updated_time" content="2019-09-13T12:15:13.955Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="crontab 中使用 pm2">
-<meta name="twitter:description" content="本篇不是讲如何处理代码内的定时任务，而是聊聊怎么借助 crontab 等工具，定时操作 pm2 (指令)。例如，定时重启 pm2 中的进程、定时执行 pm2 save 保存运行状态，等等。">
-  <link rel="canonical" href="https://claude-ray.github.io/2019/01/03/pm2-crontab/">
+<meta name="twitter:title" content="如何解决 Debian 系 Elastic apm-server 7.x 启动失败">
+<meta name="twitter:description" content="本来是几个月前在 Ubuntu 部署 Elastic apm-server 遇到的问题，当时处理起来没遇到特别的卡点，就只是把解决过程丢到 Evernote 了。最近发现还有人在重复踩这个坑，因此我把笔记整理之后搬到这里作一个极简的分享。">
+<meta name="twitter:image" content="https://claude-ray.github.io/image/apm-server-startup-troubleshooting/kibana-apm-server-tutorial.png">
+  <link rel="canonical" href="https://claude-ray.github.io/2019/09/13/apm-server-startup-troubleshooting/">
 
 
 <script id="page-configurations">
@@ -82,7 +84,7 @@
   };
 </script>
 
-  <title>crontab 中使用 pm2 | Claude's Blog</title>
+  <title>如何解决 Debian 系 Elastic apm-server 7.x 启动失败 | Claude's Blog</title>
   
 
 
@@ -232,7 +234,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/01/03/pm2-crontab/">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/09/13/apm-server-startup-troubleshooting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -244,7 +246,7 @@
       <meta itemprop="name" content="Claude's Blog">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">crontab 中使用 pm2
+        <h1 class="post-title" itemprop="name headline">如何解决 Debian 系 Elastic apm-server 7.x 启动失败
 
           
         </h1>
@@ -260,7 +262,7 @@
                 
               
 
-              <time title="Created: 2019-01-03 21:56:48 / Modified: 23:37:16" itemprop="dateCreated datePublished" datetime="2019-01-03T21:56:48+08:00">2019-01-03</time>
+              <time title="Created: 2019-09-13 11:55:57 / Modified: 20:15:13" itemprop="dateCreated datePublished" datetime="2019-09-13T11:55:57+08:00">2019-09-13</time>
             </span>
           
             
@@ -292,7 +294,7 @@
       
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/01/03/pm2-crontab/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/01/03/pm2-crontab/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/09/13/apm-server-startup-troubleshooting/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/13/apm-server-startup-troubleshooting/" itemprop="commentCount"></span></a>
   </span>
   
   <br>
@@ -302,7 +304,7 @@
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
     
-    <span>533</span>
+    <span>983</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
@@ -310,7 +312,7 @@
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
     
-    <span>2 mins.</span>
+    <span>5 mins.</span>
   </span>
 
 
@@ -323,31 +325,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>本篇不是讲如何处理代码内的定时任务，而是聊聊怎么借助 crontab 等工具，定时操作 pm2 (指令)。例如，定时重启 pm2 中的进程、定时执行 pm2 save 保存运行状态，等等。</p>
+        <p>本来是几个月前在 Ubuntu 部署 Elastic apm-server 遇到的问题，当时处理起来没遇到特别的卡点，就只是把解决过程丢到 Evernote 了。最近发现还有人在重复踩这个坑，因此我把笔记整理之后搬到这里作一个极简的分享。</p>
 <a id="more"></a>
 
-<h1 id="重启进程"><a href="#重启进程" class="headerlink" title="重启进程"></a>重启进程</h1><p><code>pm2 --help</code> 可以看到 pm2 自带 cron 功能，但功能仅限于重启进程。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Usage: pm2 [cmd] app</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line"></span><br><span class="line">-c --cron &lt;cron_pattern&gt;     restart a running process based on a cron pattern</span><br></pre></td></tr></table></figure>
+<h1 id="apm-server-安装"><a href="#apm-server-安装" class="headerlink" title="apm-server 安装"></a>apm-server 安装</h1><p>实际步骤就不需要我复述了，官方提供现成的 deb 安装包。除了查看官方文档，更推荐使用 Kibana APM 看板自带的指南。</p>
+<p>指南的 url 路径大概是 <a href="http://localhost:5601/app/kibana#/home/tutorial/apm?_g=()" target="_blank" rel="noopener">http://localhost:5601/app/kibana#/home/tutorial/apm?_g=()</a></p>
+<p>不仅有安装引导，还提供按钮协助检查 apm-server 的服务状态。</p>
+<p><img src="/image/apm-server-startup-troubleshooting/kibana-apm-server-tutorial.png" alt="Kibana apm-server tutorial"></p>
+<h1 id="启动异常"><a href="#启动异常" class="headerlink" title="启动异常"></a>启动异常</h1><p>在 debian 系发行版安装 apm-server 后，执行 <code>service apm-server start</code> 报告失败，且切换到 <code>systemctl</code> 也无效。</p>
+<p><code>service apm-server status</code>报错如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ service apm-server status                                                                                          </span><br><span class="line">● apm-server.service - Elastic APM Server                                                                               </span><br><span class="line">   Loaded: loaded (/lib/systemd/system/apm-server.service; enabled; vendor preset: enabled)                             </span><br><span class="line">   Active: failed (Result: <span class="built_in">exit</span>-code) since Tue 2019-04-16 14:44:42 CST; 3s ago                                         </span><br><span class="line">     Docs: https://www.elastic.co/solutions/apm                                                                         </span><br><span class="line">  Process: 4783 ExecStart=/usr/share/apm-server/bin/apm-server <span class="variable">$BEAT_LOG_OPTS</span> <span class="variable">$BEAT_CONFIG_OPTS</span> <span class="variable">$BEAT_PATH_OPTS</span> (code=ex</span><br><span class="line"> Main PID: 4783 (code=exited, status=1/FAILURE)                                                                         </span><br><span class="line">                                                                                                                        </span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Service hold-off time over, scheduling restart.                     </span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Scheduled restart job, restart counter is at 5.                     </span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: Stopped Elastic APM Server.                                                             </span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Start request repeated too quickly.                                 </span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Failed with result <span class="string">'exit-code'</span>.                                     </span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: Failed to start Elastic APM Server.</span><br></pre></td></tr></table></figure>
 
-<h1 id="执行指令"><a href="#执行指令" class="headerlink" title="执行指令"></a>执行指令</h1><p>执行指令包括重启 pm2 内的进程，并且可以定时调用 pm2 做任何它支持的事。这种情况下，使用系统层面的 <code>crontab</code> 就对啦。</p>
-<p>需要注意的是，pm2 在 crontab 中的运行 PATH 和 在 命令行 shell 中直接执行并不一样，因此会报 <code>pm2: command not found</code> 之类的错。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 错误示范</span></span><br><span class="line">*/1 * * * * pm2 flush &gt; /var/<span class="built_in">log</span>/pm2flush.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<h1 id="检查日志"><a href="#检查日志" class="headerlink" title="检查日志"></a>检查日志</h1><p>首先使用 <code>journalctl</code> 查看 systemd 的日志，如下</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ journalctl -u apm-server.service</span><br></pre></td></tr></table></figure>
 
-<p>解决方法是在使用pm2的脚本中指定环境变量，参考<code>which pm2</code>，找出pm2的bin路径。</p>
-<p>一般是通过<code>npm i pm2 -g</code>全局安装，环境变量是<code>/urs/local/node/bin</code>。如果你使用nvm，那可能是<code>/home/yourname/.nvm/versions/node/vX.X.X/bin</code>。</p>
-<h1 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h1><h2 id="pm2-flush"><a href="#pm2-flush" class="headerlink" title="pm2 flush"></a>pm2 flush</h2><p>例如我们要定时清除 pm2 的 log 文件，节省磁盘空间，可以使用 pm2 自带的 flush 命令。</p>
-<h2 id="直接执行"><a href="#直接执行" class="headerlink" title="直接执行"></a>直接执行</h2><p>一种是直接在定时器执行 pm2 flush</p>
-<blockquote>
-<p>PATH 的指定要结合具体情况，常见的做法是命令行 <code>echo $PATH</code>，把输出内容补到指令的 PATH 中</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SHELL=/bin/sh</span><br><span class="line">PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/<span class="built_in">local</span>/node/bin</span><br><span class="line"></span><br><span class="line">*/1 * * * * pm2 flush &gt; /var/<span class="built_in">log</span>/pm2flush.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>打印日志</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">-- Logs begin at Wed 2019-04-10 09:30:25 CST, end at Tue 2019-04-16 14:44:42 CST. --                                    </span><br><span class="line">4 月 16 13:43:23 ray systemd[1]: Started Elastic APM Server.                                                             </span><br><span class="line">4 月 16 13:43:23 ray apm-server[2487]: Exiting: error loading config file: config file (<span class="string">"/etc/apm-server/apm-server.yml"</span>)</span><br><span class="line">4 月 16 13:43:23 ray systemd[1]: apm-server.service: Main process exited, code=exited, status=1/FAILURE                  </span><br><span class="line">4 月 16 13:43:23 ray systemd[1]: apm-server.service: Failed with result <span class="string">'exit-code'</span>.                                     </span><br><span class="line">4 月 16 13:43:23 ray systemd[1]: apm-server.service: Service hold-off time over, scheduling restart.                     </span><br><span class="line">4 月 16 13:43:23 ray systemd[1]: apm-server.service: Scheduled restart job, restart counter is at 1.                     </span><br><span class="line">4 月 16 13:43:23 ray systemd[1]: Stopped Elastic APM Server.                                                             </span><br><span class="line">4 月 16 13:43:23 ray systemd[1]: Started Elastic APM Server.</span><br><span class="line"><span class="comment"># ... ，笔者注释，省略中间的多次重启信息</span></span><br><span class="line">4 月 16 14:44:42 ray apm-server[4783]: Exiting: error loading config file: config file (<span class="string">"/etc/apm-server/apm-server.yml"</span>)</span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Main process exited, code=exited, status=1/FAILURE</span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Failed with result <span class="string">'exit-code'</span>.</span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Service hold-off time over, scheduling restart.</span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Scheduled restart job, restart counter is at 5.</span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: Stopped Elastic APM Server.</span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Start request repeated too quickly.</span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: apm-server.service: Failed with result <span class="string">'exit-code'</span>.</span><br><span class="line">4 月 16 14:44:42 ray systemd[1]: Failed to start Elastic APM Server.</span><br></pre></td></tr></table></figure>
 
-<h2 id="间接执行"><a href="#间接执行" class="headerlink" title="间接执行"></a>间接执行</h2><p>另一种是定时调用任务脚本，通过脚本间接执行 pm2 flush，这样方便我们同时做其他处理，如删除日志前先打包备份。</p>
-<p>在 crontab 中，内容如下</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SHELL=/bin/sh</span><br><span class="line">PATH=/usr/<span class="built_in">local</span>/sbin:/usr/<span class="built_in">local</span>/bin:/sbin:/bin:/usr/sbin:/usr/bin:/usr/<span class="built_in">local</span>/node/bin</span><br><span class="line"></span><br><span class="line">*/1 * * * * sh /home/root/pm2flush.sh &gt; /var/<span class="built_in">log</span>/pm2flush.log 2&gt;&amp;1</span><br></pre></td></tr></table></figure>
+<p>这样找出真正的启动错误是 <code>Exiting: error loading config file: config file (&quot;/etc/apm-server/apm-server.yml&quot;)</code></p>
+<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>配置文件异常，采用 <code>apm-server export config</code> 进一步观察。提示如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">error initializing beat: error loading config file: config file (<span class="string">"/etc/apm-server/apm-server.yml"</span>) must be owned by the beat user (uid=1000) or root</span><br></pre></td></tr></table></figure>
 
-<p>再来看它执行的 <code>pm2flush.sh</code> 文件</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 如果crontab中不指定node bin的PATH，也可以在这里通过如下方式指定</span></span><br><span class="line"><span class="comment"># PATH=$PATH:/usr/local/node/bin</span></span><br><span class="line">pm2 flush</span><br></pre></td></tr></table></figure>
+<p><a href="https://github.com/elastic/apm-server/issues/2001" target="_blank" rel="noopener">github issues</a> 上找到了类似的问题，但没有给出推荐的处理方案，所以决定自己动手解决。</p>
+<p><code>ls -l</code> 观察 <code>/etc/apm-server/</code> 的信息，发现除了 apm-server.yml 之外，owner 都是 root</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ls -l /etc/apm-server</span><br><span class="line">total 148K</span><br><span class="line">drwxr-xr-x   2 root       root       4.0K 4 月  16 14:11 .</span><br><span class="line">drwxr-xr-x 142 root       root        12K 4 月  16 14:11 ..</span><br><span class="line">-rw-------   1 apm-server apm-server  33K 4 月   6 05:48 apm-server.yml</span><br><span class="line">-rw-r--r--   1 root       root        94K 4 月   6 05:48 fields.yml</span><br></pre></td></tr></table></figure>
+
+<p>那么统一将权限变更到 root 吧！</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo chown root:root /etc/apm-server/apm-server.yml</span><br></pre></td></tr></table></figure>
+
+<p>改之后测试</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apm-server <span class="built_in">test</span> config</span><br><span class="line">Config OK</span><br></pre></td></tr></table></figure>
+
+<p>再尝试启动则提示成功。</p>
+
     </div>
 
     
@@ -363,7 +373,7 @@
     <strong>Post author:  </strong>Claude Ray</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://claude-ray.github.io/2019/01/03/pm2-crontab/" title="crontab 中使用 pm2">https://claude-ray.github.io/2019/01/03/pm2-crontab/</a>
+    <a href="https://claude-ray.github.io/2019/09/13/apm-server-startup-troubleshooting/" title="如何解决 Debian 系 Elastic apm-server 7.x 启动失败">https://claude-ray.github.io/2019/09/13/apm-server-startup-troubleshooting/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
@@ -378,9 +388,13 @@
           
           <div class="post-tags">
             
-              <a href="/tags/pm2/" rel="tag"># pm2</a>
+              <a href="/tags/APM/" rel="tag"># APM</a>
             
-              <a href="/tags/crontab/" rel="tag"># crontab</a>
+              <a href="/tags/Elastic-APM/" rel="tag"># Elastic-APM</a>
+            
+              <a href="/tags/apm-server/" rel="tag"># apm-server</a>
+            
+              <a href="/tags/Debian/" rel="tag"># Debian</a>
             
           </div>
         
@@ -390,8 +404,8 @@
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2018/12/21/pm2-cluster-log4js/" rel="next" title="PM2 cluster + log4js？并不理想的组合">
-                  <i class="fa fa-chevron-left"></i> PM2 cluster + log4js？并不理想的组合
+                <a href="/2019/09/12/hexo-theme-next-upgrade-7-4/" rel="next" title="Hexo NexT 主题升级 7.4">
+                  <i class="fa fa-chevron-left"></i> Hexo NexT 主题升级 7.4
                 </a>
               
             </div>
@@ -399,10 +413,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/01/09/nginx-ifisevil/" rel="prev" title="Nginx的if使用须知">
-                  Nginx的if使用须知 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -460,7 +470,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#重启进程"><span class="nav-number">1.</span> <span class="nav-text">重启进程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#执行指令"><span class="nav-number">2.</span> <span class="nav-text">执行指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#举例"><span class="nav-number">3.</span> <span class="nav-text">举例</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pm2-flush"><span class="nav-number">3.1.</span> <span class="nav-text">pm2 flush</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#直接执行"><span class="nav-number">3.2.</span> <span class="nav-text">直接执行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#间接执行"><span class="nav-number">3.3.</span> <span class="nav-text">间接执行</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#apm-server-安装"><span class="nav-number">1.</span> <span class="nav-text">apm-server 安装</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#启动异常"><span class="nav-number">2.</span> <span class="nav-text">启动异常</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#检查日志"><span class="nav-number">3.</span> <span class="nav-text">检查日志</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方法"><span class="nav-number">4.</span> <span class="nav-text">解决方法</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -669,9 +679,9 @@
 </script>
 <script>
   function disqus_config() {
-    this.page.url = "https://claude-ray.github.io/2019/01/03/pm2-crontab/";
-    this.page.identifier = "2019/01/03/pm2-crontab/";
-    this.page.title = 'crontab 中使用 pm2';};
+    this.page.url = "https://claude-ray.github.io/2019/09/13/apm-server-startup-troubleshooting/";
+    this.page.identifier = "2019/09/13/apm-server-startup-troubleshooting/";
+    this.page.title = '如何解决 Debian 系 Elastic apm-server 7.x 启动失败';};
   function loadComments() {
     if (window.DISQUS) {
       DISQUS.reset({
