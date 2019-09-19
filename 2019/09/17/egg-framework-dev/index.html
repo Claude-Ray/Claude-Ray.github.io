@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="这是一篇面向 Egg.js 上层框架开发者的科普文。 Egg 官网基本做到了呈现所有“必知必会”的内容，再写一份 Egg 使用教程已经毫无必要，不如聊聊 Egg 上层框架开发过程中可能有用的技巧。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-17T14:50:05.885Z">
+<meta property="og:updated_time" content="2019-09-19T14:28:44.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不靠谱的 Egg.js 框架开发指南">
 <meta name="twitter:description" content="这是一篇面向 Egg.js 上层框架开发者的科普文。 Egg 官网基本做到了呈现所有“必知必会”的内容，再写一份 Egg 使用教程已经毫无必要，不如聊聊 Egg 上层框架开发过程中可能有用的技巧。">
@@ -260,11 +260,19 @@
                 
               
 
-              <time title="Created: 2019-09-17 19:44:02 / Modified: 22:50:05" itemprop="dateCreated datePublished" datetime="2019-09-17T19:44:02+08:00">2019-09-17</time>
+              <time title="Created: 2019-09-17 19:44:02" itemprop="dateCreated datePublished" datetime="2019-09-17T19:44:02+08:00">2019-09-17</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-19 22:28:44" itemprop="dateModified" datetime="2019-09-19T22:28:44+08:00">2019-09-19</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -302,7 +310,7 @@
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
     
-    <span>2.4k</span>
+    <span>2.5k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
@@ -361,9 +369,11 @@
 </ul>
 <h1 id="深入"><a href="#深入" class="headerlink" title="深入"></a>深入</h1><p>接下来是几个或多或少官网没有讲到的话题。</p>
 <h2 id="平滑重启"><a href="#平滑重启" class="headerlink" title="平滑重启"></a>平滑重启</h2><p>Egg 的多进程模型决定了 PM2 这样的进程管理工具对它意义不大。可惜的是没有了 PM2，我们也失去了 pm2 reload 这样轻量的平滑重启方案，鉴于 Egg 应用不短的启动时长，必须在流量进入 Node.js 之前加以控制。</p>
-<p>对有强力运维的团队来讲，server 的启动时间不是问题，问题是还有不少 Node.js 项目只有一层代理甚至是裸运行的。对次最基本的建议是前置 nginx ，在配置多个节点的 upstream 之后，默认的选服策略就带上了容错机制。</p>
+<p>对有强力运维的团队来讲，server 的启动时间不是问题，问题是还有不少 Node.js 项目只有一层代理甚至是裸运行的，又不想给运维加钱。对此最基本的建议是前置 nginx ，在配置多个节点的 upstream 之后，默认的选服策略就带上了容错机制。</p>
 <figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">upstream</span> backend &#123;</span><br><span class="line">    <span class="attribute">server</span> backend1.example.com       weight=<span class="number">5</span> max_fails=<span class="number">3</span> fail_timeout=<span class="number">60s</span>;</span><br><span class="line">    <span class="attribute">server</span> backend2.example.com:<span class="number">8080</span>  weight=<span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="attribute">server</span> backup1.example.com:<span class="number">8080</span>   backup;</span><br><span class="line">    <span class="attribute">server</span> backup2.example.com:<span class="number">8080</span>   backup;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="section">server</span> &#123;</span><br><span class="line">    <span class="attribute">location</span> / &#123;</span><br><span class="line">        <span class="attribute">proxy_pass</span> http://backend;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>简单来说，fail_timeout 默认 (10s) 就可以提供一个 “server backend 被 nginx 判定不可用之后，10s 之内不会有新的请求发送到该地址” 的缓冲期。</p>
+<p>参考 nginx 的配置说明，酌情调整 <code>max_fails</code>、<code>fail_timeout</code> 等参数，为服务提供一个基本但可靠的稳定保障吧。</p>
 <h2 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h2><h3 id="egg-router-vs-koa-router"><a href="#egg-router-vs-koa-router" class="headerlink" title="egg-router vs koa-router"></a>egg-router vs koa-router</h3><p>egg-router 的逻辑基于 koa-router，早期直接引用 koa-router，在其基础上封装了 Egg.js 应用的路由注册，以及其他小特性。 后来 egg-router 从 egg-core 中剥离，并更改维护方式为 fork（koa-router 的维护度太低了），但没有做 breaking changes。两者的主要差别如下，稍后会做详细介绍：</p>
 <ul>
 <li>RESTful</li>
@@ -767,7 +777,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">42.5k</span>
+  <span title="Symbols count total">42.6k</span>
 
 </div>
 
