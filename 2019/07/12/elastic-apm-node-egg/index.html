@@ -57,14 +57,14 @@
 </script>
 
   <meta name="description" content="前言本篇是为 elastic-apm-node 编写拓展系列的第二篇，主要介绍 egg 框架的定制指南。 单独拿 egg 出来讲，是因为市面主流的 APM 工具几乎都没有为 egg 提供支持。一方面 egg 底层基于 koa ，并且 egg-router 也是 koa-router 的二次封装，两者相似以致插件可以平稳切换，agent 的补丁方式也基本是一致的。另一方面，agent 代码必须早于">
-<meta name="keywords" content="Node.js,APM,Elastic-APM,Egg">
+<meta name="keywords" content="APM,Elastic-APM,Node.js,Egg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="elastic-apm-node 扩展篇 —— Egg">
 <meta property="og:url" content="https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="前言本篇是为 elastic-apm-node 编写拓展系列的第二篇，主要介绍 egg 框架的定制指南。 单独拿 egg 出来讲，是因为市面主流的 APM 工具几乎都没有为 egg 提供支持。一方面 egg 底层基于 koa ，并且 egg-router 也是 koa-router 的二次封装，两者相似以致插件可以平稳切换，agent 的补丁方式也基本是一致的。另一方面，agent 代码必须早于">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-12T10:45:26.121Z">
+<meta property="og:updated_time" content="2019-10-17T11:15:06.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="elastic-apm-node 扩展篇 —— Egg">
 <meta name="twitter:description" content="前言本篇是为 elastic-apm-node 编写拓展系列的第二篇，主要介绍 egg 框架的定制指南。 单独拿 egg 出来讲，是因为市面主流的 APM 工具几乎都没有为 egg 提供支持。一方面 egg 底层基于 koa ，并且 egg-router 也是 koa-router 的二次封装，两者相似以致插件可以平稳切换，agent 的补丁方式也基本是一致的。另一方面，agent 代码必须早于">
@@ -271,7 +271,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-12 18:45:26" itemprop="dateModified" datetime="2019-09-12T18:45:26+08:00">2019-09-12</time>
+                <time title="Modified: 2019-10-17 19:15:06" itemprop="dateModified" datetime="2019-10-17T19:15:06+08:00">2019-10-17</time>
               </span>
             
           
@@ -310,7 +310,7 @@
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
     
-    <span>810</span>
+    <span>944</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
@@ -318,7 +318,7 @@
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
     
-    <span>3 mins.</span>
+    <span>4 mins.</span>
   </span>
 
 
@@ -350,7 +350,14 @@
 <p>在 <code>package.json</code> 中添加 <code>egg.require</code> 配置，用法来自 <a href="https://github.com/eggjs/egg/issues/2844#issuecomment-409457550" target="_blank" rel="noopener">issue 讨论</a>。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"egg"</span>: &#123;</span><br><span class="line">    <span class="attr">"require"</span>: [ <span class="string">"./elastic-apm.js"</span> ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"egg-scripts start"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这是目前最推荐的做法，不影响 egg 工具链的正常使用。</p>
+<p>这是目前<del>最推荐</del>的做法，不影响 egg 工具链的正常使用。</p>
+<h4 id="2019-10-17-更正"><a href="#2019-10-17-更正" class="headerlink" title="2019-10-17 更正"></a>2019-10-17 更正</h4><blockquote>
+<p>感谢 <a href="https://github.com/wpchou" target="_blank" rel="noopener">@wenpin</a> 提示</p>
+</blockquote>
+<p><code>egg.require</code> 配置只是 egg-bin 提供的接口，并在<a href="https://github.com/eggjs/egg-bin#options" target="_blank" rel="noopener">文档</a>上明确记录。然而 egg-scripts 目前还没有提供此入口，只能通过 <code>--require</code> 导入，egg-bin 也同样支持，这得益于 egg-cluster 的实现。</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"scripts"</span>: &#123;</span><br><span class="line">    <span class="attr">"start"</span>: <span class="string">"egg-scripts start --require=@yourscope/elastic-apm"</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>--require</code> 不能使用相对路径，比起使用绝对路径，通过 npm 包来引入更方便一些。(egg-scripts 的 issues 关闭了，不然问问阻断他们支持 egg.require 的原因…)</p>
 <h1 id="编写补丁"><a href="#编写补丁" class="headerlink" title="编写补丁"></a>编写补丁</h1><h2 id="instrumentation-egg-js"><a href="#instrumentation-egg-js" class="headerlink" title="instrumentation/egg.js"></a>instrumentation/egg.js</h2><p>仿照 <a href="https://github.com/elastic/apm-agent-nodejs/blob/master/lib/instrumentation/modules/koa.js" target="_blank" rel="noopener">instrumentation/koa.js</a>，修改框架 name，注意开启 overwrite 选项，为了覆盖引用 koa 带来的标识。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">'use strict'</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span> (<span class="params">egg, agent, &#123; version, enabled &#125;</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!enabled) <span class="keyword">return</span> egg</span><br><span class="line">  <span class="comment">// 注意开启 overwrite，这样才能覆盖 koa 标识</span></span><br><span class="line">  agent.setFramework(&#123; <span class="attr">name</span>: <span class="string">'egg'</span>, version, <span class="attr">overwrite</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">  <span class="keyword">return</span> egg</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -391,11 +398,11 @@
           
           <div class="post-tags">
             
-              <a href="/tags/Node-js/" rel="tag"># Node.js</a>
-            
               <a href="/tags/APM/" rel="tag"># APM</a>
             
               <a href="/tags/Elastic-APM/" rel="tag"># Elastic-APM</a>
+            
+              <a href="/tags/Node-js/" rel="tag"># Node.js</a>
             
               <a href="/tags/Egg/" rel="tag"># Egg</a>
             
@@ -477,7 +484,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在-egg-前-require"><span class="nav-number">2.</span> <span class="nav-text">在 egg 前 require</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方案一：修改启动文件"><span class="nav-number">2.1.</span> <span class="nav-text">方案一：修改启动文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案二：修改-package-json"><span class="nav-number">2.2.</span> <span class="nav-text">方案二：修改 package.json</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编写补丁"><span class="nav-number">3.</span> <span class="nav-text">编写补丁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#instrumentation-egg-js"><span class="nav-number">3.1.</span> <span class="nav-text">instrumentation/egg.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instrumentation-egg-router-js"><span class="nav-number">3.2.</span> <span class="nav-text">instrumentation/egg-router.js</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加补丁"><span class="nav-number">4.</span> <span class="nav-text">添加补丁</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#在-egg-前-require"><span class="nav-number">2.</span> <span class="nav-text">在 egg 前 require</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#方案一：修改启动文件"><span class="nav-number">2.1.</span> <span class="nav-text">方案一：修改启动文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#方案二：修改-package-json"><span class="nav-number">2.2.</span> <span class="nav-text">方案二：修改 package.json</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2019-10-17-更正"><span class="nav-number">2.2.0.1.</span> <span class="nav-text">2019-10-17 更正</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#编写补丁"><span class="nav-number">3.</span> <span class="nav-text">编写补丁</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#instrumentation-egg-js"><span class="nav-number">3.1.</span> <span class="nav-text">instrumentation/egg.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#instrumentation-egg-router-js"><span class="nav-number">3.2.</span> <span class="nav-text">instrumentation/egg-router.js</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#添加补丁"><span class="nav-number">4.</span> <span class="nav-text">添加补丁</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -606,7 +613,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">44.7k</span>
+  <span title="Symbols count total">44.9k</span>
 
 </div>
 
