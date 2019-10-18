@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/08/24/remove-easyconnect-daemons-on-mac/</loc>
+    
+    <lastmod>2019-10-18T04:41:53.141Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/</loc>
     
-    <lastmod>2019-10-17T11:15:06.427Z</lastmod>
+    <lastmod>2019-10-17T11:29:27.085Z</lastmod>
     
   </url>
   
@@ -58,21 +65,14 @@
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/08/24/remove-easyconnect-daemons-on-mac/</loc>
-    
-    <lastmod>2019-09-12T10:45:26.128Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2019/05/23/node-graceful-server/</loc>
+    <loc>https://claude-ray.github.io/2019/08/08/node-process-hang-up/</loc>
     
     <lastmod>2019-09-12T10:45:26.127Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/08/08/node-process-hang-up/</loc>
+    <loc>https://claude-ray.github.io/2019/05/23/node-graceful-server/</loc>
     
     <lastmod>2019-09-12T10:45:26.127Z</lastmod>
     
@@ -100,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/</loc>
+    <loc>https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</loc>
     
     <lastmod>2019-09-12T10:45:26.123Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</loc>
+    <loc>https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/</loc>
     
     <lastmod>2019-09-12T10:45:26.123Z</lastmod>
     

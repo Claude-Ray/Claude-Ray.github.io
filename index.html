@@ -919,7 +919,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-12 18:45:26" itemprop="dateModified" datetime="2019-09-12T18:45:26+08:00">2019-09-12</time>
+                <time title="Modified: 2019-10-18 12:41:53" itemprop="dateModified" datetime="2019-10-18T12:41:53+08:00">2019-10-18</time>
               </span>
             
           
@@ -958,7 +958,7 @@
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
     
-    <span>326</span>
+    <span>345</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
@@ -980,7 +980,7 @@
 
       
           <p>想必大家已经知道，EasyConnect 会在后台强行添加名为 EasyMonitor 的开机自启守护进程，网上已经有关闭教程了</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 权限不足时补上 sudo</span></span><br><span class="line">launchctl unload /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo launchctl unload /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist</span><br></pre></td></tr></table></figure>
 
 <p>可实际上 EasyConnect 还启动了另一个“杀不掉”的后台进程 ECAgent，活动频率很低，似乎不会造成内存泄漏，略显不起眼。但这无法作为它肆意常驻的理由。</p>
           <!--noindex-->
