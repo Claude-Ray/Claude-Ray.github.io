@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://claude-ray.github.io/"/>
-  <updated>2019-10-03T05:56:29.654Z</updated>
+  <updated>2019-10-22T13:00:22.895Z</updated>
   <id>https://claude-ray.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Verdaccio 性能优化：上游路径转发</title>
+    <link href="https://claude-ray.github.io/2019/10/22/optimize-verdaccio-package-route/"/>
+    <id>https://claude-ray.github.io/2019/10/22/optimize-verdaccio-package-route/</id>
+    <published>2019-10-22T11:32:39.000Z</published>
+    <updated>2019-10-22T13:00:22.895Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>这里的 <a href="https://github.com/verdaccio/verdaccio" target="_blank" rel="noopener">Verdaccio</a> 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。</p><p>有些项目依赖了 npm 自身的包，每次项目部署时都会产生对私服 <code>/npm</code> 路由的请求记录，并在监控曲线上呈明显的高耗时，这引起了我们的关注。</p><a id="more"></a><h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>Verdaccio 私服对公共（外网）npm 包的处理存在一定程度的性能问题。</p><p>其中一个原因是每当通过私服下载公共 npm 包，Verdaccio 都要等上游镜像的响应完整结束之后，才开始响应私服用户的请求。这导致 Verdaccio 的整体速度比直接用上游慢了一截。</p><p>至于会慢多少呢，要提到另一个 npm 机制：一个依赖 package 下载之前，要先到镜像地址的 =/:package/:version?= 接口获取完整的包信息，之后才会下载所需的版本。而一个模块历史发布过的版本越多，信息量越大。尤其是 npm 自身这个包，访问一下 <a href="http://registry.npmjs.org/npm" target="_blank" rel="noopener">http://registry.npmjs.org/npm</a> 便知。</p><p>Verdaccio 慢就慢在获取包信息这一步，它必须等待上游接口响应完成，才能做相关 JSON 解析和逻辑处理。因此不仅仅是慢的问题了，还有内存和 CPU 的大量消耗。</p><h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>从上面看，私服接口性能存在很大的优化空间，哪怕只是将几个体积较大的“罪魁祸首” npm 包单独优化，也能缓解私服的压力。</p><p>首先想到的是缓存，可惜小机器经不起缓存的资源消耗，不然解决方案就已经找到了。网络带宽倒是相对不缺，低成本、纯网络代理转发是一个可行的目标。</p><p>Verdaccio 会对下载的 npm 包信息做解析和记录，但其实我们并不关心那些只属于上游的包，只希望它能承担好转发工作，甚至巴不得所有公共依赖都不经过私服处理。</p><p>退一步讲，就是要弱化在私服中对这些公共依赖的处理，减少解析过程 —— 用 stream 完成请求转发。</p><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>遗憾的是 Verdaccio 自身的接口难以复用，只好直接在其基础上增加路由。简单粗暴，对项目的熵值影响不大。</p><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>);</span><br><span class="line"><span class="keyword">const</span> createError = <span class="built_in">require</span>(<span class="string">'http-errors'</span>);</span><br><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="keyword">const</span> URL = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Middleware = <span class="built_in">require</span>(<span class="string">'../../web/middleware'</span>);</span><br><span class="line"><span class="keyword">const</span> Utils = <span class="built_in">require</span>(<span class="string">'../../../lib/utils'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">route, auth, storage, config</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> can = Middleware.allow(auth);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 优化特定依赖的获取，以 `npm` 举例</span></span><br><span class="line">  route.get(<span class="string">'/npm'</span>, (req, res) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 拼接镜像地址</span></span><br><span class="line">    <span class="keyword">const</span> upLinkUrl = _.get(config, <span class="string">'uplinks.npmjs.url'</span>, <span class="string">'https://registry.npm.taobao.org'</span>);</span><br><span class="line">    <span class="keyword">const</span> packageUrl = URL.resolve(upLinkUrl, req.originalUrl);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 利用 Verdaccio 定义的 res.report_error 来采集错误</span></span><br><span class="line">    <span class="keyword">const</span> npmRes = request(packageUrl)</span><br><span class="line">      .on(<span class="string">'error'</span>, res.report_error);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 直接将上游结果转发，快速响应请求</span></span><br><span class="line">    req.pipe(npmRes).pipe(res);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  route.get(<span class="string">'/:package/:version?'</span>, can(<span class="string">'access'</span>), <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><p>stream 转发减轻了服务的内存压力（节省上百 MB 的临时缓冲），并减少这部分接口 50% 以上的 TTFB 响应时间。</p><p>作为尝试，目前这个 patch 笔者只用在了特定依赖。转发所有上游 npm 包的念想还未落地，做起来应该很简单，但需要继续摸索 Verdaccio 结构，才好给出更合适的修改方案。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;背景&quot;&gt;&lt;a href=&quot;#背景&quot; class=&quot;headerlink&quot; title=&quot;背景&quot;&gt;&lt;/a&gt;背景&lt;/h2&gt;&lt;p&gt;这里的 &lt;a href=&quot;https://github.com/verdaccio/verdaccio&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Verdaccio&lt;/a&gt; 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。&lt;/p&gt;
+&lt;p&gt;有些项目依赖了 npm 自身的包，每次项目部署时都会产生对私服 &lt;code&gt;/npm&lt;/code&gt; 路由的请求记录，并在监控曲线上呈明显的高耗时，这引起了我们的关注。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/categories/Node-js/"/>
+    
+    
+      <category term="Node.js" scheme="https://claude-ray.github.io/tags/Node-js/"/>
+    
+      <category term="Verdaccio" scheme="https://claude-ray.github.io/tags/Verdaccio/"/>
+    
+      <category term="private npm registry" scheme="https://claude-ray.github.io/tags/private-npm-registry/"/>
+    
+  </entry>
   
   <entry>
     <title>CSAPP DataLab 题解</title>
@@ -142,9 +169,9 @@
     <link href="https://claude-ray.github.io/2019/08/24/remove-easyconnect-daemons-on-mac/"/>
     <id>https://claude-ray.github.io/2019/08/24/remove-easyconnect-daemons-on-mac/</id>
     <published>2019-08-23T17:20:41.000Z</published>
-    <updated>2019-10-18T04:41:53.141Z</updated>
+    <updated>2019-10-18T06:47:53.828Z</updated>
     
-    <content type="html"><![CDATA[<p>想必大家已经知道，EasyConnect 会在后台强行添加名为 EasyMonitor 的开机自启守护进程，网上已经有关闭教程了</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo launchctl unload /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist</span><br></pre></td></tr></table></figure><p>可实际上 EasyConnect 还启动了另一个“杀不掉”的后台进程 ECAgent，活动频率很低，似乎不会造成内存泄漏，略显不起眼。但这无法作为它肆意常驻的理由。</p><a id="more"></a><h1 id="禁用"><a href="#禁用" class="headerlink" title="禁用"></a>禁用</h1><p>首先找到 plist 文件，在 <code>/Library/LaunchAgents/com.sangfor.ECAgentProxy.plist</code>。它无法被 launchctl unload，不过没关系，你可以直接把它挪走或删除，并且今后都不再需要它。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /Library/LaunchAgents/com.sangfor.ECAgentProxy.plist ~</span><br></pre></td></tr></table></figure><p>当然这时候它还是不能被 kill 掉，要想从 launchctl 中删除而不重启电脑，可以采用 launchctl remove。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">launchctl remove com.sangfor.ECAgentProxy</span><br></pre></td></tr></table></figure><h1 id="启用"><a href="#启用" class="headerlink" title="启用"></a>启用</h1><p>关闭后台进程之后，启动 EasyConnect 会弹出警告：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Alert</span><br><span class="line"></span><br><span class="line">Initialization failed. Please try reinstalling!</span><br></pre></td></tr></table></figure><p>没办法，只能向恶势力低头，需要使用时，必须重新加载 EasyMonitor。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># EasyMonitor v7.6.7 开始 EasyMonitor 必须在 root 权限下运行，此前版本可以不加 sudo</span></span><br><span class="line">sudo launchctl load /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist</span><br></pre></td></tr></table></figure><p>而 ECAgent 就没这么麻烦了，它根本不必后台常驻 —— EasyConnect 启动时会自己创建一个，并且会随着 EasyConnect 进程一起退出。最终我删掉了 <code>com.sangfor.ECAgentProxy.plist</code> 文件的备份。</p><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul><li><a href="https://blog.jiayx.net/archives/274.html" target="_blank" rel="noopener">Mac 下禁用开机自启软件</a></li></ul>]]></content>
+    <content type="html"><![CDATA[<p>想必大家已经知道，EasyConnect 会在后台强行添加名为 EasyMonitor 的开机自启守护进程，网上已经有关闭教程了</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo launchctl unload /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist</span><br></pre></td></tr></table></figure><p>可实际上 EasyConnect 还启动了另一个“杀不掉”的后台进程 ECAgent，活动频率很低，似乎不会造成内存泄漏，略显不起眼。但这无法作为它肆意常驻的理由。</p><a id="more"></a><h1 id="禁用"><a href="#禁用" class="headerlink" title="禁用"></a>禁用</h1><p>首先找到 plist 文件，在 <code>/Library/LaunchAgents/com.sangfor.ECAgentProxy.plist</code>。它无法被 launchctl unload，不过没关系，你可以直接把它挪走或删除，并且今后都不再需要它。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo mv /Library/LaunchAgents/com.sangfor.ECAgentProxy.plist ~</span><br></pre></td></tr></table></figure><p>当然这时候它还是不能被 kill 掉，要想从 launchctl 中删除而不重启电脑，可以采用 launchctl remove。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">launchctl remove com.sangfor.ECAgentProxy</span><br></pre></td></tr></table></figure><h1 id="启用"><a href="#启用" class="headerlink" title="启用"></a>启用</h1><p>关闭后台进程之后，启动 EasyConnect 会弹出警告：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Alert</span><br><span class="line"></span><br><span class="line">Initialization failed. Please try reinstalling!</span><br></pre></td></tr></table></figure><p>没办法，只能向恶势力低头，需要使用时，必须重新加载 EasyMonitor。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># EasyConnect v7.6.7 开始 EasyMonitor 必须在 root 权限下运行，此前版本可以不加 sudo</span></span><br><span class="line">sudo launchctl load /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist</span><br></pre></td></tr></table></figure><p>而 ECAgent 就没这么麻烦了，它根本不必后台常驻 —— EasyConnect 启动时会自己创建一个，并且会随着 EasyConnect 进程一起退出。最终我删掉了 <code>com.sangfor.ECAgentProxy.plist</code> 文件的备份。</p><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul><li><a href="https://blog.jiayx.net/archives/274.html" target="_blank" rel="noopener">Mac 下禁用开机自启软件</a></li></ul>]]></content>
     
     <summary type="html">
     
@@ -512,32 +539,6 @@
     
     
       <category term="SVN" scheme="https://claude-ray.github.io/tags/SVN/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nginx改写$args未生效踩坑</title>
-    <link href="https://claude-ray.github.io/2019/01/24/nginx-proxypass-args/"/>
-    <id>https://claude-ray.github.io/2019/01/24/nginx-proxypass-args/</id>
-    <published>2019-01-24T13:45:26.000Z</published>
-    <updated>2019-01-24T16:22:28.028Z</updated>
-    
-    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>原始需求是通过 nginx 在请求链接中增加一个固定参数 custom_param，方法很简单，在 location 中重设 <code>$args</code>。</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># in location xxx</span></span><br><span class="line"><span class="built_in">set</span> <span class="variable">$args</span> <span class="variable">$args</span>&amp;custom_param=<span class="built_in">test</span>;</span><br><span class="line">proxy_pass http://remote_host;</span><br></pre></td></tr></table></figure><p>顺便说一下，即使链接中没有参数也不影响一般服务端解析，符号<code>?</code>会自动加上，如上例子 proxy_pass 后会路径将变成 <a href="http://remote_host/xxx?&amp;custom_param=test。" target="_blank" rel="noopener">http://remote_host/xxx?&amp;custom_param=test。</a></p><p>但问题是在服务器如此配置 nginx 后，custom_param 参数并没有如约发给 remote_host……</p><a id="more"></a><p>最终在 nginx change log 中找到了原因。</p><blockquote><p><a href="http://nginx.org/en/CHANGES" target="_blank" rel="noopener">http://nginx.org/en/CHANGES</a> Changes with nginx 1.7.1          27 May 2014</p><p>Bugfix: a “proxy_pass” directive without URI part might use original<br>  request after the $args variable was set.<br>  Thanks to Yichun Zhang.</p></blockquote><p>可以看出是nginx很早就修复的 bug，可以肯定到手的 nginx 版本太旧了，又试了版本 1.6.2 果然也存在问题，bug 存在的版本不多，相关资料很少。</p><p>在不升级 nginx 的情况下，修复方案是采用旧的参数附加方式<code>$uri$is_args$args</code>，如下</p><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> <span class="variable">$args</span> <span class="variable">$args</span>&amp;custom_param=<span class="built_in">test</span>;</span><br><span class="line">proxy_pass http://remote_host<span class="variable">$uri</span><span class="variable">$is_args</span><span class="variable">$args</span>;</span><br></pre></td></tr></table></figure><h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>很多软件包的疑难杂症都可以试着查阅 change log，而且有些情况下检索历史变更比查 issue 更方便。之前<a href="https://claude-ray.github.io/2017/10/05/lodash-3-to-4/">《lodash3升级4踩坑》</a> 一文提到的 lodash 升级大版本导致 merge 用法变更，也是查 history 定位到了问题。</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;h2 id=&quot;问题&quot;&gt;&lt;a href=&quot;#问题&quot; class=&quot;headerlink&quot; title=&quot;问题&quot;&gt;&lt;/a&gt;问题&lt;/h2&gt;&lt;p&gt;原始需求是通过 nginx 在请求链接中增加一个固定参数 custom_param，方法很简单，在 location 中重设 &lt;code&gt;$args&lt;/code&gt;。&lt;/p&gt;
-&lt;figure class=&quot;highlight sh&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;# in location xxx&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;set&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$args&lt;/span&gt; &lt;span class=&quot;variable&quot;&gt;$args&lt;/span&gt;&amp;amp;custom_param=&lt;span class=&quot;built_in&quot;&gt;test&lt;/span&gt;;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;proxy_pass http://remote_host;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;顺便说一下，即使链接中没有参数也不影响一般服务端解析，符号&lt;code&gt;?&lt;/code&gt;会自动加上，如上例子 proxy_pass 后会路径将变成 &lt;a href=&quot;http://remote_host/xxx?&amp;amp;custom_param=test。&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://remote_host/xxx?&amp;amp;custom_param=test。&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;但问题是在服务器如此配置 nginx 后，custom_param 参数并没有如约发给 remote_host……&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Nginx" scheme="https://claude-ray.github.io/categories/Nginx/"/>
-    
-    
-      <category term="Nginx" scheme="https://claude-ray.github.io/tags/Nginx/"/>
     
   </entry>
   

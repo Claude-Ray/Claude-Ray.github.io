@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="想必大家已经知道，EasyConnect 会在后台强行添加名为 EasyMonitor 的开机自启守护进程，网上已经有关闭教程了 1sudo launchctl unload /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist  可实际上 EasyConnect 还启动了另一个“杀不掉”的后台进程 ECAgent，活动频率很低，似乎不会造成内存">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-18T04:41:53.141Z">
+<meta property="og:updated_time" content="2019-10-18T06:47:53.828Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mac 上移除 EasyConnect 常驻后台进程">
 <meta name="twitter:description" content="想必大家已经知道，EasyConnect 会在后台强行添加名为 EasyMonitor 的开机自启守护进程，网上已经有关闭教程了 1sudo launchctl unload /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist  可实际上 EasyConnect 还启动了另一个“杀不掉”的后台进程 ECAgent，活动频率很低，似乎不会造成内存">
@@ -271,7 +271,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-18 12:41:53" itemprop="dateModified" datetime="2019-10-18T12:41:53+08:00">2019-10-18</time>
+                <time title="Modified: 2019-10-18 14:47:53" itemprop="dateModified" datetime="2019-10-18T14:47:53+08:00">2019-10-18</time>
               </span>
             
           
@@ -347,7 +347,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Alert</span><br><span class="line"></span><br><span class="line">Initialization failed. Please try reinstalling!</span><br></pre></td></tr></table></figure>
 
 <p>没办法，只能向恶势力低头，需要使用时，必须重新加载 EasyMonitor。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># EasyMonitor v7.6.7 开始 EasyMonitor 必须在 root 权限下运行，此前版本可以不加 sudo</span></span><br><span class="line">sudo launchctl load /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># EasyConnect v7.6.7 开始 EasyMonitor 必须在 root 权限下运行，此前版本可以不加 sudo</span></span><br><span class="line">sudo launchctl load /Library/LaunchDaemons/com.sangfor.EasyMonitor.plist</span><br></pre></td></tr></table></figure>
 
 <p>而 ECAgent 就没这么麻烦了，它根本不必后台常驻 —— EasyConnect 启动时会自己创建一个，并且会随着 EasyConnect 进程一起退出。最终我删掉了 <code>com.sangfor.ECAgentProxy.plist</code> 文件的备份。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
@@ -486,7 +486,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">45</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -512,7 +512,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">48</span>
+        <span class="site-state-item-count">50</span>
         <span class="site-state-item-name">tags</span>
         </a>
       </div>
@@ -597,7 +597,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">44.9k</span>
+  <span title="Symbols count total">45.7k</span>
 
 </div>
 
