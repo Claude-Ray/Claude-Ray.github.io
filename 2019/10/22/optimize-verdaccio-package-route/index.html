@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="背景这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 有些项目依赖了 npm 自身的包，每次项目部署时都会产生对私服 /npm 路由的请求记录，并在监控曲线上呈明显的高耗时，这引起了我们的关注。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-22T13:00:22.895Z">
+<meta property="og:updated_time" content="2019-10-24T15:10:24.670Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Verdaccio 性能优化：上游路径转发">
 <meta name="twitter:description" content="背景这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 有些项目依赖了 npm 自身的包，每次项目部署时都会产生对私服 /npm 路由的请求记录，并在监控曲线上呈明显的高耗时，这引起了我们的关注。">
@@ -260,11 +260,19 @@
                 
               
 
-              <time title="Created: 2019-10-22 19:32:39 / Modified: 21:00:22" itemprop="dateCreated datePublished" datetime="2019-10-22T19:32:39+08:00">2019-10-22</time>
+              <time title="Created: 2019-10-22 19:32:39" itemprop="dateCreated datePublished" datetime="2019-10-22T19:32:39+08:00">2019-10-22</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-24 23:10:24" itemprop="dateModified" datetime="2019-10-24T23:10:24+08:00">2019-10-24</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -302,7 +310,7 @@
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
     
-    <span>846</span>
+    <span>1.3k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
@@ -310,7 +318,7 @@
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
     
-    <span>3 mins.</span>
+    <span>4 mins.</span>
   </span>
 
 
@@ -328,18 +336,25 @@
 <a id="more"></a>
 
 <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>Verdaccio 私服对公共（外网）npm 包的处理存在一定程度的性能问题。</p>
-<p>其中一个原因是每当通过私服下载公共 npm 包，Verdaccio 都要等上游镜像的响应完整结束之后，才开始响应私服用户的请求。这导致 Verdaccio 的整体速度比直接用上游慢了一截。</p>
+<p>其中一个原因是，通过私服下载未缓存的公共 npm 包，Verdaccio 都要等上游镜像的响应完整结束之后，才开始响应私服用户的请求。这导致 Verdaccio 的整体速度比直接用上游慢了一截。</p>
 <p>至于会慢多少呢，要提到另一个 npm 机制：一个依赖 package 下载之前，要先到镜像地址的 =/:package/:version?= 接口获取完整的包信息，之后才会下载所需的版本。而一个模块历史发布过的版本越多，信息量越大。尤其是 npm 自身这个包，访问一下 <a href="http://registry.npmjs.org/npm" target="_blank" rel="noopener">http://registry.npmjs.org/npm</a> 便知。</p>
 <p>Verdaccio 慢就慢在获取包信息这一步，它必须等待上游接口响应完成，才能做相关 JSON 解析和逻辑处理。因此不仅仅是慢的问题了，还有内存和 CPU 的大量消耗。</p>
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>从上面看，私服接口性能存在很大的优化空间，哪怕只是将几个体积较大的“罪魁祸首” npm 包单独优化，也能缓解私服的压力。</p>
-<p>首先想到的是缓存，可惜小机器经不起缓存的资源消耗，不然解决方案就已经找到了。网络带宽倒是相对不缺，低成本、纯网络代理转发是一个可行的目标。</p>
+<p>然而这一步对于 Verdaccio 又很重要，因为它的对于此接口的缓存策略基于文件，只有拿到完整的 JSON 返回值才能将其记录到文件中。只是默认仅 2 分钟的缓存时间，让这一步操作的性价比打了折扣。</p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><p>从上面看，私服接口性能存在<del>不小的</del>优化空间，哪怕只是将几个体积较大的“罪魁祸首” npm 包单独优化，也能缓解私服的压力。</p>
+<p>首先想到的是让 Verdaccio 不必等待上游全部返回就开始响应私服用户。其次是现有的缓存机制对部分低频率高开销的 package 请求形同虚设，小机器又经不起缓存扩充的资源消耗，网络带宽倒是相对不缺，降低计算成本、纯网络代理转发是一个可行的方向。</p>
 <p>Verdaccio 会对下载的 npm 包信息做解析和记录，但其实我们并不关心那些只属于上游的包，只希望它能承担好转发工作，甚至巴不得所有公共依赖都不经过私服处理。</p>
-<p>退一步讲，就是要弱化在私服中对这些公共依赖的处理，减少解析过程 —— 用 stream 完成请求转发。</p>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><p>遗憾的是 Verdaccio 自身的接口难以复用，只好直接在其基础上增加路由。简单粗暴，对项目的熵值影响不大。</p>
+<p>退一步讲，就是要弱化在私服中对这些公共依赖的处理，减少解析过程 —— 用 stream 或 buffer 完成请求转发。</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><p>遗憾的是 Verdaccio 自身的接口难以复用，只好直接在其基础上增加路由(中间件)。简单粗暴，对项目的熵值影响不大。</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> _ = <span class="built_in">require</span>(<span class="string">'lodash'</span>);</span><br><span class="line"><span class="keyword">const</span> createError = <span class="built_in">require</span>(<span class="string">'http-errors'</span>);</span><br><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="keyword">const</span> URL = <span class="built_in">require</span>(<span class="string">'url'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Middleware = <span class="built_in">require</span>(<span class="string">'../../web/middleware'</span>);</span><br><span class="line"><span class="keyword">const</span> Utils = <span class="built_in">require</span>(<span class="string">'../../../lib/utils'</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">module</span>.exports = <span class="function"><span class="keyword">function</span>(<span class="params">route, auth, storage, config</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> can = Middleware.allow(auth);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 优化特定依赖的获取，以 `npm` 举例</span></span><br><span class="line">  route.get(<span class="string">'/npm'</span>, (req, res) =&gt; &#123;</span><br><span class="line">    <span class="comment">// 拼接镜像地址</span></span><br><span class="line">    <span class="keyword">const</span> upLinkUrl = _.get(config, <span class="string">'uplinks.npmjs.url'</span>, <span class="string">'https://registry.npm.taobao.org'</span>);</span><br><span class="line">    <span class="keyword">const</span> packageUrl = URL.resolve(upLinkUrl, req.originalUrl);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 利用 Verdaccio 定义的 res.report_error 来采集错误</span></span><br><span class="line">    <span class="keyword">const</span> npmRes = request(packageUrl)</span><br><span class="line">      .on(<span class="string">'error'</span>, res.report_error);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 直接将上游结果转发，快速响应请求</span></span><br><span class="line">    req.pipe(npmRes).pipe(res);</span><br><span class="line">  &#125;);</span><br><span class="line"></span><br><span class="line">  route.get(<span class="string">'/:package/:version?'</span>, can(<span class="string">'access'</span>), <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">  &#125;);</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
-<p>stream 转发减轻了服务的内存压力（节省上百 MB 的临时缓冲），并减少这部分接口 50% 以上的 TTFB 响应时间。</p>
-<p>作为尝试，目前这个 patch 笔者只用在了特定依赖。转发所有上游 npm 包的念想还未落地，做起来应该很简单，但需要继续摸索 Verdaccio 结构，才好给出更合适的修改方案。</p>
+<p>上面是 stream 方式的修改，也可以把路由改写为中间件。stream 转发减轻了服务的内存压力（节省上百 MB 的临时缓冲），并减少这部分接口 50% 以上的 TTFB 响应时间，不过总体响应时间却因为 stream 有所延长。</p>
+<p>降低机器负载的目标达成了，但压力测试证明这会大大拖慢进程的处理效率，在并发较低的情况下才能采用。</p>
+<p>作为尝试，目前这个 patch 只用在了特定依赖。在 Verdaccio 优化空间如此狭隘的情况下，并发大的场景应首先考虑横向扩展，抠这点单机性能不值得。</p>
+<h2 id="待续"><a href="#待续" class="headerlink" title="待续"></a>待续</h2><p>转发所有上游 npm 包的念想还未落地，虽然做起来应该很简单，但需要继续摸索 Verdaccio 结构，才好给出更合适的修改方案。</p>
+<p>现在能想到的最简单做法仍然是适当调高 Verdaccio 默认 2 分钟的缓存 TTL。提升最大的做法是扩展 Verdaccio 尚未支持的 Cluster 架构……</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">request(&#123; <span class="attr">url</span>: packageUrl, <span class="attr">encoding</span>: <span class="literal">null</span> &#125;, (error, resp, body) =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (error) <span class="keyword">return</span> res.report_error(error);</span><br><span class="line">  res.set(<span class="string">'Content-Type'</span>, resp.headers[<span class="string">'content-type'</span>]);</span><br><span class="line">  <span class="keyword">return</span> res.send(body);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>再者，结合自身情况，可以尝试更多玩法。如果系统内存富足，把 stream 稍微改一改，变为回调形式。缺点和 Verdaccio 一样的是必须等 resp 完整返回，但 <code>encoding: null</code> 确保响应结果为 buffer，能省略 JSON 解析，优点是可以基于 buffer 做 LRU Cache。</p>
 
     </div>
 
@@ -451,7 +466,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">3.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">4.</span> <span class="nav-text">代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#思路"><span class="nav-number">3.</span> <span class="nav-text">思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">4.</span> <span class="nav-text">实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#待续"><span class="nav-number">5.</span> <span class="nav-text">待续</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -580,7 +595,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">45.7k</span>
+  <span title="Symbols count total">46.1k</span>
 
 </div>
 
