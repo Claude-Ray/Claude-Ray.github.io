@@ -110,13 +110,13 @@
       <category term="Linux" scheme="https://claude-ray.github.io/categories/Linux/"/>
     
     
+      <category term="Debian" scheme="https://claude-ray.github.io/tags/Debian/"/>
+    
       <category term="APM" scheme="https://claude-ray.github.io/tags/APM/"/>
     
       <category term="Elastic-APM" scheme="https://claude-ray.github.io/tags/Elastic-APM/"/>
     
       <category term="apm-server" scheme="https://claude-ray.github.io/tags/apm-server/"/>
-    
-      <category term="Debian" scheme="https://claude-ray.github.io/tags/Debian/"/>
     
   </entry>
   
