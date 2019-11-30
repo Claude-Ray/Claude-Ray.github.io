@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/11/30/optimize-verdaccio-proxy/</loc>
+    
+    <lastmod>2019-11-30T14:11:21.245Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/about/index.html</loc>
     
     <lastmod>2019-10-31T15:11:30.552Z</lastmod>
@@ -79,14 +86,14 @@
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/05/23/node-graceful-server/</loc>
+    <loc>https://claude-ray.github.io/2019/08/08/node-process-hang-up/</loc>
     
     <lastmod>2019-09-12T10:45:26.127Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/08/08/node-process-hang-up/</loc>
+    <loc>https://claude-ray.github.io/2019/05/23/node-graceful-server/</loc>
     
     <lastmod>2019-09-12T10:45:26.127Z</lastmod>
     
