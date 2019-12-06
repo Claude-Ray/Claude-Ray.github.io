@@ -57,7 +57,7 @@
 </script>
 
   <meta name="description" content="前言这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 前段时间写了一点分流相关的优化思路，但那是以节省资源开销为主、不冲破原有结构的微调，从结果上看，甚至不是合格的优化。 随着用户（请求）数量的上升，服务响应速度和效率其实才是最要紧的问题，节省资源终究不能改善这一点。因此我决定实施上次浮现在脑中的想法，将内外网的 npm 包流量彻底分流。">
-<meta name="keywords" content="Node.js,Verdaccio,private npm registry">
+<meta name="keywords" content="Node.js,npm,Verdaccio,private npm registry">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Verdaccio 性能优化：代理分流">
 <meta property="og:url" content="https://claude-ray.github.io/2019/11/30/optimize-verdaccio-proxy/index.html">
@@ -65,7 +65,7 @@
 <meta property="og:description" content="前言这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 前段时间写了一点分流相关的优化思路，但那是以节省资源开销为主、不冲破原有结构的微调，从结果上看，甚至不是合格的优化。 随着用户（请求）数量的上升，服务响应速度和效率其实才是最要紧的问题，节省资源终究不能改善这一点。因此我决定实施上次浮现在脑中的想法，将内外网的 npm 包流量彻底分流。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://claude-ray.github.io/image/optimize-verdaccio-proxy/verdaccio-fetch-path.png">
-<meta property="og:updated_time" content="2019-11-30T14:11:21.245Z">
+<meta property="og:updated_time" content="2019-12-06T03:06:17.492Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Verdaccio 性能优化：代理分流">
 <meta name="twitter:description" content="前言这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 前段时间写了一点分流相关的优化思路，但那是以节省资源开销为主、不冲破原有结构的微调，从结果上看，甚至不是合格的优化。 随着用户（请求）数量的上升，服务响应速度和效率其实才是最要紧的问题，节省资源终究不能改善这一点。因此我决定实施上次浮现在脑中的想法，将内外网的 npm 包流量彻底分流。">
@@ -262,11 +262,19 @@
                 
               
 
-              <time title="Created: 2019-11-30 19:08:03 / Modified: 22:11:21" itemprop="dateCreated datePublished" datetime="2019-11-30T19:08:03+08:00">2019-11-30</time>
+              <time title="Created: 2019-11-30 19:08:03" itemprop="dateCreated datePublished" datetime="2019-11-30T19:08:03+08:00">2019-11-30</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-12-06 11:06:17" itemprop="dateModified" datetime="2019-12-06T11:06:17+08:00">2019-12-06</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -396,6 +404,8 @@
             
               <a href="/tags/Node-js/" rel="tag"># Node.js</a>
             
+              <a href="/tags/npm/" rel="tag"># npm</a>
+            
               <a href="/tags/Verdaccio/" rel="tag"># Verdaccio</a>
             
               <a href="/tags/private-npm-registry/" rel="tag"># private npm registry</a>
@@ -417,6 +427,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/12/06/npm-install-without-cache/" rel="prev" title="让 npm install 不使用缓存的方法">
+                  让 npm install 不使用缓存的方法 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -492,7 +506,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -603,7 +617,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">47.9k</span>
+  <span title="Symbols count total">48.4k</span>
 
 </div>
 
