@@ -65,7 +65,7 @@
 <meta property="og:description" content="前言这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 前段时间写了一点分流相关的优化思路，但那是以节省资源开销为主、不冲破原有结构的微调，从结果上看，甚至不是合格的优化。 随着用户（请求）数量的上升，服务响应速度和效率其实才是最要紧的问题，节省资源终究不能改善这一点。因此我决定实施上次浮现在脑中的想法，将内外网的 npm 包流量彻底分流。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://claude-ray.github.io/image/optimize-verdaccio-proxy/verdaccio-fetch-path.png">
-<meta property="og:updated_time" content="2019-12-06T03:06:17.492Z">
+<meta property="og:updated_time" content="2019-12-31T14:26:32.450Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Verdaccio 性能优化：代理分流">
 <meta name="twitter:description" content="前言这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 前段时间写了一点分流相关的优化思路，但那是以节省资源开销为主、不冲破原有结构的微调，从结果上看，甚至不是合格的优化。 随着用户（请求）数量的上升，服务响应速度和效率其实才是最要紧的问题，节省资源终究不能改善这一点。因此我决定实施上次浮现在脑中的想法，将内外网的 npm 包流量彻底分流。">
@@ -273,7 +273,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-12-06 11:06:17" itemprop="dateModified" datetime="2019-12-06T11:06:17+08:00">2019-12-06</time>
+                <time title="Modified: 2019-12-31 22:26:32" itemprop="dateModified" datetime="2019-12-31T22:26:32+08:00">2019-12-31</time>
               </span>
             
           
@@ -346,7 +346,7 @@
 <h3 id="npm-下载最长请求路径"><a href="#npm-下载最长请求路径" class="headerlink" title="npm 下载最长请求路径"></a>npm 下载最长请求路径</h3><p>为了方便理解 Verdaccio 所处的位置，我来绘制一下 npm 包下载时从客户端到 Verdaccio 再到上游的最长请求路径简图，并忽略中间的安全验证环节，如下所示。</p>
 <p><img src="/image/optimize-verdaccio-proxy/verdaccio-fetch-path.png" alt="npm 请求路径"></p>
 <h3 id="接口转发"><a href="#接口转发" class="headerlink" title="接口转发"></a>接口转发</h3><p>有了代理层，就可以忽略 Verdaccio 内部的各种逻辑，不受技术栈的约束，编写少量的代码，便能完成主要接口的分流。</p>
-<p>首要的接口是 <code>/:package/:version?</code> ，释放私服最大的查询压力，原因可以看<a href="https://claude-ray.github.io/2019/10/22/optimize-verdaccio-package-route/#原因">这里的解释</a>。</p>
+<p>首要的接口是 <code>/:package/:version?</code> ，释放私服最大的查询压力，原因可以看<a href="https://claude-ray.github.io/2019/10/22/optimize-verdaccio-package-route">这里的解释</a>。</p>
 <p>次要的接口是 <code>/:package/-/:filename</code> ，也就是实际的下载接口。并且其中还涉及另一个极为有利的优化。</p>
 <p>尽管 Verdaccio 是转发上游的资源，它也会将下载 url 变更为自己的服务域名。因此不论依赖是否私有，记录到 package-lock.json 中的地址都是 Verdaccio 的地址。</p>
 <p>但经过代理层的分流，此后经过更新的 package-lock.json 将保留原汁原味的下载地址，此后下载压缩包的请求再也不会发到私服。</p>
@@ -506,7 +506,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -605,7 +605,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-bolt"></i>
   </span>
@@ -617,7 +617,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">48.4k</span>
+  <span title="Symbols count total">49.9k</span>
 
 </div>
 

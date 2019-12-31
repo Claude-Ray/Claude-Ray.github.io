@@ -229,6 +229,144 @@
   
   
   <div class="post-block home">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/08/10/nginx-swrr/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/08/10/nginx-swrr/" class="post-title-link" itemprop="url">Nginx SWRR 算法解读</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-08-10 13:13:49" itemprop="dateCreated datePublished" datetime="2019-08-10T13:13:49+08:00">2019-08-10</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-12 18:45:26" itemprop="dateModified" datetime="2019-09-12T18:45:26+08:00">2019-09-12</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/08/10/nginx-swrr/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/10/nginx-swrr/" itemprop="commentCount"></span></a>
+  </span>
+  
+  <br>
+  <span class="post-meta-item" title="Symbols count in article">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-file-word-o"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+    
+    <span>741</span>
+  </span>
+  <span class="post-meta-item" title="Reading time">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-clock-o"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+    
+    <span>2 mins.</span>
+  </span>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。</p>
+<blockquote>
+<p>该算法来自 nginx 的一次 commit：<a href="https://github.com/phusion/nginx/commit/27e94984486058d73157038f7950a0a36ecc6e35" target="_blank" rel="noopener">Upstream: smooth weighted round-robin balancing</a></p>
+</blockquote>
+<p>在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，并阅读了 SWRR 的实现。</p>
+<p>介绍此算法的文章有很多，但还没发现哪里用数学角度给出证明过程的，虽然并不复杂，这里把自己粗劣的思路分享一下。为了便于理解，只考虑算法核心的 current_weight，忽略受异常波动影响的 effective_weight。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/08/10/nginx-swrr/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </div>
+  
+  
+  
+  </article>
+
+    
+        <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/08/08/node-process-hang-up/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1436,140 +1574,6 @@
   </article>
 
     
-        <article itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/03/11/mysql-pagination/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Claude's Blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/03/11/mysql-pagination/" class="post-title-link" itemprop="url">MySQL 分页查询优化思路</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2019-03-11 22:11:05" itemprop="dateCreated datePublished" datetime="2019-03-11T22:11:05+08:00">2019-03-11</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-03-14 22:14:55" itemprop="dateModified" datetime="2019-03-14T22:14:55+08:00">2019-03-14</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/MySQL/" itemprop="url" rel="index"><span itemprop="name">MySQL</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-        
-      
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2019/03/11/mysql-pagination/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/03/11/mysql-pagination/" itemprop="commentCount"></span></a>
-  </span>
-  
-  <br>
-  <span class="post-meta-item" title="Symbols count in article">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-file-word-o"></i>
-    </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-    
-    <span>1.9k</span>
-  </span>
-  <span class="post-meta-item" title="Reading time">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-clock-o"></i>
-    </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-    
-    <span>6 mins.</span>
-  </span>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>突破查询瓶颈的方法有很多，但这里先不谈分库分表之流，当头问题就一个：单数据表分页查询过慢怎么办？</p>
-<p>其实讲分页优化的博客真不少，但很多博主只顾分享点子忽略了细节，还有很多值得补充的地方。笔者回顾了曾经在千万级 BBS 项目的优化经历，尽可能结合实际地聊聊个人对分页查询的见解。也希望读者在亲身操作中验证，任何优化脱离了实际场景都是纸上谈兵。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/11/mysql-pagination/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </div>
-  
-  
-  
-  </article>
-
-    
   </div>
 
   
@@ -1622,7 +1626,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1721,7 +1725,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2020</span>
   <span class="with-love" id="animate">
     <i class="fa fa-bolt"></i>
   </span>
@@ -1733,7 +1737,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">48.4k</span>
+  <span title="Symbols count total">49.9k</span>
 
 </div>
 

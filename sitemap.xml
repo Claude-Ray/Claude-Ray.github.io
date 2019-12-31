@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://claude-ray.github.io/2019/12/06/npm-install-without-cache/</loc>
+    <loc>https://claude-ray.github.io/2019/12/31/optimize-verdaccio-cluster/</loc>
     
-    <lastmod>2019-12-06T07:22:14.912Z</lastmod>
+    <lastmod>2019-12-31T16:26:33.844Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://claude-ray.github.io/2019/11/30/optimize-verdaccio-proxy/</loc>
     
-    <lastmod>2019-12-06T03:06:17.492Z</lastmod>
+    <lastmod>2019-12-31T14:26:32.450Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://claude-ray.github.io/2019/12/06/npm-install-without-cache/</loc>
+    
+    <lastmod>2019-12-06T07:22:14.912Z</lastmod>
     
   </url>
   
@@ -93,14 +100,14 @@
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/05/23/node-graceful-server/</loc>
+    <loc>https://claude-ray.github.io/2019/08/08/node-process-hang-up/</loc>
     
     <lastmod>2019-09-12T10:45:26.127Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/08/08/node-process-hang-up/</loc>
+    <loc>https://claude-ray.github.io/2019/05/23/node-graceful-server/</loc>
     
     <lastmod>2019-09-12T10:45:26.127Z</lastmod>
     
