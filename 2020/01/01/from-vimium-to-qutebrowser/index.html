@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.4.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.4.0">
+  <link rel="mask-icon" href="/images/favicon.ico?v=7.4.0" color="#222">
+  <link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.4.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="过去两年，不论我安装、切换到哪家浏览器，除了已逝的 Vimperator，Vimium 都是第一个安装的插件。 曾经偶然听闻 qutebrowser 大名，但得知它没有让我难以割舍的 Dark Reader 插件，因此擦肩而过。 然而 Vimium 的小缺陷屡屡挑衅我的耐心，直到真正开始使用 qutebrowser，终于让我定下了迁移的决心。">
+<meta name="keywords" content="Vim,Browser,Equipment">
+<meta property="og:type" content="article">
+<meta property="og:title" content="从 Vimium 到 qutebrowser">
+<meta property="og:url" content="https://claude-ray.github.io/2020/01/01/from-vimium-to-qutebrowser/index.html">
+<meta property="og:site_name" content="Claude&#39;s Blog">
+<meta property="og:description" content="过去两年，不论我安装、切换到哪家浏览器，除了已逝的 Vimperator，Vimium 都是第一个安装的插件。 曾经偶然听闻 qutebrowser 大名，但得知它没有让我难以割舍的 Dark Reader 插件，因此擦肩而过。 然而 Vimium 的小缺陷屡屡挑衅我的耐心，直到真正开始使用 qutebrowser，终于让我定下了迁移的决心。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://claude-ray.github.io/image/from-vimium-to-qutebrowser/vimium-cheatsheet.png">
+<meta property="og:image" content="https://claude-ray.github.io/image/from-vimium-to-qutebrowser/qutebrowser-cheatsheet.png">
+<meta property="og:updated_time" content="2020-01-01T16:17:55.020Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="从 Vimium 到 qutebrowser">
+<meta name="twitter:description" content="过去两年，不论我安装、切换到哪家浏览器，除了已逝的 Vimperator，Vimium 都是第一个安装的插件。 曾经偶然听闻 qutebrowser 大名，但得知它没有让我难以割舍的 Dark Reader 插件，因此擦肩而过。 然而 Vimium 的小缺陷屡屡挑衅我的耐心，直到真正开始使用 qutebrowser，终于让我定下了迁移的决心。">
+<meta name="twitter:image" content="https://claude-ray.github.io/image/from-vimium-to-qutebrowser/vimium-cheatsheet.png">
+  <link rel="canonical" href="https://claude-ray.github.io/2020/01/01/from-vimium-to-qutebrowser/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>从 Vimium 到 qutebrowser | Claude's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claude's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">Searching</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2020/01/01/from-vimium-to-qutebrowser/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">从 Vimium 到 qutebrowser
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2020-01-01 14:21:32" itemprop="dateCreated datePublished" datetime="2020-01-01T14:21:32+08:00">2020-01-01</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-02 00:17:55" itemprop="dateModified" datetime="2020-01-02T00:17:55+08:00">2020-01-02</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Essay/" itemprop="url" rel="index"><span itemprop="name">Essay</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2020/01/01/from-vimium-to-qutebrowser/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/01/01/from-vimium-to-qutebrowser/" itemprop="commentCount"></span></a>
+  </span>
+  
+  <br>
+  <span class="post-meta-item" title="Symbols count in article">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-file-word-o"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+    
+    <span>1.6k</span>
+  </span>
+  <span class="post-meta-item" title="Reading time">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-clock-o"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+    
+    <span>6 mins.</span>
+  </span>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>过去两年，不论我安装、切换到哪家浏览器，<del>除了已逝的 Vimperator</del>，Vimium 都是第一个安装的插件。</p>
+<p>曾经偶然听闻 qutebrowser 大名，但得知它没有让我难以割舍的 Dark Reader 插件，因此擦肩而过。</p>
+<p>然而 Vimium 的小缺陷屡屡挑衅我的耐心，直到真正开始使用 qutebrowser，终于让我定下了迁移的决心。</p>
+<a id="more"></a>
+
+<h2 id="对比"><a href="#对比" class="headerlink" title="对比"></a>对比</h2><p>Vimium 只是一个浏览器插件，Firefox 和 Chrome 均有支持，可以说在不破坏原有操作体验的同时，补充了一些键盘操作的效率提升。</p>
+<p>可它的工作方式是页面注入式的，必须等当前页面加载出来后才能使用键盘操作，而且一些页面注定无法使用键盘操作，例如浏览器自己的插件商店、配置页。</p>
+<p>qutebrowser 则是一个使用 Python、PyQt 实现的轻量 GUI 跨平台浏览器，默认基于 Chromium 内核，并专注于键盘操作。不论页面是否完成加载，都可以随时使用键盘做出强大快捷的操作。</p>
+<p>可惜缺少插件系统，且对 inspector 的支持很差，Web 开发者们可能难以接受。</p>
+<p>它们最大的相同点，当属两者的按键都是 Vim 风格。即使之前从未体验过的用户，看看键位图也能理解它们的差异了。</p>
+<p><img src="/image/from-vimium-to-qutebrowser/vimium-cheatsheet.png" alt="vimium cheatsheet"></p>
+<p><img src="/image/from-vimium-to-qutebrowser/qutebrowser-cheatsheet.png" alt="qutebrowser cheatsheet"></p>
+<h2 id="文档"><a href="#文档" class="headerlink" title="文档"></a>文档</h2><p>qutebrowser 自带离线文档，<code>:help</code> 即可快捷查看，深度使用的话，自然要过上几遍。<br>接下来，我会介绍几个要点信息，帮助其他感兴趣的 Vimium 用户无痛切换到 qutebrowser。</p>
+<h2 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h2><p>qutebrowser 的配置管理十分方便，支持通过修改文件自定配置。</p>
+<p>不仅可以用 yml 文件做基础定义，还能使用 python 满足更多的定制需要。因而更推崇直接使用 config.py 做配置管理，Linux 平台在 <code>~/.config/qutebrowser/config.py</code>，Mac <code>~/.qutebrowser/config.py</code>， Windows 是 <code>%APPDATA%/qutebrowser/config/config.py</code>。</p>
+<p>如果一开始配置文件不存在，可执行 <code>:config-write-py</code> 初始化。另有可选参数 <code>--force</code>，强制用当前配置覆写磁盘文件。</p>
+<h2 id="搜索引擎"><a href="#搜索引擎" class="headerlink" title="搜索引擎"></a>搜索引擎</h2><p>qutebrowser 默认搜索引擎为 duckduckgo，但可以按需增加自己的常用配置。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">c.url.searchengines = &#123;</span><br><span class="line">    <span class="string">'DEFAULT'</span>: <span class="string">'https://google.com/search?q=&#123;&#125;'</span>,</span><br><span class="line">    <span class="string">'google'</span>: <span class="string">'https://google.com/search?q=&#123;&#125;'</span>,</span><br><span class="line">    <span class="string">'duckduckgo'</span>: <span class="string">'https://duckduckgo.com/?q=&#123;&#125;'</span>,</span><br><span class="line">    <span class="string">'github'</span>: <span class="string">'https://github.com/search?q=&#123;&#125;'</span>,</span><br><span class="line">    <span class="string">'npm'</span>: <span class="string">'https://npmjs.com/search?q=&#123;&#125;'</span>,</span><br><span class="line">    <span class="string">'baidu'</span>: <span class="string">'https://baidu.com/s?wd=&#123;&#125;'</span>,</span><br><span class="line">    <span class="string">'mijisou'</span>: <span class="string">'https://mijisou.com/search?q=&#123;&#125;'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="键位迁移"><a href="#键位迁移" class="headerlink" title="键位迁移"></a>键位迁移</h2><p>作为 Vimium 老用户，我保留了之前的使用习惯，修改如下键位，并参考 <a href="https://github.com/amosbird/serverconfig" target="_blank" rel="noopener">Amos Bird</a> 的配置，增加了在模式转换时自动切换中文输入法状态。这里使用的是 fcitx-remote，在 Mac 下，可以借助 <a href="https://github.com/xcodebuild/fcitx-remote-for-osx" target="_blank" rel="noopener">fcitx-remote-for-osx</a> 实现同样的效果。</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Bindings for normal mode</span></span><br><span class="line">config.bind(<span class="string">'x'</span>, <span class="string">'tab-close'</span>)</span><br><span class="line">config.bind(<span class="string">'X'</span>, <span class="string">'undo'</span>)</span><br><span class="line">config.bind(<span class="string">'J'</span>, <span class="string">'tab-prev'</span>)</span><br><span class="line">config.bind(<span class="string">'K'</span>, <span class="string">'tab-next'</span>)</span><br><span class="line">config.bind(<span class="string">'d'</span>, <span class="string">'scroll-page 0 0.5'</span>)</span><br><span class="line">config.bind(<span class="string">'u'</span>, <span class="string">'scroll-page 0 -0.5'</span>)</span><br><span class="line">config.bind(<span class="string">'j'</span>, <span class="string">'scroll-page 0 0.1'</span>)</span><br><span class="line">config.bind(<span class="string">'k'</span>, <span class="string">'scroll-page 0 -0.1'</span>)</span><br><span class="line">config.bind(<span class="string">'i'</span>, <span class="string">'enter-mode insert ;; spawn fcitx-remote -t'</span>)</span><br><span class="line">config.bind(<span class="string">'gi'</span>, <span class="string">'hint inputs --first ;; spawn fcitx-remote -t'</span>)</span><br><span class="line">config.bind(<span class="string">'p'</span>, <span class="string">'open -- &#123;clipboard&#125;'</span>)</span><br><span class="line">config.bind(<span class="string">'P'</span>, <span class="string">'open -t -- &#123;clipboard&#125;'</span>)</span><br><span class="line">config.unbind(<span class="string">'gl'</span>)</span><br><span class="line">config.unbind(<span class="string">'gr'</span>)</span><br><span class="line">config.bind(<span class="string">'gj'</span>, <span class="string">'tab-move -'</span>)</span><br><span class="line">config.bind(<span class="string">'gk'</span>, <span class="string">'tab-move +'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Escape&gt;'</span>, c.bindings.default[<span class="string">'normal'</span>][<span class="string">'&lt;Escape&gt;'</span>] + <span class="string">' ;; fake-key &lt;Escape&gt; ;; clear-messages ;; jseval --quiet document.getSelection().empty()'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bindings for insert mode</span></span><br><span class="line">config.bind(<span class="string">'&lt;Ctrl-a&gt;'</span>, <span class="string">'fake-key &lt;Home&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Ctrl-e&gt;'</span>, <span class="string">'fake-key &lt;End&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Ctrl-d&gt;'</span>, <span class="string">'fake-key &lt;Delete&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Ctrl-h&gt;'</span>, <span class="string">'fake-key &lt;Backspace&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Ctrl-k&gt;'</span>, <span class="string">'fake-key &lt;Ctrl-Shift-Right&gt; ;; fake-key &lt;Backspace&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Ctrl-f&gt;'</span>, <span class="string">'fake-key &lt;Right&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Ctrl-b&gt;'</span>, <span class="string">'fake-key &lt;Left&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Ctrl-n&gt;'</span>, <span class="string">'fake-key &lt;Down&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Ctrl-p&gt;'</span>, <span class="string">'fake-key &lt;Up&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br><span class="line">config.bind(<span class="string">'&lt;Escape&gt;'</span>, <span class="string">'spawn fcitx-remote -t ;; leave-mode ;; fake-key &lt;Escape&gt;'</span>, mode=<span class="string">'insert'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="代理配置"><a href="#代理配置" class="headerlink" title="代理配置"></a>代理配置</h2><p>通过 <code>c.content.proxy</code>，可以轻松配置自己的代理，支持 http 和 socks 协议。</p>
+<p>为了简化配置过程，我使用了 <code>Privoxy</code> 做了 http PAC 代理，可以参考我在 Mac 平台的 <a href="https://github.com/Claude-Ray/dotfiles/blob/master/macos/privoxy.sh" target="_blank" rel="noopener">Shell 脚本</a>。</p>
+<h2 id="窗口最大化"><a href="#窗口最大化" class="headerlink" title="窗口最大化"></a>窗口最大化</h2><p>绝大部分时间，我的浏览器是处于窗口最大化的。当然不是 Mac 原生的全屏，私以为那种另开一个桌面的全屏模式体验太差，不仅窗口切换动画时间长，也无法与别的任务窗口叠加，总有需要抄点东西的时候。</p>
+<p>在 Mac 上，qutebrowser 的 title bar 实在是又丑又大，可以通过 <code>c.window.hide_decoration = True</code> 来关闭它。但至今还存在的一个问题是关闭 title bar 之后，无法再调整窗口大小。</p>
+<p>即使在更改设置之前 qutebrowser 窗口处于最大化状态，hide_decoration 只能起到隐藏 title bar 的效果，界面上依然缺着一小条。</p>
+<p>作为强迫症简直不能忍啊，还好一番琢磨，找到了临时的解决办法，并且重启 qutebrowser，甚至重启电脑之后仍然能保持这个状态。现在就把这个办法分享给大家！</p>
+<ol>
+<li>先把 hide_decoration 关掉，在浏览器上快捷执行<code>:set window.hide_decoration false</code></li>
+<li>再将浏览器全屏，对应指令<code>:fullscreen</code> </li>
+<li>执行 <code>:set window.hide_decoration true</code></li>
+<li>按 <code>Ctrl+Up</code> 或用手势操作进入 Mission Control 界面，将最大化的 qutebrowser 从新桌面中拖拽到原来的桌面</li>
+<li>这时 qutebrowser 进入短暂的“无响应”阶段，用鼠标点击或滚动一下窗口的任意地方即可重新激活</li>
+</ol>
+<p>这样就获得了无边框的最大化 qutebrowser，enjoy！</p>
+<p>我还加了热键便于管理 title bar，在 config.py 中添加：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">c.window.hide_decoration = <span class="keyword">True</span></span><br><span class="line"></span><br><span class="line">config.bind(<span class="string">'&lt;Meta-Ctrl-f&gt;'</span>, <span class="string">'config-cycle window.hide_decoration false true'</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>经过一个星期的使用，qutebrowser 流畅的操作体验令我开怀不矣，现在将它作为主力浏览器。</p>
+<p>另一方面，它支持 insert 模式的按键定制，可以让我们在其他系统环境中像 Mac 一样在浏览器中使用 Emacs-like 的键位做行内编辑！</p>
+<p>假如你之前从未使用过 Vim-like 的浏览器插件，可以先把 Vimium 装起来。即使键位需要一点时间适应，可它胜在有着极大的包容性——不存在模式切换，没有按键冲突，也就不用担心它会降低你既有的操作效率。</p>
+<p>最后，我的配置都在自己的 <a href="https://github.com/Claude-Ray/dotfiles" target="_blank" rel="noopener">dotfiles</a> 仓库，希望对你有所帮助。</p>
+
+    </div>
+
+    
+    
+    
+        
+      
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Claude Ray</li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="https://claude-ray.github.io/2020/01/01/from-vimium-to-qutebrowser/" title="从 Vimium 到 qutebrowser">https://claude-ray.github.io/2020/01/01/from-vimium-to-qutebrowser/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+</ul>
+</div>
+
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Vim/" rel="tag"># Vim</a>
+            
+              <a href="/tags/Browser/" rel="tag"># Browser</a>
+            
+              <a href="/tags/Equipment/" rel="tag"># Equipment</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/12/31/optimize-verdaccio-cluster/" rel="next" title="Verdaccio 性能优化：单机 Cluster">
+                  <i class="fa fa-chevron-left"></i> Verdaccio 性能优化：单机 Cluster
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#对比"><span class="nav-number">1.</span> <span class="nav-text">对比</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文档"><span class="nav-number">2.</span> <span class="nav-text">文档</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件"><span class="nav-number">3.</span> <span class="nav-text">配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搜索引擎"><span class="nav-number">4.</span> <span class="nav-text">搜索引擎</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#键位迁移"><span class="nav-number">5.</span> <span class="nav-text">键位迁移</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理配置"><span class="nav-number">6.</span> <span class="nav-text">代理配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#窗口最大化"><span class="nav-number">7.</span> <span class="nav-text">窗口最大化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/avatar.jpg"
+      alt="Claude Ray">
+  <p class="site-author-name" itemprop="name">Claude Ray</p>
+  <div class="site-description" itemprop="description">Now or Never</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Claude-Ray" title="GitHub &rarr; https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://twitter.com/Claude__Ray" title="Twitter &rarr; https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam &rarr; https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
+      </span>
+    
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/nebulae-pan" title="https://github.com/nebulae-pan" rel="noopener" target="_blank">Nebulae Pan</a>
+        </li>
+      
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-bolt"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claude Ray</span>
+</div><div class="copyright">
+
+  <span class="post-meta-divider">|</span>
+  <span class="post-meta-item-icon">
+    <i class="fa fa-area-chart"></i>
+  </span>
+  <span class="post-meta-item-text">Symbols count total: </span>
+  <span title="Symbols count total">51.6k</span>
+
+</div>
+
+<div>
+  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homepage</a>. Happy hacking!
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js?v=7.4.0"></script>
+
+<script src="/js/next-boot.js?v=7.4.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://claude-ray.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  function disqus_config() {
+    this.page.url = "https://claude-ray.github.io/2020/01/01/from-vimium-to-qutebrowser/";
+    this.page.identifier = "2020/01/01/from-vimium-to-qutebrowser/";
+    this.page.title = '从 Vimium 到 qutebrowser';};
+  function loadComments() {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://claude-ray.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  }
+    (function() {
+      var offsetTop = document.getElementById('comments').offsetTop - window.innerHeight;
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        var disqus_scroll = () => {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = document.getElementById('comments').offsetTop - window.innerHeight;
+          var scrollTop = window.scrollY;
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            window.removeEventListener('scroll', disqus_scroll);
+            loadComments();
+          }
+        };
+        window.addEventListener('scroll', disqus_scroll);
+      }
+    })();
+  
+</script>
+
+</body>
+</html>

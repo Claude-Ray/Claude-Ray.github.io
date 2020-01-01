@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2020/01/01/from-vimium-to-qutebrowser/</loc>
+    
+    <lastmod>2020-01-01T16:17:55.020Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/12/31/optimize-verdaccio-cluster/</loc>
     
     <lastmod>2019-12-31T16:26:33.844Z</lastmod>
