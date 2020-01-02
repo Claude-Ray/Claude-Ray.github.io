@@ -2,16 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://claude-ray.github.io/2020/01/01/from-vimium-to-qutebrowser/</loc>
+    <loc>https://claude-ray.github.io/2019/10/22/optimize-verdaccio-package-route/</loc>
     
-    <lastmod>2020-01-01T16:22:26.309Z</lastmod>
+    <lastmod>2020-01-02T08:41:16.216Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://claude-ray.github.io/2019/12/31/optimize-verdaccio-cluster/</loc>
     
-    <lastmod>2019-12-31T16:26:33.844Z</lastmod>
+    <lastmod>2020-01-02T07:18:14.257Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://claude-ray.github.io/2020/01/01/from-vimium-to-qutebrowser/</loc>
+    
+    <lastmod>2020-01-02T06:54:58.684Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://claude-ray.github.io/2017/12/05/vscode-evernote%E4%BA%91%E7%AC%94%E8%AE%B0/</loc>
+    
+    <lastmod>2020-01-02T06:26:45.477Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://claude-ray.github.io/2019/09/10/from-journeyman-to-master/</loc>
+    
+    <lastmod>2020-01-02T06:26:02.774Z</lastmod>
     
   </url>
   
@@ -26,13 +47,6 @@
     <loc>https://claude-ray.github.io/2019/12/06/npm-install-without-cache/</loc>
     
     <lastmod>2019-12-06T07:22:14.912Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2019/10/22/optimize-verdaccio-package-route/</loc>
-    
-    <lastmod>2019-12-06T03:06:11.247Z</lastmod>
     
   </url>
   
@@ -135,21 +149,14 @@
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/09/10/from-journeyman-to-master/</loc>
-    
-    <lastmod>2019-09-12T10:45:26.124Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/</loc>
+    <loc>https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</loc>
     
     <lastmod>2019-09-12T10:45:26.123Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</loc>
+    <loc>https://claude-ray.github.io/2019/05/27/elastic-apm-node-research/</loc>
     
     <lastmod>2019-09-12T10:45:26.123Z</lastmod>
     
@@ -250,13 +257,6 @@
     <loc>https://claude-ray.github.io/2017/10/05/lodash-3-to-4/</loc>
     
     <lastmod>2018-12-11T16:05:56.208Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2017/12/05/vscode-evernote%E4%BA%91%E7%AC%94%E8%AE%B0/</loc>
-    
-    <lastmod>2018-10-31T14:19:08.784Z</lastmod>
     
   </url>
   
