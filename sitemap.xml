@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</loc>
+    
+    <lastmod>2020-01-10T03:29:07.504Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://claude-ray.github.io/2019/10/22/optimize-verdaccio-package-route/</loc>
     
     <lastmod>2020-01-02T08:41:16.216Z</lastmod>
@@ -145,13 +152,6 @@
     <loc>https://claude-ray.github.io/2019/08/10/nginx-swrr/</loc>
     
     <lastmod>2019-09-12T10:45:26.125Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://claude-ray.github.io/2019/07/17/fcitx-remote-for-osx-squirrel/</loc>
-    
-    <lastmod>2019-09-12T10:45:26.123Z</lastmod>
     
   </url>
   

@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="初衷是解决中文输入法在 vim/evil 键位下的 insert 模式和 normal 模式的切换问题，实现 normal 模式自动切英文、insert 模式回复之前的输入状态。 当然各编辑器都有各自知名的解决方案，本次主要吐槽 Mac 平台 fcitx-remote-for-osx 和 squirrel 输入法间的“摩擦”。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-09-12T10:45:26.123Z">
+<meta property="og:updated_time" content="2020-01-10T03:29:07.504Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="fcitx-remote-for-osx 设置 Squirrel 输入法切换">
 <meta name="twitter:description" content="初衷是解决中文输入法在 vim/evil 键位下的 insert 模式和 normal 模式的切换问题，实现 normal 模式自动切英文、insert 模式回复之前的输入状态。 当然各编辑器都有各自知名的解决方案，本次主要吐槽 Mac 平台 fcitx-remote-for-osx 和 squirrel 输入法间的“摩擦”。">
@@ -271,7 +271,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-12 18:45:26" itemprop="dateModified" datetime="2019-09-12T18:45:26+08:00">2019-09-12</time>
+                <time title="Modified: 2020-01-10 11:29:07" itemprop="dateModified" datetime="2020-01-10T11:29:07+08:00">2020-01-10</time>
               </span>
             
           
@@ -310,7 +310,7 @@
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
     
-    <span>728</span>
+    <span>730</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
@@ -357,7 +357,7 @@
 
 <p>结果可能是 <code>im.rime.*</code> 或 <code>com.googlecode.rimeime.*</code>。我这里的输出为 <code>im.rime.inputmethod.Squirrel</code>，说明要使用 <code>squirrel-rime-upstream</code> 作为编译选项。</p>
 <p>可惜 tap 安装的旧版没有这个选项，最后决定直接用源码编译，等新版本修复了再回归 homebrew 管理。<code>build.py</code> 文件内容本来就简单，并且作者在 <a href="https://github.com/xcodebuild/fcitx-remote-for-osx/tree/feature/special-input-method#install" target="_blank" rel="noopener">special-input-method分支</a> 提供了编译安装的文档，效果和 homebrew install 是一致的。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/dangxuandev/fcitx-remote-for-osx</span><br><span class="line"><span class="built_in">cd</span> fcitx-remote-for-osx</span><br><span class="line">./build.py build squirrel-rime-upstream</span><br><span class="line">cp ./fcitx-remote-squirrel-rime-upstream /usr/<span class="built_in">local</span>/bin/fcitx-remote</span><br><span class="line">ln -snf /usr/<span class="built_in">local</span>/bin/fcitx-remote /usr/<span class="built_in">local</span>/bin/fcitx-remote-squirrel-rime</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/dangxuandev/fcitx-remote-for-osx</span><br><span class="line"><span class="built_in">cd</span> fcitx-remote-for-osx</span><br><span class="line">./build.py build squirrel-rime-upstream</span><br><span class="line">cp ./fcitx-remote-squirrel-rime-upstream /usr/<span class="built_in">local</span>/bin/fcitx-remote-squirrel-rime</span><br><span class="line">ln -snf /usr/<span class="built_in">local</span>/bin/fcitx-remote-squirrel-rime /usr/<span class="built_in">local</span>/bin/fcitx-remote</span><br></pre></td></tr></table></figure>
 
 <p>基本可以正常使用了，也没有出现切换延迟较高的问题，但偶尔遇到 squirrel 卡住，无法切换中英，在 squirrel issues 可以看到了有许多相关 bug。但是并没有人给出终极的解决方案，佛振认为这是其他软件的问题，暂不予关注，等他参与修复可能遥遥无期。详见这个已关闭的 <a href="https://github.com/rime/squirrel/issues/292" target="_blank" rel="noopener">issue</a></p>
 <p>在写这篇文章的过程中，就触发了一次卡死状态……但切换输入法、或切换窗口就可以恢复。而在 VSCode 配置 vim 插件的<a href="https://github.com/VSCodeVim/Vim#input-method" target="_blank" rel="noopener">自动切换</a>后 100% 重现。</p>
