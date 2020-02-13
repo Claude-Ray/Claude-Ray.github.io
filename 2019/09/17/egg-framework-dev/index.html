@@ -60,15 +60,15 @@
 <meta name="keywords" content="Node.js,Egg">
 <meta property="og:type" content="article">
 <meta property="og:title" content="不靠谱的 Egg.js 框架开发指南">
-<meta property="og:url" content="https://claude-ray.github.io/2019/09/17/egg-framework-dev/index.html">
+<meta property="og:url" content="http://claude-ray.com/2019/09/17/egg-framework-dev/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="这是一篇面向 Egg.js 上层框架开发者的科普文。 Egg 官网基本做到了呈现所有“必知必会”的内容，再写一份 Egg 使用教程已经毫无必要，不如聊聊 Egg 上层框架开发过程中可能有用的技巧。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-13T09:27:27.295Z">
+<meta property="og:updated_time" content="2020-02-13T10:27:31.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="不靠谱的 Egg.js 框架开发指南">
 <meta name="twitter:description" content="这是一篇面向 Egg.js 上层框架开发者的科普文。 Egg 官网基本做到了呈现所有“必知必会”的内容，再写一份 Egg 使用教程已经毫无必要，不如聊聊 Egg 上层框架开发过程中可能有用的技巧。">
-  <link rel="canonical" href="https://claude-ray.github.io/2019/09/17/egg-framework-dev/">
+  <link rel="canonical" href="http://claude-ray.com/2019/09/17/egg-framework-dev/">
 
 
 <script id="page-configurations">
@@ -232,7 +232,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/09/17/egg-framework-dev/">
+    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/09/17/egg-framework-dev/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -271,7 +271,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-13 17:27:27" itemprop="dateModified" datetime="2020-02-13T17:27:27+08:00">2020-02-13</time>
+                <time title="Modified: 2020-02-13 18:27:31" itemprop="dateModified" datetime="2020-02-13T18:27:31+08:00">2020-02-13</time>
               </span>
             
           
@@ -494,7 +494,7 @@
 <p>那为什么不全面使用 Radix Tree 呢？其实只有少数涉及大量路由和性能的场景，如 npm registery。</p>
 <p>如果项目真的有如此性能需要，恐怕你不得不考虑用该算法编写的路由中间件来取代默认的 egg-router 了。</p>
 <h2 id="引入-Elastic-APM"><a href="#引入-Elastic-APM" class="headerlink" title="引入 Elastic APM"></a>引入 Elastic APM</h2><h3 id="如何支持-egg-框架"><a href="#如何支持-egg-框架" class="headerlink" title="如何支持 egg 框架"></a>如何支持 egg 框架</h3><p>需求：elastic-apm hook 必须在 Egg 和 egg-router 被 require 前完成加载。</p>
-<p>之前有一篇更详细的文章《<a href="https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/">elastic-apm-node 扩展篇 —— Egg</a>》，适用于 Egg 应用层的 APM 接入。而在框架层则简单许多，可以直接在框架入口文件做此处理，应用开发者无须再关心这个包的处理细节。</p>
+<p>之前有一篇更详细的文章《<a href="https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg/" target="_blank" rel="noopener">elastic-apm-node 扩展篇 —— Egg</a>》，适用于 Egg 应用层的 APM 接入。而在框架层则简单许多，可以直接在框架入口文件做此处理，应用开发者无须再关心这个包的处理细节。</p>
 <h3 id="ts-项目启动卡住"><a href="#ts-项目启动卡住" class="headerlink" title="ts 项目启动卡住"></a>ts 项目启动卡住</h3><p>由于 egg-bin 内置的 ets (egg-ts-helper) 会用子进程同步地预加载一部分 ts 代码用作检查，apm 会被顺势加载，如果配置的环境变量或 serverUrl 字段有误，导致访问无法连通的 apm-server，最终会让该子进程挂起，ets 无法正常退出。</p>
 <blockquote>
 <p>ets 只在 <code>egg-bin start/dev/debug</code> 启动 ts 项目时生效，不会影响线上经过编译的 js <code>egg-script start</code> 启动。</p>
@@ -555,7 +555,7 @@
     <strong>Post author:  </strong>Claude Ray</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://claude-ray.github.io/2019/09/17/egg-framework-dev/" title="不靠谱的 Egg.js 框架开发指南">https://claude-ray.github.io/2019/09/17/egg-framework-dev/</a>
+    <a href="http://claude-ray.com/2019/09/17/egg-framework-dev/" title="不靠谱的 Egg.js 框架开发指南">http://claude-ray.com/2019/09/17/egg-framework-dev/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
@@ -861,7 +861,7 @@
 </script>
 <script>
   function disqus_config() {
-    this.page.url = "https://claude-ray.github.io/2019/09/17/egg-framework-dev/";
+    this.page.url = "http://claude-ray.com/2019/09/17/egg-framework-dev/";
     this.page.identifier = "2019/09/17/egg-framework-dev/";
     this.page.title = '不靠谱的 Egg.js 框架开发指南';};
   function loadComments() {

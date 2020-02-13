@@ -60,15 +60,15 @@
 <meta name="keywords" content="Nginx">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx改写$args未生效踩坑">
-<meta property="og:url" content="https://claude-ray.github.io/2019/01/24/nginx-proxypass-args/index.html">
+<meta property="og:url" content="http://claude-ray.com/2019/01/24/nginx-proxypass-args/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="问题原始需求是通过 nginx 在请求链接中增加一个固定参数 custom_param，方法很简单，在 location 中重设 $args。 123# in location xxxset $args $args&amp;amp;custom_param=test;proxy_pass http://remote_host;  顺便说一下，即使链接中没有参数也不影响一般服务端解析，符号?会自动加上，如上">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-13T09:27:27.296Z">
+<meta property="og:updated_time" content="2020-02-13T10:27:31.316Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx改写$args未生效踩坑">
 <meta name="twitter:description" content="问题原始需求是通过 nginx 在请求链接中增加一个固定参数 custom_param，方法很简单，在 location 中重设 $args。 123# in location xxxset $args $args&amp;amp;custom_param=test;proxy_pass http://remote_host;  顺便说一下，即使链接中没有参数也不影响一般服务端解析，符号?会自动加上，如上">
-  <link rel="canonical" href="https://claude-ray.github.io/2019/01/24/nginx-proxypass-args/">
+  <link rel="canonical" href="http://claude-ray.com/2019/01/24/nginx-proxypass-args/">
 
 
 <script id="page-configurations">
@@ -232,7 +232,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/01/24/nginx-proxypass-args/">
+    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/01/24/nginx-proxypass-args/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -271,7 +271,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-13 17:27:27" itemprop="dateModified" datetime="2020-02-13T17:27:27+08:00">2020-02-13</time>
+                <time title="Modified: 2020-02-13 18:27:31" itemprop="dateModified" datetime="2020-02-13T18:27:31+08:00">2020-02-13</time>
               </span>
             
           
@@ -347,7 +347,7 @@
 <p>在不升级 nginx 的情况下，修复方案是采用旧的参数附加方式<code>$uri$is_args$args</code>，如下</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> <span class="variable">$args</span> <span class="variable">$args</span>&amp;custom_param=<span class="built_in">test</span>;</span><br><span class="line">proxy_pass http://remote_host<span class="variable">$uri</span><span class="variable">$is_args</span><span class="variable">$args</span>;</span><br></pre></td></tr></table></figure>
 
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>很多软件包的疑难杂症都可以试着查阅 change log，而且有些情况下检索历史变更比查 issue 更方便。之前<a href="https://claude-ray.github.io/2017/10/05/lodash-3-to-4/">《lodash3升级4踩坑》</a> 一文提到的 lodash 升级大版本导致 merge 用法变更，也是查 history 定位到了问题。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>很多软件包的疑难杂症都可以试着查阅 change log，而且有些情况下检索历史变更比查 issue 更方便。之前<a href="https://claude-ray.github.io/2017/10/05/lodash-3-to-4/" target="_blank" rel="noopener">《lodash3升级4踩坑》</a> 一文提到的 lodash 升级大版本导致 merge 用法变更，也是查 history 定位到了问题。</p>
 
     </div>
 
@@ -364,7 +364,7 @@
     <strong>Post author:  </strong>Claude Ray</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://claude-ray.github.io/2019/01/24/nginx-proxypass-args/" title="Nginx改写$args未生效踩坑">https://claude-ray.github.io/2019/01/24/nginx-proxypass-args/</a>
+    <a href="http://claude-ray.com/2019/01/24/nginx-proxypass-args/" title="Nginx改写$args未生效踩坑">http://claude-ray.com/2019/01/24/nginx-proxypass-args/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
@@ -668,7 +668,7 @@
 </script>
 <script>
   function disqus_config() {
-    this.page.url = "https://claude-ray.github.io/2019/01/24/nginx-proxypass-args/";
+    this.page.url = "http://claude-ray.com/2019/01/24/nginx-proxypass-args/";
     this.page.identifier = "2019/01/24/nginx-proxypass-args/";
     this.page.title = 'Nginx改写$args未生效踩坑';};
   function loadComments() {

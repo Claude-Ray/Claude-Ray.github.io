@@ -60,15 +60,15 @@
 <meta name="keywords" content="Node.js">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记一次 Node.js 进程挂起的 BUG 追踪">
-<meta property="og:url" content="https://claude-ray.github.io/2019/08/08/node-process-hang-up/index.html">
+<meta property="og:url" content="http://claude-ray.com/2019/08/08/node-process-hang-up/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="前言先把干货放前面，辅助排查的 npm 模块有：wtfnode，why-is-node-running，active-handles 等，使用方法差不多如下，可以查看各自的文档。 123456const wtf = require(&apos;wtfnode&apos;);// your codes// track downwtf.dump();  也可以更深入地排查，因为上述模块的核心都是 Node.js 文档未标">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-13T09:27:27.296Z">
+<meta property="og:updated_time" content="2020-02-13T10:27:31.316Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记一次 Node.js 进程挂起的 BUG 追踪">
 <meta name="twitter:description" content="前言先把干货放前面，辅助排查的 npm 模块有：wtfnode，why-is-node-running，active-handles 等，使用方法差不多如下，可以查看各自的文档。 123456const wtf = require(&apos;wtfnode&apos;);// your codes// track downwtf.dump();  也可以更深入地排查，因为上述模块的核心都是 Node.js 文档未标">
-  <link rel="canonical" href="https://claude-ray.github.io/2019/08/08/node-process-hang-up/">
+  <link rel="canonical" href="http://claude-ray.com/2019/08/08/node-process-hang-up/">
 
 
 <script id="page-configurations">
@@ -232,7 +232,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/08/08/node-process-hang-up/">
+    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/08/08/node-process-hang-up/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -271,7 +271,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-13 17:27:27" itemprop="dateModified" datetime="2020-02-13T17:27:27+08:00">2020-02-13</time>
+                <time title="Modified: 2020-02-13 18:27:31" itemprop="dateModified" datetime="2020-02-13T18:27:31+08:00">2020-02-13</time>
               </span>
             
           
@@ -340,7 +340,7 @@
 <p>好了，本篇到这里结束了，剩下的内容，劝你还是跳过吧：流水帐警告⚠️️ 翻车警告⚠️️</p>
 <a id="more"></a>
 
-<h1 id="问题经过"><a href="#问题经过" class="headerlink" title="问题经过"></a>问题经过</h1><p>背景是为 ts + egg 项目引入 apm 探针，由于 apm 必须在“启动文件”的第一行完成加载，即整个 egg 的生命周期开始之前，因此需要使用独立的脚本或指令进行启动。具体如何处理可以参考这篇<a href="https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg">博客</a>。</p>
+<h1 id="问题经过"><a href="#问题经过" class="headerlink" title="问题经过"></a>问题经过</h1><p>背景是为 ts + egg 项目引入 apm 探针，由于 apm 必须在“启动文件”的第一行完成加载，即整个 egg 的生命周期开始之前，因此需要使用独立的脚本或指令进行启动。具体如何处理可以参考这篇<a href="https://claude-ray.github.io/2019/07/12/elastic-apm-node-egg" target="_blank" rel="noopener">博客</a>。</p>
 <p>问题就出在脱离了 egg 的声明周期，得额外管理不同运行环境下 apm-server（APM 数据采集服务器）的地址配置。可能第一时间就能想到 Node.js 的环境变量，思路没错，毕竟程序和 egg-bin 绑定，NODE_ENV 环境变量的命名符合规范，主要为 development、test、production。特定环境读取特定的即可。</p>
 <p>但调试过程中，写错了 apm-server 路径，遇到了进程启动过程中卡住的现象。解决起来很容易，但好奇是什么原因造成的，因为正常引入 elastic-apm-node 并填写一个错误的 url 并不妨碍主流程的运行。</p>
 <h1 id="战前准备"><a href="#战前准备" class="headerlink" title="战前准备"></a>战前准备</h1><p>省略翻代码的过程，简单的结论就是：进程卡死的问题由 egg-bin 内置的 ets（egg-ts-helper）指令诱发，其使用 <code>child_process.execSync</code> 方法启动子进程来预加载一部分代码用作检查，而子进程卡住不退出，才导致父进程无法继续向下执行。</p>
@@ -400,7 +400,7 @@
     <strong>Post author:  </strong>Claude Ray</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://claude-ray.github.io/2019/08/08/node-process-hang-up/" title="记一次 Node.js 进程挂起的 BUG 追踪">https://claude-ray.github.io/2019/08/08/node-process-hang-up/</a>
+    <a href="http://claude-ray.com/2019/08/08/node-process-hang-up/" title="记一次 Node.js 进程挂起的 BUG 追踪">http://claude-ray.com/2019/08/08/node-process-hang-up/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
@@ -704,7 +704,7 @@
 </script>
 <script>
   function disqus_config() {
-    this.page.url = "https://claude-ray.github.io/2019/08/08/node-process-hang-up/";
+    this.page.url = "http://claude-ray.com/2019/08/08/node-process-hang-up/";
     this.page.identifier = "2019/08/08/node-process-hang-up/";
     this.page.title = '记一次 Node.js 进程挂起的 BUG 追踪';};
   function loadComments() {

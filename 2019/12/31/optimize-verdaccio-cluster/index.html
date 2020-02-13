@@ -60,15 +60,15 @@
 <meta name="keywords" content="Node.js,npm,Verdaccio,private npm registry">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Verdaccio 性能优化：单机 Cluster">
-<meta property="og:url" content="https://claude-ray.github.io/2019/12/31/optimize-verdaccio-cluster/index.html">
+<meta property="og:url" content="http://claude-ray.com/2019/12/31/optimize-verdaccio-cluster/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="本篇将讨论如何解决 Verdaccio 官方本地存储方案不支持 Cluster 的问题。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-13T09:27:27.297Z">
+<meta property="og:updated_time" content="2020-02-13T10:27:31.317Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Verdaccio 性能优化：单机 Cluster">
 <meta name="twitter:description" content="本篇将讨论如何解决 Verdaccio 官方本地存储方案不支持 Cluster 的问题。">
-  <link rel="canonical" href="https://claude-ray.github.io/2019/12/31/optimize-verdaccio-cluster/">
+  <link rel="canonical" href="http://claude-ray.com/2019/12/31/optimize-verdaccio-cluster/">
 
 
 <script id="page-configurations">
@@ -232,7 +232,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="https://claude-ray.github.io/2019/12/31/optimize-verdaccio-cluster/">
+    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/12/31/optimize-verdaccio-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Claude Ray">
@@ -271,7 +271,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-13 17:27:27" itemprop="dateModified" datetime="2020-02-13T17:27:27+08:00">2020-02-13</time>
+                <time title="Modified: 2020-02-13 18:27:31" itemprop="dateModified" datetime="2020-02-13T18:27:31+08:00">2020-02-13</time>
               </span>
             
           
@@ -365,7 +365,7 @@
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Search</span> </span>&#123;</span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Constructor.</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">constructor</span>() &#123;</span><br><span class="line">    <span class="keyword">this</span>.index = lunr(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">      <span class="keyword">this</span>.field(<span class="string">'name'</span>, &#123;<span class="attr">boost</span>: <span class="number">10</span>&#125;);</span><br><span class="line">      <span class="keyword">this</span>.field(<span class="string">'unscoped'</span>, &#123;<span class="attr">boost</span>: <span class="number">8</span>&#125;);</span><br><span class="line">      <span class="keyword">this</span>.field(<span class="string">'description'</span>, &#123;<span class="attr">boost</span>: <span class="number">4</span>&#125;);</span><br><span class="line">      <span class="keyword">this</span>.field(<span class="string">'author'</span>, &#123;<span class="attr">boost</span>: <span class="number">6</span>&#125;);</span><br><span class="line">      <span class="keyword">this</span>.field(<span class="string">'readme'</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Add a new element to index</span></span><br><span class="line"><span class="comment">   * @param &#123;*&#125; pkg the package</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  add(pkg) &#123;</span><br><span class="line">    <span class="keyword">this</span>.index.add(&#123;</span><br><span class="line">      id: pkg.name,</span><br><span class="line">      name: pkg.name,</span><br><span class="line">      unscoped: getUnscopedName(pkg.name),</span><br><span class="line">      description: pkg.description,</span><br><span class="line">      author: pkg._npmUser ? pkg._npmUser.name : <span class="string">'???'</span>,</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 截取包名中不带 scope 的部分</span></span><br><span class="line"><span class="comment"> * 参照命名规范 @scope/name，直接截取/后的字符串</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getUnscopedName</span>(<span class="params">name</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> name.split(<span class="string">'/'</span>)[<span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>为 Verdaccio 开启 Cluster 能力并不是一个轻松的做法，但经过这个系列解读，却可以轻松地作出选择。</p>
-<p>如果只是想一定程度上提高处理高并发的性能，可以采取上一篇<a href="https://claude-ray.github.io/2019/10/22/optimize-verdaccio-proxy/">代理分流</a>的做法，代理可以帮你分担 99% 以上的压力。</p>
+<p>如果只是想一定程度上提高处理高并发的性能，可以采取上一篇<a href="https://claude-ray.github.io/2019/10/22/optimize-verdaccio-proxy/" target="_blank" rel="noopener">代理分流</a>的做法，代理可以帮你分担 99% 以上的压力。</p>
 <p>如果想进一步提升性能，实现应用的平滑重启，本文单机 Cluster 并配合 pm2 reload 的做法不妨一试。</p>
 <p>而一但想开启多节点集群的能力，几乎超出了轻量级私服的理念，试着迁移到 cnpm、Nexus 吧。</p>
 
@@ -384,7 +384,7 @@
     <strong>Post author:  </strong>Claude Ray</li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
-    <a href="https://claude-ray.github.io/2019/12/31/optimize-verdaccio-cluster/" title="Verdaccio 性能优化：单机 Cluster">https://claude-ray.github.io/2019/12/31/optimize-verdaccio-cluster/</a>
+    <a href="http://claude-ray.com/2019/12/31/optimize-verdaccio-cluster/" title="Verdaccio 性能优化：单机 Cluster">http://claude-ray.com/2019/12/31/optimize-verdaccio-cluster/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
@@ -694,7 +694,7 @@
 </script>
 <script>
   function disqus_config() {
-    this.page.url = "https://claude-ray.github.io/2019/12/31/optimize-verdaccio-cluster/";
+    this.page.url = "http://claude-ray.com/2019/12/31/optimize-verdaccio-cluster/";
     this.page.identifier = "2019/12/31/optimize-verdaccio-cluster/";
     this.page.title = 'Verdaccio 性能优化：单机 Cluster';};
   function loadComments() {
