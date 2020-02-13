@@ -64,7 +64,7 @@
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="概述Node内部不支持直接操作GBK字符串，而实际也并不需要如此。总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用utf8。编码转换主要基于iconv-lite库。总结已经写在了前头，下面再列举几种http服务中常见的处理场景。常见场景请求返回值最常用且容易处理，通常我们使用request发起http请求，options中设置encoding: null，这样返回的res.body为b">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-18T16:17:00.896Z">
+<meta property="og:updated_time" content="2020-02-13T09:27:27.296Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="总结node处理GBK编码">
 <meta name="twitter:description" content="概述Node内部不支持直接操作GBK字符串，而实际也并不需要如此。总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用utf8。编码转换主要基于iconv-lite库。总结已经写在了前头，下面再列举几种http服务中常见的处理场景。常见场景请求返回值最常用且容易处理，通常我们使用request发起http请求，options中设置encoding: null，这样返回的res.body为b">
@@ -271,7 +271,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-12-19 00:17:00" itemprop="dateModified" datetime="2018-12-19T00:17:00+08:00">2018-12-19</time>
+                <time title="Modified: 2020-02-13 17:27:27" itemprop="dateModified" datetime="2020-02-13T17:27:27+08:00">2020-02-13</time>
               </span>
             
           
