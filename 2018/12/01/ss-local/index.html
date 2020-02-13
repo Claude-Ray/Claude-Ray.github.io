@@ -1,77 +1,42 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-Hans">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.4.0">
-  <link rel="mask-icon" href="/images/favicon.ico?v=7.4.0" color="#222">
-  <link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
   <meta name="google-site-verification" content="2NvRwEicYYEjnSCQZmthUW33BtS11QwT85AgvfocMGI">
   <meta name="msvalidate.01" content="0BFF64D8466DDA1B96AF8DBA4B5ED7EC">
   <meta name="baidu-site-verification" content="13oCuH1wUm">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '7.4.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"claude-ray.com","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="近期Evernote因为局域网问题不能使用了，作为重要工具不能离手，于是借助ss代理方式应急一下。ubuntu18没有特别好用的ss GUI，故选择了命令行工具ss-local。部署没难度，操作流程是翻文档加自己探索，个人认为比网上其他攻略简单，分享出来希望有助于大家解决网络疑难杂症。同时声明，本文只涉及客户端部署，evernote.com截止文章发布时间并没有被墙，请使用国内云服务器代理合规站点">
-<meta name="keywords" content="Ubuntu,proxy">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Ubuntu配置ss-local客户端">
 <meta property="og:url" content="http://claude-ray.com/2018/12/01/ss-local/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="近期Evernote因为局域网问题不能使用了，作为重要工具不能离手，于是借助ss代理方式应急一下。ubuntu18没有特别好用的ss GUI，故选择了命令行工具ss-local。部署没难度，操作流程是翻文档加自己探索，个人认为比网上其他攻略简单，分享出来希望有助于大家解决网络疑难杂症。同时声明，本文只涉及客户端部署，evernote.com截止文章发布时间并没有被墙，请使用国内云服务器代理合规站点">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-15T04:37:02.099Z">
+<meta property="article:published_time" content="2018-12-01T14:03:28.000Z">
+<meta property="article:modified_time" content="2019-05-15T04:37:02.099Z">
+<meta property="article:author" content="Claude Ray">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="proxy">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Ubuntu配置ss-local客户端">
-<meta name="twitter:description" content="近期Evernote因为局域网问题不能使用了，作为重要工具不能离手，于是借助ss代理方式应急一下。ubuntu18没有特别好用的ss GUI，故选择了命令行工具ss-local。部署没难度，操作流程是翻文档加自己探索，个人认为比网上其他攻略简单，分享出来希望有助于大家解决网络疑难杂症。同时声明，本文只涉及客户端部署，evernote.com截止文章发布时间并没有被墙，请使用国内云服务器代理合规站点">
-  <link rel="canonical" href="http://claude-ray.com/2018/12/01/ss-local/">
+
+<link rel="canonical" href="http://claude-ray.com/2018/12/01/ss-local/">
 
 
 <script id="page-configurations">
@@ -79,16 +44,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>Ubuntu配置ss-local客户端 | Claude's Blog</title>
   
-
-
 
 
 
@@ -107,7 +68,6 @@
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -119,13 +79,14 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
@@ -141,11 +102,11 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
@@ -153,64 +114,32 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
-      
-    
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
-      
-    
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
-      
-    
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
-      
-    
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
-      
-    
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
 
   </li>
   </ul>
-
-    
 
 </nav>
 </div>
@@ -223,33 +152,33 @@
   </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-      <article itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block post">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2018/12/01/ss-local/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Claude's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">Ubuntu配置ss-local客户端
-
-          
+        <h2 class="post-title" itemprop="name headline">
+          Ubuntu配置ss-local客户端
         </h2>
 
         <div class="post-meta">
@@ -259,16 +188,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2018-12-01 22:03:28" itemprop="dateCreated datePublished" datetime="2018-12-01T22:03:28+08:00">2018-12-01</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -276,21 +197,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-05-15 12:37:02" itemprop="dateModified" datetime="2019-05-15T12:37:02+08:00">2019-05-15</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -299,11 +216,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2018/12/01/ss-local/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/01/ss-local/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2018/12/01/ss-local/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/01/ss-local/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -312,20 +229,17 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
-    <span>691</span>
+    <span>698</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>3 mins.</span>
   </span>
 
             <div class="post-description">近期Evernote因为局域网问题不能使用了，作为重要工具不能离手，于是借助ss代理方式应急一下。ubuntu18没有特别好用的ss GUI，故选择了命令行工具ss-local。部署没难度，操作流程是翻文档加自己探索，个人认为比网上其他攻略简单，分享出来希望有助于大家解决网络疑难杂症。同时声明，本文只涉及客户端部署，evernote.com截止文章发布时间并没有被墙，请使用国内云服务器代理合规站点。</div>
-          
 
         </div>
       </header>
@@ -336,20 +250,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>ss-local是<a href="https://github.com/shadowsocks/shadowsocks-libev" target="_blank" rel="noopener">shadowsocks-libev</a>提供的客户端工具，若想正常使用需先准备一台机器部署shadowsocks服务端以作为代理。</p><h2 id="一、安装准备"><a href="#一、安装准备" class="headerlink" title="一、安装准备"></a>一、安装准备</h2><p>Ubuntu 16以上直接用apt安装，其他发行版可以查阅文档<a href="https://github.com/shadowsocks/shadowsocks-libev#installation" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks-libev#installation</a></p><a id="more"></a>
-
+        <p>ss-local是<a href="https://github.com/shadowsocks/shadowsocks-libev" target="_blank" rel="noopener">shadowsocks-libev</a>提供的客户端工具，若想正常使用需先准备一台机器部署shadowsocks服务端以作为代理。</p>
+<h2 id="一、安装准备"><a href="#一、安装准备" class="headerlink" title="一、安装准备"></a>一、安装准备</h2><p>Ubuntu 16以上直接用apt安装，其他发行版可以查阅文档<a href="https://github.com/shadowsocks/shadowsocks-libev#installation" target="_blank" rel="noopener">https://github.com/shadowsocks/shadowsocks-libev#installation</a></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo apt update</span><br><span class="line">sudo apt install shadowsocks-libev</span><br></pre></td></tr></table></figure>
 
 <h2 id="二、编辑配置文件"><a href="#二、编辑配置文件" class="headerlink" title="二、编辑配置文件"></a>二、编辑配置文件</h2><h3 id="配置代理服地址"><a href="#配置代理服地址" class="headerlink" title="配置代理服地址"></a>配置代理服地址</h3><p>参考config.json修改local.json，填写代理服务器的地址。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo cp /etc/shadowsocks-libev/config.json /etc/shadowsocks-libev/local.json</span><br><span class="line">sudo vi /etc/shadowsocks-libev/local.json</span><br></pre></td></tr></table></figure>
-
 <p>建议<code>local_port</code>不要使用默认的1080，例如改为1081。主要是避免和ss-server（在安装后默认作为<code>shadowsocks-libev.service</code>启动）抢占端口，或者选择手动停掉ss-server。</p>
 <figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"server"</span>: <span class="string">"代理服地址"</span>,</span><br><span class="line">  <span class="attr">"server_port"</span>: <span class="string">"代理服端口"</span>,</span><br><span class="line">  <span class="attr">"local_port"</span>: <span class="number">1081</span>,</span><br><span class="line">  <span class="attr">"password"</span>: <span class="string">"代理服密码"</span>,</span><br><span class="line">  <span class="attr">"timeout"</span>: <span class="number">60</span>,</span><br><span class="line">  <span class="attr">"method"</span>: <span class="string">"chacha20-ietf-poly1305"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="配置systemd-service"><a href="#配置systemd-service" class="headerlink" title="配置systemd service"></a>配置systemd service</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vi /lib/systemd/system/shadowsocks-libev-local@.service</span><br></pre></td></tr></table></figure>
-
 <p>替换其中ExecStart的配置路径</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart=/usr/bin/ss-local -c /etc/shadowsocks-libev/local.json</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ExecStart&#x3D;&#x2F;usr&#x2F;bin&#x2F;ss-local -c &#x2F;etc&#x2F;shadowsocks-libev&#x2F;local.json</span><br></pre></td></tr></table></figure>
 
 <h2 id="三、启动服务"><a href="#三、启动服务" class="headerlink" title="三、启动服务"></a>三、启动服务</h2><p>使用systemctl或service管理服务</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#启动</span></span><br><span class="line">sudo systemctl start shadowsocks-libev-local@.</span><br><span class="line"><span class="comment">#或 $ sudo service shadowsocks-libev-local@.service start</span></span><br><span class="line"><span class="comment">#查看运行情况</span></span><br><span class="line">sudo systemctl status shadowsocks-libev-local@.</span><br><span class="line"><span class="comment">#配置开机自启</span></span><br><span class="line">sudo systemctl <span class="built_in">enable</span> shadowsocks-libev-local@.</span><br></pre></td></tr></table></figure>
@@ -375,66 +287,49 @@
     
     
         
-      
-        
 
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>Post author:  </strong>Claude Ray</li>
+    <strong>Post author:  </strong>Claude Ray
+  </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     <a href="http://claude-ray.com/2018/12/01/ss-local/" title="Ubuntu配置ss-local客户端">http://claude-ray.com/2018/12/01/ss-local/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
 </ul>
 </div>
 
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/Ubuntu/" rel="tag"># Ubuntu</a>
-            
               <a href="/tags/proxy/" rel="tag"># proxy</a>
-            
           </div>
-        
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2018/10/30/jest-server-context/" rel="next" title="Jest共享server和tests的上下文环境">
-                  <i class="fa fa-chevron-left"></i> Jest共享server和tests的上下文环境
-                </a>
-              
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2018/12/12/node-gbk-sum/" rel="prev" title="总结node处理GBK编码">
-                  总结node处理GBK编码 <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
         
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/10/30/jest-server-context/" rel="prev" title="Jest共享server和tests的上下文环境">
+      <i class="fa fa-chevron-left"></i> Jest共享server和tests的上下文环境
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/12/12/node-gbk-sum/" rel="next" title="总结node处理GBK编码">
+      总结node处理GBK编码 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
   </div>
 
@@ -442,33 +337,46 @@
           </div>
           
     
-    
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
-  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -482,94 +390,49 @@
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、安装准备"><span class="nav-number">1.</span> <span class="nav-text">一、安装准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、编辑配置文件"><span class="nav-number">2.</span> <span class="nav-text">二、编辑配置文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置代理服地址"><span class="nav-number">2.1.</span> <span class="nav-text">配置代理服地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置systemd-service"><span class="nav-number">2.2.</span> <span class="nav-text">配置systemd service</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、启动服务"><span class="nav-number">3.</span> <span class="nav-text">三、启动服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、配置PAC文件"><span class="nav-number">4.</span> <span class="nav-text">四、配置PAC文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、配置系统代理"><span class="nav-number">5.</span> <span class="nav-text">五、配置系统代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器插件"><span class="nav-number">5.1.</span> <span class="nav-text">浏览器插件</span></a></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/images/avatar.jpg"
-      alt="Claude Ray">
+    <img class="site-author-image" itemprop="image" alt="Claude Ray"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Claude Ray</p>
   <div class="site-description" itemprop="description">Now or Never</div>
 </div>
-  <nav class="site-state motion-element">
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
         
           <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
-          
             <a href="/categories/">
           
-        
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">categories</span>
-        </a>
+        <span class="site-state-item-name">categories</span></a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags/">
           
-        
         <span class="site-state-item-count">54</span>
-        <span class="site-state-item-name">tags</span>
-        </a>
+        <span class="site-state-item-name">tags</span></a>
       </div>
-    
   </nav>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
+</div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/Claude-Ray" title="GitHub &rarr; https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/Claude-Ray" title="GitHub → https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/Claude__Ray" title="Twitter &rarr; https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/Claude__Ray" title="Twitter → https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam &rarr; https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
+        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam → https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
       </span>
-    
   </div>
 
 
@@ -582,7 +445,6 @@
         <li class="links-of-blogroll-item">
           <a href="https://github.com/nebulae-pan" title="https://github.com/nebulae-pan" rel="noopener" target="_blank">Nebulae Pan</a>
         </li>
-      
     </ul>
   </div>
 
@@ -596,10 +458,15 @@
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2020</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
     <i class="fa fa-bolt"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Claude Ray</span>
@@ -610,12 +477,12 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">51.6k</span>
+  <span title="Symbols count total">51.9k</span>
 
 </div>
 
 <div>
-  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homepage</a>. Happy hacking!
+  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io" target="_blank" rel="noopener">Homepage</a>. Happy hacking!
 </div>
 
 
@@ -628,51 +495,43 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/muse.js?v=7.4.0"></script>
-
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script src="/js/next-boot.js"></script>
 
 
 
 
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -689,11 +548,12 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function disqus_config() {
+  var disqus_config = function() {
     this.page.url = "http://claude-ray.com/2018/12/01/ss-local/";
     this.page.identifier = "2018/12/01/ss-local/";
-    this.page.title = 'Ubuntu配置ss-local客户端';};
-  function loadComments() {
+    this.page.title = "Ubuntu配置ss-local客户端";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
@@ -705,28 +565,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    (function() {
-      var offsetTop = document.getElementById('comments').offsetTop - window.innerHeight;
-      if (offsetTop <= 0) {
-        // load directly when there's no a scrollbar
-        window.addEventListener('load', loadComments, false);
-      } else {
-        var disqus_scroll = () => {
-          // offsetTop may changes because of manually resizing browser window or lazy loading images.
-          var offsetTop = document.getElementById('comments').offsetTop - window.innerHeight;
-          var scrollTop = window.scrollY;
-
-          // pre-load comments a bit? (margin or anything else)
-          if (offsetTop - scrollTop < 60) {
-            window.removeEventListener('scroll', disqus_scroll);
-            loadComments();
-          }
-        };
-        window.addEventListener('scroll', disqus_scroll);
-      }
-    })();
-  
+  });
 </script>
 
 </body>

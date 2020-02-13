@@ -1,63 +1,27 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-Hans">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.4.0">
-  <link rel="mask-icon" href="/images/favicon.ico?v=7.4.0" color="#222">
-  <link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
   <meta name="google-site-verification" content="2NvRwEicYYEjnSCQZmthUW33BtS11QwT85AgvfocMGI">
   <meta name="msvalidate.01" content="0BFF64D8466DDA1B96AF8DBA4B5ED7EC">
   <meta name="baidu-site-verification" content="13oCuH1wUm">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '7.4.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"claude-ray.com","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="Now or Never">
 <meta property="og:type" content="website">
@@ -65,11 +29,10 @@
 <meta property="og:url" content="http://claude-ray.com/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="Now or Never">
-<meta property="og:locale" content="zh-Hans">
+<meta property="article:author" content="Claude Ray">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Claude&#39;s Blog">
-<meta name="twitter:description" content="Now or Never">
-  <link rel="canonical" href="http://claude-ray.com/">
+
+<link rel="canonical" href="http://claude-ray.com/">
 
 
 <script id="page-configurations">
@@ -77,16 +40,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: true,
-    isPost: false,
-    isPage: false,
-    isArchive: false
+    isPost: false
   };
 </script>
 
   <title>Claude's Blog</title>
   
-
-
 
 
 
@@ -105,7 +64,6 @@
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -117,13 +75,14 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
@@ -139,11 +98,11 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
@@ -151,64 +110,32 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
-      
-    
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
-      
-    
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
-      
-    
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
-      
-    
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
-      
-    
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
 
   </li>
   </ul>
-
-    
 
 </nav>
 </div>
@@ -221,23 +148,25 @@
   </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
-  <div id="posts" class="posts-expand">
-        <article itemscope itemtype="http://schema.org/Article">
+
+  <div class="posts-expand">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2020/01/01/from-vimium-to-qutebrowser/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -245,9 +174,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2020/01/01/from-vimium-to-qutebrowser/" class="post-title-link" itemprop="url">从 Vimium 到 qutebrowser</a>
           
+            <a href="/2020/01/01/from-vimium-to-qutebrowser/" class="post-title-link" itemprop="url">从 Vimium 到 qutebrowser</a>
         </h2>
 
         <div class="post-meta">
@@ -257,16 +185,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2020-01-01 14:21:32" itemprop="dateCreated datePublished" datetime="2020-01-01T14:21:32+08:00">2020-01-01</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -274,21 +194,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-01-02 14:54:58" itemprop="dateModified" datetime="2020-01-02T14:54:58+08:00">2020-01-02</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Essay/" itemprop="url" rel="index"><span itemprop="name">Essay</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Essay/" itemprop="url" rel="index">
+                    <span itemprop="name">Essay</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -297,11 +213,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2020/01/01/from-vimium-to-qutebrowser/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/01/01/from-vimium-to-qutebrowser/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2020/01/01/from-vimium-to-qutebrowser/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/01/01/from-vimium-to-qutebrowser/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -310,7 +226,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>1.6k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -318,7 +233,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>6 mins.</span>
   </span>
 
@@ -336,13 +250,11 @@
 <p>曾经偶然听闻 qutebrowser 大名，但得知它没有让我难以割舍的 Dark Reader 插件，因此擦肩而过。</p>
 <p>然而 Vimium 的小缺陷屡屡挑衅我的耐心，直到真正开始使用 qutebrowser，终于让我下定了迁移的决心。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2020/01/01/from-vimium-to-qutebrowser/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -352,27 +264,23 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/12/31/optimize-verdaccio-cluster/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -380,9 +288,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/12/31/optimize-verdaccio-cluster/" class="post-title-link" itemprop="url">Verdaccio 性能优化：单机 Cluster</a>
           
+            <a href="/2019/12/31/optimize-verdaccio-cluster/" class="post-title-link" itemprop="url">Verdaccio 性能优化：单机 Cluster</a>
         </h2>
 
         <div class="post-meta">
@@ -392,16 +299,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-12-31 19:46:30" itemprop="dateCreated datePublished" datetime="2019-12-31T19:46:30+08:00">2019-12-31</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -409,21 +308,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-02-13 18:27:31" itemprop="dateModified" datetime="2020-02-13T18:27:31+08:00">2020-02-13</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -432,11 +327,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/12/31/optimize-verdaccio-cluster/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/31/optimize-verdaccio-cluster/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/12/31/optimize-verdaccio-cluster/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/31/optimize-verdaccio-cluster/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -445,7 +340,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>1.5k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -453,7 +347,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>6 mins.</span>
   </span>
 
@@ -469,13 +362,11 @@
       
           <p>本篇将讨论如何解决 <a href="https://github.com/verdaccio/verdaccio" target="_blank" rel="noopener">Verdaccio</a> 官方本地存储方案不支持 Cluster 的问题。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/12/31/optimize-verdaccio-cluster/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -485,27 +376,23 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/12/06/npm-install-without-cache/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -513,9 +400,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/12/06/npm-install-without-cache/" class="post-title-link" itemprop="url">让 npm install 不使用缓存的方法</a>
           
+            <a href="/2019/12/06/npm-install-without-cache/" class="post-title-link" itemprop="url">让 npm install 不使用缓存的方法</a>
         </h2>
 
         <div class="post-meta">
@@ -524,31 +410,21 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-
-              
-                
               
 
               <time title="Created: 2019-12-06 12:04:56 / Modified: 15:22:14" itemprop="dateCreated datePublished" datetime="2019-12-06T12:04:56+08:00">2019-12-06</time>
             </span>
-          
-            
-
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -557,11 +433,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/12/06/npm-install-without-cache/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/06/npm-install-without-cache/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/12/06/npm-install-without-cache/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/12/06/npm-install-without-cache/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -570,15 +446,13 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
-    <span>588</span>
+    <span>589</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>2 mins.</span>
   </span>
 
@@ -597,13 +471,11 @@
 <p>偶尔也会出现上述操作解决不了的问题，譬如 npm 的缓存文件异常，就需要在安装前执行 <code>npm cache clean --force</code> 清空缓存目录。</p>
 <p>但 npm cache clean 也存在两个未处理的缺陷，使它既不完全可靠又具备风险。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/12/06/npm-install-without-cache/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -613,27 +485,23 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -641,9 +509,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/11/30/optimize-verdaccio-proxy/" class="post-title-link" itemprop="url">Verdaccio 性能优化：代理分流</a>
           
+            <a href="/2019/11/30/optimize-verdaccio-proxy/" class="post-title-link" itemprop="url">Verdaccio 性能优化：代理分流</a>
         </h2>
 
         <div class="post-meta">
@@ -653,16 +520,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-11-30 19:08:03" itemprop="dateCreated datePublished" datetime="2019-11-30T19:08:03+08:00">2019-11-30</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -670,21 +529,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-02-13 18:27:31" itemprop="dateModified" datetime="2020-02-13T18:27:31+08:00">2020-02-13</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -693,11 +548,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/11/30/optimize-verdaccio-proxy/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/30/optimize-verdaccio-proxy/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/11/30/optimize-verdaccio-proxy/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/30/optimize-verdaccio-proxy/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -706,7 +561,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>1.7k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -714,7 +568,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>6 mins.</span>
   </span>
 
@@ -732,13 +585,11 @@
 <p>前段时间写了一点分流相关的<a href="https://claude-ray.github.io/2019/10/22/optimize-verdaccio-package-route/" target="_blank" rel="noopener">优化思路</a>，但那是以节省资源开销为主、不冲破原有结构的微调，从结果上看，甚至不是合格的优化。</p>
 <p>随着用户（请求）数量的上升，服务响应速度和效率其实才是最要紧的问题，节省资源终究不能改善这一点。因此我决定实施上次浮现在脑中的想法，将内外网的 npm 包流量彻底分流。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/11/30/optimize-verdaccio-proxy/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -748,27 +599,23 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/10/22/optimize-verdaccio-package-route/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -776,9 +623,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/10/22/optimize-verdaccio-package-route/" class="post-title-link" itemprop="url">Verdaccio 性能优化：上游路径转发</a>
           
+            <a href="/2019/10/22/optimize-verdaccio-package-route/" class="post-title-link" itemprop="url">Verdaccio 性能优化：上游路径转发</a>
         </h2>
 
         <div class="post-meta">
@@ -788,16 +634,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-10-22 19:32:39" itemprop="dateCreated datePublished" datetime="2019-10-22T19:32:39+08:00">2019-10-22</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -805,21 +643,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-01-02 16:41:16" itemprop="dateModified" datetime="2020-01-02T16:41:16+08:00">2020-01-02</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -828,11 +662,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/10/22/optimize-verdaccio-package-route/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/22/optimize-verdaccio-package-route/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/10/22/optimize-verdaccio-package-route/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/22/optimize-verdaccio-package-route/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -841,7 +675,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>1.3k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -849,7 +682,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>4 mins.</span>
   </span>
 
@@ -867,13 +699,11 @@
 <p>近期观察发现，有些项目依赖了名为 <code>npm</code> 的 npm 包，每次项目部署时都会向私服 <code>/npm</code> 发起请求记录，并在监控曲线上呈明显的高耗时，这引起了我们的关注。</p>
 <p>有些项目依赖了 npm 自身的包，每次项目部署时都会产生对私服 <code>/npm</code> 路由的请求记录，并在监控曲线上呈明显的高耗时，这引起了我们的关注。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/10/22/optimize-verdaccio-package-route/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -883,27 +713,23 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/10/02/csapp-datalab/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -911,9 +737,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/10/02/csapp-datalab/" class="post-title-link" itemprop="url">CSAPP DataLab 题解</a>
           
+            <a href="/2019/10/02/csapp-datalab/" class="post-title-link" itemprop="url">CSAPP DataLab 题解</a>
         </h2>
 
         <div class="post-meta">
@@ -923,16 +748,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-10-02 23:19:44" itemprop="dateCreated datePublished" datetime="2019-10-02T23:19:44+08:00">2019-10-02</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -940,21 +757,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2019-10-03 13:56:29" itemprop="dateModified" datetime="2019-10-03T13:56:29+08:00">2019-10-03</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Computer-System/" itemprop="url" rel="index"><span itemprop="name">Computer System</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Computer System</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -963,11 +776,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/10/02/csapp-datalab/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/02/csapp-datalab/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/10/02/csapp-datalab/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/02/csapp-datalab/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -976,7 +789,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>2k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -984,7 +796,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>10 mins.</span>
   </span>
 
@@ -1000,13 +811,11 @@
       
           <h1 id="DataLab"><a href="#DataLab" class="headerlink" title="DataLab"></a>DataLab</h1><p>近来开始读 CS:APP3e 第二章，但干看书做课后题太乏味，于是提前把 DataLab 拉出来练练。不一定是优解，趁热记录一下思路吧。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/10/02/csapp-datalab/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -1016,27 +825,23 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/09/17/egg-framework-dev/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1044,9 +849,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/17/egg-framework-dev/" class="post-title-link" itemprop="url">不靠谱的 Egg.js 框架开发指南</a>
           
+            <a href="/2019/09/17/egg-framework-dev/" class="post-title-link" itemprop="url">不靠谱的 Egg.js 框架开发指南</a>
         </h2>
 
         <div class="post-meta">
@@ -1056,16 +860,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-09-17 19:44:02" itemprop="dateCreated datePublished" datetime="2019-09-17T19:44:02+08:00">2019-09-17</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -1073,21 +869,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-02-13 18:27:31" itemprop="dateModified" datetime="2020-02-13T18:27:31+08:00">2020-02-13</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -1096,11 +888,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/09/17/egg-framework-dev/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/17/egg-framework-dev/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/09/17/egg-framework-dev/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/17/egg-framework-dev/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -1109,7 +901,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>2.5k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -1117,7 +908,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>10 mins.</span>
   </span>
 
@@ -1134,13 +924,11 @@
           <p>这是一篇面向 Egg.js 上层框架开发者的科普文。</p>
 <p>Egg 官网基本做到了呈现所有“必知必会”的内容，再写一份 Egg 使用教程已经毫无必要，不如聊聊 Egg 上层框架开发过程中可能有用的技巧。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/09/17/egg-framework-dev/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -1150,27 +938,23 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/09/13/apm-server-startup-troubleshooting/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1178,9 +962,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/13/apm-server-startup-troubleshooting/" class="post-title-link" itemprop="url">如何解决 Debian 系 Elastic apm-server 7.x 启动失败</a>
           
+            <a href="/2019/09/13/apm-server-startup-troubleshooting/" class="post-title-link" itemprop="url">如何解决 Debian 系 Elastic apm-server 7.x 启动失败</a>
         </h2>
 
         <div class="post-meta">
@@ -1189,31 +972,21 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-
-              
-                
               
 
               <time title="Created: 2019-09-13 11:55:57 / Modified: 20:15:13" itemprop="dateCreated datePublished" datetime="2019-09-13T11:55:57+08:00">2019-09-13</time>
             </span>
-          
-            
-
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -1222,11 +995,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/09/13/apm-server-startup-troubleshooting/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/13/apm-server-startup-troubleshooting/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/09/13/apm-server-startup-troubleshooting/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/13/apm-server-startup-troubleshooting/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -1235,7 +1008,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>983</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -1243,7 +1015,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>5 mins.</span>
   </span>
 
@@ -1259,13 +1030,11 @@
       
           <p>本来是几个月前在 Ubuntu 部署 Elastic apm-server 遇到的问题，当时处理起来没遇到特别的卡点，就只是把解决过程丢到 Evernote 了。最近发现还有人在重复踩这个坑，因此我把笔记整理之后搬到这里作一个极简的分享。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/09/13/apm-server-startup-troubleshooting/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -1275,27 +1044,23 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/09/12/hexo-theme-next-upgrade-7-4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1303,9 +1068,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/12/hexo-theme-next-upgrade-7-4/" class="post-title-link" itemprop="url">Hexo NexT 主题升级 7.4</a>
           
+            <a href="/2019/09/12/hexo-theme-next-upgrade-7-4/" class="post-title-link" itemprop="url">Hexo NexT 主题升级 7.4</a>
         </h2>
 
         <div class="post-meta">
@@ -1315,16 +1079,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-09-12 20:06:19" itemprop="dateCreated datePublished" datetime="2019-09-12T20:06:19+08:00">2019-09-12</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -1332,21 +1088,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-02-13 18:27:31" itemprop="dateModified" datetime="2020-02-13T18:27:31+08:00">2020-02-13</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Hexo/" itemprop="url" rel="index">
+                    <span itemprop="name">Hexo</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -1355,11 +1107,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/09/12/hexo-theme-next-upgrade-7-4/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/12/hexo-theme-next-upgrade-7-4/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/09/12/hexo-theme-next-upgrade-7-4/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/12/hexo-theme-next-upgrade-7-4/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -1368,7 +1120,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>633</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -1376,7 +1127,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>2 mins.</span>
   </span>
 
@@ -1392,13 +1142,11 @@
       
           <p>使用 7.1.2 才过了不到 3 个月，我又将博客主题升级了，不过这次是因为 sidebar 出现了统计隐藏的样式 bug，没想到意外赶上了几个特别明显的优化。这次是真的值得所有 NexT 老用户去尝试了。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/09/12/hexo-theme-next-upgrade-7-4/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -1408,27 +1156,23 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
-        <article itemscope itemtype="http://schema.org/Article">
+        
   
   
-  
-  <div class="post-block home">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/09/10/from-journeyman-to-master/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -1436,9 +1180,8 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/09/10/from-journeyman-to-master/" class="post-title-link" itemprop="url">From Journeyman to Master</a>
           
+            <a href="/2019/09/10/from-journeyman-to-master/" class="post-title-link" itemprop="url">From Journeyman to Master</a>
         </h2>
 
         <div class="post-meta">
@@ -1448,38 +1191,26 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-09-10 23:45:17" itemprop="dateCreated datePublished" datetime="2019-09-10T23:45:17+08:00">2019-09-10</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-02 14:26:02" itemprop="dateModified" datetime="2020-01-02T14:26:02+08:00">2020-01-02</time>
+                <time title="Modified: 2020-02-14 00:23:05" itemprop="dateModified" datetime="2020-02-14T00:23:05+08:00">2020-02-14</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Essay/" itemprop="url" rel="index"><span itemprop="name">Essay</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Essay/" itemprop="url" rel="index">
+                    <span itemprop="name">Essay</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -1488,11 +1219,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/09/10/from-journeyman-to-master/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/10/from-journeyman-to-master/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/09/10/from-journeyman-to-master/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/09/10/from-journeyman-to-master/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -1501,7 +1232,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>1.3k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -1509,7 +1239,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>4 mins.</span>
   </span>
 
@@ -1523,15 +1252,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>《 The Pragmatic Programmer: From Journeyman to Master 》这本书已加入愿望单许久，最近终于在通勤路上读完了。对于处于或将处于熟练工阶段的程序员，毫无疑问这是本值得用心阅读的书，因此我也写一下短评和推荐理由。</p><p>作为思想指导性读物，首先它具备不挑剔阅读设备的优点，电子书随处可见的内链（实体书则是页码）可以方便地跳到引用的章节，也能帮读者构建知识的关联体系，因此你可以放心挑选你感兴趣的专题。</p>
+          <p>《 The Pragmatic Programmer: From Journeyman to Master 》这本书已加入愿望单许久，最近终于在通勤路上读完了。对于处于或将处于熟练工阶段的程序员，毫无疑问这是本值得用心阅读的书，因此我也写一下短评和推荐理由。</p>
           <!--noindex-->
-          
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2019/09/10/from-journeyman-to-master/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-          
           <!--/noindex-->
         
       
@@ -1541,16 +1268,13 @@
     
     
       <footer class="post-footer">
-          <div class="post-eof"></div>
-        
+        <div class="post-eof"></div>
       </footer>
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
-    
   </div>
 
   
@@ -1559,18 +1283,39 @@
   </nav>
 
 
+
           </div>
           
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
   <aside class="sidebar">
@@ -1592,88 +1337,44 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/images/avatar.jpg"
-      alt="Claude Ray">
+    <img class="site-author-image" itemprop="image" alt="Claude Ray"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Claude Ray</p>
   <div class="site-description" itemprop="description">Now or Never</div>
 </div>
-  <nav class="site-state motion-element">
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
         
           <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
-          
             <a href="/categories/">
           
-        
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">categories</span>
-        </a>
+        <span class="site-state-item-name">categories</span></a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags/">
           
-        
         <span class="site-state-item-count">54</span>
-        <span class="site-state-item-name">tags</span>
-        </a>
+        <span class="site-state-item-name">tags</span></a>
       </div>
-    
   </nav>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
+</div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/Claude-Ray" title="GitHub &rarr; https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/Claude-Ray" title="GitHub → https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/Claude__Ray" title="Twitter &rarr; https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/Claude__Ray" title="Twitter → https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam &rarr; https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
+        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam → https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
       </span>
-    
   </div>
 
 
@@ -1686,7 +1387,6 @@
         <li class="links-of-blogroll-item">
           <a href="https://github.com/nebulae-pan" title="https://github.com/nebulae-pan" rel="noopener" target="_blank">Nebulae Pan</a>
         </li>
-      
     </ul>
   </div>
 
@@ -1700,10 +1400,15 @@
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2020</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
     <i class="fa fa-bolt"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Claude Ray</span>
@@ -1714,12 +1419,12 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">51.6k</span>
+  <span title="Symbols count total">51.9k</span>
 
 </div>
 
 <div>
-  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homepage</a>. Happy hacking!
+  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io" target="_blank" rel="noopener">Homepage</a>. Happy hacking!
 </div>
 
 
@@ -1732,55 +1437,57 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/muse.js?v=7.4.0"></script>
-
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script src="/js/next-boot.js"></script>
 
 
 
 
   
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
   
+  <script src="//cdn.jsdelivr.net/npm/quicklink@1/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink({
+        timeout: 3000,
+        priority: true,
+        ignores: [uri => uri.includes('#'),uri => uri == 'http://claude-ray.com/',]
+      });
+      });
+  </script>
 
 <script>
   function loadCount() {

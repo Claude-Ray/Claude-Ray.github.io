@@ -1,77 +1,44 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-Hans">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.4.0">
-  <link rel="mask-icon" href="/images/favicon.ico?v=7.4.0" color="#222">
-  <link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
   <meta name="google-site-verification" content="2NvRwEicYYEjnSCQZmthUW33BtS11QwT85AgvfocMGI">
   <meta name="msvalidate.01" content="0BFF64D8466DDA1B96AF8DBA4B5ED7EC">
   <meta name="baidu-site-verification" content="13oCuH1wUm">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '7.4.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"claude-ray.com","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
-  <meta name="description" content="log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。">
-<meta name="keywords" content="Node.js,pm2,log4js,pm2-intercom">
+  <meta name="description" content="log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。 log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。 官方提供的方案是安装 pm2-intercom，并在代码配置">
 <meta property="og:type" content="article">
 <meta property="og:title" content="PM2 cluster + log4js？并不理想的组合">
 <meta property="og:url" content="http://claude-ray.com/2018/12/21/pm2-cluster-log4js/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
-<meta property="og:description" content="log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-22T05:53:09.215Z">
+<meta property="og:description" content="log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。 log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。 官方提供的方案是安装 pm2-intercom，并在代码配置">
+<meta property="article:published_time" content="2018-12-21T12:49:03.000Z">
+<meta property="article:modified_time" content="2018-12-22T05:53:09.215Z">
+<meta property="article:author" content="Claude Ray">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="pm2">
+<meta property="article:tag" content="log4js">
+<meta property="article:tag" content="pm2-intercom">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="PM2 cluster + log4js？并不理想的组合">
-<meta name="twitter:description" content="log4js 和 cluster写策略node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。">
-  <link rel="canonical" href="http://claude-ray.com/2018/12/21/pm2-cluster-log4js/">
+
+<link rel="canonical" href="http://claude-ray.com/2018/12/21/pm2-cluster-log4js/">
 
 
 <script id="page-configurations">
@@ -79,16 +46,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>PM2 cluster + log4js？并不理想的组合 | Claude's Blog</title>
   
-
-
 
 
 
@@ -107,7 +70,6 @@
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -119,13 +81,14 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
@@ -141,11 +104,11 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
@@ -153,64 +116,32 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
-      
-    
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
-      
-    
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
-      
-    
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
-      
-    
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
-      
-    
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
 
   </li>
   </ul>
-
-    
 
 </nav>
 </div>
@@ -223,33 +154,33 @@
   </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-      <article itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block post">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2018/12/21/pm2-cluster-log4js/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Claude's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">PM2 cluster + log4js？并不理想的组合
-
-          
+        <h2 class="post-title" itemprop="name headline">
+          PM2 cluster + log4js？并不理想的组合
         </h2>
 
         <div class="post-meta">
@@ -259,16 +190,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2018-12-21 20:49:03" itemprop="dateCreated datePublished" datetime="2018-12-21T20:49:03+08:00">2018-12-21</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -276,21 +199,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-22 13:53:09" itemprop="dateModified" datetime="2018-12-22T13:53:09+08:00">2018-12-22</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -299,11 +218,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2018/12/21/pm2-cluster-log4js/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/21/pm2-cluster-log4js/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2018/12/21/pm2-cluster-log4js/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/21/pm2-cluster-log4js/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -312,7 +231,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>902</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -320,7 +238,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>3 mins.</span>
   </span>
 
@@ -334,8 +251,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="log4js-和-cluster"><a href="#log4js-和-cluster" class="headerlink" title="log4js 和 cluster"></a>log4js 和 cluster</h1><h2 id="写策略"><a href="#写策略" class="headerlink" title="写策略"></a>写策略</h2><p>node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。</p><p>log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。</p><a id="more"></a>
-
+        <h1 id="log4js-和-cluster"><a href="#log4js-和-cluster" class="headerlink" title="log4js 和 cluster"></a>log4js 和 cluster</h1><h2 id="写策略"><a href="#写策略" class="headerlink" title="写策略"></a>写策略</h2><p>node cluster 多个进程同时写一个文件是不安全的，通常会只选择一个 master 进程负责写入，其他 worker 进程则将数据传输到 master。</p>
+<p>log4js 的写策略正是如此，但默认只适用于 node 原生的 cluster 模式，然而通过 pm2 启动的进程都是 worker。</p>
 <p>官方提供的方案是安装 <code>pm2-intercom</code>，并在代码配置 log4js 时打开 <code>pm2: true</code> 选项，其原理也是选出一个负责写文件的主进程。</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pm2 install pm2-intercom</span><br></pre></td></tr></table></figure>
 
@@ -378,70 +295,51 @@
     
     
         
-      
-        
 
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>Post author:  </strong>Claude Ray</li>
+    <strong>Post author:  </strong>Claude Ray
+  </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     <a href="http://claude-ray.com/2018/12/21/pm2-cluster-log4js/" title="PM2 cluster + log4js？并不理想的组合">http://claude-ray.com/2018/12/21/pm2-cluster-log4js/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
 </ul>
 </div>
 
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/Node-js/" rel="tag"># Node.js</a>
-            
               <a href="/tags/pm2/" rel="tag"># pm2</a>
-            
               <a href="/tags/log4js/" rel="tag"># log4js</a>
-            
               <a href="/tags/pm2-intercom/" rel="tag"># pm2-intercom</a>
-            
           </div>
-        
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2018/12/15/iptables-wont-block-established-connections/" rel="next" title="iptables不会主动断开已有连接">
-                  <i class="fa fa-chevron-left"></i> iptables不会主动断开已有连接
-                </a>
-              
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/01/03/pm2-crontab/" rel="prev" title="crontab 中使用 pm2">
-                  crontab 中使用 pm2 <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
         
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/12/15/iptables-wont-block-established-connections/" rel="prev" title="iptables不会主动断开已有连接">
+      <i class="fa fa-chevron-left"></i> iptables不会主动断开已有连接
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/01/03/pm2-crontab/" rel="next" title="crontab 中使用 pm2">
+      crontab 中使用 pm2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
   </div>
 
@@ -449,33 +347,46 @@
           </div>
           
     
-    
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
-  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -489,94 +400,49 @@
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#log4js-和-cluster"><span class="nav-number">1.</span> <span class="nav-text">log4js 和 cluster</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#写策略"><span class="nav-number">1.1.</span> <span class="nav-text">写策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#选举-master"><span class="nav-number">1.2.</span> <span class="nav-text">选举 master</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#问题多多的-pm2-intercom-方案"><span class="nav-number">1.3.</span> <span class="nav-text">问题多多的 pm2-intercom 方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#option-disableClustering-不是银弹"><span class="nav-number">1.4.</span> <span class="nav-text">option.disableClustering 不是银弹</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#pm2-intercom-粗解"><span class="nav-number">2.</span> <span class="nav-text">pm2-intercom 粗解</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.1.</span> <span class="nav-text">Reference</span></a></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/images/avatar.jpg"
-      alt="Claude Ray">
+    <img class="site-author-image" itemprop="image" alt="Claude Ray"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Claude Ray</p>
   <div class="site-description" itemprop="description">Now or Never</div>
 </div>
-  <nav class="site-state motion-element">
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
         
           <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
-          
             <a href="/categories/">
           
-        
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">categories</span>
-        </a>
+        <span class="site-state-item-name">categories</span></a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags/">
           
-        
         <span class="site-state-item-count">54</span>
-        <span class="site-state-item-name">tags</span>
-        </a>
+        <span class="site-state-item-name">tags</span></a>
       </div>
-    
   </nav>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
+</div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/Claude-Ray" title="GitHub &rarr; https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/Claude-Ray" title="GitHub → https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/Claude__Ray" title="Twitter &rarr; https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/Claude__Ray" title="Twitter → https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam &rarr; https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
+        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam → https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
       </span>
-    
   </div>
 
 
@@ -589,7 +455,6 @@
         <li class="links-of-blogroll-item">
           <a href="https://github.com/nebulae-pan" title="https://github.com/nebulae-pan" rel="noopener" target="_blank">Nebulae Pan</a>
         </li>
-      
     </ul>
   </div>
 
@@ -603,10 +468,15 @@
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2020</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
     <i class="fa fa-bolt"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Claude Ray</span>
@@ -617,12 +487,12 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">51.6k</span>
+  <span title="Symbols count total">51.9k</span>
 
 </div>
 
 <div>
-  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homepage</a>. Happy hacking!
+  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io" target="_blank" rel="noopener">Homepage</a>. Happy hacking!
 </div>
 
 
@@ -635,51 +505,43 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/muse.js?v=7.4.0"></script>
-
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script src="/js/next-boot.js"></script>
 
 
 
 
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -696,11 +558,12 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function disqus_config() {
+  var disqus_config = function() {
     this.page.url = "http://claude-ray.com/2018/12/21/pm2-cluster-log4js/";
     this.page.identifier = "2018/12/21/pm2-cluster-log4js/";
-    this.page.title = 'PM2 cluster + log4js？并不理想的组合';};
-  function loadComments() {
+    this.page.title = "PM2 cluster + log4js？并不理想的组合";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
@@ -712,28 +575,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    (function() {
-      var offsetTop = document.getElementById('comments').offsetTop - window.innerHeight;
-      if (offsetTop <= 0) {
-        // load directly when there's no a scrollbar
-        window.addEventListener('load', loadComments, false);
-      } else {
-        var disqus_scroll = () => {
-          // offsetTop may changes because of manually resizing browser window or lazy loading images.
-          var offsetTop = document.getElementById('comments').offsetTop - window.innerHeight;
-          var scrollTop = window.scrollY;
-
-          // pre-load comments a bit? (margin or anything else)
-          if (offsetTop - scrollTop < 60) {
-            window.removeEventListener('scroll', disqus_scroll);
-            loadComments();
-          }
-        };
-        window.addEventListener('scroll', disqus_scroll);
-      }
-    })();
-  
+  });
 </script>
 
 </body>

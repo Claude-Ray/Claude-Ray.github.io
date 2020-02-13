@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://claude-ray.com/2019/09/10/from-journeyman-to-master/</loc>
+    
+    <lastmod>2020-02-13T16:23:05.624Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/</loc>
     
     <lastmod>2020-02-13T10:27:31.317Z</lastmod>
@@ -16,21 +23,14 @@
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2019/09/12/hexo-theme-next-upgrade-7-4/</loc>
-    
-    <lastmod>2020-02-13T10:27:31.316Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://claude-ray.com/2019/01/24/nginx-proxypass-args/</loc>
-    
-    <lastmod>2020-02-13T10:27:31.316Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://claude-ray.com/2018/12/12/node-gbk-sum/</loc>
+    
+    <lastmod>2020-02-13T10:27:31.316Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://claude-ray.com/2019/09/12/hexo-theme-next-upgrade-7-4/</loc>
     
     <lastmod>2020-02-13T10:27:31.316Z</lastmod>
     
@@ -44,14 +44,21 @@
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2019/09/17/egg-framework-dev/</loc>
+    <loc>http://claude-ray.com/2019/01/24/nginx-proxypass-args/</loc>
+    
+    <lastmod>2020-02-13T10:27:31.316Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://claude-ray.com/2019/05/27/elastic-apm-node-research/</loc>
     
     <lastmod>2020-02-13T10:27:31.315Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2019/05/27/elastic-apm-node-research/</loc>
+    <loc>http://claude-ray.com/2019/09/17/egg-framework-dev/</loc>
     
     <lastmod>2020-02-13T10:27:31.315Z</lastmod>
     
@@ -82,13 +89,6 @@
     <loc>http://claude-ray.com/2017/12/05/vscode-evernote%E4%BA%91%E7%AC%94%E8%AE%B0/</loc>
     
     <lastmod>2020-01-02T06:26:45.477Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://claude-ray.com/2019/09/10/from-journeyman-to-master/</loc>
-    
-    <lastmod>2020-01-02T06:26:02.774Z</lastmod>
     
   </url>
   

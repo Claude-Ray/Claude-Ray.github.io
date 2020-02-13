@@ -1,79 +1,46 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-Hans">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=7.4.0">
-  <link rel="mask-icon" href="/images/favicon.ico?v=7.4.0" color="#222">
-  <link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
   <meta name="google-site-verification" content="2NvRwEicYYEjnSCQZmthUW33BtS11QwT85AgvfocMGI">
   <meta name="msvalidate.01" content="0BFF64D8466DDA1B96AF8DBA4B5ED7EC">
   <meta name="baidu-site-verification" content="13oCuH1wUm">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
 
 <script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Mist',
-    version: '7.4.0',
-    exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: false,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: false,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"claude-ray.com","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
 
   <meta name="description" content="前言这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 前段时间写了一点分流相关的优化思路，但那是以节省资源开销为主、不冲破原有结构的微调，从结果上看，甚至不是合格的优化。 随着用户（请求）数量的上升，服务响应速度和效率其实才是最要紧的问题，节省资源终究不能改善这一点。因此我决定实施上次浮现在脑中的想法，将内外网的 npm 包流量彻底分流。">
-<meta name="keywords" content="Node.js,npm,Verdaccio,private npm registry">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Verdaccio 性能优化：代理分流">
 <meta property="og:url" content="http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/index.html">
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="前言这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 前段时间写了一点分流相关的优化思路，但那是以节省资源开销为主、不冲破原有结构的微调，从结果上看，甚至不是合格的优化。 随着用户（请求）数量的上升，服务响应速度和效率其实才是最要紧的问题，节省资源终究不能改善这一点。因此我决定实施上次浮现在脑中的想法，将内外网的 npm 包流量彻底分流。">
-<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://claude-ray.com/image/optimize-verdaccio-proxy/verdaccio-fetch-path.png">
-<meta property="og:updated_time" content="2020-02-13T10:27:31.317Z">
+<meta property="article:published_time" content="2019-11-30T11:08:03.000Z">
+<meta property="article:modified_time" content="2020-02-13T10:27:31.317Z">
+<meta property="article:author" content="Claude Ray">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="npm">
+<meta property="article:tag" content="Verdaccio">
+<meta property="article:tag" content="private npm registry">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Verdaccio 性能优化：代理分流">
-<meta name="twitter:description" content="前言这里的 Verdaccio 是指用于搭建轻量级 npm 私有仓库的开源解决方案，以下简称 npm 私服。 前段时间写了一点分流相关的优化思路，但那是以节省资源开销为主、不冲破原有结构的微调，从结果上看，甚至不是合格的优化。 随着用户（请求）数量的上升，服务响应速度和效率其实才是最要紧的问题，节省资源终究不能改善这一点。因此我决定实施上次浮现在脑中的想法，将内外网的 npm 包流量彻底分流。">
 <meta name="twitter:image" content="http://claude-ray.com/image/optimize-verdaccio-proxy/verdaccio-fetch-path.png">
-  <link rel="canonical" href="http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/">
+
+<link rel="canonical" href="http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/">
 
 
 <script id="page-configurations">
@@ -81,16 +48,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
   <title>Verdaccio 性能优化：代理分流 | Claude's Blog</title>
   
-
-
 
 
 
@@ -109,7 +72,6 @@
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -121,13 +83,14 @@
   </style>
 </noscript>
 
+<link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
@@ -143,11 +106,11 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
@@ -155,64 +118,32 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
-      
-    
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
-      
-    
 
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
-      
-    
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
-      
-    
 
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
-      
-    
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
 
   </li>
   </ul>
-
-    
 
 </nav>
 </div>
@@ -225,33 +156,33 @@
   </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-      <article itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block post">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="Claude Ray">
       <meta itemprop="description" content="Now or Never">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="Claude's Blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">Verdaccio 性能优化：代理分流
-
-          
+        <h2 class="post-title" itemprop="name headline">
+          Verdaccio 性能优化：代理分流
         </h2>
 
         <div class="post-meta">
@@ -261,16 +192,8 @@
               </span>
               <span class="post-meta-item-text">Posted on</span>
 
-              
-                
-              
-
               <time title="Created: 2019-11-30 19:08:03" itemprop="dateCreated datePublished" datetime="2019-11-30T19:08:03+08:00">2019-11-30</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -278,21 +201,17 @@
                 <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2020-02-13 18:27:31" itemprop="dateModified" datetime="2020-02-13T18:27:31+08:00">2020-02-13</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
             </span>
-          
 
           
   
@@ -301,11 +220,11 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-comment-o"></i>
       </span>
-        
-      
       <span class="post-meta-item-text">Disqus: </span>
     
-    <a title="disqus" href="/2019/11/30/optimize-verdaccio-proxy/#comments" itemprop="discussionUrl"><span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/30/optimize-verdaccio-proxy/" itemprop="commentCount"></span></a>
+    <a title="disqus" href="/2019/11/30/optimize-verdaccio-proxy/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/11/30/optimize-verdaccio-proxy/" itemprop="commentCount"></span>
+    </a>
   </span>
   
   <br>
@@ -314,7 +233,6 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    
     <span>1.7k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
@@ -322,7 +240,6 @@
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    
     <span>6 mins.</span>
   </span>
 
@@ -359,7 +276,7 @@
 <p>因此，可以改良 <code>/-/verdaccio/packages</code>，例如新增一个专门获取包名列表的接口，并增加内存缓存。</p>
 <p>Verdaccio 版本不同时，做法也有很大差异，相信这里的处理不是问题，只要认真阅读上述接口就能获取思路了。</p>
 <p>PS：还是补充一点代码吧，早期版本 Verdaccio 只需要这样改：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get name list of all visible package</span></span><br><span class="line"><span class="comment"> * @route /-/verdaccio/names</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">route.get(<span class="string">'/names'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 此处 cache 作为缓存，在有新的私有 npm 包发布时刷新即可</span></span><br><span class="line">  <span class="keyword">let</span> names = cache.get(<span class="string">'packageNames'</span>);</span><br><span class="line">  <span class="keyword">if</span> (!names) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      names = <span class="keyword">await</span> storage.localStorage.localList.get();</span><br><span class="line">    &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">      <span class="keyword">return</span> next(err);</span><br><span class="line">    &#125;</span><br><span class="line">    cache.set(<span class="string">'packageNames'</span>, names);</span><br><span class="line">  &#125;</span><br><span class="line">  next(names);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Get name list of all visible package</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@route </span>/-/verdaccio/names</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">route.get(<span class="string">'/names'</span>, <span class="keyword">async</span> <span class="function"><span class="keyword">function</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 此处 cache 作为缓存，在有新的私有 npm 包发布时刷新即可</span></span><br><span class="line">  <span class="keyword">let</span> names = cache.get(<span class="string">'packageNames'</span>);</span><br><span class="line">  <span class="keyword">if</span> (!names) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      names = <span class="keyword">await</span> storage.localStorage.localList.get();</span><br><span class="line">    &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">      <span class="keyword">return</span> next(err);</span><br><span class="line">    &#125;</span><br><span class="line">    cache.set(<span class="string">'packageNames'</span>, names);</span><br><span class="line">  &#125;</span><br><span class="line">  next(names);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <p>最新的 names 要使用回调的方式取值，伪代码：</p>
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> names = <span class="keyword">await</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span></span><br><span class="line">  storage.localStorage.storagePlugin.get(<span class="function">(<span class="params">err, list</span>) =&gt;</span></span><br><span class="line">    err ? reject(err): resolve(list)))</span><br></pre></td></tr></table></figure>
@@ -368,7 +285,7 @@
 <p>缺陷是推行难度和速度都不理想，于是这里只是顺便提一下。</p>
 <h3 id="服务端"><a href="#服务端" class="headerlink" title="服务端"></a>服务端</h3><p>到这一步，技术选型已经无所谓了，自然可以 nginx + lua，简单一点就继续使用 Node.js 实现。</p>
 <p>由于其他原因，我用 express 做了实现，贴一点转发逻辑，大家就自由发挥吧。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="keyword">const</span> rp = <span class="built_in">require</span>(<span class="string">'request-promise-native'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> publicRegistry = <span class="string">'http://registry.npm.taobao.org'</span>;</span><br><span class="line"><span class="keyword">const</span> privateRegistry = <span class="string">'http://npm.private.com'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sec = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">const</span> min = <span class="number">60</span> * sec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> privateListCache = [];</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 检查并更新私服包名列表的缓存</span></span><br><span class="line"><span class="comment"> * 缓存可以基于 redis 或内存，注意控制好更新节奏</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">checkPrivateCache</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * npm package 请求分流</span></span><br><span class="line"><span class="comment"> * @route /:packages/:version?   版本检查</span></span><br><span class="line"><span class="comment"> * @route /:packages/-/:filename 下载</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">packages</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.url)</span><br><span class="line">  <span class="keyword">await</span> checkPrivateCache();</span><br><span class="line">  <span class="comment">// 请求默认转发至 taobao</span></span><br><span class="line">  <span class="keyword">let</span> baseUrl = publicRegistry;</span><br><span class="line">  <span class="keyword">if</span> (privateListCache.length &amp;&amp; privateListCache.includes(req.params.package)) &#123;</span><br><span class="line">    <span class="comment">// 转发私服的请求</span></span><br><span class="line">    baseUrl = privateRegistry;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    uri: baseUrl + req.url,</span><br><span class="line">    timeout: <span class="number">2</span> * min</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    request(options).on(<span class="string">'error'</span>, next).pipe(res)</span><br><span class="line">  &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 其他请求原样转发私服</span></span><br><span class="line"><span class="comment"> * @route /*</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">all</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 清除 headers 的 host</span></span><br><span class="line">  <span class="keyword">const</span> headers = <span class="built_in">Object</span>.assign(&#123;&#125;, req.headers, &#123; <span class="attr">host</span>: <span class="literal">undefined</span> &#125;)</span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    uri: privateRegistry + req.url,</span><br><span class="line">    method: req.method,</span><br><span class="line">    timeout: <span class="number">2</span> * min,</span><br><span class="line">    headers</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    req.pipe(request(options).on(<span class="string">'error'</span>, next)).pipe(res);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> request = <span class="built_in">require</span>(<span class="string">'request'</span>);</span><br><span class="line"><span class="keyword">const</span> rp = <span class="built_in">require</span>(<span class="string">'request-promise-native'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> publicRegistry = <span class="string">'http://registry.npm.taobao.org'</span>;</span><br><span class="line"><span class="keyword">const</span> privateRegistry = <span class="string">'http://npm.private.com'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sec = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">const</span> min = <span class="number">60</span> * sec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> privateListCache = [];</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 检查并更新私服包名列表的缓存</span></span><br><span class="line"><span class="comment"> * 缓存可以基于 redis 或内存，注意控制好更新节奏</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">checkPrivateCache</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * npm package 请求分流</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@route </span>/:packages/:version?   版本检查</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@route </span>/:packages/-/:filename 下载</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">packages</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(req.url)</span><br><span class="line">  <span class="keyword">await</span> checkPrivateCache();</span><br><span class="line">  <span class="comment">// 请求默认转发至 taobao</span></span><br><span class="line">  <span class="keyword">let</span> baseUrl = publicRegistry;</span><br><span class="line">  <span class="keyword">if</span> (privateListCache.length &amp;&amp; privateListCache.includes(req.params.package)) &#123;</span><br><span class="line">    <span class="comment">// 转发私服的请求</span></span><br><span class="line">    baseUrl = privateRegistry;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    uri: baseUrl + req.url,</span><br><span class="line">    timeout: <span class="number">2</span> * min</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    request(options).on(<span class="string">'error'</span>, next).pipe(res)</span><br><span class="line">  &#125; <span class="keyword">catch</span>(err) &#123;</span><br><span class="line">    next(err);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 其他请求原样转发私服</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@route </span>/*</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">all</span>(<span class="params">req, res, next</span>) </span>&#123;</span><br><span class="line">  <span class="comment">// 清除 headers 的 host</span></span><br><span class="line">  <span class="keyword">const</span> headers = <span class="built_in">Object</span>.assign(&#123;&#125;, req.headers, &#123; <span class="attr">host</span>: <span class="literal">undefined</span> &#125;)</span><br><span class="line">  <span class="keyword">const</span> options = &#123;</span><br><span class="line">    uri: privateRegistry + req.url,</span><br><span class="line">    method: req.method,</span><br><span class="line">    timeout: <span class="number">2</span> * min,</span><br><span class="line">    headers</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    req.pipe(request(options).on(<span class="string">'error'</span>, next)).pipe(res);</span><br><span class="line">  &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">    next(err)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p>在同样的测试条件下，私服的 /:package/:version? 接口平均响应耗时从 4s 降至 400 ms，可以明显感觉到速度的提升，并且可以通过不断扩展代理层优化处理效率。作为轻量级的私服解决方案，已经可以续命很久了。</p>
 <h2 id="后续"><a href="#后续" class="headerlink" title="后续"></a>后续</h2><p>这个系列就此结束了吗？<del>当然没有，cluster 的坑还没填呢！</del>也确实可能会鸽掉…</p>
@@ -381,70 +298,51 @@
     
     
         
-      
-        
 
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>Post author:  </strong>Claude Ray</li>
+    <strong>Post author:  </strong>Claude Ray
+  </li>
   <li class="post-copyright-link">
     <strong>Post link: </strong>
     <a href="http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/" title="Verdaccio 性能优化：代理分流">http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.</li>
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
 </ul>
 </div>
 
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/Node-js/" rel="tag"># Node.js</a>
-            
               <a href="/tags/npm/" rel="tag"># npm</a>
-            
               <a href="/tags/Verdaccio/" rel="tag"># Verdaccio</a>
-            
               <a href="/tags/private-npm-registry/" rel="tag"># private npm registry</a>
-            
           </div>
-        
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-              
-                <a href="/2019/10/22/optimize-verdaccio-package-route/" rel="next" title="Verdaccio 性能优化：上游路径转发">
-                  <i class="fa fa-chevron-left"></i> Verdaccio 性能优化：上游路径转发
-                </a>
-              
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/12/06/npm-install-without-cache/" rel="prev" title="让 npm install 不使用缓存的方法">
-                  让 npm install 不使用缓存的方法 <i class="fa fa-chevron-right"></i>
-                </a>
-              
-            </div>
-          </div>
         
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/10/22/optimize-verdaccio-package-route/" rel="prev" title="Verdaccio 性能优化：上游路径转发">
+      <i class="fa fa-chevron-left"></i> Verdaccio 性能优化：上游路径转发
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/12/06/npm-install-without-cache/" rel="next" title="让 npm install 不使用缓存的方法">
+      让 npm install 不使用缓存的方法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
   </div>
 
@@ -452,33 +350,46 @@
           </div>
           
     
-    
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="disqus_thread">
       <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
     </div>
   </div>
   
-  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -492,94 +403,49 @@
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#关于-Cluster-模式的说明"><span class="nav-number">1.1.</span> <span class="nav-text">关于 Cluster 模式的说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原理"><span class="nav-number">2.</span> <span class="nav-text">原理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-安装机制"><span class="nav-number">2.1.</span> <span class="nav-text">npm 安装机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#npm-下载最长请求路径"><span class="nav-number">2.2.</span> <span class="nav-text">npm 下载最长请求路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#接口转发"><span class="nav-number">2.3.</span> <span class="nav-text">接口转发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件"><span class="nav-number">3.</span> <span class="nav-text">条件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现方式"><span class="nav-number">4.</span> <span class="nav-text">实现方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#客户端"><span class="nav-number">4.1.</span> <span class="nav-text">客户端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务端"><span class="nav-number">4.2.</span> <span class="nav-text">服务端</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结果"><span class="nav-number">5.</span> <span class="nav-text">结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#后续"><span class="nav-number">6.</span> <span class="nav-text">后续</span></a></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/images/avatar.jpg"
-      alt="Claude Ray">
+    <img class="site-author-image" itemprop="image" alt="Claude Ray"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">Claude Ray</p>
   <div class="site-description" itemprop="description">Now or Never</div>
 </div>
-  <nav class="site-state motion-element">
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives/">
         
           <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
-          
             <a href="/categories/">
           
-        
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">categories</span>
-        </a>
+        <span class="site-state-item-name">categories</span></a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags/">
           
-        
         <span class="site-state-item-count">54</span>
-        <span class="site-state-item-name">tags</span>
-        </a>
+        <span class="site-state-item-name">tags</span></a>
       </div>
-    
   </nav>
-  <div class="feed-link motion-element">
-    <a href="/atom.xml" rel="alternate">
-      <i class="fa fa-rss"></i>RSS
-    </a>
-  </div>
+</div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://github.com/Claude-Ray" title="GitHub &rarr; https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+        <a href="https://github.com/Claude-Ray" title="GitHub → https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://twitter.com/Claude__Ray" title="Twitter &rarr; https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+        <a href="https://twitter.com/Claude__Ray" title="Twitter → https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
-        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam &rarr; https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
+        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam → https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
       </span>
-    
   </div>
 
 
@@ -592,7 +458,6 @@
         <li class="links-of-blogroll-item">
           <a href="https://github.com/nebulae-pan" title="https://github.com/nebulae-pan" rel="noopener" target="_blank">Nebulae Pan</a>
         </li>
-      
     </ul>
   </div>
 
@@ -606,10 +471,15 @@
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2017 – <span itemprop="copyrightYear">2020</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
     <i class="fa fa-bolt"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Claude Ray</span>
@@ -620,12 +490,12 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">51.6k</span>
+  <span title="Symbols count total">51.9k</span>
 
 </div>
 
 <div>
-  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io">Homepage</a>. Happy hacking!
+  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io" target="_blank" rel="noopener">Homepage</a>. Happy hacking!
 </div>
 
 
@@ -638,51 +508,43 @@
 
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
 
   
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
 
 
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/muse.js?v=7.4.0"></script>
-
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/schemes/muse.js"></script>
 
 
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<script src="/js/next-boot.js"></script>
 
 
 
 
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -699,11 +561,12 @@
   window.addEventListener('load', loadCount, false);
 </script>
 <script>
-  function disqus_config() {
+  var disqus_config = function() {
     this.page.url = "http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/";
     this.page.identifier = "2019/11/30/optimize-verdaccio-proxy/";
-    this.page.title = 'Verdaccio 性能优化：代理分流';};
-  function loadComments() {
+    this.page.title = "Verdaccio 性能优化：代理分流";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
     if (window.DISQUS) {
       DISQUS.reset({
         reload: true,
@@ -715,28 +578,7 @@
       s.setAttribute('data-timestamp', '' + +new Date());
       (d.head || d.body).appendChild(s);
     }
-  }
-    (function() {
-      var offsetTop = document.getElementById('comments').offsetTop - window.innerHeight;
-      if (offsetTop <= 0) {
-        // load directly when there's no a scrollbar
-        window.addEventListener('load', loadComments, false);
-      } else {
-        var disqus_scroll = () => {
-          // offsetTop may changes because of manually resizing browser window or lazy loading images.
-          var offsetTop = document.getElementById('comments').offsetTop - window.innerHeight;
-          var scrollTop = window.scrollY;
-
-          // pre-load comments a bit? (margin or anything else)
-          if (offsetTop - scrollTop < 60) {
-            window.removeEventListener('scroll', disqus_scroll);
-            loadComments();
-          }
-        };
-        window.addEventListener('scroll', disqus_scroll);
-      }
-    })();
-  
+  });
 </script>
 
 </body>
