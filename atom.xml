@@ -226,13 +226,13 @@
       <category term="Linux" scheme="http://claude-ray.com/categories/Linux/"/>
     
     
+      <category term="Debian" scheme="http://claude-ray.com/tags/Debian/"/>
+    
       <category term="APM" scheme="http://claude-ray.com/tags/APM/"/>
     
       <category term="Elastic-APM" scheme="http://claude-ray.com/tags/Elastic-APM/"/>
     
       <category term="apm-server" scheme="http://claude-ray.com/tags/apm-server/"/>
-    
-      <category term="Debian" scheme="http://claude-ray.com/tags/Debian/"/>
     
   </entry>
   
@@ -439,11 +439,11 @@
       <category term="Node.js" scheme="http://claude-ray.com/categories/Node-js/"/>
     
     
+      <category term="Node.js" scheme="http://claude-ray.com/tags/Node-js/"/>
+    
       <category term="APM" scheme="http://claude-ray.com/tags/APM/"/>
     
       <category term="Elastic-APM" scheme="http://claude-ray.com/tags/Elastic-APM/"/>
-    
-      <category term="Node.js" scheme="http://claude-ray.com/tags/Node-js/"/>
     
       <category term="Egg" scheme="http://claude-ray.com/tags/Egg/"/>
     
@@ -467,13 +467,13 @@
       <category term="Node.js" scheme="http://claude-ray.com/categories/Node-js/"/>
     
     
-      <category term="APM" scheme="http://claude-ray.com/tags/APM/"/>
-    
-      <category term="Elastic-APM" scheme="http://claude-ray.com/tags/Elastic-APM/"/>
-    
       <category term="Node.js" scheme="http://claude-ray.com/tags/Node-js/"/>
     
       <category term="Express" scheme="http://claude-ray.com/tags/Express/"/>
+    
+      <category term="APM" scheme="http://claude-ray.com/tags/APM/"/>
+    
+      <category term="Elastic-APM" scheme="http://claude-ray.com/tags/Elastic-APM/"/>
     
   </entry>
   
@@ -519,11 +519,11 @@
       <category term="Node.js" scheme="http://claude-ray.com/categories/Node-js/"/>
     
     
+      <category term="Node.js" scheme="http://claude-ray.com/tags/Node-js/"/>
+    
       <category term="APM" scheme="http://claude-ray.com/tags/APM/"/>
     
       <category term="Elastic-APM" scheme="http://claude-ray.com/tags/Elastic-APM/"/>
-    
-      <category term="Node.js" scheme="http://claude-ray.com/tags/Node-js/"/>
     
       <category term="V8" scheme="http://claude-ray.com/tags/V8/"/>
     

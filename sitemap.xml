@@ -2,13 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://claude-ray.com/2019/12/31/optimize-verdaccio-cluster/</loc>
-    
-    <lastmod>2020-02-13T10:27:31.317Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://claude-ray.com/2019/11/30/optimize-verdaccio-proxy/</loc>
     
     <lastmod>2020-02-13T10:27:31.317Z</lastmod>
@@ -16,7 +9,14 @@
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2019/08/08/node-process-hang-up/</loc>
+    <loc>http://claude-ray.com/2019/12/31/optimize-verdaccio-cluster/</loc>
+    
+    <lastmod>2020-02-13T10:27:31.317Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://claude-ray.com/2019/09/12/hexo-theme-next-upgrade-7-4/</loc>
     
     <lastmod>2020-02-13T10:27:31.316Z</lastmod>
     
@@ -37,7 +37,7 @@
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2019/09/12/hexo-theme-next-upgrade-7-4/</loc>
+    <loc>http://claude-ray.com/2019/08/08/node-process-hang-up/</loc>
     
     <lastmod>2020-02-13T10:27:31.316Z</lastmod>
     
