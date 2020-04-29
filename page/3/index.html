@@ -161,6 +161,122 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/05/23/node-graceful-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/05/23/node-graceful-server/" class="post-title-link" itemprop="url">让 Node.js Server 优雅退出</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-05-23 15:12:28" itemprop="dateCreated datePublished" datetime="2019-05-23T15:12:28+08:00">2019-05-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-09-12 18:45:26" itemprop="dateModified" datetime="2019-09-12T18:45:26+08:00">2019-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Node-js/" itemprop="url" rel="index">
+                    <span itemprop="name">Node.js</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2019/05/23/node-graceful-server/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/05/23/node-graceful-server/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+  <span class="post-meta-item" title="Symbols count in article">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-file-word-o"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+    <span>1.4k</span>
+  </span>
+  <span class="post-meta-item" title="Reading time">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-clock-o"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+    <span>5 mins.</span>
+  </span>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>服务进程登场时往往“蓄势而发”，犹抱琵琶半遮面，真正的服务端口跑起来之前做了太多准备工作，然而落幕工作常被人草草了之。</p>
+<p>如何让进程自然结束，这本是 hello world 级的基础内容，却有很多项目忽视了这一步的必要性以及重要性。</p>
+<p>目前使用 PM2 作为进程管理的项目仍占多数，有相关意识的朋友使用 <code>pm2 reload</code> 让进程“平滑”重启，但这就不需要额外的代码处理了吗？</p>
+<p>举个例子，未捕获的异常导致服务强行退出时，是不是有可能进程尚未记录异常日志、请求执行到了一半、甚至中断了更复杂的业务工作？PM2 只能截住新的请求，旧的请求是否彻底执行完毕，仍需要业务自己判断。</p>
+<p>下面我们先抛开 PM2 ，聊聊基本的进程退出需要哪些工作。首先我们从未捕获的异常说起。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/05/23/node-graceful-server/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/05/19/node-apm-product-research/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1188,141 +1304,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2018/12/12/node-gbk-sum/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="Now or Never">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Claude's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/12/12/node-gbk-sum/" class="post-title-link" itemprop="url">总结node处理GBK编码</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-12-12 22:49:00" itemprop="dateCreated datePublished" datetime="2018-12-12T22:49:00+08:00">2018-12-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-02-14 09:18:29" itemprop="dateModified" datetime="2020-02-14T09:18:29+08:00">2020-02-14</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Node-js/" itemprop="url" rel="index">
-                    <span itemprop="name">Node.js</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2018/12/12/node-gbk-sum/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2018/12/12/node-gbk-sum/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-  <span class="post-meta-item" title="Symbols count in article">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-file-word-o"></i>
-    </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-    <span>628</span>
-  </span>
-  <span class="post-meta-item" title="Reading time">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-clock-o"></i>
-    </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-    <span>2 mins.</span>
-  </span>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>Node内部不支持直接操作GBK字符串，而实际也并不需要如此。</p>
-<p>总的原则是，gbk的逻辑仅保留在输入和输出，内部处理一律使用utf8。编码转换主要基于<code>iconv-lite</code>库。</p>
-<p>总结已经写在了前头，下面再列举几种http服务中常见的处理场景。</p>
-<h1 id="常见场景"><a href="#常见场景" class="headerlink" title="常见场景"></a>常见场景</h1><h2 id="请求返回值"><a href="#请求返回值" class="headerlink" title="请求返回值"></a>请求返回值</h2><p>最常用且容易处理，通常我们使用<code>request</code>发起http请求，options中设置<code>encoding: null</code>，这样返回的res.body为buffer，再对buffer进行解码<code>iconv.decode(res.body, encoding)</code>。</p>
-<blockquote>
-<p>引用：<a href="http://claude-ray.com/2018/02/26/request%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/#%E7%BC%96%E7%A0%81">request返回值中文乱码问题</a></p>
-</blockquote>
-<h2 id="请求参数"><a href="#请求参数" class="headerlink" title="请求参数"></a>请求参数</h2><p>这里直接用<code>iconv-lite</code>处理略显复杂，建议上<a href="https://github.com/node-modules/urlencode" target="_blank" rel="noopener">urlencode</a>。</p>
-<p>post请求时stringify整个body对象，用options.form提交。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(body, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure>
-<p>querystring则stringify后再拼到url中。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">urlencode.stringify(qs, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure>
-
-<h2 id="接口返回值"><a href="#接口返回值" class="headerlink" title="接口返回值"></a>接口返回值</h2><p>以koa举例，返回值先使用<code>iconv-lite</code>转为gbk Buffer，随后设置响应头的content-type。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ctx.body = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">ctx.type = <span class="string">'text/plain; charset=gbk'</span>;</span><br></pre></td></tr></table></figure>
-
-<h2 id="接口参数"><a href="#接口参数" class="headerlink" title="接口参数"></a>接口参数</h2><p>同样以koa举例，结合<code>koa-bodyparser</code>，一般http method的原始参数分布在ctx.request.rawBody和ctx.request.querystring中，使用<code>urlencode.parse</code>解析。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">urlencode.parse(ctx.request.rawBody, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br><span class="line">urlencode.parse(ctx.request.querystring, &#123;<span class="attr">charset</span>: <span class="string">'gbk'</span>&#125;);</span><br></pre></td></tr></table></figure>
-
-<p>特别地，当请求格式为multipart或json时需要结合具体情况具体分析。</p>
-<p>例如，使用<code>busboy</code>等multipart解析库会将请求body挂在<code>ctx.request.body</code>上，规范的请求方式是会对字符进行url encode的，这时可以按gbk编码对字段decode（由于不能直接url decode，实际处理方法为转hex后再经buffer解码）。</p>
-<p>如果请求参数是经过binary处理的，则binary decode。</p>
-<p>综上，处理姿势大致如下。</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">lodash.mapValues(ctx.request.body, value =&gt; &#123;</span><br><span class="line">  <span class="keyword">if</span> (!value) <span class="keyword">return</span> value;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> buff = <span class="regexp">/^(%\w&#123;2&#125;)+$/</span>.test(value)</span><br><span class="line">    ? Buffer.from(value.replace(<span class="regexp">/%/g</span>, <span class="string">''</span>), <span class="string">'hex'</span>)</span><br><span class="line">    : Buffer.from(value, <span class="string">'binary'</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> iconv.decode(buff, <span class="string">'gbk'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<p>想兼容更多情况是比较复杂的，即使做基础服务也不必包容所有不规范的传值，大可以拒绝解析，因此按需调整即可。</p>
-<p>如果能约定使用十六进制传参更好，处理hex就不需要在参数获取上额外操作了。可惜一般用到gbk的场景都是难以变更的、需要兼容的，否则肯定是让调用方改传utf8，皆大欢喜。</p>
-<h2 id="读写文件"><a href="#读写文件" class="headerlink" title="读写文件"></a>读写文件</h2><p>默认方式（<code>encoding: null</code>）就是操作buffer，iconv转换无压力。</p>
-<p>读：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = fs.readFileSync(<span class="string">'test.txt'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(iconv.decode(buff, <span class="string">'gbk'</span>));</span><br></pre></td></tr></table></figure>
-<p>写：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> buff = iconv.encode(<span class="string">'你好'</span>, <span class="string">'gbk'</span>);</span><br><span class="line">fs.writeFileSync(<span class="string">'test.txt'</span>, buff);</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1395,7 +1376,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1467,7 +1448,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">51.9k</span>
+  <span title="Symbols count total">52.2k</span>
 
 </div>
 
