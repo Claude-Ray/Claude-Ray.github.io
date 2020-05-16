@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://claude-ray.com/2020/05/16/npm-is-promise/</loc>
+    
+    <lastmod>2020-05-16T11:38:58.297Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://claude-ray.com/2020/04/29/npm-initial-publish-with-beta-tag/</loc>
     
     <lastmod>2020-04-29T14:55:38.084Z</lastmod>
@@ -23,13 +30,6 @@
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2018/12/12/node-gbk-sum/</loc>
-    
-    <lastmod>2020-02-14T01:18:29.737Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://claude-ray.com/2019/08/08/node-process-hang-up/</loc>
     
     <lastmod>2020-02-14T01:18:29.737Z</lastmod>
@@ -37,14 +37,21 @@
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2019/09/12/hexo-theme-next-upgrade-7-4/</loc>
+    <loc>http://claude-ray.com/2018/12/12/node-gbk-sum/</loc>
+    
+    <lastmod>2020-02-14T01:18:29.737Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://claude-ray.com/2019/01/24/nginx-proxypass-args/</loc>
     
     <lastmod>2020-02-14T01:18:29.736Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2019/01/24/nginx-proxypass-args/</loc>
+    <loc>http://claude-ray.com/2019/09/12/hexo-theme-next-upgrade-7-4/</loc>
     
     <lastmod>2020-02-14T01:18:29.736Z</lastmod>
     
