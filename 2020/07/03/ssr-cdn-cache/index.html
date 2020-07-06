@@ -34,7 +34,7 @@
 <meta property="og:image" content="http://claude-ray.com/image/ssr-cdn-cache/cdn3.png">
 <meta property="og:image" content="http://claude-ray.com/image/ssr-cdn-cache/cdn-headers.png">
 <meta property="article:published_time" content="2020-07-03T11:38:57.000Z">
-<meta property="article:modified_time" content="2020-07-03T11:49:08.020Z">
+<meta property="article:modified_time" content="2020-07-06T10:59:01.601Z">
 <meta property="article:author" content="Claude Ray">
 <meta property="article:tag" content="SSR">
 <meta property="article:tag" content="CDN">
@@ -193,10 +193,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-07-03 19:38:57 / Modified: 19:49:08" itemprop="dateCreated datePublished" datetime="2020-07-03T19:38:57+08:00">2020-07-03</time>
+              <time title="Created: 2020-07-03 19:38:57" itemprop="dateCreated datePublished" datetime="2020-07-03T19:38:57+08:00">2020-07-03</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-07-06 18:59:01" itemprop="dateModified" datetime="2020-07-06T18:59:01+08:00">2020-07-06</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -265,7 +271,8 @@
 <blockquote>
 <p>用户 -&gt; CDN -&gt; Nginx -&gt; App Server</p>
 </blockquote>
-<p>简单而言，CDN 利用自身广大的服务器资源，可以为用户提供就近访问，从而提高网络层面的使用体验。</p>
+<p>看似增加了一层传输成本，其实不然。</p>
+<p>CDN 利用自身广大的服务器资源，能动态优化访问路由、就近提供访问节点，以更低延迟、更高带宽从源站获取数据，优化了网络层面的用户体验。</p>
 <h3 id="为什么开启-CDN-缓存？"><a href="#为什么开启-CDN-缓存？" class="headerlink" title="为什么开启 CDN 缓存？"></a>为什么开启 CDN 缓存？</h3><p>开启前：浏览器 -&gt; CDN -&gt; Nginx -&gt; App Server1 -&gt; App Server2 -&gt; …</p>
 <p>开启后：浏览器 &lt;-&gt; CDN</p>
 <p>CDN 能够缓存用户请求到的资源，并且可以包含 HTTP 响应头。在下一次任意用户请求同样的资源时，用缓存的资源直接响应用户，节省了本该由源站处理的所有后续步骤。</p>
