@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://claude-ray.com/2019/08/10/nginx-swrr/</loc>
+    
+    <lastmod>2020-08-06T15:29:23.187Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://claude-ray.com/2020/07/03/ssr-cdn-cache/</loc>
     
     <lastmod>2020-07-06T10:59:01.601Z</lastmod>
@@ -187,13 +194,6 @@
     <loc>http://claude-ray.com/2019/05/19/node-apm-product-research/</loc>
     
     <lastmod>2019-09-12T10:45:26.126Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://claude-ray.com/2019/08/10/nginx-swrr/</loc>
-    
-    <lastmod>2019-09-12T10:45:26.125Z</lastmod>
     
   </url>
   

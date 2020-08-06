@@ -30,7 +30,7 @@
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。  该算法来自 nginx 的一次 commit：Upstream: smooth weighted round-robin balancing  在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，">
 <meta property="article:published_time" content="2019-08-10T05:13:49.000Z">
-<meta property="article:modified_time" content="2019-09-12T10:45:26.125Z">
+<meta property="article:modified_time" content="2020-08-06T15:29:23.187Z">
 <meta property="article:author" content="Claude Ray">
 <meta property="article:tag" content="Nginx">
 <meta property="article:tag" content="load balance">
@@ -195,7 +195,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-09-12 18:45:26" itemprop="dateModified" datetime="2019-09-12T18:45:26+08:00">2019-09-12</time>
+                <time title="Modified: 2020-08-06 23:29:23" itemprop="dateModified" datetime="2020-08-06T23:29:23+08:00">2020-08-06</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,14 +229,14 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    <span>746</span>
+    <span>1k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
       <i class="fa fa-clock-o"></i>
     </span>
       <span class="post-meta-item-text">Reading time &asymp;</span>
-    <span>2 mins.</span>
+    <span>4 mins.</span>
   </span>
 
 
@@ -251,108 +251,69 @@
       
         <p>Smooth Weighted Round-Robin (SWRR) 是 nginx 默认的加权负载均衡算法，它的重要特点是平滑，避免低权重的节点长时间处于空闲状态，因此被称为平滑加权轮询。</p>
 <blockquote>
-<p>该算法来自 nginx 的一次 commit：<a href="https://github.com/phusion/nginx/commit/27e94984486058d73157038f7950a0a36ecc6e35" target="_blank" rel="noopener">Upstream: smooth weighted round-robin balancing</a></p>
+<p>该算法来自 nginx 的一次 commit：<a href="https://github.com/nginx/nginx/commit/52327e0627f49dbda1e8db695e63a4b0af4448b1" target="_blank" rel="noopener">Upstream: smooth weighted round-robin balancing</a></p>
 </blockquote>
 <p>在阅读之前，你应该已经了解过 nginx 的几种负载均衡算法，并阅读了 SWRR 的实现。</p>
-<p>介绍此算法的文章有很多，但还没发现哪里用数学角度给出证明过程的，虽然并不复杂，这里把自己粗劣的思路分享一下。为了便于理解，只考虑算法核心的 current_weight，忽略受异常波动影响的 effective_weight。</p>
+<p>介绍此算法的文章有很多，但用数学角度给出证明过程的较少，尽管并不复杂。这里把自己的思路分享一下，为了便于理解，只考虑算法核心的 current_weight，忽略受异常波动影响的 effective_weight。</p>
 <a id="more"></a>
 
-<hr>
-<p>假设有三个服务器节点 A B C，它们的权重分别为 Wa、Wb、Wc 并保持不变。根据 SWRR 算法，用 CWa CWb CWc 分别表示每台服务器的当前权重，初始值均为 0。Wn 表示所有服务器节点权重的总和，即 Wn = Wa + Wb + Wc。</p>
-<p>每次开始选择，各节点的 CW 会增加对应 W 值的大小。从中选择 CW 最大的节点，并将其值减去 Wn。</p>
-<p>不妨设 A 为权重最大的节点，首次开始选择时，当前权重均为 0</p>
-<table>
-<thead>
-<tr>
-<th>CWa</th>
-<th>CWb</th>
-<th>CWc</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0</td>
-<td>0</td>
-<td>0</td>
-</tr>
-</tbody></table>
-<p>经过加权</p>
-<table>
-<thead>
-<tr>
-<th>CWa</th>
-<th>CWb</th>
-<th>CWc</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Wa</td>
-<td>Wb</td>
-<td>Wc</td>
-</tr>
-</tbody></table>
-<p>W 中最大值为 Wa，减去 Wn，可以表示为 CWa = Wa - Wn = 0 - (Wb + Wc)</p>
-<table>
-<thead>
-<tr>
-<th>CWa</th>
-<th>CWb</th>
-<th>CWc</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>1 * Wa - Wn * 1</td>
-<td>Wb</td>
-<td>Wc</td>
-</tr>
-<tr>
-<td>-(Wb+Wc)</td>
-<td>Wb</td>
-<td>Wc</td>
-</tr>
-</tbody></table>
-<p>依此类推，第二次选择之后，CW 变为</p>
-<table>
-<thead>
-<tr>
-<th>CWa</th>
-<th>CWb</th>
-<th>CWc</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>2 * Wa - Wn * 2</td>
-<td>2 * Wb</td>
-<td>2 * Wc</td>
-</tr>
-</tbody></table>
-<p>根据算法，无论选择哪个节点，每次轮询的操作等于降低最大的权重，逐步提高最小值的权重，但 CW 的总和始终为 0。</p>
-<p>不妨设 n = n1 + n2 + n3，每次选择的结果都可以表示为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">0 &#x3D; n * Wa + n * Wb + n * Wc - n * Wn</span><br><span class="line">  &#x3D; (n * Wa - n1 * Wn) + (n * Wb - n2 * Wn) + (n * Wc - n3 * Wn)</span><br><span class="line">  &#x3D; (n ＊ Wa - n * Wn) + Wb + n * Wc</span><br></pre></td></tr></table></figure>
+<h2 id="更新说明"><a href="#更新说明" class="headerlink" title="更新说明"></a>更新说明</h2><p>在写下博客之前，我还没有翻到其他靠谱的证明过程，就草草记录了自己粗鄙的思路。可发布文章一年之后，再来回顾的我不禁汗颜，为了照顾读者（更未来的自己），参考 <a href="https://tenfy.cn/2018/11/12/smooth-weighted-round-robin/" target="_blank" rel="noopener">nginx平滑的基于权重轮询算法分析</a> 重新梳理了文章脉络。</p>
+<p>以至于现在的内容更像是他人博客的学习笔记，和初版大不相同。这让患有原创洁癖的我深感羞愧，之后的自己务必用更数学的风格去做解析。</p>
+<h2 id="算法描述"><a href="#算法描述" class="headerlink" title="算法描述"></a>算法描述</h2><p>由于所有节点都有原始权重和当前权重，为了方便区分，我们称当前权重为“状态”。</p>
+<p>节点的初始状态均为 0，每开始一轮新的选择，先为各个节点加上其原始权重大小的值，然后选出权重最大的节点，将其值减去所有节点的权重和，最后，该节点作为命中节点返回。</p>
+<p>接下来是官方的示例，对于权重占比 { 5, 1, 1 } 的 A, B, C 三个节点，每轮节点的选择和状态的变换如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">| Round |  A |  B |  C | Selected Node |</span><br><span class="line">|-------|----|----|----|---------------|</span><br><span class="line">|       |  0 |  0 |  0 |               |</span><br><span class="line">|-------|----|----|----|---------------|</span><br><span class="line">|     1 |  5 |  1 |  1 | A             |</span><br><span class="line">|       | -2 |  1 |  1 |               |</span><br><span class="line">|-------|----|----|----|---------------|</span><br><span class="line">|     2 |  3 |  2 |  2 | A             |</span><br><span class="line">|       | -4 |  2 |  2 |               |</span><br><span class="line">|-------|----|----|----|---------------|</span><br><span class="line">|     3 |  1 |  3 |  3 | B             |</span><br><span class="line">|       |  1 | -4 |  3 |               |</span><br><span class="line">|-------|----|----|----|---------------|</span><br><span class="line">|     4 |  6 | -3 |  4 | A             |</span><br><span class="line">|       | -1 | -3 |  4 |               |</span><br><span class="line">|-------|----|----|----|---------------|</span><br><span class="line">|     5 |  4 | -2 |  5 | C             |</span><br><span class="line">|       |  4 | -2 | -2 |               |</span><br><span class="line">|-------|----|----|----|---------------|</span><br><span class="line">|     6 |  9 | -1 | -1 | A             |</span><br><span class="line">|       |  2 | -1 | -1 |               |</span><br><span class="line">|-------|----|----|----|---------------|</span><br><span class="line">|     7 |  7 |  0 |  0 | A             |</span><br><span class="line">|       |  0 |  0 |  0 |               |</span><br></pre></td></tr></table></figure>
 
-<p>第 n 次选择之后，CW 等同于</p>
+<h2 id="证明思路"><a href="#证明思路" class="headerlink" title="证明思路"></a>证明思路</h2><p>假设有三个服务器节点 A B C，它们的权重分别为 a、b、c 并保持不变，W 表示所有服务器节点权重的总和，即 W = a + b + c。</p>
+<p>根据 SWRR 算法，每台服务器的初始权重均为 0。</p>
 <table>
 <thead>
 <tr>
-<th>CWa</th>
-<th>CWb</th>
-<th>CWc</th>
+<th>A</th>
+<th>B</th>
+<th>C</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>n * Wa - Wn * n</td>
-<td>n * Wb</td>
-<td>n * Wc</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
 </tr>
 </tbody></table>
-<p>因此当选择次数达到 Wn 时，平衡关系为</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Wn * 0 &#x3D; Wn * (Wa + Wb + Wc - Wn)</span><br><span class="line">       &#x3D; (Wn * Wa - Wa * Wn) + (Wn * Wb - Wb * Wn) + (Wn * Wc - Wc * Wn)</span><br></pre></td></tr></table></figure>
+<p>也可以用等式表达当前的权重（状态）之和</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Sum &#x3D; 0 + 0 + 0 &#x3D; 0</span><br></pre></td></tr></table></figure>
 
-<p>此时 CW 又重新回到 0 的起点，证得此轮询是一个周期，且周期长度等于权重之和，每个节点分别被选中了等于各自权重值的次数。</p>
-<p>更多节点的证明同上。</p>
+<p>每次开始选择，各节点的状态会增加对应权重的大小。从中选择 CW 最大的节点，并将其值减去 W。</p>
+<p>首先，所有节点加权，不妨设 A 为权重最大的节点，经过第一轮变换之后</p>
+<table>
+<thead>
+<tr>
+<th>A</th>
+<th>B</th>
+<th>C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>a - W</td>
+<td>b</td>
+<td>c</td>
+</tr>
+</tbody></table>
+<p>此时，节点的状态和仍然为 0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Sum &#x3D; (a - W) + b + c</span><br><span class="line">    &#x3D; (a - a - b - c) + b + c</span><br><span class="line">    &#x3D; 0</span><br></pre></td></tr></table></figure>
+
+<p>综上，每一轮选择都是将总资源根据权重分配给各自节，再由权重最大的节点一次性消耗掉。依此类推，无论第几次选择，他们的和恒等于零。</p>
 <hr>
-<p>相比普通的轮询选择，高权重的节点在此过程中不断让权给低权节点，实现平滑轮询。</p>
-<p>至于增加了的 effective_weight 概念，变数在于每次选中后 CW 减去的 Wn 总权重变为总当前权重。随着代码阅读很容易理解，就不单独证明了。</p>
-<h2 id="update"><a href="#update" class="headerlink" title="update"></a>update</h2><p>碰巧读到了这篇 <a href="https://tenfy.cn/2018/11/12/smooth-weighted-round-robin/" target="_blank" rel="noopener">nginx平滑的基于权重轮询算法分析</a>，里面证明严谨多了，XD，是我之前想看的数学推理，在此推荐。</p>
+<p>假设 A 已经被选择了 a 轮 (a &lt; W)，即将开始第 n 轮选择（a &lt; n &lt; W），那么 A 节点的状态为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">n * a - a * W &#x3D; a * (n - W) &lt; 0</span><br></pre></td></tr></table></figure>
+
+<p>由于状态总和恒为 0，而 A 节点状态小于 0 的时候一定不会被选中，因此 A 最多只能被选择 a 轮。同理，其他每个节点也最多只能被选择等同于节点权重的次数。</p>
+<hr>
+<p>最后证明算法的平滑性，即 A 节点不会连续被选择 a 次。</p>
+<p>不妨设 A 节点已经被连续选择了 a - 1 次，那么当前 A 节点的状态为</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(a - 1) * a - (a - 1) * W &#x3D; (a - 1) * (a - W) &lt; 0</span><br></pre></td></tr></table></figure>
+
+<p>同上一条证明，由于状态总和恒为 0，而 A 节点状态小于 0 的时候一定不会被选中，因此 A 最多只能被连续选中 a - 1 轮。即每个节点也不会被连续选择，平滑性得证。</p>
 
     </div>
 
@@ -462,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#update"><span class="nav-number">1.</span> <span class="nav-text">update</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#更新说明"><span class="nav-number">1.</span> <span class="nav-text">更新说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#算法描述"><span class="nav-number">2.</span> <span class="nav-text">算法描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证明思路"><span class="nav-number">3.</span> <span class="nav-text">证明思路</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -550,7 +511,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">57.8k</span>
+  <span title="Symbols count total">58.1k</span>
 
 </div>
 
