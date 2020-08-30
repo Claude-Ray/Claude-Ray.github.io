@@ -30,7 +30,7 @@
 <meta property="og:site_name" content="Claude&#39;s Blog">
 <meta property="og:description" content="DataLab近来开始读 CS:APP3e 第二章，但干看书做课后题太乏味，于是提前把 DataLab 拉出来练练。不一定是优解，趁热记录一下思路吧。">
 <meta property="article:published_time" content="2019-10-02T15:19:44.000Z">
-<meta property="article:modified_time" content="2019-10-03T05:56:29.654Z">
+<meta property="article:modified_time" content="2020-08-30T02:43:35.241Z">
 <meta property="article:author" content="Claude Ray">
 <meta property="article:tag" content="DataLab">
 <meta property="article:tag" content="CSAPP">
@@ -195,7 +195,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-03 13:56:29" itemprop="dateModified" datetime="2019-10-03T13:56:29+08:00">2019-10-03</time>
+                <time title="Modified: 2020-08-30 10:43:35" itemprop="dateModified" datetime="2020-08-30T10:43:35+08:00">2020-08-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -229,7 +229,7 @@
       <i class="fa fa-file-word-o"></i>
     </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-    <span>2k</span>
+    <span>2.1k</span>
   </span>
   <span class="post-meta-item" title="Reading time">
     <span class="post-meta-item-icon">
@@ -264,6 +264,13 @@
 <h2 id="isTmax"><a href="#isTmax" class="headerlink" title="isTmax"></a>isTmax</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * isTmax - returns 1 if x is the maximum, two's complement number,</span></span><br><span class="line"><span class="comment"> *     and 0 otherwise </span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | +</span></span><br><span class="line"><span class="comment"> *   Max ops: 10</span></span><br><span class="line"><span class="comment"> *   Rating: 1</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isTmax</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> !(~(<span class="number">1</span> &lt;&lt; <span class="number">31</span>) ^ x);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上面已经知道怎么获取 TMIN，TMAX 可以用 ~TMIN 表示，因此主要考察两个数是否相等 —— <code>^</code>。</p>
+<h3 id="错误更正"><a href="#错误更正" class="headerlink" title="错误更正"></a>错误更正</h3><blockquote>
+<p>感谢 <a href="https://github.com/nerrons" target="_blank" rel="noopener">@nerrons</a> 兄指正</p>
+</blockquote>
+<p>前面的解法忽略了操作符的限制，是不合题意的。故更换思路：由于 TMAX + 1 可得到 TMIN，若 x 为 TMAX，则 x + 1 + x 结果为 0。</p>
+<p>但直接这样写无法通过检测程序，是因为 0xffffffff 同样满足 x + 1 + x 为 0 的特性，需要将该情况排除。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isTmax</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> !(~((x + <span class="number">1</span>) + x) | !(x + <span class="number">1</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="allOddBits"><a href="#allOddBits" class="headerlink" title="allOddBits"></a>allOddBits</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment"> * allOddBits - return 1 if all odd-numbered bits in word set to 1</span></span><br><span class="line"><span class="comment"> *   where bits are numbered from 0 (least significant) to 31 (most significant)</span></span><br><span class="line"><span class="comment"> *   Examples allOddBits(0xFFFFFFFD) = 0, allOddBits(0xAAAAAAAA) = 1</span></span><br><span class="line"><span class="comment"> *   Legal ops: ! ~ &amp; ^ | + &lt;&lt; &gt;&gt;</span></span><br><span class="line"><span class="comment"> *   Max ops: 12</span></span><br><span class="line"><span class="comment"> *   Rating: 2</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">allOddBits</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">int</span> odd = (<span class="number">0xAA</span> &lt;&lt; <span class="number">24</span>) + (<span class="number">0xAA</span> &lt;&lt; <span class="number">16</span>) + (<span class="number">0xAA</span> &lt;&lt; <span class="number">8</span>) + <span class="number">0xAA</span>;</span><br><span class="line">  <span class="keyword">return</span> !((x &amp; odd) ^ odd);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>先构造 <code>0xAAAAAAAA</code>，利用 &amp; 操作将所有奇数位提出来，再和已构造的数判等。</p>
@@ -409,7 +416,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DataLab"><span class="nav-number">1.</span> <span class="nav-text">DataLab</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bitXor"><span class="nav-number">1.1.</span> <span class="nav-text">bitXor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tmin"><span class="nav-number">1.2.</span> <span class="nav-text">tmin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isTmax"><span class="nav-number">1.3.</span> <span class="nav-text">isTmax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#allOddBits"><span class="nav-number">1.4.</span> <span class="nav-text">allOddBits</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#negate"><span class="nav-number">1.5.</span> <span class="nav-text">negate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isAsciiDigit"><span class="nav-number">1.6.</span> <span class="nav-text">isAsciiDigit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conditional"><span class="nav-number">1.7.</span> <span class="nav-text">conditional</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isLessOrEqual"><span class="nav-number">1.8.</span> <span class="nav-text">isLessOrEqual</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logicalNeg"><span class="nav-number">1.9.</span> <span class="nav-text">logicalNeg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#howManyBits"><span class="nav-number">1.10.</span> <span class="nav-text">howManyBits</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#floatScale2"><span class="nav-number">1.11.</span> <span class="nav-text">floatScale2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#floatFloat2Int"><span class="nav-number">1.12.</span> <span class="nav-text">floatFloat2Int</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#floatPower2"><span class="nav-number">1.13.</span> <span class="nav-text">floatPower2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#DataLab"><span class="nav-number">1.</span> <span class="nav-text">DataLab</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#bitXor"><span class="nav-number">1.1.</span> <span class="nav-text">bitXor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tmin"><span class="nav-number">1.2.</span> <span class="nav-text">tmin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isTmax"><span class="nav-number">1.3.</span> <span class="nav-text">isTmax</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#错误更正"><span class="nav-number">1.3.1.</span> <span class="nav-text">错误更正</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#allOddBits"><span class="nav-number">1.4.</span> <span class="nav-text">allOddBits</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#negate"><span class="nav-number">1.5.</span> <span class="nav-text">negate</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isAsciiDigit"><span class="nav-number">1.6.</span> <span class="nav-text">isAsciiDigit</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#conditional"><span class="nav-number">1.7.</span> <span class="nav-text">conditional</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#isLessOrEqual"><span class="nav-number">1.8.</span> <span class="nav-text">isLessOrEqual</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#logicalNeg"><span class="nav-number">1.9.</span> <span class="nav-text">logicalNeg</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#howManyBits"><span class="nav-number">1.10.</span> <span class="nav-text">howManyBits</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#floatScale2"><span class="nav-number">1.11.</span> <span class="nav-text">floatScale2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#floatFloat2Int"><span class="nav-number">1.12.</span> <span class="nav-text">floatFloat2Int</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#floatPower2"><span class="nav-number">1.13.</span> <span class="nav-text">floatPower2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#小结"><span class="nav-number">2.</span> <span class="nav-text">小结</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -497,7 +504,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">58.1k</span>
+  <span title="Symbols count total">58.2k</span>
 
 </div>
 

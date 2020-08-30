@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://claude-ray.com/2019/10/02/csapp-datalab/</loc>
+    
+    <lastmod>2020-08-30T02:43:35.241Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://claude-ray.com/2019/08/10/nginx-swrr/</loc>
     
     <lastmod>2020-08-06T15:29:23.187Z</lastmod>
@@ -58,14 +65,14 @@
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2019/09/12/hexo-theme-next-upgrade-7-4/</loc>
+    <loc>http://claude-ray.com/2019/01/24/nginx-proxypass-args/</loc>
     
     <lastmod>2020-02-14T01:18:29.736Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://claude-ray.com/2019/01/24/nginx-proxypass-args/</loc>
+    <loc>http://claude-ray.com/2019/09/12/hexo-theme-next-upgrade-7-4/</loc>
     
     <lastmod>2020-02-14T01:18:29.736Z</lastmod>
     
@@ -145,13 +152,6 @@
     <loc>http://claude-ray.com/2019/07/12/elastic-apm-node-egg/</loc>
     
     <lastmod>2019-10-17T11:29:27.085Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://claude-ray.com/2019/10/02/csapp-datalab/</loc>
-    
-    <lastmod>2019-10-03T05:56:29.654Z</lastmod>
     
   </url>
   
