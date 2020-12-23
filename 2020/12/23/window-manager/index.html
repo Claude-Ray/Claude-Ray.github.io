@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+  <meta name="google-site-verification" content="2NvRwEicYYEjnSCQZmthUW33BtS11QwT85AgvfocMGI">
+  <meta name="msvalidate.01" content="0BFF64D8466DDA1B96AF8DBA4B5ED7EC">
+  <meta name="baidu-site-verification" content="13oCuH1wUm">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"claude-ray.com","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="想向同事分享窗口切换的一点心得，不小心写成一篇没什么营养的方法论。虽然主要还是讲窗口切换。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何管理桌面窗口">
+<meta property="og:url" content="http://claude-ray.com/2020/12/23/window-manager/index.html">
+<meta property="og:site_name" content="Claude&#39;s Blog">
+<meta property="og:description" content="想向同事分享窗口切换的一点心得，不小心写成一篇没什么营养的方法论。虽然主要还是讲窗口切换。">
+<meta property="article:published_time" content="2020-12-23T12:49:53.000Z">
+<meta property="article:modified_time" content="2020-12-23T13:08:11.846Z">
+<meta property="article:author" content="Claude Ray">
+<meta property="article:tag" content="MacOS">
+<meta property="article:tag" content="WindowManager">
+<meta property="article:tag" content="Workflow">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://claude-ray.com/2020/12/23/window-manager/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>如何管理桌面窗口 | Claude's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claude's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Searching</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2020/12/23/window-manager/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          如何管理桌面窗口
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-12-23 20:49:53 / Modified: 21:08:11" itemprop="dateCreated datePublished" datetime="2020-12-23T20:49:53+08:00">2020-12-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Essay/" itemprop="url" rel="index">
+                    <span itemprop="name">Essay</span>
+                  </a>
+                </span>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2020/12/23/window-manager/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2020/12/23/window-manager/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+  <span class="post-meta-item" title="Symbols count in article">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-file-word-o"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+    <span>1.5k</span>
+  </span>
+  <span class="post-meta-item" title="Reading time">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-clock-o"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+    <span>5 mins.</span>
+  </span>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>想向同事分享窗口切换的一点心得，不小心写成一篇没什么营养的方法论。虽然主要还是讲窗口切换。</p>
+<a id="more"></a>
+
+<h2 id="什么是窗口管理"><a href="#什么是窗口管理" class="headerlink" title="什么是窗口管理"></a>什么是窗口管理</h2><p>如果你不知道什么是窗口管理，在开启话题之前，不妨先来确认一下窗口管理器和桌面环境的概念。</p>
+<p>首先说桌面环境，翻译自 Desktop Environment，它负责为用户提供完整的操作界面，而不仅仅是狭义的“桌面部件”，还包括图标、窗口、工具栏、壁纸等等。</p>
+<p>再说窗口管理器，Window Manager，它是上述桌面环境的一部分，关乎图形化应用的窗口的基本操作，主要为如何进行排列和切换。窗口管理器是桌面环境的一部分，甚至可以完全独立于桌面环境，只运行窗口管理器，从而节省硬件资源。它包含以下类型：</p>
+<ul>
+<li>Float 悬浮：不同窗口可以相互重叠，就像桌子上随意摆放的白纸一样（这里借用了 Archlinux Wiki 的比喻）。正是 MacOS 和 Windows 提供的模式。</li>
+<li>Tiling 平铺：窗口不能重叠，而是像瓦片一样挨个摆放。</li>
+<li>Dynamic 动态：兼顾上述两种模式，可以动态切换窗口放置方式。</li>
+</ul>
+<p>不同类型的窗口管理器提供了不同的窗口摆放方式，还提供了各自的窗口切换逻辑，其中“平铺”更倾向于使用键盘操作，如何选择，主要看个人口味。</p>
+<p>虽然着重介绍了窗口管理器，但它不是今天的主角，我们应该跳出所有的运行环境，去发现真正的“窗口管理器”其实是使用者自己。</p>
+<h2 id="排列方式"><a href="#排列方式" class="headerlink" title="排列方式"></a>排列方式</h2><p>窗口排列是一个答案无足轻重选择题，需要结合显示器的使用习惯作答。如果仅从思路上讲，相比手动排列，自动排列无疑是更好的选择，此时平铺类窗口管理器的优势就体现出来了。</p>
+<p>然而，Linux 可以非常轻松地调换窗口管理器，在 MacOS 下可供的选择就不多了。<a href="https://github.com/koekeishiya/yabai" target="_blank" rel="noopener">yabai</a> 要求关闭 SIP，提高了安全风险，<a href="https://github.com/ianyh/Amethyst" target="_blank" rel="noopener">Amethyst</a> 功能较弱，好在轻量可控。如果放弃一点点平铺的功能性，可以选择 moom 这类辅助布局软件。考虑到本文不是工具推荐，也就不再介绍更多。</p>
+<p>对使用小屏幕和习惯全屏的用户而言，绝大多数的使用场景是全屏，则没必要安装辅助工具。</p>
+<h2 id="切换方式"><a href="#切换方式" class="headerlink" title="切换方式"></a>切换方式</h2><h3 id="操作背景"><a href="#操作背景" class="headerlink" title="操作背景"></a>操作背景</h3><p>按以下特征对号入座，目的是想让大家思考不同使用习惯之间的异同点。现在你的窗口管理习惯，是否适用于其他的用户呢？</p>
+<p>窗口模式：</p>
+<ul>
+<li>全屏化</li>
+<li>窗口化</li>
+<li>最小化（隐藏）</li>
+</ul>
+<p>桌面分布：</p>
+<ul>
+<li>单显示器-单桌面：将所有开启的窗口放在同一个桌面下，不采用任何虚拟桌面。</li>
+<li>单显示器-多桌面：（按照习惯）将不同的软件放在不同的虚拟桌面下。</li>
+<li>多显示器-单桌面：和多桌面类似，但不采用虚拟桌面，每台显示器就是一个桌面。</li>
+<li>多显示器-多桌面：各台显示器放置了不同的虚拟桌面，互相隔离。</li>
+</ul>
+<h3 id="操作习惯"><a href="#操作习惯" class="headerlink" title="操作习惯"></a>操作习惯</h3><ol>
+<li>鼠标/触摸板</li>
+<li>全局快捷键（系统默认）<ul>
+<li>MacOS 可以使用 command+tab 和 command+` 切换，Linux、Windows 有 alt+tab</li>
+<li>MacOS 可以使用 control+↑ 和手势操作，Linux、Windows 有 win、win+tab</li>
+</ul>
+</li>
+<li>启动器：例如 MacOS 的 Spotlight、Alfred，Windows 的 Everything，Linux 的 rofi、dmenu 等等</li>
+<li>全局快捷键（自定义）</li>
+</ol>
+<p>它们的区别：</p>
+<ol>
+<li>寻找(思考) -&gt; 移动(思考+操作) -&gt; 确认(操作)</li>
+<li>寻找(操作+思考) -&gt; 确认(操作)</li>
+<li>寻找(思考+肌肉记忆) -&gt; 确认(操作)</li>
+<li>确认(思考+肌肉记忆)</li>
+</ol>
+<blockquote>
+<p>肌肉记忆≈闭眼操作</p>
+</blockquote>
+<p>虽然存在很大的误差，但不难发现，桌面越复杂，操作复杂度的差距就越明显。</p>
+<h2 id="如何自定义快捷键"><a href="#如何自定义快捷键" class="headerlink" title="如何自定义快捷键"></a>如何自定义快捷键</h2><p>两个代表性工具，MacOS Hammerspoon，Linux wmctrl。同事 MacOS 开发较多，因此以 Hammerspoon 为例。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">hs.hotkey.bind(hyper, <span class="string">"C"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">    hs.application.launchOrFocus(<span class="string">"/Applications/Google Chrome.app"</span>)</span><br><span class="line"><span class="keyword">end</span>)</span><br><span class="line"></span><br><span class="line">hs.hotkey.bind(hyper, <span class="string">"Return"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">    hs.application.launchOrFocus(<span class="string">"/Applications/Alacritty.app"</span>)</span><br><span class="line"><span class="keyword">end</span>)</span><br><span class="line"></span><br><span class="line">hs.hotkey.bind(hyper, <span class="string">"W"</span>, <span class="function"><span class="keyword">function</span><span class="params">()</span></span></span><br><span class="line">    hs.application.launchOrFocus(<span class="string">"/Applications/WeChat.app"</span>)</span><br><span class="line"><span class="keyword">end</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="如何设置更多快捷键"><a href="#如何设置更多快捷键" class="headerlink" title="如何设置更多快捷键"></a>如何设置更多快捷键</h2><p>全局快捷键极易引起冲突，譬如某狗输入法（别用）。为了避免这种烦恼，我们可以在 Hammerspoon 设置组合键。</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">local</span> hyper = &#123;<span class="string">"cmd"</span>, <span class="string">"alt"</span>, <span class="string">"ctrl"</span>&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可惜，并不是所有人的手都能成长为“八爪鱼”，腱鞘炎了解一下？我们尽可能把多个按键合并，同时注意减少小拇指的使用。</p>
+<p>以 MacOS 为例，使用 Karabiner-Elements，将大拇指附近不需要的按键设置为 hyper，配置示例如下</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"title"</span>: <span class="string">"Change option key"</span>,</span><br><span class="line">  <span class="attr">"rules"</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">"description"</span>: <span class="string">"Change right_option to left_option + left_control + left_command if pressed with other keys, to escape if pressed alone."</span>,</span><br><span class="line">      <span class="attr">"manipulators"</span>: [</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">"type"</span>: <span class="string">"basic"</span>,</span><br><span class="line">          <span class="attr">"from"</span>: &#123;</span><br><span class="line">            <span class="attr">"key_code"</span>: <span class="string">"right_option"</span>,</span><br><span class="line">            <span class="attr">"modifiers"</span>: &#123;</span><br><span class="line">              <span class="attr">"optional"</span>: [</span><br><span class="line">                <span class="string">"any"</span></span><br><span class="line">              ]</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;,</span><br><span class="line">          <span class="attr">"to"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">"key_code"</span>: <span class="string">"left_option"</span>,</span><br><span class="line">              <span class="attr">"modifiers"</span>: [</span><br><span class="line">                <span class="string">"left_control"</span>,</span><br><span class="line">                <span class="string">"left_command"</span></span><br><span class="line">              ]</span><br><span class="line">            &#125;</span><br><span class="line">          ],</span><br><span class="line">          <span class="attr">"to_if_alone"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">              <span class="attr">"key_code"</span>: <span class="string">"escape"</span></span><br><span class="line">            &#125;</span><br><span class="line">          ]</span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>按住右 option，等于同时按住了 option+control+command，还可以随手实现轻按一下等于 ESC 的效果。</p>
+<p>别忘了，组合键可不止这三个，还可以再从键盘上选几个键，设为 option+control+command+shift 等等，从此再也不用担心自定义的键位不够用了。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>排列窗口的方式很大程度取决于个人口味，自由度也非常高。窗口切换的操作具备更强的逻辑性，需要付出一定的成本。两者都可以提高工作效益，值得思考改进。但也必须承认，改进 Workflow 的边际效应明显，希望读完这篇文章的你，宁可什么都不做，也不要反复抉择。</p>
+<p>最后，分享一下我目前的 MBP 使用习惯吧：极端的全屏使用者，彻底禁用 Dock，隐藏 Menu Bar，将通知和时间放在了 Touch Bar，每天享受沉浸式的屏幕体验。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Claude Ray
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://claude-ray.com/2020/12/23/window-manager/" title="如何管理桌面窗口">http://claude-ray.com/2020/12/23/window-manager/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/MacOS/" rel="tag"># MacOS</a>
+              <a href="/tags/WindowManager/" rel="tag"># WindowManager</a>
+              <a href="/tags/Workflow/" rel="tag"># Workflow</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/07/03/ssr-cdn-cache/" rel="prev" title="SSR 页面 CDN 缓存实践">
+      <i class="fa fa-chevron-left"></i> SSR 页面 CDN 缓存实践
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是窗口管理"><span class="nav-number">1.</span> <span class="nav-text">什么是窗口管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#排列方式"><span class="nav-number">2.</span> <span class="nav-text">排列方式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#切换方式"><span class="nav-number">3.</span> <span class="nav-text">切换方式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#操作背景"><span class="nav-number">3.1.</span> <span class="nav-text">操作背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作习惯"><span class="nav-number">3.2.</span> <span class="nav-text">操作习惯</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何自定义快捷键"><span class="nav-number">4.</span> <span class="nav-text">如何自定义快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如何设置更多快捷键"><span class="nav-number">5.</span> <span class="nav-text">如何设置更多快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结语"><span class="nav-number">6.</span> <span class="nav-text">结语</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Claude Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Claude Ray</p>
+  <div class="site-description" itemprop="description">Now or Never</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Claude-Ray" title="GitHub → https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/Claude__Ray" title="Twitter → https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam → https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/nebulae-pan" title="https://github.com/nebulae-pan" rel="noopener" target="_blank">Nebulae Pan</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-bolt"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claude Ray</span>
+</div><div class="copyright">
+
+  <span class="post-meta-divider">|</span>
+  <span class="post-meta-item-icon">
+    <i class="fa fa-area-chart"></i>
+  </span>
+  <span class="post-meta-item-text">Symbols count total: </span>
+  <span title="Symbols count total">59.7k</span>
+
+</div>
+
+<div>
+  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io" target="_blank" rel="noopener">Homepage</a>. Happy hacking!
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://claude-ray.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://claude-ray.com/2020/12/23/window-manager/";
+    this.page.identifier = "2020/12/23/window-manager/";
+    this.page.title = "如何管理桌面窗口";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://claude-ray.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
