@@ -161,6 +161,106 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2021/01/27/node-http-stream-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/01/27/node-http-stream-proxy/" class="post-title-link" itemprop="url">记录 Got(Node.js) 代理 HTTP 请求的坑</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-27 19:05:25 / Modified: 20:59:14" itemprop="dateCreated datePublished" datetime="2021-01-27T19:05:25+08:00">2021-01-27</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/27/node-http-stream-proxy/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/27/node-http-stream-proxy/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+  <span class="post-meta-item" title="Symbols count in article">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-file-word-o"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+    <span>682</span>
+  </span>
+  <span class="post-meta-item" title="Reading time">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-clock-o"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+    <span>2 mins.</span>
+  </span>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>在过去，request 模块几乎是 Node.js 端的不二选择，可惜已被放弃维护。如今流行的模块虽然变多，但不意味着它们足够成熟，我还是倾向于专注 Node.js 端的那几个。</p>
+<p>需求越简单，选择越不重要。不过相较而言，Got 的接口设计看起来更友好，并且它是做到支持 Connection Timeout 和 Read Timeout 的少数。</p>
+<blockquote>
+<p>见 <a href="https://github.com/sindresorhus/got/#comparison" target="_blank" rel="noopener">https://github.com/sindresorhus/got/#comparison</a> 的 Advanced timeouts</p>
+</blockquote>
+<p>实际用下来，还是遇到了坑，顺便扒了一眼 Got 的代码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/01/27/node-http-stream-proxy/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2020/12/23/window-manager/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1163,118 +1263,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2019/10/02/csapp-datalab/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Claude Ray">
-      <meta itemprop="description" content="Now or Never">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Claude's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/10/02/csapp-datalab/" class="post-title-link" itemprop="url">CSAPP DataLab 题解</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2019-10-02 23:19:44" itemprop="dateCreated datePublished" datetime="2019-10-02T23:19:44+08:00">2019-10-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-30 10:43:35" itemprop="dateModified" datetime="2020-08-30T10:43:35+08:00">2020-08-30</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer-System/" itemprop="url" rel="index">
-                    <span itemprop="name">Computer System</span>
-                  </a>
-                </span>
-            </span>
-
-          
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="fa fa-comment-o"></i>
-      </span>
-      <span class="post-meta-item-text">Disqus: </span>
-    
-    <a title="disqus" href="/2019/10/02/csapp-datalab/#disqus_thread" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/10/02/csapp-datalab/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  <br>
-  <span class="post-meta-item" title="Symbols count in article">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-file-word-o"></i>
-    </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-    <span>2.1k</span>
-  </span>
-  <span class="post-meta-item" title="Reading time">
-    <span class="post-meta-item-icon">
-      <i class="fa fa-clock-o"></i>
-    </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-    <span>10 mins.</span>
-  </span>
-
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h1 id="DataLab"><a href="#DataLab" class="headerlink" title="DataLab"></a>DataLab</h1><p>近来开始读 CS:APP3e 第二章，但干看书做课后题太乏味，于是提前把 DataLab 拉出来练练。不一定是优解，趁热记录一下思路吧。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/10/02/csapp-datalab/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1347,7 +1335,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1360,7 +1348,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">61</span>
+        <span class="site-state-item-count">63</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -1407,7 +1395,7 @@
 <div class="copyright">
   
   &copy; 2017 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-bolt"></i>
   </span>
@@ -1419,7 +1407,7 @@
     <i class="fa fa-area-chart"></i>
   </span>
   <span class="post-meta-item-text">Symbols count total: </span>
-  <span title="Symbols count total">60k</span>
+  <span title="Symbols count total">60.7k</span>
 
 </div>
 

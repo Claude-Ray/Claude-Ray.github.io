@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico">
+  <link rel="mask-icon" href="/images/favicon.ico" color="#222">
+  <meta name="google-site-verification" content="2NvRwEicYYEjnSCQZmthUW33BtS11QwT85AgvfocMGI">
+  <meta name="msvalidate.01" content="0BFF64D8466DDA1B96AF8DBA4B5ED7EC">
+  <meta name="baidu-site-verification" content="13oCuH1wUm">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"claude-ray.com","root":"/","scheme":"Mist","version":"7.7.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="在过去，request 模块几乎是 Node.js 端的不二选择，可惜已被放弃维护。如今流行的模块虽然变多，但不意味着它们足够成熟，我还是倾向于专注 Node.js 端的那几个。 需求越简单，选择越不重要。不过相较而言，Got 的接口设计看起来更友好，并且它是做到支持 Connection Timeout 和 Read Timeout 的少数。  见 https:&#x2F;&#x2F;github.com&#x2F;sind">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录 Got(Node.js) 代理 HTTP 请求的坑">
+<meta property="og:url" content="http://claude-ray.com/2021/01/27/node-http-stream-proxy/index.html">
+<meta property="og:site_name" content="Claude&#39;s Blog">
+<meta property="og:description" content="在过去，request 模块几乎是 Node.js 端的不二选择，可惜已被放弃维护。如今流行的模块虽然变多，但不意味着它们足够成熟，我还是倾向于专注 Node.js 端的那几个。 需求越简单，选择越不重要。不过相较而言，Got 的接口设计看起来更友好，并且它是做到支持 Connection Timeout 和 Read Timeout 的少数。  见 https:&#x2F;&#x2F;github.com&#x2F;sind">
+<meta property="article:published_time" content="2021-01-27T11:05:25.000Z">
+<meta property="article:modified_time" content="2021-01-27T12:59:14.957Z">
+<meta property="article:author" content="Claude Ray">
+<meta property="article:tag" content="Node.js">
+<meta property="article:tag" content="Stream">
+<meta property="article:tag" content="HTTP">
+<meta property="article:tag" content="proxy">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://claude-ray.com/2021/01/27/node-http-stream-proxy/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>记录 Got(Node.js) 代理 HTTP 请求的坑 | Claude's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Claude's Blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Claude's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <h1 class="site-subtitle" itemprop="description">Searching</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://claude-ray.com/2021/01/27/node-http-stream-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Claude Ray">
+      <meta itemprop="description" content="Now or Never">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Claude's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          记录 Got(Node.js) 代理 HTTP 请求的坑
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2021-01-27 19:05:25 / Modified: 20:59:14" itemprop="dateCreated datePublished" datetime="2021-01-27T19:05:25+08:00">2021-01-27</time>
+            </span>
+
+          
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+      <span class="post-meta-item-text">Disqus: </span>
+    
+    <a title="disqus" href="/2021/01/27/node-http-stream-proxy/#disqus_thread" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2021/01/27/node-http-stream-proxy/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+  <span class="post-meta-item" title="Symbols count in article">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-file-word-o"></i>
+    </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+    <span>682</span>
+  </span>
+  <span class="post-meta-item" title="Reading time">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-clock-o"></i>
+    </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+    <span>2 mins.</span>
+  </span>
+
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>在过去，request 模块几乎是 Node.js 端的不二选择，可惜已被放弃维护。如今流行的模块虽然变多，但不意味着它们足够成熟，我还是倾向于专注 Node.js 端的那几个。</p>
+<p>需求越简单，选择越不重要。不过相较而言，Got 的接口设计看起来更友好，并且它是做到支持 Connection Timeout 和 Read Timeout 的少数。</p>
+<blockquote>
+<p>见 <a href="https://github.com/sindresorhus/got/#comparison" target="_blank" rel="noopener">https://github.com/sindresorhus/got/#comparison</a> 的 Advanced timeouts</p>
+</blockquote>
+<p>实际用下来，还是遇到了坑，顺便扒了一眼 Got 的代码。</p>
+<a id="more"></a>
+
+<h2 id="native-http"><a href="#native-http" class="headerlink" title="native http?"></a>native http?</h2><p>先解释一下为什么不用原生 http 模块吧。</p>
+<p>毕竟在 Node.js 提供代理服务是非常容易的事儿，普遍的优化无非是：</p>
+<ul>
+<li>使用 http.Agent。用它来支持 keepAlive，关闭 Nagle 算法等等。</li>
+<li>使用 stream.pipe()。相对于“接收-等待-发送”的模式，一方面主要是节省内存，另一方面可以减少等待，提高传输效率（但也不是绝对的）。</li>
+</ul>
+<p>不用安装第三方依赖，基于原生 http 写上十来行代码即可完工，所以我自己很喜欢直接用 http 做一些工作。</p>
+<p>但如果代理需求变得复杂，使用现成的轮子才能利于队友们（也包括自己）维护。</p>
+<h2 id="decompress"><a href="#decompress" class="headerlink" title="decompress"></a>decompress</h2><p>Got 默认对响应执行 decompress，对于代理而言毫无意义，需要关掉。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> _onResponseBase(response: IncomingMessageWithTimings): <span class="built_in">Promise</span>&lt;<span class="keyword">void</span>&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;options&#125; = <span class="keyword">this</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (options.decompress) &#123;</span><br><span class="line">    response = decompressResponse(response);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这在 decompress 的文档上有说明，但是一点儿都不醒目。</p>
+<blockquote>
+<p>If this is disabled, a compressed response is returned as a Buffer. This may be useful if you want to handle decompression yourself or stream the raw compressed data.</p>
+</blockquote>
+<p>最坑的是，我是因为遇到了 stream 的 bug (<a href="https://github.com/sindresorhus/got/issues/1279" target="_blank" rel="noopener">#issues/1279</a>) 才注意到这个选项。在开启 decompress 的情况下，使响应值的 content-length 是错误的，该 bug 会导致返回的结果不完整。</p>
+<h2 id="accept-encoding"><a href="#accept-encoding" class="headerlink" title="accept-encoding"></a>accept-encoding</h2><p>关闭 decompress 之后，响应开始变慢到肉眼可见得慢。</p>
+<p>原因如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> _makeRequest(): <span class="built_in">Promise</span>&lt;<span class="keyword">void</span>&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;options&#125; = <span class="keyword">this</span>;</span><br><span class="line">  <span class="keyword">const</span> &#123;headers&#125; = options;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (options.decompress &amp;&amp; is.undefined(headers[<span class="string">'accept-encoding'</span>])) &#123;</span><br><span class="line">    headers[<span class="string">'accept-encoding'</span>] = supportsBrotli ? <span class="string">'gzip, deflate, br'</span> : <span class="string">'gzip, deflate'</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>accept-encoding 只在 decompress 为 true 的时候设置，否则无法享用 gzip 等压缩带来的优化。</p>
+<h2 id="solution"><a href="#solution" class="headerlink" title="solution"></a>solution</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> got = <span class="built_in">require</span>(<span class="string">'got'</span>);</span><br><span class="line"><span class="keyword">const</span> HttpAgent = <span class="built_in">require</span>(<span class="string">'agentkeepalive'</span>);</span><br><span class="line"><span class="keyword">const</span> HttpsAgent = HttpAgent.HttpsAgent;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> sec = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">const</span> min = <span class="number">60</span> * sec;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> supportsBrotli = process.versions.brotli;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> request = got.extend(&#123;</span><br><span class="line">  agent: &#123;</span><br><span class="line">    http: <span class="keyword">new</span> HttpAgent(),</span><br><span class="line">    https: <span class="keyword">new</span> HttpsAgent(),</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// content-length is not set correctly when streaming with decompress</span></span><br><span class="line">  <span class="comment">// #issues/1279</span></span><br><span class="line">  decompress: <span class="literal">false</span>,</span><br><span class="line">  <span class="comment">// accept-encoding won't be set without decompress</span></span><br><span class="line">  headers: &#123;</span><br><span class="line">    <span class="string">'accept-encoding'</span>: supportsBrotli ? <span class="string">'gzip, deflate, br'</span> : <span class="string">'gzip, deflate'</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  timeout: &#123;</span><br><span class="line">    connect: <span class="number">3</span> * sec,</span><br><span class="line">    socket: <span class="number">2</span> * min,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这大概率不是最终版，立一个 flag，如果再遇到问题，就自己从头写一个专用于代理场景的 http 库。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:  </strong>Claude Ray
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link: </strong>
+    <a href="http://claude-ray.com/2021/01/27/node-http-stream-proxy/" title="记录 Got(Node.js) 代理 HTTP 请求的坑">http://claude-ray.com/2021/01/27/node-http-stream-proxy/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Node-js/" rel="tag"># Node.js</a>
+              <a href="/tags/Stream/" rel="tag"># Stream</a>
+              <a href="/tags/HTTP/" rel="tag"># HTTP</a>
+              <a href="/tags/proxy/" rel="tag"># proxy</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/12/23/window-manager/" rel="prev" title="如何管理桌面窗口">
+      <i class="fa fa-chevron-left"></i> 如何管理桌面窗口
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+  <div class="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#native-http"><span class="nav-number">1.</span> <span class="nav-text">native http?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#decompress"><span class="nav-number">2.</span> <span class="nav-text">decompress</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#accept-encoding"><span class="nav-number">3.</span> <span class="nav-text">accept-encoding</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solution"><span class="nav-number">4.</span> <span class="nav-text">solution</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Claude Ray"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Claude Ray</p>
+  <div class="site-description" itemprop="description">Now or Never</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">54</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">63</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Claude-Ray" title="GitHub → https://github.com/Claude-Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://twitter.com/Claude__Ray" title="Twitter → https://twitter.com/Claude__Ray" rel="noopener" target="_blank"><i class="fa fa-fw fa-twitter"></i>Twitter</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://steamcommunity.com/profiles/76561198202113170" title="Steam → https://steamcommunity.com/profiles/76561198202113170" rel="noopener" target="_blank"><i class="fa fa-fw fa-steam"></i>Steam</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title">
+      <i class="fa fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://github.com/nebulae-pan" title="https://github.com/nebulae-pan" rel="noopener" target="_blank">Nebulae Pan</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2017 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-bolt"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Claude Ray</span>
+</div><div class="copyright">
+
+  <span class="post-meta-divider">|</span>
+  <span class="post-meta-item-icon">
+    <i class="fa fa-area-chart"></i>
+  </span>
+  <span class="post-meta-item-text">Symbols count total: </span>
+  <span title="Symbols count total">60.7k</span>
+
+</div>
+
+<div>
+  Welcome To My <a href="https://github.com/Claude-Ray/claude-ray.github.io" target="_blank" rel="noopener">Homepage</a>. Happy hacking!
+</div>
+
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://claude-ray.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "http://claude-ray.com/2021/01/27/node-http-stream-proxy/";
+    this.page.identifier = "2021/01/27/node-http-stream-proxy/";
+    this.page.title = "记录 Got(Node.js) 代理 HTTP 请求的坑";
+    };
+  NexT.utils.loadComments(document.querySelector('#disqus_thread'), () => {
+    if (window.DISQUS) {
+      DISQUS.reset({
+        reload: true,
+        config: disqus_config
+      });
+    } else {
+      var d = document, s = d.createElement('script');
+      s.src = 'https://claude-ray.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', '' + +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+  });
+</script>
+
+</body>
+</html>
