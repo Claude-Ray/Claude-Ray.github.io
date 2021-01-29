@@ -379,13 +379,13 @@
       <category term="Linux" scheme="http://claude-ray.com/categories/Linux/"/>
     
     
-      <category term="Debian" scheme="http://claude-ray.com/tags/Debian/"/>
-    
       <category term="APM" scheme="http://claude-ray.com/tags/APM/"/>
     
       <category term="Elastic-APM" scheme="http://claude-ray.com/tags/Elastic-APM/"/>
     
       <category term="apm-server" scheme="http://claude-ray.com/tags/apm-server/"/>
+    
+      <category term="Debian" scheme="http://claude-ray.com/tags/Debian/"/>
     
   </entry>
   
